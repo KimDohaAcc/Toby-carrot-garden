@@ -10,18 +10,33 @@ import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="school" element={<School />} />
-      <Route path="hospital" element={<Hospital />} />
-      <Route path="police" element={<PoliceOffice />} />
-      <Route path="carrot" element={<Carrot />} />
-      <Route path="mart" element={<Mart />} />
-      <Route path="analysis" element={<Analysis />} />
+  const backgroundStyle = {
+    backgroundSize: "cover",
+    backgroundAttachment: "fixed",
+    backgroundImage: `url('src/assets/images/backgroundImage.png')`,
+  };
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+  return (
+    <div
+      style={{
+        position: "relative",
+        height: "100vh",
+        display: "block",
+        ...backgroundStyle,
+      }}
+    >
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="school" element={<School />} />
+        <Route path="hospital" element={<Hospital />} />
+        <Route path="police" element={<PoliceOffice />} />
+        <Route path="carrot" element={<Carrot />} />
+        <Route path="mart" element={<Mart />} />
+        <Route path="analysis" element={<Analysis />} />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }
 
