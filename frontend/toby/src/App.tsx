@@ -18,12 +18,12 @@ function App() {
 
   return (
     <div
-    // style={{
-    //   position: "relative",
-    //   height: "100vh",
-    //   display: "block",
-    //   ...backgroundStyle,
-    // }}
+      style={{
+        position: "relative",
+        height: "100%",
+        display: "block",
+        ...backgroundStyle,
+      }}
     >
       <Routes>
         <Route path="/" element={<MainPage />} />
