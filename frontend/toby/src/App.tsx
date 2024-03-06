@@ -20,7 +20,7 @@ function App() {
     <div
       style={{
         position: "relative",
-        height: "100vh",
+        height: "100%",
         display: "block",
         ...backgroundStyle,
       }}
