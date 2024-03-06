@@ -37,10 +37,8 @@ const MainPage = () => {
         alt="analysis"
         style={{
           position: "absolute",
-          top: "30%",
-          left: "10%",
-          width: "20%",
-          height: "20%",
+          top: "26%",
+          left: "14%",
         }}
         onClick={() => handleAreaClick("/analysis")}
       />
@@ -49,10 +47,8 @@ const MainPage = () => {
         alt="carrot"
         style={{
           position: "absolute",
-          top: "36%",
+          top: "30%",
           left: "41%",
-          width: "34%",
-          height: "34%",
         }}
         onClick={() => handleAreaClick("/carrot")}
       />
@@ -63,8 +59,6 @@ const MainPage = () => {
           position: "absolute",
           top: "30%",
           left: "75%",
-          width: "20%",
-          height: "20%",
         }}
         onClick={() => handleAreaClick("/hospital")}
       />
@@ -75,8 +69,6 @@ const MainPage = () => {
           position: "absolute",
           top: "65%",
           left: "20%",
-          width: "25%",
-          height: "25%",
         }}
         onClick={() => handleAreaClick("/mart")}
       />
@@ -86,9 +78,7 @@ const MainPage = () => {
         style={{
           position: "absolute",
           top: "70%",
-          left: "75%",
-          width: "20%",
-          height: "20%",
+          right: "20%",
         }}
         onClick={() => handleAreaClick("/police")}
       />
@@ -99,8 +89,6 @@ const MainPage = () => {
           position: "absolute",
           top: "6%",
           left: "35%",
-          width: "40%",
-          height: "30%",
         }}
         onClick={() => handleAreaClick("/school")}
       />
@@ -111,8 +99,6 @@ const MainPage = () => {
           position: "absolute",
           bottom: "1%",
           left: "1%",
-          width: "10%",
-          height: "20%",
         }}
       />
     </div>
