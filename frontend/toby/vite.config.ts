@@ -1,7 +1,40 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: "autoUpdate",
+      devOptions: {
+        enabled: true,
+      },
+      manifest: {
+        name: "toby's carrot farm",
+        short_name: "toby",
+        start_url: "/",
+        scope: ".",
+        display: "standalone",
+        orientation: "portrait", // landscape // portrait // portrait-primary
+        background_color: "#fff",
+        theme_color: "#fff",
+        description: "app description",
+        dir: "ltr",
+        lang: "ko-KR",
+        icons: [
+          {
+            src: "/icon-192.png",
+            type: "image/png",
+            sizes: "192x192",
+          },
+          {
+            src: "/icon-512.png",
+            type: "image/png",
+            sizes: "512x512",
+          },
+        ],
+      },
+    }),
+  ],
+});

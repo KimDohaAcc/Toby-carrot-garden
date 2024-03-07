@@ -8,13 +8,26 @@ const Carrot = () => {
     setIsClicked(!isClicked);
   };
 
+  const handleCarrotClick = () => {
+    setIsClicked(!isClicked);
+  };
+
   return (
-    <div
-      className={`image-container ${isClicked ? "clicked" : ""}`}
-      onClick={handleImageClick}
-    >
-      <img src="src\assets\images\backgroundImage.png" alt="이미지" />
-    </div>
+    <>
+      <button
+        onClick={() => {
+          handleCarrotClick();
+        }}
+      >
+        당근
+      </button>
+      <div
+        className={`image-container ${isClicked ? "clicked" : ""}`}
+        onClick={handleImageClick}
+      >
+        <img src="src\assets\images\backgroundImage.png" alt="이미지" />
+      </div>
+    </>
   );
 };
 
