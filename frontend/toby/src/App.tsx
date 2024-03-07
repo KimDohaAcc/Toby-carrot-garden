@@ -1,3 +1,4 @@
+// App.tsx
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
@@ -10,21 +11,26 @@ import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
 
 function App() {
-  const backgroundStyle = {
+  const containerStyle: React.CSSProperties = {
+    position: "relative",
+    height: "100%",
+    display: "block",
+  };
+
+  const backgroundStyle: React.CSSProperties = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    zIndex: -1,
     backgroundSize: "cover",
-    backgroundAttachment: "fixed",
     backgroundImage: `url('src/assets/images/backgroundImage.png')`,
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        height: "100%",
-        display: "block",
-        ...backgroundStyle,
-      }}
-    >
+    <div style={containerStyle}>
+      <div style={backgroundStyle}></div>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="school" element={<School />} />
