@@ -11,15 +11,6 @@ const MainPage = () => {
   return (
     <div style={{ position: "relative", width: "100vw", display: "block" }}>
       <img
-        src="src\assets\images\backgroundImage.png"
-        alt="background-map"
-        style={{
-          backgroundSize: "cover",
-          backgroundAttachment: "fixed",
-        }}
-      />
-
-      <img
         src="src\assets\images\logoImage.png"
         alt="logo"
         style={{
