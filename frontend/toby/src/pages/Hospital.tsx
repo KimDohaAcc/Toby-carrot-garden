@@ -16,7 +16,7 @@ const Hospital = () => {
           src="src\assets\images\components\storyFrameImage.png"
           alt="storyframe"
           style={{
-            width: "100vw",
+            height: "100vh",
           }}
         />
       </div>
