@@ -8,38 +8,49 @@ const MainPage = () => {
     navigate(path);
   };
 
+  // 부모 요소에 대한 스타일을 추가
+  const containerStyle: React.CSSProperties = {
+    position: "relative", // 이 부분을 추가
+    height: "100vh", // 전체 높이를 차지하도록 설정
+    width: "100vw", // 전체 너비를 차지하도록 설정
+  };
+
   return (
-    <div style={{ position: "relative", width: "100vw", display: "block" }}>
-      <img
+    <div style={containerStyle}>
+      {/* <img
         src="src\assets\images\logoImage.png"
         alt="logo"
         style={{
           position: "absolute",
           top: "1%",
           left: "1%",
-          width: "16%",
-          height: "24%",
+          width: "12%",
+          height: "auto",
         }}
         onClick={() => handleAreaClick("/")}
-      />
+      /> */}
 
       <img
-        src="src\assets\images\analysisImage.png"
+        src="src\assets\images\reportImage.png"
         alt="analysis"
         style={{
           position: "absolute",
           top: "26%",
-          left: "14%",
+          left: "8%",
+          width: "20%",
+          height: "auto",
         }}
         onClick={() => handleAreaClick("/analysis")}
       />
       <img
-        src="src\assets\images\carrotImage.png"
+        src="src\assets\images\mypageImage.png"
         alt="carrot"
         style={{
           position: "absolute",
-          top: "30%",
-          left: "41%",
+          top: "23%",
+          left: "29%",
+          width: "38%",
+          height: "auto",
         }}
         onClick={() => handleAreaClick("/carrot")}
       />
@@ -48,8 +59,10 @@ const MainPage = () => {
         alt="hospital"
         style={{
           position: "absolute",
-          top: "30%",
-          left: "75%",
+          top: "22%",
+          left: "71%",
+          width: "19%",
+          height: "auto",
         }}
         onClick={() => handleAreaClick("/hospital")}
       />
@@ -58,18 +71,22 @@ const MainPage = () => {
         alt="mart"
         style={{
           position: "absolute",
-          top: "65%",
-          left: "20%",
+          top: "69%",
+          left: "17%",
+          width: "20%",
+          height: "auto",
         }}
         onClick={() => handleAreaClick("/mart")}
       />
       <img
-        src="src\assets\images\policeofficeImage.png"
+        src="src\assets\images\policeImage.png"
         alt="police"
         style={{
           position: "absolute",
-          top: "70%",
+          top: "65%",
           right: "20%",
+          width: "20%",
+          height: "auto",
         }}
         onClick={() => handleAreaClick("/police")}
       />
@@ -78,8 +95,11 @@ const MainPage = () => {
         alt="school"
         style={{
           position: "absolute",
-          top: "6%",
-          left: "35%",
+          top: "12%",
+          left: "32%",
+          width: "35%",
+          height: "auto",
+          zIndex: -3,
         }}
         onClick={() => handleAreaClick("/school")}
       />
@@ -88,8 +108,8 @@ const MainPage = () => {
         alt="maintoby"
         style={{
           position: "absolute",
-          bottom: "1%",
-          left: "1%",
+          bottom: "3%",
+          right: "3%",
         }}
       />
     </div>
