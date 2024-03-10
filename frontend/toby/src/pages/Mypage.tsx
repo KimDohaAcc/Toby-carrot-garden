@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Carrot.css";
 
-const Carrot = () => {
+const Mypage = () => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleImageClick = () => {
@@ -31,4 +31,4 @@ const Carrot = () => {
   );
 };
 
-export default Carrot;
+export default Mypage;

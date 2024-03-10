@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ConstructionModal from "../components/constructionModal";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
   const handleAreaClick = (path: string) => {
-    navigate(path);
+    if (path === "/police" || path === "/mart") {
+      setShowModal(true);
+    } else {
+      navigate(path);
+    }
   };
 
   // 부모 요소에 대한 스타일을 추가
@@ -79,7 +85,7 @@ const MainPage = () => {
         onClick={() => handleAreaClick("/mart")}
       />
       <img
-        src="src\assets\images\policeImage.png"
+        src="src/assets/images/policeImage.png" // 경로 수정이 필요할 수 있음
         alt="police"
         style={{
           position: "absolute",
@@ -90,6 +96,7 @@ const MainPage = () => {
         }}
         onClick={() => handleAreaClick("/police")}
       />
+      {showModal && <ConstructionModal onClose={() => setShowModal(false)} />}
       <img
         src="src\assets\images\schoolImage.png"
         alt="school"
