@@ -5,12 +5,12 @@ import MainPage from "./pages/MainPage";
 import School from "./pages/School";
 import Hospital from "./pages/Hospital";
 import PoliceOffice from "./pages/PoliceOffice";
-import Carrot from "./pages/Mypage";
+import Mypage from "./pages/Mypage";
 import Mart from "./pages/Mart";
 import Analysis from "./pages/Report";
 import NotFound from "./pages/NotFound";
 import Logo from "./components/Logo"; // 여기에 LogoImage 컴포넌트를 임포트합니다.
-
+import constructionModal from "./constructionModal";
 function App() {
   const containerStyle: React.CSSProperties = {
     position: "relative",
@@ -39,7 +39,7 @@ function App() {
         <Route path="school" element={<School />} />
         <Route path="hospital" element={<Hospital />} />
         <Route path="police" element={<PoliceOffice />} />
-        <Route path="carrot" element={<Carrot />} />
+        <Route path="/mypage" element={<Mypage />} />
         <Route path="mart" element={<Mart />} />
         <Route path="analysis" element={<Analysis />} />
 
