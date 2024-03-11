@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const LogoWrapper = styled.div`
-  position: absolute;
-  top: 1%;
-  left: 1%;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 12%;
   height: auto;
+  padding: 10px;
   border: 2px solid cyan;
   justify-content: center;
   align-items: center;

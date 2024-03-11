@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConstructionModal from "../components/modals/constructionModal";
-<<<<<<< HEAD
-=======
-// import styled from "styled-components";
->>>>>>> feature/화석/reportLayout
+import Logo from "../components/Logo.tsx";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -27,18 +24,7 @@ const MainPage = () => {
 
   return (
     <div style={containerStyle}>
-      {/* <img
-        src="src\assets\images\logoImage.png"
-        alt="logo"
-        style={{
-          position: "absolute",
-          top: "1%",
-          left: "1%",
-          width: "12%",
-          height: "auto",
-        }}
-        onClick={() => handleAreaClick("/")}
-      /> */}
+      <Logo />
 
       <img
         src="src\assets\images\reportImage.png"
@@ -61,6 +47,7 @@ const MainPage = () => {
           left: "29%",
           width: "38%",
           height: "auto",
+          zIndex: 3,
         }}
         onClick={() => handleAreaClick("/mypage")}
       />
@@ -110,7 +97,6 @@ const MainPage = () => {
           left: "32%",
           width: "35%",
           height: "auto",
-          zIndex: -3,
         }}
         onClick={() => handleAreaClick("/school")}
       />
@@ -118,7 +104,7 @@ const MainPage = () => {
         src="src\assets\images\toby\maintoby.png"
         alt="maintoby"
         style={{
-          position: "absolute",
+          position: "fixed",
           bottom: "3%",
           right: "3%",
         }}

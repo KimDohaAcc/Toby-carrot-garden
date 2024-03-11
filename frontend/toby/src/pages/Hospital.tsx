@@ -1,29 +1,42 @@
 import React from "react";
 import styled from "styled-components";
 
-const HospitalContainer = styled.div`
-  display: grid;
-  place-items: center;
-  grid-template-rows: 4fr 3fr 1fr 1fr 2fr;
+import Logo from "../components/Logo";
+
+import StoryTitle from "../components/StoryTitle";
+
+// 전체 컨테이너
+const StoryContainer = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  border: 2px solid black;
+`;
+
+// 로고와 병원 내용을 나누기 위한 컨테이너
+const LogoArea = styled.div`
+  flex-grow: 1;
+  border: 2px solid black;
+`;
+
+const StoryContent = styled.div`
+  flex-grow: 6;
+  border: 2px solid black;
+  padding: 20px;
+  display: flex;
 `;
 
 const Hospital = () => {
   return (
-    <HospitalContainer>
-      <div></div>
-      <div>
-        <img
-          src="src\assets\images\components\storyFrameImage.png"
-          alt="storyframe"
-          style={{
-            height: "100vh",
-          }}
-        />
-      </div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </HospitalContainer>
+    <>
+      <Logo />
+      <StoryContainer>
+        <LogoArea />
+        <StoryContent>
+          <StoryTitle />
+        </StoryContent>
+      </StoryContainer>
+    </>
   );
 };
 
