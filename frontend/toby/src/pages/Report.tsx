@@ -1,109 +1,102 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import Logo from "../components/Logo.tsx";
 
 const MainContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-wrap: wrap;
-`;
-
-const ControlsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  position: absolute;
-  top: 250px;
-  left: 38px;
-`;
-
-const BoxContainer = styled.div<{ isAnalysis: boolean }>`
-  display: flex;
-  flex-direction: ${({ isAnalysis }) => (isAnalysis ? "row" : "column")};
-  gap: 10px;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  margin-left: 310px;
-  margin-right: 80px;
-`;
-
-const StyledButton = styled.button`
-  padding: 10px;
-  width: 160px;
+  gap: 20px;
+  border: 2px solid red;
+  width: 100vw;
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
 `;
 
 const Box = styled.div`
-  padding: 20px;
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  height: 750px; // 분석 박스와 같은 높이
-  width: 90%; // 화면의 대부분을 차지하도록 너비 조정
-  margin: 0 auto; // 자동 마진으로 가운데 정렬
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  border: 2px solid yellow;
 `;
 
-const TextBox = styled.div`
-  padding: 20px;
-  padding-left: 335px;
-  width: calc(100% - 335px); // 패딩을 고려한 너비 조정
-  text-align: left;
+const Box1Container = styled(Box)`
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1.5;
+  min-height: 99vh;
+  width: auto;
+  background-color: #ddd;
 `;
-const TextBoxTitle = styled.div`
-  padding: 20px;
-  padding-left: 335px; // 왼쪽 패딩 추가로 텍스트 위치를 우측으로 조정
+
+const Box1Child1 = styled.div`
+  flex-grow: 2.5;
   width: 100%;
-  text-align: left;
+  background-color: #bbb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const Report: React.FC = () => {
-  const [activeView, setActiveView] = useState("");
-  const navigate = useNavigate(); // navigate 함수를 초기화합니다.
+const Box1Child2 = styled.div`
+  flex-grow: 7.5;
+  width: 100%;
+  background-color: #bbb;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+`;
 
-  // 뷰 변경용 핸들러, 마이페이지 버튼용 별도의 핸들러가 필요
-  const handleButtonClick = (view: string) => {
-    setActiveView(activeView === view ? "" : view);
-  };
+const Box2 = styled(Box)`
+  flex-grow: 8.5;
+  min-height: 99vh;
+  width: auto;
+  background-color: #ddd;
+`;
 
-  // 마이페이지 이동 핸들러
-  const handleMypageClick = () => {
-    navigate("/carrot"); // navigate 함수를 호출하여 /carrot 경로로 이동
-  };
+const Button = styled.button`
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: lightgray;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: gray;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    padding: 15px 30px; // 작은 화면에서는 버튼의 패딩을 늘림
+    font-size: 18px; // 폰트 사이즈를 증가시킴
+  }
+`;
+
+const Report = () => {
+  const navigate = useNavigate();
 
   return (
     <MainContainer>
-      <ControlsContainer>
-        <StyledButton onClick={() => handleButtonClick("analysis")}>
-          분석
-        </StyledButton>
-        <StyledButton onClick={() => handleButtonClick("history")}>
-          히스토리
-        </StyledButton>
-        <StyledButton onClick={handleMypageClick}>마이페이지</StyledButton>
-      </ControlsContainer>
-      {activeView === "analysis" && (
-        <>
-          <TextBoxTitle>분석</TextBoxTitle>
-          <TextBox>
-            우리 아이가 풀었던 문제에 대한 통계자료를 볼 수 있습니다.
-          </TextBox>
-          <BoxContainer isAnalysis={true}>
-            <Box>박스 #1</Box>
-            <Box>박스 #2</Box>
-          </BoxContainer>
-        </>
-      )}
-      {activeView === "history" && (
-        <>
-          <TextBoxTitle>히스토리</TextBoxTitle>
-          <TextBox>우리 아이가 풀었던 문제를 확인할 수 있어요!</TextBox>
-          <BoxContainer isAnalysis={false}>
-            <Box>히스토리 내용이 여기 표시됩니다.</Box>
-          </BoxContainer>
-        </>
-      )}
+      <Box1Container>
+        <Box1Child1>
+          {/* Logo 컴포넌트 예시로 사용; 실제 경로나 구현에 따라 달라질 수 있음 */}
+          <Logo />
+        </Box1Child1>
+        <Box1Child2>
+          <Button onClick={() => navigate("/analysis")}>분석</Button>
+          <Button onClick={() => navigate("/history")}>히스토리</Button>
+          <Button onClick={() => navigate("/myPage")}>마이페이지</Button>
+        </Box1Child2>
+      </Box1Container>
+      <Box2>박스 2</Box2>
     </MainContainer>
   );
 };

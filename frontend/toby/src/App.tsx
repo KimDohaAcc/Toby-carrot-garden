@@ -7,8 +7,9 @@ import Hospital from "./pages/Hospital";
 import PoliceOffice from "./pages/PoliceOffice";
 import Mypage from "./pages/Mypage";
 import Mart from "./pages/Mart";
-import Analysis from "./pages/Report";
+import Report from "./pages/Report";
 import NotFound from "./pages/NotFound";
+// import Logo from "./components/Logo";
 
 function App() {
   const containerStyle: React.CSSProperties = {
@@ -39,7 +40,7 @@ function App() {
         <Route path="police" element={<PoliceOffice />} />
         <Route path="mypage" element={<Mypage />} />
         <Route path="mart" element={<Mart />} />
-        <Route path="analysis" element={<Analysis />} />
+        <Route path="report" element={<Report />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

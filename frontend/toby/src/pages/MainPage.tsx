@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConstructionModal from "../components/modals/constructionModal";
+<<<<<<< HEAD
+=======
+// import styled from "styled-components";
+>>>>>>> feature/화석/reportLayout
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -46,7 +50,7 @@ const MainPage = () => {
           width: "20%",
           height: "auto",
         }}
-        onClick={() => handleAreaClick("/analysis")}
+        onClick={() => handleAreaClick("/report")}
       />
       <img
         src="src\assets\images\mypageImage.png"
