@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ConstructionModal from "../components/constructionModal";
+import ConstructionModal from "../components/modals/constructionModal";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const MainPage = () => {
           width: "38%",
           height: "auto",
         }}
-        onClick={() => handleAreaClick("/carrot")}
+        onClick={() => handleAreaClick("/mypage")}
       />
       <img
         src="src\assets\images\hospitalImage.png"
