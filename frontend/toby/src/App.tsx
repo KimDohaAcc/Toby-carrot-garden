@@ -9,8 +9,7 @@ import Mypage from "./pages/Mypage";
 import Mart from "./pages/Mart";
 import Analysis from "./pages/Report";
 import NotFound from "./pages/NotFound";
-import Logo from "./components/Logo"; // 여기에 LogoImage 컴포넌트를 임포트합니다.
-import constructionModal from "./constructionModal";
+
 function App() {
   const containerStyle: React.CSSProperties = {
     position: "relative",
@@ -31,7 +30,6 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <Logo />
       <div style={backgroundStyle}></div>
 
       <Routes>

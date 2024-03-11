@@ -1,5 +1,5 @@
 import React from "react";
-import constructionImage from "../assets/images/constructionImage.png";
+import constructionImage from "../../assets/images/constructionImage.png";
 
 interface Props {
   onClose: () => void;
