@@ -8,12 +8,10 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,8 +37,9 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-			.cors(CorsConfigurer::disable) // WebMvcConfig에 있는 cors 설정 사용
-			.cors(Customizer.withDefaults())
+			// .cors(CorsConfigurer::disable) // WebMvcConfig에 있는 cors 설정 사용
+			// .cors(Customizer.withDefaults())
+			.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
 			.csrf(AbstractHttpConfigurer::disable) //csrf 비활성
 			.httpBasic(AbstractHttpConfigurer::disable) //HTTP 기본인증 비활성
 			// 시큐리티가 세션을 만들지도 사용하지도 않음.
@@ -59,6 +58,8 @@ public class SecurityConfig {
 
 		corsConfiguration.setAllowCredentials(true);
 		corsConfiguration.setAllowedOrigins(WebMvcConfig.getAllowedOrigins());
+		System.out.println("실행됐나요");
+		System.out.println(corsConfiguration.getAllowedOrigins());
 		corsConfiguration.setAllowedMethods(List.of(
 			HttpMethod.GET.name(),
 			HttpMethod.POST.name(),
