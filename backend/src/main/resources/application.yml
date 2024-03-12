@@ -29,3 +29,6 @@ server:
 
   servlet:
     context-path: /api
+
+# constants
+DOMAIN: ${FRONT_DOMAIN}
