@@ -9,30 +9,21 @@ import Mypage from "./pages/Mypage";
 import Mart from "./pages/Mart";
 import Report from "./pages/Report";
 import NotFound from "./pages/NotFound";
-// import Logo from "./components/Logo";
+
+import styled from "styled-components";
+
+const BackgroundContainer = styled.div`
+  height: 100vh;
+  width: 100vw;
+  z-index: -5;
+  background-size: cover;
+  background-image: url("src/assets/images/backgroundImage.png");
+  overflow: hidden;
+`;
 
 function App() {
-  const containerStyle: React.CSSProperties = {
-    position: "relative",
-    height: "100%",
-    display: "block",
-  };
-
-  const backgroundStyle: React.CSSProperties = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    zIndex: -5,
-    backgroundSize: "cover",
-    backgroundImage: `url('src/assets/images/backgroundImage.png')`,
-  };
-
   return (
-    <div style={containerStyle}>
-      <div style={backgroundStyle}></div>
-
+    <BackgroundContainer>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="school" element={<School />} />
@@ -44,7 +35,7 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </div>
+    </BackgroundContainer>
   );
 }
 
