@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.configuration;
+package garden.carrot.toby.common.config;
 
 import java.util.Arrays;
 
@@ -17,7 +17,7 @@ public class CorsConfig {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
-		for (String origin : WebMvcConfiguration.getAllowedOrigins()) {
+		for (String origin : WebMvcConfig.getAllowedOrigins()) {
 			config.addAllowedOriginPattern(origin); // 허용할 URL
 		}
 		config.addAllowedHeader("*"); // 허용할 Header

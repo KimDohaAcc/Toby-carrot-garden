@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.configuration;
+package garden.carrot.toby.common.config;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfig {
 	private final AuthenticationConfiguration authenticationConfiguration;
 	// private final TokenProvider tokenProvider;
 	// private final CorsConfig config;
@@ -58,7 +58,7 @@ public class SecurityConfiguration {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 
 		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setAllowedOrigins(WebMvcConfiguration.getAllowedOrigins());
+		corsConfiguration.setAllowedOrigins(WebMvcConfig.getAllowedOrigins());
 		corsConfiguration.setAllowedMethods(List.of(
 			HttpMethod.GET.name(),
 			HttpMethod.POST.name(),

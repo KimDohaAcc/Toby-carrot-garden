@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.configuration;
+package garden.carrot.toby.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +10,7 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
 @Configuration
-public class SwaggerConfiguration {
+public class SwaggerConfig {
 	@Bean
 	public OpenAPI openAPI() {
 		Info info = new Info()

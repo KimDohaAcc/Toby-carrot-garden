@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.configuration;
+package garden.carrot.toby.common.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import lombok.Getter;
 
 @Configuration
-public class WebMvcConfiguration implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
 	private final String host;
 
 	private final String[] protocols = {"http://", "https://"};
@@ -29,7 +29,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	@Getter
 	private static List<String> allowedOrigins = new ArrayList<>();
 
-	public WebMvcConfiguration(@Value("${DOMAIN}") String host) {
+	public WebMvcConfig(@Value("${DOMAIN}") String host) {
 		this.host = host;
 
 		// 허용할 origin 목록
