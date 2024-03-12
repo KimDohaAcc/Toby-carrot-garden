@@ -8,7 +8,6 @@ const LogoWrapper = styled.div`
   left: 0;
   width: 12%;
   height: auto;
-  padding: 10px;
   border: 2px solid cyan;
   justify-content: center;
   align-items: center;
