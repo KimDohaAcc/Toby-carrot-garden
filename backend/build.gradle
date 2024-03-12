@@ -37,6 +37,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	// discord logging webhook
+	implementation 'club.minnced:discord-webhooks:0.8.4'
 }
 
 tasks.named('test') {
