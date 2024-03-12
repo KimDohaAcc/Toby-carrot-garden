@@ -8,8 +8,8 @@ import StoryTitle from "../components/StoryTitle";
 // 전체 컨테이너
 const StoryContainer = styled.div`
   display: flex;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   border: 2px solid black;
 `;
 

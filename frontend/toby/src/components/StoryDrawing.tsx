@@ -31,9 +31,9 @@ const Drawing2 = styled.div`
 const StoryDrawing = () => {
   return (
     <StoryDrawingContainer>
-      <Title>제목</Title>
+      <Title>주사기를 그려주세요</Title>
       <Drawing1>그림</Drawing1>
-      <Drawing2>그림</Drawing2>
+      <Drawing2>여기를 클릭하세요</Drawing2>
     </StoryDrawingContainer>
   );
 };
