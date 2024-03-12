@@ -1,14 +1,15 @@
 package garden.carrot.toby.common.config;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -19,15 +20,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
-	private final AuthenticationConfiguration authenticationConfiguration;
 	// private final TokenProvider tokenProvider;
-	// private final CorsConfig config;
+
+	private final String HOST;
+
+	public SecurityConfig(@Value("${DOMAIN}") String host) {
+		this.HOST = host;
+	}
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -37,8 +39,6 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-			// .cors(CorsConfigurer::disable) // WebMvcConfig에 있는 cors 설정 사용
-			// .cors(Customizer.withDefaults())
 			.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
 			.csrf(AbstractHttpConfigurer::disable) //csrf 비활성
 			.httpBasic(AbstractHttpConfigurer::disable) //HTTP 기본인증 비활성
@@ -48,18 +48,47 @@ public class SecurityConfig {
 			)
 		// .addFilterAfter(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
 		;
+		
 		return http.build();
 	}
 
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
+		final String LOCALHOST = "localhost:";
+
+		final String[] ALLOWED_HOSTS = new String[] {
+			LOCALHOST,
+			"127.0.0.1:"
+		};
+
+		final String[] PROTOCOLS = {"http://", "https://"};
+
+		final int DEFAULT_PORT = 80;
+		final int ALLOWED_MIN_PORT = 5173;
+		final int ALLOWED_MAX_PORT = 5175;
+
+		// 허용할 origin 목록
+		List<String> allowedOrigins = new ArrayList<>();
+
+		for (String protocol : PROTOCOLS) {
+			allowedOrigins.add(protocol + HOST);
+			allowedOrigins.add(protocol + LOCALHOST + DEFAULT_PORT);
+
+			int allowedPort = ALLOWED_MIN_PORT;
+
+			while (allowedPort <= ALLOWED_MAX_PORT) {
+				for (String host : ALLOWED_HOSTS) {
+					allowedOrigins.add(protocol + host + allowedPort);
+				}
+				allowedPort += 1;
+			}
+		}
+
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 
 		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setAllowedOrigins(WebMvcConfig.getAllowedOrigins());
-		System.out.println("실행됐나요");
-		System.out.println(corsConfiguration.getAllowedOrigins());
+		corsConfiguration.setAllowedOrigins(allowedOrigins);
 		corsConfiguration.setAllowedMethods(List.of(
 			HttpMethod.GET.name(),
 			HttpMethod.POST.name(),
