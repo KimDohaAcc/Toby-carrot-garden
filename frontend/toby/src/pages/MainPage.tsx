@@ -12,17 +12,19 @@ const MainpageContainer = styled.div`
 `;
 
 const Area1 = styled.div`
+  box-sizing: border-box;
   display: grid;
   grid-template-rows: 3fr 2fr 2fr;
-  flex-grow: 3;
+  flex: 3 0 auto;
   border: 1px solid black;
 `;
 
 const ReportArea = styled.div`
-  border: 1px solid black;
   display: flex;
+  flex: 1 0 auto;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 const ReportImage = styled.img`
@@ -35,10 +37,11 @@ const ReportImage = styled.img`
 `;
 
 const MartArea = styled.div`
-  border: 1px solid black;
   display: flex;
+  flex: 1 0 auto;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 const MartImage = styled.img`
@@ -47,21 +50,23 @@ const MartImage = styled.img`
   width: auto;
   height: auto;
   position: relative;
-  left: 10%;
+  left: 20%;
 `;
 
 const Area2 = styled.div`
+  box-sizing: border-box;
   display: grid;
   grid-template-rows: 1fr 1fr;
-  flex-grow: 2;
+  flex: 2 0 auto;
   border: 1px solid black;
 `;
 
 const SchoolArea = styled.div`
-  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1 0 auto;
+  box-sizing: border-box;
 `;
 
 const SchoolImage = styled.img`
@@ -72,10 +77,11 @@ const SchoolImage = styled.img`
 `;
 
 const MypageArea = styled.div`
-  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1 0 auto;
+  box-sizing: border-box;
 `;
 
 const MyPageImage = styled.img`
@@ -90,15 +96,16 @@ const MyPageImage = styled.img`
 const Area3 = styled.div`
   display: grid;
   grid-template-rows: 3fr 2fr;
-  flex-grow: 2;
+  flex: 2 0 auto;
   border: 1px solid black;
 `;
 
 const HospitalArea = styled.div`
-  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1 0 auto;
+  box-sizing: border-box;
 `;
 
 const HospitalImage = styled.img`
@@ -107,14 +114,15 @@ const HospitalImage = styled.img`
   width: auto;
   height: auto;
   position: relative;
-  top: -20%;
+  top: 20%;
 `;
 
 const PoliceArea = styled.div`
-  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1 0 auto;
+  box-sizing: border-box;
 `;
 
 const PoliceImage = styled.img`
@@ -124,21 +132,21 @@ const PoliceImage = styled.img`
   height: auto;
   position: relative;
   left: -20%;
-  top: -10%;
 `;
 
 const Area4 = styled.div`
   display: grid;
-  flex-grow: 1;
   grid-template-rows: 5fr 2fr;
   border: 1px solid black;
+  flex: 1 0 auto;
 `;
 
 const TobyArea = styled.div`
-  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1 0 auto;
+  box-sizing: border-box;
 `;
 
 const TobyImage = styled.img`

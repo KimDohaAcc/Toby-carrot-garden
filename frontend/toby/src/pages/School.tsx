@@ -6,8 +6,8 @@ import Logo from "../components/Logo";
 // 전체 컨테이너
 const ReportContainer = styled.div`
   display: flex;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 `;
 
 //  카테고리와 내용을 나누기 위한 컨테이너

@@ -8,6 +8,8 @@ const StoryTitleContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   flex-direction: column;
   border: 2px solid black;
 `;
@@ -29,11 +31,16 @@ const StoryTitleBottom = styled.div`
 const Title = styled.div`
   flex-grow: 6;
   border: 2px solid black;
+  box-sizing: border-box;
 `;
 
 const NextArea = styled.div`
-  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
   border: 2px solid black;
+  box-sizing: border-box;
 `;
 
 const StoryTitle = () => {
@@ -44,7 +51,9 @@ const StoryTitle = () => {
       </StoryTitleContent>
       <StoryTitleBottom>
         <Title>제목</Title>
-        <NextArea>다음</NextArea>
+        <NextArea>
+          <button>다음</button>
+        </NextArea>
       </StoryTitleBottom>
     </StoryTitleContainer>
   );
