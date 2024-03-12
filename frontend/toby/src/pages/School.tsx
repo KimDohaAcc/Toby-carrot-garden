@@ -56,6 +56,7 @@ const ContentCategory = styled.div`
 
 const Content = styled.div`
   flex-grow: 3;
+  /* width: 20%; */
   border: 2px solid black;
 `;
 
@@ -65,11 +66,11 @@ const School = () => {
       <Logo />
       <ReportContainer>
         <ReportCategory>
-          <div style={{ height: "30%" }}></div>
+          <div></div>
           <Category1></Category1>
           <Category2></Category2>
           <Category3></Category3>
-          <div style={{ height: "30%" }}></div>
+          <div></div>
         </ReportCategory>
         <ReportContent>
           <ContentCategory></ContentCategory>

@@ -1,103 +1,176 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+
 import styled from "styled-components";
-import Logo from "../components/Logo.tsx";
+import Logo from "../components/Logo";
 
-const MainContainer = styled.div`
+// 전체 컨테이너
+const ReportContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  border: 2px solid red;
-  width: 100vw;
+  width: 100%;
   height: 100%;
-  margin: 0;
-  box-sizing: border-box;
 `;
 
-const Box = styled.div`
-  display: flex;
+//  카테고리와 내용을 나누기 위한 컨테이너
+const ReportCategory = styled.div`
+  width: 20%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 3fr 2fr 2fr 2fr 2fr;
+  /* grid-row-gap: 10px; */
+  grid-template-areas:
+    "Logo"
+    "category1"
+    "category2"
+    "category3"
+    "category4";
+  border: 2px solid black;
+`;
+
+const StyledButton = styled.button`
+  padding: 8px 16px;
+  margin: 0 5px; // Adds a little space between the buttons
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 60%;
+  height: 50%;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
-  border: 2px solid yellow;
-`;
+  border-radius: 5%;
 
-const Box1Container = styled(Box)`
-  flex-direction: column;
-  gap: 10px;
-  flex-grow: 1.5;
-  min-height: 99vh;
-  width: auto;
-  background-color: #ddd;
-`;
-
-const Box1Child1 = styled.div`
-  flex-grow: 2.5;
-  width: 100%;
-  background-color: #bbb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Box1Child2 = styled.div`
-  flex-grow: 7.5;
-  width: 100%;
-  background-color: #bbb;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 10px;
-`;
-
-const Box2 = styled(Box)`
-  flex-grow: 8.5;
-  min-height: 99vh;
-  width: auto;
-  background-color: #ddd;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  margin: 5px;
-  background-color: lightgray;
-  border: 1px solid gray;
-  border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
 
   &:hover {
-    background-color: gray;
-    color: white;
-  }
-
-  @media (max-width: 768px) {
-    padding: 15px 30px; // 작은 화면에서는 버튼의 패딩을 늘림
-    font-size: 18px; // 폰트 사이즈를 증가시킴
+    background-color: #0056b3;
   }
 `;
 
-const Report = () => {
-  const navigate = useNavigate();
+const Category1 = styled.div`
+  grid-area: category1;
+  display: flex;
+  /* justify-content: center; // Centers the buttons horizontally */
+  align-items: left; // Centers the buttons vertically
+  gap: 10px; // Adds space between the buttons
+  border: 2px solid black;
+  flex-direction: column;
+`;
 
+const Category2 = styled.div`
+  grid-area: category2;
+  display: flex;
+  /* justify-content: center; // Centers the buttons horizontally */
+  align-items: left; // Centers the buttons vertically
+  gap: 10px; // Adds space between the buttons
+  border: 2px solid black;
+  flex-direction: column;
+`;
+
+const Category3 = styled.div`
+  grid-area: category3;
+  display: flex;
+  /* justify-content: center; // Centers the buttons horizontally */
+  align-items: left; // Centers the buttons vertically
+  gap: 10px; // Adds space between the buttons
+  border: 2px solid black;
+  flex-direction: column;
+`;
+
+//분석 내용을 담는 컨테이너
+const ReportContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border: 2px solid black;
+`;
+
+const ContentCategory = styled.div`
+  flex-grow: 1;
+  border: 2px solid black;
+`;
+
+const Content = styled.div`
+  flex-grow: 5;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: row;
+`;
+const ContentExpress = styled.div`
+  flex-grow: 1;
+  border: 2px solid red;
+`;
+const ContentElse = styled.div`
+  flex-grow: 1;
+  border: 2px solid yellow;
+  display: flex;
+  flex-direction: column;
+`;
+const ContentGraph = styled.div`
+  flex-grow: 3;
+  border: 2px solid red;
+`;
+const ContentExplain = styled.div`
+  flex-grow: 2;
+  border: 2px solid yellow;
+`;
+const Report = () => {
+  const [contentText, setContentText] = useState("");
+  const [showBoxes, setShowBoxes] = useState(false);
+  const [showHistory, setshowHistory] = useState(false);
+
+  const handleAnalysisClick = () => {
+    setContentText(
+      "분석: 우리 아이가 풀었던 문제에 대한 통계 자료를 볼 수 있어요!"
+    );
+    setShowBoxes(true);
+  };
+  const handleHistoryClick = () => {
+    setContentText(
+      "히스토리 우리 아이가 풀었던 문제를 확인 할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점 해주세요!"
+    );
+    setShowBoxes(false);
+    setshowHistory(true);
+  };
+  const handleMypageClick = () => {
+    setContentText(
+      "히스토리 우리 아이가 풀었던 문제를 확인 할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점 해주세요!"
+    );
+    setShowBoxes(false);
+    setshowHistory(true);
+  };
   return (
-    <MainContainer>
-      <Box1Container>
-        <Box1Child1>
-          {/* Logo 컴포넌트 예시로 사용; 실제 경로나 구현에 따라 달라질 수 있음 */}
-          <Logo />
-        </Box1Child1>
-        <Box1Child2>
-          <Button onClick={() => navigate("/analysis")}>분석</Button>
-          <Button onClick={() => navigate("/history")}>히스토리</Button>
-          <Button onClick={() => navigate("/myPage")}>마이페이지</Button>
-        </Box1Child2>
-      </Box1Container>
-      <Box2>박스 2</Box2>
-    </MainContainer>
+    <>
+      <Logo />
+      <ReportContainer>
+        <ReportCategory>
+          <div style={{ height: "30%" }}></div>
+          <Category1>
+            <StyledButton onClick={handleAnalysisClick}>분석</StyledButton>
+          </Category1>
+          <Category2>
+            <StyledButton onClick={handleHistoryClick}>히스토리</StyledButton>
+          </Category2>
+          <Category3>
+            <StyledButton>마이페이지</StyledButton>
+          </Category3>
+          <div style={{ height: "30%" }}></div>
+        </ReportCategory>
+        <ReportContent>
+          <ContentCategory>{contentText}</ContentCategory>
+          <Content>
+            {showBoxes && (
+              <>
+                <ContentElse>
+                  <ContentGraph></ContentGraph>
+                  <ContentExplain></ContentExplain>
+                </ContentElse>
+                <ContentExpress>박스 2</ContentExpress>
+              </>
+            )}
+          </Content>
+        </ReportContent>
+      </ReportContainer>
+    </>
   );
 };
 
