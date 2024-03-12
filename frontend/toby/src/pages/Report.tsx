@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
+import Rescore from "../components/Rescore";
 
 // 전체 컨테이너
 const ReportContainer = styled.div`
@@ -86,14 +88,18 @@ const ReportContent = styled.div`
 
 const ContentCategory = styled.div`
   flex-grow: 1;
+  min-height: 18%;
+  max-height: 18%;
   border: 2px solid black;
 `;
 
+// Content 컴포넌트에 대한 스타일 정의
 const Content = styled.div`
   flex-grow: 5;
   border: 2px solid black;
   display: flex;
   flex-direction: row;
+  overflow-y: auto; // 내용이 많아지면 스크롤바 생성
 `;
 const ContentExpress = styled.div`
   flex-grow: 1;
@@ -114,36 +120,35 @@ const ContentExplain = styled.div`
   border: 2px solid yellow;
 `;
 const Report = () => {
+  const navigate = useNavigate();
   const [contentText, setContentText] = useState("");
   const [showBoxes, setShowBoxes] = useState(false);
-  const [showHistory, setshowHistory] = useState(false);
+  const [showHistory, setShowHistory] = useState(false); // 상태 업데이트 함수명 수정
 
   const handleAnalysisClick = () => {
     setContentText(
       "분석: 우리 아이가 풀었던 문제에 대한 통계 자료를 볼 수 있어요!"
     );
     setShowBoxes(true);
+    setShowHistory(false); // 다른 버튼을 클릭할 때 showHistory를 false로 설정
   };
+
   const handleHistoryClick = () => {
     setContentText(
-      "히스토리 우리 아이가 풀었던 문제를 확인 할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점 해주세요!"
+      "히스토리: 우리 아이가 풀었던 문제를 확인 할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점 해주세요!"
     );
     setShowBoxes(false);
-    setshowHistory(true);
+    setShowHistory(true); // 히스토리 버튼 클릭 시 true로 설정
   };
+
   const handleMypageClick = () => {
-    setContentText(
-      "히스토리 우리 아이가 풀었던 문제를 확인 할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점 해주세요!"
-    );
-    setShowBoxes(false);
-    setshowHistory(true);
+    navigate("/mypage");
   };
   return (
     <>
       <Logo />
       <ReportContainer>
         <ReportCategory>
-          <div style={{ height: "30%" }}></div>
           <Category1>
             <StyledButton onClick={handleAnalysisClick}>분석</StyledButton>
           </Category1>
@@ -151,9 +156,8 @@ const Report = () => {
             <StyledButton onClick={handleHistoryClick}>히스토리</StyledButton>
           </Category2>
           <Category3>
-            <StyledButton>마이페이지</StyledButton>
+            <StyledButton onClick={handleMypageClick}>마이페이지</StyledButton>
           </Category3>
-          <div style={{ height: "30%" }}></div>
         </ReportCategory>
         <ReportContent>
           <ContentCategory>{contentText}</ContentCategory>
@@ -167,6 +171,7 @@ const Report = () => {
                 <ContentExpress>박스 2</ContentExpress>
               </>
             )}
+            {showHistory && <Rescore />}{" "}
           </Content>
         </ReportContent>
       </ReportContainer>

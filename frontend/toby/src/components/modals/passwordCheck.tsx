@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import constructionImage from "../../assets/images/constructionImage.png";
 import styled from "styled-components";
-import constructionImage from "../../assets/images/constructionImage.png"; // 경로는 실제 구조에 맞게 조정하세요
+import { useNavigate } from "react-router-dom";
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -71,19 +71,26 @@ const ConstructionText = styled.h2`
 
 const ConstructionModal = ({ onClose }) => {
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // useNavigate 훅 사용
-
+  const navigate = useNavigate();
   const handleConfirm = () => {
-    // 여기에 비밀번호 확인 로직을 추가하세요
-    console.log(password); // 비밀번호를 콘솔에 출력합니다
-    navigate("/report"); // 비밀번호 확인 후 /report 경로로 이동합니다
+    // 비밀번호 확인 로직을 여기에 추가
+    console.log(password); // 예시로 콘솔에 출력
+    onClose(); // 확인 후 모달 닫기
+    navigate("/report"); // /report 경로로 이동
   };
 
   return (
     <ModalBackdrop onClick={onClose}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
-        <img src={constructionImage} alt="Under Construction" />
-
+        {/* <img src={constructionImage} alt="Construction" /> */}
+        <ConstructionText>비밀번호를 입력하시오</ConstructionText>
+        <PasswordInput
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="비밀번호"
+        />
+        <ConfirmButton onClick={handleConfirm}>확인</ConfirmButton>
         <CloseButton onClick={onClose}>닫기</CloseButton>
       </ModalBox>
     </ModalBackdrop>
