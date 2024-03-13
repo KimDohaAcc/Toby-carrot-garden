@@ -43,6 +43,7 @@ for message in consumer:
     # 명령어 실행
     # command = f"python detect.py --weights {weights_path} --conf 0.1 --source {source_path} --device {device}"
     # subprocess.run(command, shell=True)
+
     command = f"python detect.py --weights {weights_path} --source {source_path} --conf 0.1 --device {device}"
     # command = f"python detect.py --weights --conf 0.1 --source {HOME}/data/bags.jpg --device 0"
     # command = f"python detect.py --img 640 --conf 0.1 --device cpu --weights {weights_path} --source {source_path}"

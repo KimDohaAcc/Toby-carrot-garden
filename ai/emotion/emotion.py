@@ -18,11 +18,6 @@ def emotion(image_data, data_name):
     # OpenCV로 이미지 로드
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    # # 이미지 파일 경로
-    # image_path = 'image.jpg'
-    #
-    # # 이미지 불러오기
-    # image = cv2.imread(image_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # 얼굴 검출
