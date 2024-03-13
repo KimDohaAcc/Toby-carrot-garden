@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import styled from "styled-components";
 function UserInfoForm() {
   const [step, setStep] = useState(1);
   const [password, setPassword] = useState("");

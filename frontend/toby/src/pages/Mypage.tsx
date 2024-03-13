@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 import Logo from "../components/Logo";
-import MypageContent from "../components/MypageContent";
+import MypageContent from "../components/mypage/MypageContent";
+import LogoutBtn from "../components/LogoutBtn";
 
 const MypageContainer = styled.div`
   display: flex;
@@ -12,18 +13,20 @@ const MypageContainer = styled.div`
 `;
 
 const LogoArea = styled.div`
-  flex-grow: 1;
+  flex: 0 0 15%;
   border: 2px solid black;
 `;
 
 const MypageContentContainer = styled.div`
-  flex-grow: 6;
+  flex-grow: 1;
   flex-direction: column;
   border: 2px solid black;
   display: flex;
 `;
 
 const LogoutArea = styled.div`
+  display: flex;
+  justify-content: flex-end;
   flex-grow: 1;
   border: 2px solid black;
 `;
@@ -32,7 +35,7 @@ const MypageContentArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 6;
+  flex: 0 0 85%;
   border: 2px solid black;
 `;
 
@@ -43,7 +46,9 @@ const Mypage = () => {
       <MypageContainer>
         <LogoArea />
         <MypageContentContainer>
-          <LogoutArea>로그아웃 버튼 들어갈 영역임</LogoutArea>
+          <LogoutArea>
+            <LogoutBtn />
+          </LogoutArea>
           <MypageContentArea>
             <MypageContent />
           </MypageContentArea>
