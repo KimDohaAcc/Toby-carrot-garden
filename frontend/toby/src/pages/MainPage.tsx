@@ -16,49 +16,46 @@ const Area1 = styled.div`
   box-sizing: border-box;
   display: grid;
   grid-template-rows: 3fr 2fr 2fr;
-  flex: 3 0 auto;
+  flex: 0 0 37.5%;
   border: 1px solid black;
 `;
 
 const ReportArea = styled.div`
   display: flex;
-  flex: 1 0 auto;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-`;
-
-const ReportImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
-  width: auto;
-  height: auto;
   position: relative;
   top: -10%;
 `;
 
+const ReportImage = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  width: 500px;
+`;
+
 const MartArea = styled.div`
   display: flex;
-  flex: 1 0 auto;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  border: 1px solid black;
 `;
 
 const MartImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
-  width: auto;
-  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  width: 500px;
   position: relative;
-  left: 20%;
+  top: 5%;
 `;
 
 const Area2 = styled.div`
   box-sizing: border-box;
   display: grid;
   grid-template-rows: 1fr 1fr;
-  flex: 2 0 auto;
+  flex: 0 0 25%;
   border: 1px solid black;
 `;
 
@@ -66,15 +63,16 @@ const SchoolArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1 0 auto;
   box-sizing: border-box;
+  border: 1px solid black;
 `;
 
 const SchoolImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
-  width: auto;
-  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  position: relative;
+  top: 10%;
 `;
 
 const MypageArea = styled.div`
@@ -83,21 +81,21 @@ const MypageArea = styled.div`
   align-items: center;
   flex: 1 0 auto;
   box-sizing: border-box;
+  border: 1px solid black;
 `;
 
 const MyPageImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
-  width: auto;
-  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
   position: relative;
-  top: -30%;
+  top: -25%;
 `;
 
 const Area3 = styled.div`
   display: grid;
   grid-template-rows: 3fr 2fr;
-  flex: 2 0 auto;
+  flex: 0 0 25%;
   border: 1px solid black;
 `;
 
@@ -107,15 +105,15 @@ const HospitalArea = styled.div`
   align-items: center;
   flex: 1 0 auto;
   box-sizing: border-box;
+  border: 1px solid black;
 `;
 
 const HospitalImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
-  width: auto;
-  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  width: 500px;
   position: relative;
-  top: 20%;
+  top: 5%;
 `;
 
 const PoliceArea = styled.div`
@@ -124,22 +122,20 @@ const PoliceArea = styled.div`
   align-items: center;
   flex: 1 0 auto;
   box-sizing: border-box;
+  border: 1px solid black;
 `;
 
 const PoliceImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
-  width: auto;
-  height: auto;
-  position: relative;
-  left: -20%;
+  max-width: 100%;
+  max-height: 100%;
+  width: 500px;
 `;
 
 const Area4 = styled.div`
   display: grid;
   grid-template-rows: 5fr 2fr;
   border: 1px solid black;
-  flex: 1 0 auto;
+  flex: 0 0 12.5%;
 `;
 
 const TobyArea = styled.div`
@@ -148,13 +144,13 @@ const TobyArea = styled.div`
   align-items: center;
   flex: 1 0 auto;
   box-sizing: border-box;
+  border: 1px solid black;
 `;
 
 const TobyImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
-  width: auto;
-  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  width: 80%;
 `;
 
 const MainPage = () => {
