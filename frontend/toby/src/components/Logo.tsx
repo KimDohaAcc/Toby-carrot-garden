@@ -21,7 +21,7 @@ const Logo = () => {
   const navigate = useNavigate();
 
   return (
-    <LogoWrapper onClick={() => navigate("/")}>
+    <LogoWrapper onClick={() => navigate("/main")}>
       <img
         src="src/assets/images/logoImage.png"
         alt="logo"

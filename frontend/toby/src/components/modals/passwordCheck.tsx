@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import constructionImage from "../../assets/images/constructionImage.png";
+
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
