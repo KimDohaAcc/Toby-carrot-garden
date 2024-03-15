@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Logo from "../components/Logo";
 
-import StoryTitle from "../components/StoryTitle";
+import StoryTitle from "../components/hospital/StoryTitle";
 
 // 전체 컨테이너
 const StoryContainer = styled.div`
