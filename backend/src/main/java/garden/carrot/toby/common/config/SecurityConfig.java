@@ -27,7 +27,7 @@ public class SecurityConfig {
 
 	private final String HOST;
 
-	public SecurityConfig(@Value("${DOMAIN}") String host) {
+	public SecurityConfig(@Value("${DOMAIN.FRONT}") String host) {
 		this.HOST = host;
 	}
 
@@ -48,7 +48,7 @@ public class SecurityConfig {
 			)
 		// .addFilterAfter(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
 		;
-		
+
 		return http.build();
 	}
 
@@ -74,6 +74,7 @@ public class SecurityConfig {
 		for (String protocol : PROTOCOLS) {
 			allowedOrigins.add(protocol + HOST);
 			allowedOrigins.add(protocol + LOCALHOST + DEFAULT_PORT);
+			allowedOrigins.add(protocol + LOCALHOST + "3000");
 
 			int allowedPort = ALLOWED_MIN_PORT;
 

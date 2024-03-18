@@ -31,4 +31,7 @@ server:
     context-path: /api
 
 # constants
-DOMAIN: ${FRONT_DOMAIN}
+DOMAIN:
+  FRONT: ${FRONT_DOMAIN} # localhost:5173
+  BACK: ${BACK_DOMAIN} # http://localhost:8080
+KAKAO_CLIENT_ID: ${KAKAO_OAUTH2_CLIENT_ID}
