@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
-import Rescore from "../components/Rescore";
+import Rescore from "../components/report/Rescore.tsx";
 
 // 전체 컨테이너
 const ReportContainer = styled.div`

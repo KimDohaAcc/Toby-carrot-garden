@@ -20,6 +20,25 @@ const ImageArea = styled.div`
   align-items: center;
 `;
 
+const NoImage = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const GotoStory = styled.button`
+  background-color: #f5f5f5d9;
+  border: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+`;
+
 const BtnArea = styled.div`
   height: 100%;
   width: 60%;
@@ -112,37 +131,59 @@ const Album = () => {
 
   return (
     <AlbumArea>
-      <ImageArea>
-        {/** 이미지 없을 때 보여줄 화면 */}
-        {imageList.length === 0 ? (
-          <div>토비와 함께 사진 찍으러 가볼까요?</div>
-        ) : (
-          imageList.map((image) => {
-            //이미지 리스트를 불러옴
-            return (
-              <img
-                key={image.clearImageId}
-                src={image.clearImageUrl}
-                alt="image"
-                style={{ width: "100%", height: "100%" }}
-              />
-            );
-          })
-        )}
-      </ImageArea>
-      <BtnArea>
-        <PrevBtn
-          onClick={() => {
-            showPrevImage;
-          }}
-        ></PrevBtn>
-        <OrderArea>1/5</OrderArea>
-        <NextBtn
-          onClick={() => {
-            showNextImage;
-          }}
-        ></NextBtn>
-      </BtnArea>
+      {/** 이미지 없을 때 보여줄 화면 */}
+      {!imageList ? (
+        <>
+          <NoImage>
+            <h1>
+              토비와 함께
+              <br />
+              사진 찍으러 가볼까요?
+            </h1>
+          </NoImage>
+          <GotoStory>
+            당근 모으러 가기
+            <img
+              src=""
+              alt="albumtoby"
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+              }}
+            />
+          </GotoStory>
+        </>
+      ) : (
+        imageList.map((image) => {
+          //이미지 리스트를 불러옴
+          return (
+            <>
+              <ImageArea>
+                <img
+                  key={image.clearImageId}
+                  src={image.clearImageUrl}
+                  alt="image"
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </ImageArea>
+              <BtnArea>
+                <PrevBtn
+                  onClick={() => {
+                    showPrevImage;
+                  }}
+                ></PrevBtn>
+                <OrderArea>1/ 5</OrderArea>
+                <NextBtn
+                  onClick={() => {
+                    showNextImage;
+                  }}
+                ></NextBtn>
+              </BtnArea>
+            </>
+          );
+        })
+      )}
     </AlbumArea>
   );
 };
