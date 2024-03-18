@@ -114,7 +114,7 @@ const Album = () => {
     <AlbumArea>
       <ImageArea>
         {/** 이미지 없을 때 보여줄 화면 */}
-        {imageList.length === 0 ? (
+        {!imageList ? (
           <div>토비와 함께 사진 찍으러 가볼까요?</div>
         ) : (
           imageList.map((image) => {

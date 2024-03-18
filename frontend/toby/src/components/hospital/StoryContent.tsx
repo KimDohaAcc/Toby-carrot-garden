@@ -1,45 +1,47 @@
-import React from "react";
+import React, { useRef } from "react";
+import SignatureCanvas from "react-signature-canvas";
 import styled from "styled-components";
 
-const StoryContentContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  border: 2px solid black;
+// 서명 캔버스를 감싸는 컨테이너를 스타일링한 컴포넌트 생성
+const SignatureContainer = styled.div`
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 `;
 
-const StoryContentContent = styled.div`
-  flex-grow: 6;
-  border: 2px solid black;
+// 서명 캔버스 스타일링
+const StyledSignatureCanvas = styled(SignatureCanvas)`
+  border: 1px solid #000;
 `;
 
-const StoryContentBottom = styled.div`
-  flex-grow: 1;
-  border: 2px solid black;
-  display: flex;
-`;
+function Drawing() {
+  const signatureRef = useRef();
 
-const Content = styled.div`
-  flex-grow: 6;
-  border: 2px solid black;
-`;
+  const clearSignature = () => {
+    signatureRef.current.clear();
+  };
 
-const NextArea = styled.div`
-  flex-grow: 1;
-  border: 2px solid black;
-`;
+  const saveSignature = () => {
+    const dataUrl = signatureRef.current.toDataURL();
+    console.log(dataUrl); // 여기서 서명 데이터를 사용할 수 있습니다.
+  };
 
-const StoryContent = () => {
   return (
-    <StoryContentContainer>
-      <StoryContentContent>이미지 들어갈 예정</StoryContentContent>
-      <StoryContentBottom>
-        <Content>내용</Content>
-        <NextArea>다음</NextArea>
-      </StoryContentBottom>
-    </StoryContentContainer>
+    <SignatureContainer>
+      <h2>Signature Pad</h2>
+      {/* styled-components로 스타일링된 서명 캔버스 */}
+      <StyledSignatureCanvas
+        ref={signatureRef}
+        penColor="black"
+        canvasProps={{ width: 500, height: 200 }}
+      />
+      <div>
+        <button onClick={clearSignature}>Clear</button>
+        <button onClick={saveSignature}>Save</button>
+      </div>
+    </SignatureContainer>
   );
-};
+}
 
-export default StoryContent;
+export default Drawing;

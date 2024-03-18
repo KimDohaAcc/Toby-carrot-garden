@@ -1,122 +1,38 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
-// import "./App.css";
+import React, { useRef } from "react";
+import SignatureCanvas from "react-signature-canvas";
 
-interface CanvasProps {
-  width?: number; // width와 height가 선택적 속성임을 명시
-  height?: number;
-}
-interface Coordinate {
-  x: number;
-  y: number;
-}
+function Drawing() {
+  const signatureRef = useRef(); // 서명 캔버스를 참조하기 위한 ref 생성
 
-function Drawing({ width = 800, height = 600 }: CanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
-    undefined
-  );
-  const [isPainting, setIsPainting] = useState(false);
-
-  const getCoordinates = (event: MouseEvent): Coordinate | undefined => {
-    if (!canvasRef.current) {
-      return;
-    }
-
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    return {
-      x: event.pageX - canvas.offsetLeft,
-      y: event.pageY - canvas.offsetTop,
-    };
+  // 서명 지우기
+  const clearSignature = () => {
+    signatureRef.current.clear(); // ref를 통해 signature canvas의 clear 메소드 호출
   };
 
-  const drawLine = (
-    originalMousePosition: Coordinate,
-    newMousePosition: Coordinate
-  ) => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    const context = canvas.getContext("2d");
-
-    if (context) {
-      context.strokeStyle = "red";
-      context.lineJoin = "round";
-      context.lineWidth = 5;
-
-      context.beginPath();
-      context.moveTo(originalMousePosition.x, originalMousePosition.y);
-      context.lineTo(newMousePosition.x, newMousePosition.y);
-      context.closePath();
-
-      context.stroke();
-    }
+  // 서명 저장
+  const saveSignature = () => {
+    const dataUrl = signatureRef.current.toDataURL(); // ref를 통해 signature canvas의 toDataURL 메소드 호출하여 데이터 URL 생성
+    console.log(dataUrl); // 콘솔에 데이터 URL 출력
   };
-
-  const startPaint = useCallback((event: MouseEvent) => {
-    const coordinates = getCoordinates(event);
-    if (coordinates) {
-      setIsPainting(true);
-      setMousePosition(coordinates);
-    }
-  }, []);
-
-  const paint = useCallback(
-    (event: MouseEvent) => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      if (isPainting) {
-        const newMousePosition = getCoordinates(event);
-        if (mousePosition && newMousePosition) {
-          drawLine(mousePosition, newMousePosition);
-          setMousePosition(newMousePosition);
-        }
-      }
-    },
-    [isPainting, mousePosition]
-  );
-
-  const exitPaint = useCallback(() => {
-    setIsPainting(false);
-  }, []);
-
-  useEffect(() => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-
-    canvas.addEventListener("mousedown", startPaint);
-    canvas.addEventListener("mousemove", paint);
-    canvas.addEventListener("mouseup", exitPaint);
-    canvas.addEventListener("mouseleave", exitPaint);
-
-    return () => {
-      canvas.removeEventListener("mousedown", startPaint);
-      canvas.removeEventListener("mousemove", paint);
-      canvas.removeEventListener("mouseup", exitPaint);
-      canvas.removeEventListener("mouseleave", exitPaint);
-    };
-  }, [startPaint, paint, exitPaint]);
 
   return (
-    <div className="App">
-      안녕하세요
-      <canvas
-        ref={canvasRef}
-        height={height}
-        width={width}
-        className="canvas"
+    <div>
+      <h2>Signature Pad</h2>
+      <SignatureCanvas
+        ref={signatureRef} // SignatureCanvas 컴포넌트에 ref 연결
+        penColor="black" // 펜 색상 설정
+        canvasProps={{
+          width: 1000,
+          height: 800,
+          className: "signature-canvas",
+        }} // 캔버스 속성 설정
       />
+      <div>
+        <button onClick={clearSignature}>Clear</button> {/* 서명 지우기 버튼 */}
+        <button onClick={saveSignature}>Save</button> {/* 서명 저장 버튼 */}
+      </div>
     </div>
   );
 }
 
-// App.defaultProps = {
-//   width: 800,
-//   height: 600,
-// };
-
-export default Drawing;
+export default Drawing; // Drawing 컴포넌트를 기본으로 내보냄
