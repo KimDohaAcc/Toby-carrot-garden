@@ -7,7 +7,7 @@ from emotion import emotion
 bootstrap_servers = ["host.docker.internal:9092"]
 
 # 카프카 토픽
-str_topic_name = 'Topic1'
+str_topic_name = 'emotion'
 
 # 카프카 소비자 group1 생성
 str_group_name = 'group1'

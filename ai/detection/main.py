@@ -1,17 +1,16 @@
 from kafka import KafkaConsumer
 from json import loads
-import cv2
-import numpy as np
-import base64
-
 import os
 import subprocess
+from s3_reader import s3_image_reader
+import tempfile
+import sys
 
 # 카프카 서버
 bootstrap_servers = ["host.docker.internal:9092"]
 
 # 카프카 토픽
-str_topic_name = 'Topic2'
+str_topic_name = 'detection'
 
 # 카프카 소비자 group1 생성
 str_group_name = 'group2'
@@ -24,29 +23,30 @@ consumer = KafkaConsumer(str_topic_name, bootstrap_servers=bootstrap_servers,
                         )
 
 for message in consumer:
-    print("detection 모델 테스트", message)
+    print("detection 모델 테스트")
+    print(message)
+    image_data, extension = s3_image_reader(message.value['image'])
 
-    # 이미지 파일 경로
-    image_data_base64 = message.value['image']
-    image_data = base64.b64decode(image_data_base64)
-
-    # 이미지를 numpy 배열로 변환
-    nparr = np.frombuffer(image_data, np.uint8)
-    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    # 이미지 데이터를 임시 파일로 저장
+    with tempfile.NamedTemporaryFile(delete=False, suffix=extension) as temp_file:
+        temp_file.write(image_data)
+        temp_file_path = temp_file.name
 
     # 필요한 경로 및 변수 설정
     HOME = "content/"
     weights_path = os.path.join(HOME, "weights", "gelan-c.pt")
-    source_path = os.path.join(HOME, "data", "dog.jpeg")
+    source_path = message.value['image']
     device = "cpu"
 
-    # 명령어 실행
-    # command = f"python detect.py --weights {weights_path} --conf 0.1 --source {source_path} --device {device}"
-    # subprocess.run(command, shell=True)
+    # detect.py 스크립트를 실행하는 명령어 생성
+    object_name = "backpack"
+    python_executable = sys.executable
 
-    command = f"python detect.py --weights {weights_path} --source {source_path} --conf 0.1 --device {device}"
-    # command = f"python detect.py --weights --conf 0.1 --source {HOME}/data/bags.jpg --device 0"
-    # command = f"python detect.py --img 640 --conf 0.1 --device cpu --weights {weights_path} --source {source_path}"
+    command = f"{python_executable} detect.py --weights {weights_path} --source {temp_file_path} --conf 0.1 --device {device} --object {object_name}"
+    # subprocess.run()으로 명령어 실행
     subprocess.run(command, shell=True)
+
+    # 임시 파일 삭제
+    os.unlink(temp_file_path)
 
     print("Image analysis complete. Result saved.")

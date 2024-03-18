@@ -6,7 +6,7 @@ from s3_reader import s3_image_reader
 bootstrap_servers = ["host.docker.internal:9092"]
 
 # 카프카 토픽
-str_topic_name = 'Topic3'
+str_topic_name = 'drawing'
 
 # 카프카 소비자 group1 생성
 str_group_name = 'group1'
@@ -20,4 +20,4 @@ consumer = KafkaConsumer(str_topic_name, bootstrap_servers=bootstrap_servers,
 for message in consumer:
     print("그림 분석 요청", message)
     image_data = s3_image_reader(message.value['image'])
-    analyze_object(image_data, message.value['image'], "apple")
+    analyze_object(image_data, message.value['image'], "fork")

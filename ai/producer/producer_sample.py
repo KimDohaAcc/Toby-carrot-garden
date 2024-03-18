@@ -1,3 +1,5 @@
+import base64
+
 from kafka import KafkaProducer
 from json import dumps
 import time
@@ -16,14 +18,14 @@ producer = KafkaProducer(bootstrap_servers=bootstrap_servers,
                          value_serializer=lambda x: dumps(x).encode('utf-8'))
 
 # 카프카 토픽
-str_topic_name = 'Topic3'
+str_topic_name = 'detection'
 
 # 이미지 테스트
-image = 'emotion.jpg'
+image = 'bag.JPG'
 
 # 이미지를 Base64로 인코딩
 # with open(image, 'rb') as file:
-    # image_data = base64.b64encode(file.read()).decode('utf-8')
+#     image = base64.b64encode(file.read()).decode('utf-8')
 
 # 데이터 생성
 data = {"time": time.time(), "image": image}
