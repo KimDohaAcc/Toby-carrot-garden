@@ -25,7 +25,7 @@ consumer = KafkaConsumer(str_topic_name, bootstrap_servers=bootstrap_servers,
 for message in consumer:
     print("detection 모델 테스트")
     print(message)
-    image_data, extension = s3_image_reader(message.value['image'])
+    image_data, extension = s3_image_reader(message.value['imageUrl'])
 
     # 이미지 데이터를 임시 파일로 저장
     with tempfile.NamedTemporaryFile(delete=False, suffix=extension) as temp_file:
@@ -35,14 +35,18 @@ for message in consumer:
     # 필요한 경로 및 변수 설정
     HOME = "content/"
     weights_path = os.path.join(HOME, "weights", "gelan-c.pt")
-    source_path = message.value['image']
     device = "cpu"
 
     # detect.py 스크립트를 실행하는 명령어 생성
-    object_name = "backpack"
+    correct_answer = message.value['correctAnswer']
+    quiz_id = message.value['quizId']
+    member_id = message.value['memberId']
+
     python_executable = sys.executable
 
-    command = f"{python_executable} detect.py --weights {weights_path} --source {temp_file_path} --conf 0.1 --device {device} --object {object_name}"
+    command = (f"{python_executable} detect.py --weights {weights_path} "
+               f"--source {temp_file_path} --conf 0.1 --device {device} "
+               f"--member_id {member_id} --quiz_id {quiz_id} --correct_answer {correct_answer}")
     # subprocess.run()으로 명령어 실행
     subprocess.run(command, shell=True)
 
