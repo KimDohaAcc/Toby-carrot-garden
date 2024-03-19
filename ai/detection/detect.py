@@ -139,18 +139,17 @@ def run(
                     n = (det[:, 5] == c).sum()  # detections per class
                     # s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
                     if names[int(c)] == correct_answer:
-                        print("n", names[int(c)])
-                        print("분석 성공")
-
                         # Redis 서버에 연결
-                        
                         r.set(f'quiz_answer_{member_id}_{quiz_id}', 'Success')
                         r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
                         r.close()
+                        print(f'분석 성공 - detect {names[int(c)]}, correct_answer {correct_answer}')
                         return
                 r.set(f'quiz_answer_{member_id}_{quiz_id}', 'Failure')
                 r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
                 r.close()
+                print('분석 실패')
+
                 return
 
         # Print time (inference-only)
