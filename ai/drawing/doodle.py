@@ -1,10 +1,10 @@
-from pydantic import BaseModel
 import tensorflow as tf
 from keras.models import load_model
-import PIL
 import numpy as np
 import cv2
 from classes.doodle_ref import ref as doodle_ref
+import redis
+
 
 def find_object_index(object_name):
     target_index = 0
@@ -15,10 +15,10 @@ def find_object_index(object_name):
     return target_index
 
 
-def analyze_object(image_data, data_name, object_name):
+def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
     doodle_model = load_model("model/doodle_cnn.h5")
 
-    target_index = find_object_index(object_name)
+    target_index = find_object_index(correct_answer)
 
     # 이미지 데이터를 NumPy 배열로 변환
     nparr = np.frombuffer(image_data, np.uint8)
@@ -41,6 +41,12 @@ def analyze_object(image_data, data_name, object_name):
     # 결과 후처리
     idx = prediction.argmax()
     result = doodle_ref[idx]
+
+    r = redis.Redis(host='localhost', port=6379, db=0)
+
+    r.set(f'quiz_answer_{member_id}_{quiz_id}', f'{100 + prediction[0][target_index]}')
+    r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
+    r.close()
 
     # print(prediction)
     print(f"{doodle_ref[target_index]}는~~{100 + prediction[0][target_index]}%")

@@ -19,5 +19,6 @@ consumer = KafkaConsumer(str_topic_name, bootstrap_servers=bootstrap_servers,
                         )
 for message in consumer:
     print("그림 분석 요청", message)
-    image_data = s3_image_reader(message.value['image'])
-    analyze_object(image_data, message.value['image'], "fork")
+    image_data = s3_image_reader(message.value['imageUrl'])
+    # analyze_object(image_data, message.value['image'], "fork")
+    analyze_object(image_data, message.value['imageUrl'], message.value['memberId'], message.value['quizId'], message.value['correctAnswer'] )
