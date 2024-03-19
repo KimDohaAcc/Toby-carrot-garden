@@ -21,6 +21,5 @@ consumer = KafkaConsumer(str_topic_name, bootstrap_servers=bootstrap_servers,
 
 for message in consumer:
     print("감정 분석 요청", message)
-    image_data = s3_image_reader(message.value['image'])
-
-    emotion(image_data, message.value['image'])
+    image_data = s3_image_reader(message.value['imageUrl'])
+    emotion(image_data, message.value['imageUrl'], message.value['memberId'], message.value['quizId'], message.value['correctAnswer'] )

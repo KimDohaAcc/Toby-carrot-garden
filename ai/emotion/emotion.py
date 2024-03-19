@@ -2,9 +2,9 @@ from keras.models import load_model
 from keras.preprocessing.image import img_to_array, load_img
 import cv2
 import numpy as np
+import redis
 
-
-def emotion(image_data, data_name):
+def emotion(image_data, data_name, member_id, quiz_id, correct_answer):
     print("모델 분석 시작")
 
     face_classifier = cv2.CascadeClassifier('model/haarcascade_frontalface_default.xml')
@@ -23,6 +23,7 @@ def emotion(image_data, data_name):
     # 얼굴 검출
     faces = face_classifier.detectMultiScale(gray, 1.3, 5)
 
+    label = ''
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
         roi_gray = gray[y:y + h, x:x + w]
@@ -42,8 +43,13 @@ def emotion(image_data, data_name):
     # 결과 이미지 저장
     cv2.imwrite('result/'+ data_name, image)
 
-    # 결과 텍스트 파일 저장
-    # with open('result.txt', 'w') as f:
-    #     f.write("Predicted Emotion: {}".format(label))
+    r = redis.Redis(host='localhost', port=6379, db=0)
 
+    if label == '':
+        label = 'Failure'
+    r.set(f'quiz_answer_{member_id}_{quiz_id}', label)
+    r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
+    r.close()
+
+    print(f'분석 성공 - emotion {label}')
     print("Image analysis complete. Result saved.")

@@ -18,10 +18,13 @@ producer = KafkaProducer(bootstrap_servers=bootstrap_servers,
                          value_serializer=lambda x: dumps(x).encode('utf-8'))
 
 # 카프카 토픽
-str_topic_name = 'detection'
+str_topic_name = 'emotion'
 
-# 이미지 테스트
-image = 'bag.JPG'
+# 이미지 테스트 - 물체 감지
+image = 'apple.png'
+
+# 이미지 테스트 - 감정 분석
+# image = 'emotion.jpg'
 
 # 이미지를 Base64로 인코딩
 # with open(image, 'rb') as file:
@@ -34,8 +37,11 @@ image = 'bag.JPG'
 #     “correctAnswer” : “사과”
 # }
 
-# 데이터 생성
-data = {"time": time.time(), "imageUrl": image, "memberId": 1, "quizId": 13, "correctAnswer": "backpack"}
+# 데이터 생성_detection
+# data = {"time": time.time(), "imageUrl": image, "memberId": 1, "quizId": 13, "correctAnswer": "backpack"}
+
+# 데이터 생성_emotion
+data = {"time": time.time(), "imageUrl": image, "memberId": 1, "quizId": 15, "correctAnswer": "happy"}
 
 # 카프카 공급자 토픽에 데이터를 보낸다
 producer.send(str_topic_name, value=data).add_callback(on_send_success).get(timeout=100)  # blocking maximum timeout
