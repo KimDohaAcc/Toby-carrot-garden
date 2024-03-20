@@ -1,5 +1,6 @@
 from keras.models import load_model
-from keras.preprocessing.image import img_to_array, load_img
+from keras.utils import image_utils
+
 import cv2
 import numpy as np
 import redis
@@ -31,7 +32,7 @@ def emotion(image_data, data_name, member_id, quiz_id, correct_answer):
 
         if np.sum([roi_gray]) != 0:
             roi = roi_gray.astype('float') / 255.0
-            roi = img_to_array(roi)
+            roi = image_utils.img_to_array(roi)
             roi = np.expand_dims(roi, axis=0)
 
             # 감정 분석
