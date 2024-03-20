@@ -12,7 +12,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,22 +23,33 @@ import lombok.extern.slf4j.Slf4j;
 public class ExternalApiService {
 	private final ObjectMapper objectMapper;
 
-	public <T> T sendPostRequest(URI uri, Object requestDto, Class<T> responseType) {
-		// 요청 설정
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+	public <T> T sendPostRequest(URI uri, Object requestDto, Class<T> responseType, HttpHeaders headers) {
 		MultiValueMap<String, String> requestBody = convertDtoToMultiValueMap(requestDto);
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
-
 		// 요청 보내기
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<Map> responseEntity = restTemplate.postForEntity(uri, requestEntity, Map.class);
 
 		// 받은 응답 데이터 Camel Case로 변환하기
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+		mapper.setPropertyNamingStrategy(new PropertyNamingStrategies.SnakeCaseStrategy());
 
 		return mapper.convertValue(responseEntity.getBody(), responseType);
+	}
+
+	public <T> T sendPostRequest(URI uri, Object requestDto, Class<T> responseType, String accessToken) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+		headers.add("Authorization", "Bearer " + accessToken);
+		return sendPostRequest(uri, requestDto, responseType, headers);
+	}
+
+	public <T> T sendPostRequest(URI uri, Object requestDto, Class<T> responseType) {
+		// 헤더
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+		return sendPostRequest(uri, requestDto, responseType, headers);
+
 	}
 
 	public MultiValueMap<String, String> convertDtoToMultiValueMap(Object dto) {
