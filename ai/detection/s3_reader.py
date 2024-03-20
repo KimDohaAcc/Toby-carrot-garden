@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
-
 dotenv_path = Path(".env")
 load_dotenv(dotenv_path=dotenv_path)
 
@@ -35,7 +34,7 @@ def s3_image_reader(s3_key):
     # S3에서 이미지 읽기
     response = s3.get_object(Bucket=AWS_BUCKET_NAME, Key=s3_key)
     image_data = response['Body'].read()
-    _, extension = os.path.splitext(s3_key)
+
     print("s3 객체 읽기 성공")
 
-    return image_data, extension
+    return image_data
