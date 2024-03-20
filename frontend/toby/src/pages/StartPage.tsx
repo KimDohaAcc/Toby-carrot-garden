@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import Logo from "../components/Logo";
+// import { useNavigate, useLocation } from "react-router-dom";
+import { getKakaoPage, postKakaoToken } from "../apis/signupAPI";
 
 const StartPageContainer = styled.div`
   height: 100vh;
   width: 100vw;
   position: relative;
   background-size: cover;
-  background-image: url("src/assets/images/startImage.png"); // 새로운 배경 이미지 경로
+  background-image: url("Image/common/startImage.png"); // 새로운 배경 이미지 경로
 `;
 const HelloRabbit = styled.img`
   height: 80%;
@@ -43,15 +45,30 @@ const LoginButton = styled.img`
 `;
 
 const StartPage = () => {
+  const handleSignupClick = async () => {
+    try {
+      const kakaoPageData = await getKakaoPage();
+      if (kakaoPageData && kakaoPageData.result && kakaoPageData.result.uri) {
+        window.location.href = kakaoPageData.result.uri;
+      } else {
+        console.error("카카오 로그인 페이지 URI를 받아오는 데 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("카카오 로그인 처리 중 에러가 발생했습니다.", error);
+    }
+  };
   return (
     <>
       <StartPageContainer>
-        <HelloRabbitText src="src\assets\images\HelloRabbitTextImage.png" />
-        <HelloRabbit src="src\assets\images\HelloRabbitImage.png" />
-        <SignupButton src="src\assets\images\signupButton.png" />
-        <LoginButton src="src\assets\images\loginButton.png" />
+        <HelloRabbitText src="Image/toby/HelloRabbitTextImage.png" />
+        <HelloRabbit src="Image/toby/HelloRabbitImage.png" />
+        <SignupButton
+          src="Image/button/signupButton.png"
+          onClick={handleSignupClick} // 클릭 이벤트에 핸들러 연결
+        />
+        <LoginButton src="Image/button/loginButton.png" />
       </StartPageContainer>
-      <Logo></Logo>;
+      <Logo />
     </>
   );
 };
