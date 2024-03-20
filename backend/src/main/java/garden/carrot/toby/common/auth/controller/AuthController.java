@@ -15,11 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("auth")
 public class AuthController {
-
-	@Value("${KAKAO_CLIENT_ID}")
-	private String KAKAO_CLIENT_ID;
-	@Value("${DOMAIN.BACK}")
-	private String BACKEND_DOMAIN; // 프로토콜://도메인:포트
+	private final AuthService authService;
 	@Value("${DOMAIN.FRONT}")
 	private String FRONTEND_DOMAIN; // 도메인:포트
 
