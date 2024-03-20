@@ -17,6 +17,9 @@ public enum ErrorCode {
 	BAD_PARAMETER_TYPE(BAD_REQUEST, "지원하지 않는 파라미터 형식입니다."),
 	NO_TOKEN(BAD_REQUEST, "토큰이 존재하지 않습니다."),
 
+	// 카카오 OAuth
+	KAKAO_TOKEN_NOT_ISSUED(INTERNAL_SERVER_ERROR, "카카오 토큰 발급에 문제가 생겼습니다"),
+
 	// 멤버
 	MEMBER_NOT_FOUND(BAD_REQUEST, "id에 해당하는 멤버가 없습니다."),
 	MEMBER_NOT_FOUND_WITH_NICKNAME(BAD_REQUEST, "닉네임에 해당하는 멤버가 없습니다."),

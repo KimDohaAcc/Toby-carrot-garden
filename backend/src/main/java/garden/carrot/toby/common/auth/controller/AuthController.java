@@ -39,7 +39,6 @@ public class AuthController {
 	public String kakaoCallback(@RequestParam String code) {
 		System.out.println("인가코드: " + code);
 
-		// TODO: 인가코드로 카카오토큰 받고 우리 토큰 레디스에 저장
 
 		// 우리 서버가 발급해준 토큰 코드_레디스 안에 키 값으로 쓰임. value에는 accesstoken과 refreshtoken이 있음.
 		String tokenCode = "my-token-code";
