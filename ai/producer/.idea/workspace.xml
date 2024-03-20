@@ -5,100 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="865ed1e5-2d7a-4c3b-bfe8-53e6b4ad1ffa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../detection/inceptionV3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/.idea/detection.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../detection/.idea/detection.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../detection/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/content/weights/gelan-c.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/detect.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/export.py" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../detection/detection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../detection/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../detection/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/common.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/detect/gelan-c.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/detect/gelan-e.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/detect/gelan.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/detect/yolov7-af.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/detect/yolov9-c.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/detect/yolov9-e.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/detect/yolov9.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/experimental.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/hub/anchors.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/hub/yolov3-spp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/hub/yolov3-tiny.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/hub/yolov3.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/panoptic/yolov7-af-pan.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/segment/yolov7-af-seg.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/tf.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/models/yolo.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../detection/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../detection/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/s3_reader.py" beforeDir="false" afterPath="$PROJECT_DIR$/../detection/s3_reader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/activations.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/augmentations.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/autoanchor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/autobatch.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/callbacks.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/dataloaders.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/downloads.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/general.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/lion.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/clearml/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/clearml/clearml_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/clearml/hpo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/comet/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/comet/comet_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/comet/hpo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/comet/optimizer_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/wandb/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/wandb/log_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/wandb/sweep.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/wandb/sweep.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loggers/wandb/wandb_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loss.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loss_tal.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loss_tal_dual.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/loss_tal_triple.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/metrics.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/augmentations.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/dataloaders.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/general.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/loss.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/loss_tal.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/metrics.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/plots.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/tal/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/tal/anchor_generator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/panoptic/tal/assigner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/plots.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/augmentations.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/dataloaders.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/general.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/loss.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/loss_tal.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/loss_tal_dual.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/metrics.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/plots.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/tal/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/tal/anchor_generator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/segment/tal/assigner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/tal/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/tal/anchor_generator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/tal/assigner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/torch_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/utils/triton.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../drawing/.idea/drawing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../drawing/.idea/drawing.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../drawing/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../drawing/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../drawing/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../drawing/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emotion/.idea/emotion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../emotion/.idea/emotion.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emotion/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../emotion/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emotion/emotion.py" beforeDir="false" afterPath="$PROJECT_DIR$/../emotion/emotion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emotion/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../emotion/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emotion/testCode/consumer_sample.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emotion/testCode/emotion.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emotion/testCode/modelTest.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/producer_sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/producer_sample.py" afterDir="false" />
     </list>
@@ -169,7 +78,7 @@
       <workItem from="1710468412771" duration="620000" />
       <workItem from="1710722888853" duration="11702000" />
       <workItem from="1710896831321" duration="9755000" />
-      <workItem from="1710909554639" duration="360000" />
+      <workItem from="1710909554639" duration="1106000" />
     </task>
     <servers />
   </component>
@@ -177,6 +86,6 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/producer$producer_sample.coverage" NAME="producer_sample Coverage Results" MODIFIED="1710909787757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/producer$producer_sample.coverage" NAME="producer_sample Coverage Results" MODIFIED="1710910527459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -21,7 +21,7 @@ producer = KafkaProducer(bootstrap_servers=bootstrap_servers,
 str_topic_name = 'detection'
 
 # 이미지 테스트 - 물체 감지
-image = 'fork.png'
+image = 'emptyTest.jpg'
 
 # 이미지 테스트 - 감정 분석
 # image = 'emotion.jpg'
