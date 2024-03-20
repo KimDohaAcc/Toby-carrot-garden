@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import constructionImage from "../../assets/images/constructionImage.png"; // 경로는 실제 구조에 맞게 조정하세요
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -82,7 +81,10 @@ const ConstructionModal = ({ onClose }) => {
   return (
     <ModalBackdrop onClick={onClose}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
-        <img src={constructionImage} alt="Under Construction" />
+        <img
+          src="/Image/modal/constructionImage.png"
+          alt="Under Construction"
+        />
 
         <CloseButton onClick={onClose}>닫기</CloseButton>
       </ModalBox>

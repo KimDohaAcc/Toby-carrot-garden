@@ -10,7 +10,7 @@ const LogoutArea = styled.div`
 const LogoutBtn = () => {
   return (
     <LogoutArea onClick={() => alert("Logout 클릭임")}>
-      <img src="src/assets/images/logoutImage.png" alt="logout" />
+      <img src="/logoutImage.png" alt="logout" />
       <div>로그아웃</div>
     </LogoutArea>
   );

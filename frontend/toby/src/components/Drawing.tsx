@@ -1,38 +1,69 @@
 import React, { useRef } from "react";
 import SignatureCanvas from "react-signature-canvas";
+import styled from "styled-components";
+
+const Container = styled.div`
+  text-align: center;
+  margin: 20px;
+`;
+
+const Title = styled.h2`
+  color: #333;
+`;
+
+const SignaturePadContainer = styled.div`
+  border: 2px solid #000;
+  margin: auto;
+  width: 1020px; // 캔버스보다 약간 크게 설정하여 테두리가 보이도록 함
+`;
+
+const Button = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
 
 function Drawing() {
-  const signatureRef = useRef(); // 서명 캔버스를 참조하기 위한 ref 생성
+  const signatureRef = useRef<SignatureCanvas>(null);
 
-  // 서명 지우기
   const clearSignature = () => {
-    signatureRef.current.clear(); // ref를 통해 signature canvas의 clear 메소드 호출
+    signatureRef.current?.clear();
   };
 
-  // 서명 저장
   const saveSignature = () => {
-    const dataUrl = signatureRef.current.toDataURL(); // ref를 통해 signature canvas의 toDataURL 메소드 호출하여 데이터 URL 생성
-    console.log(dataUrl); // 콘솔에 데이터 URL 출력
+    const dataUrl = signatureRef.current?.toDataURL();
+    if (dataUrl) {
+      console.log(dataUrl);
+    }
   };
 
   return (
-    <div>
-      <h2>Signature Pad</h2>
-      <SignatureCanvas
-        ref={signatureRef} // SignatureCanvas 컴포넌트에 ref 연결
-        penColor="black" // 펜 색상 설정
-        canvasProps={{
-          width: 1000,
-          height: 800,
-          className: "signature-canvas",
-        }} // 캔버스 속성 설정
-      />
+    <Container>
+      <Title>Signature Pad</Title>
+      <SignaturePadContainer>
+        <SignatureCanvas
+          ref={signatureRef}
+          penColor="black"
+          canvasProps={{
+            width: 1000,
+            height: 800,
+            className: "signature-canvas",
+          }}
+        />
+      </SignaturePadContainer>
       <div>
-        <button onClick={clearSignature}>Clear</button> {/* 서명 지우기 버튼 */}
-        <button onClick={saveSignature}>Save</button> {/* 서명 저장 버튼 */}
+        <Button onClick={clearSignature}>Clear</Button>
+        <Button onClick={saveSignature}>Save</Button>
       </div>
-    </div>
+    </Container>
   );
 }
 
-export default Drawing; // Drawing 컴포넌트를 기본으로 내보냄
+export default Drawing;
