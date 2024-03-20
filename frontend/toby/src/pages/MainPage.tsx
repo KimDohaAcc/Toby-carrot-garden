@@ -15,8 +15,8 @@ const MainpageContainer = styled.div`
 const Area1 = styled.div`
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: 3fr 2fr 2fr;
-  flex: 0 0 37.5%;
+  grid-template-rows: 2fr 3fr 3fr;
+  flex: 0 0 33%;
   border: 1px solid black;
 `;
 
@@ -26,13 +26,17 @@ const ReportArea = styled.div`
   align-items: center;
   box-sizing: border-box;
   position: relative;
-  top: -10%;
+  border: 1px solid black;
 `;
 
 const ReportImage = styled.img`
+  /* max-width: 100%;
+  max-height: 100%; */
   max-width: 100%;
-  max-height: 100%;
-  width: 500px;
+  height: 100%;
+  position: absolute;
+
+  top: -5%;
 `;
 
 const MartArea = styled.div`
@@ -41,21 +45,24 @@ const MartArea = styled.div`
   align-items: center;
   box-sizing: border-box;
   border: 1px solid black;
+  position: relative;
 `;
 
 const MartImage = styled.img`
   max-width: 100%;
   max-height: 100%;
-  width: 500px;
-  position: relative;
-  top: 5%;
+  width: 85%;
+
+  position: absolute;
+  left: 15%;
+  top: 7%;
 `;
 
 const Area2 = styled.div`
   box-sizing: border-box;
   display: grid;
   grid-template-rows: 1fr 1fr;
-  flex: 0 0 25%;
+  flex: 0 0 29.5%;
   border: 1px solid black;
 `;
 
@@ -65,14 +72,15 @@ const SchoolArea = styled.div`
   align-items: center;
   box-sizing: border-box;
   border: 1px solid black;
+  position: relative;
 `;
 
 const SchoolImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  width: 100%;
-  position: relative;
-  top: 10%;
+  max-width: 150%;
+  max-height: 150%;
+  width: 150%;
+  position: absolute;
+  top: 3%;
 `;
 
 const MypageArea = styled.div`
@@ -82,14 +90,16 @@ const MypageArea = styled.div`
   flex: 1 0 auto;
   box-sizing: border-box;
   border: 1px solid black;
+  position: relative;
 `;
 
 const MyPageImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  width: 100%;
+  max-width: 150%;
+  max-height: 150%;
+  width: 120%;
   position: relative;
-  top: -25%;
+  top: -42%;
+  position: absolute;
 `;
 
 const Area3 = styled.div`
@@ -106,14 +116,16 @@ const HospitalArea = styled.div`
   flex: 1 0 auto;
   box-sizing: border-box;
   border: 1px solid black;
+  position: relative;
 `;
 
 const HospitalImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  width: 500px;
-  position: relative;
-  top: 5%;
+  max-width: 95%;
+  max-height: 95%;
+  width: 95%;
+  position: absolute;
+  top: 11%;
+  left: 18%;
 `;
 
 const PoliceArea = styled.div`
@@ -123,12 +135,15 @@ const PoliceArea = styled.div`
   flex: 1 0 auto;
   box-sizing: border-box;
   border: 1px solid black;
+  position: relative;
 `;
 
 const PoliceImage = styled.img`
   max-width: 100%;
   max-height: 100%;
-  width: 500px;
+  width: 100%;
+  position: absolute;
+  top: -3%;
 `;
 
 const Area4 = styled.div`
@@ -171,20 +186,21 @@ const MainPage = () => {
 
   return (
     <>
-      <Logo />
       <MainpageContainer>
         <Area1>
-          <div></div>
+          <div style={{ position: "relative" }}>
+            <Logo />
+          </div>
           <ReportArea>
             <ReportImage
-              src="src\assets\images\reportImage.png"
+              src="\Image\village\reportImage.png"
               alt="report"
               onClick={() => handleAreaClick("/report")}
             />
           </ReportArea>
           <MartArea>
             <MartImage
-              src="src\assets\images\martImage.png"
+              src="\Image\village\martImage.png"
               alt="mart"
               onClick={() => handleAreaClick("/mart")}
             />
@@ -193,14 +209,14 @@ const MainPage = () => {
         <Area2>
           <SchoolArea>
             <SchoolImage
-              src="src\assets\images\schoolImage.png"
+              src="\Image\village\schoolImage.png"
               alt="school"
               onClick={() => handleAreaClick("/school")}
             />
           </SchoolArea>
           <MypageArea>
             <MyPageImage
-              src="src\assets\images\mypageImage.png"
+              src="\Image\village\mypageImage.png"
               alt="mypage"
               onClick={() => handleAreaClick("/mypage")}
             />
@@ -209,14 +225,14 @@ const MainPage = () => {
         <Area3>
           <HospitalArea>
             <HospitalImage
-              src="src\assets\images\hospitalImage.png"
+              src="\Image\village\hospitalImage.png"
               alt="hospital"
               onClick={() => handleAreaClick("/hospital")}
             />
           </HospitalArea>
           <PoliceArea>
             <PoliceImage
-              src="src\assets\images\policeImage.png"
+              src="\Image\village\policeImage.png"
               alt="police"
               onClick={() => handleAreaClick("/police")}
             />
@@ -226,7 +242,7 @@ const MainPage = () => {
           <div></div>
           <TobyArea>
             <TobyImage
-              src="src\assets\images\toby\maintoby.png"
+              src="\Image\toby\maintoby.png"
               alt="toby"
               onClick={() => handleAreaClick("/toby")}
             />

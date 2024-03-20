@@ -6,15 +6,10 @@ const LogoWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 12%;
-  height: auto;
+  height: 25%;
   border: 2px solid cyan;
   justify-content: center;
   align-items: center;
-
-  @media (max-width: 768px) {
-    width: 18%; // 작은 화면에서는 로고 크기를 늘림
-  }
 `;
 
 const Logo = () => {
@@ -23,7 +18,7 @@ const Logo = () => {
   return (
     <LogoWrapper onClick={() => navigate("/main")}>
       <img
-        src="src/assets/images/logoImage.png"
+        src="/Image/common/logoImage.png"
         alt="logo"
         style={{
           width: "100%",
