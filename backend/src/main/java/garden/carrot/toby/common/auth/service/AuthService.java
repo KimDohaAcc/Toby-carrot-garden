@@ -39,11 +39,30 @@ public class AuthService {
 			kakaoToken = externalApiService.sendPostRequest(kakaoTokenUri, requestDto,
 				KakaoDto.TokenResponse.class);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new CustomException(ErrorCode.KAKAO_TOKEN_NOT_ISSUED, code);
 		}
 
-		System.out.println(kakaoToken);
 		// === 카카오 토큰으로 유저 정보 확인
+		URI kakaoUserInfoUri = UriComponentsBuilder
+			.fromUriString("https://kapi.kakao.com/v2")
+			.path("/user/me")
+			.encode()
+			.build()
+			.toUri();
+		String kakaoAccessToken = kakaoToken.getAccessToken();
+
+		System.out.println("카카오 토큰: " + kakaoAccessToken);
+		KakaoDto.UserInfo userInfo = null;
+		try {
+			userInfo = externalApiService.sendPostRequest(kakaoUserInfoUri, requestDto,
+				KakaoDto.UserInfo.class, kakaoAccessToken);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CustomException(ErrorCode.KAKAO_GET_USER_INFO_FAILED, kakaoAccessToken);
+		}
+
+		System.out.println(userInfo);
 
 		// === db에서 멤버 있는지 확인
 

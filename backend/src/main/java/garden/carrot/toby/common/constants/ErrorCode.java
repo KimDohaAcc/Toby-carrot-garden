@@ -19,6 +19,7 @@ public enum ErrorCode {
 
 	// 카카오 OAuth
 	KAKAO_TOKEN_NOT_ISSUED(INTERNAL_SERVER_ERROR, "카카오 토큰 발급에 문제가 생겼습니다"),
+	KAKAO_GET_USER_INFO_FAILED(INTERNAL_SERVER_ERROR, "카카오 유저 정보 조회에 문제가 생겼습니다"),
 
 	// 멤버
 	MEMBER_NOT_FOUND(BAD_REQUEST, "id에 해당하는 멤버가 없습니다."),

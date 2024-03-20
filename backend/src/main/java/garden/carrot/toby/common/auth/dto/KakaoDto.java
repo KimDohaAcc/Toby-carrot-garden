@@ -2,12 +2,12 @@ package garden.carrot.toby.common.auth.dto;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import garden.carrot.toby.common.auth.constatnts.KakaoConstants;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 public class KakaoDto {
@@ -30,9 +30,7 @@ public class KakaoDto {
 	}
 
 	@Getter
-	@AllArgsConstructor
 	@NoArgsConstructor
-	@Setter
 	@ToString
 	// 인가 코드로 토큰 발급 받음
 	public static class TokenResponse {
@@ -44,6 +42,16 @@ public class KakaoDto {
 		private String refreshToken;
 		private int refreshTokenExpiresIn;
 		private String scope;
+	}
+
+	@ToString
+	@NoArgsConstructor
+	@Getter
+	public static class UserInfo {
+		@JsonProperty("id")
+		private Long id;
+		@JsonProperty("connected_at")
+		private String connectedAt; // Datetime을 String으로 표현
 	}
 
 }
