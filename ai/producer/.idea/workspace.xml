@@ -5,22 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="865ed1e5-2d7a-4c3b-bfe8-53e6b4ad1ffa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../detection/s3_reader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../detection/yolov5.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bag.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/../detection/detect.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../detection/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../detection/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/runs/detect/exp10/bag.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/runs/detect/exp11/dog.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/runs/detect/exp4/dog.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/runs/detect/exp6/dog.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../detection/runs/detect/exp7/bag.JPG" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../drawing/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../drawing/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emotion/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../emotion/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../emotion/result/emotion.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kafka-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../kafka-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/producer_sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/producer_sample.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +81,6 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/producer$producer_sample.coverage" NAME="producer_sample Coverage Results" MODIFIED="1710745079341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/producer$producer_sample.coverage" NAME="producer_sample Coverage Results" MODIFIED="1710832816779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
