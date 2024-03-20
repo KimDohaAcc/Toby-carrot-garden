@@ -12,6 +12,8 @@ const MypageContentContainer = styled.div`
   height: 90%;
   border: 2px solid black;
   grid-template-columns: 1fr 1fr;
+  background-color: #ffffff;
+  border-radius: 40px;
 `;
 
 const AlbumArea = styled.div`
@@ -20,6 +22,7 @@ const AlbumArea = styled.div`
   width: 85%;
   height: 90%;
   border: 2px solid black;
+  border-radius: 30px;
 `;
 
 const CarrotArea = styled.div`
@@ -28,17 +31,24 @@ const CarrotArea = styled.div`
   width: 85%;
   height: 90%;
   border: 2px solid black;
+  border-radius: 30px;
 `;
 
 const MypageContent = () => {
   return (
     <MypageContentContainer>
       <AlbumArea>
-        <div>앨범</div>
+        <div>
+          <img src="abc" alt="album" />
+          <span>앨범</span>
+        </div>
         <Album />
       </AlbumArea>
       <CarrotArea>
-        <div>당근 밭</div>
+        <div>
+          <img src="abc" alt="carrot" />
+          <span>당근 밭</span>
+        </div>
         <CarrotField />
       </CarrotArea>
     </MypageContentContainer>

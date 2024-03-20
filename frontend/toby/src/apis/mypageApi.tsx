@@ -39,7 +39,7 @@ export const getClearImageList = async () => {
   }
 };
 
-export const getCarrot = async () => {
+export const getCarrotList = async () => {
   try {
     const response = await api.get("member/carrot");
     return response.data.result;
