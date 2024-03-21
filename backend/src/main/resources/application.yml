@@ -33,6 +33,9 @@ server:
 
   servlet:
     context-path: /api
+logging:
+  level:
+    root: info
 
 # constants
 DOMAIN:
