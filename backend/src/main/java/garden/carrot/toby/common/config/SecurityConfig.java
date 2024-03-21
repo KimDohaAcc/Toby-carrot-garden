@@ -109,6 +109,8 @@ public class SecurityConfig {
 			HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS
+			HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS,
+			HttpHeaders.CONTENT_TYPE
 		));
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
