@@ -10,7 +10,6 @@ import Mart from "./pages/Mart";
 import Report from "./pages/Report";
 import NotFound from "./pages/NotFound";
 import StartPage from "./pages/StartPage";
-import Drawing from "./components/Drawing";
 import Webcam from "./components/WebCam";
 
 import styled from "styled-components";
@@ -32,7 +31,7 @@ function App() {
         <Route path="/" element={<StartPage />} />
         <Route path="main" element={<MainPage />} />
         <Route path="school" element={<School />} />
-        <Route path="hospital" element={<Hospital />} />
+        <Route path="hospital/*" element={<Hospital />} />
         <Route path="police" element={<PoliceOffice />} />
         <Route path="mypage" element={<Mypage />} />
         <Route path="mart" element={<Mart />} />

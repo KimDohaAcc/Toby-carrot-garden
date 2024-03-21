@@ -5,6 +5,8 @@ import styled from "styled-components";
 import ConstructionModal from "../components/modals/constructionModal";
 import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 입력 모달
 import Logo from "../components/Logo";
+import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryListModal";
+import { set } from "date-fns";
 
 const MainpageContainer = styled.div`
   height: 100%;
@@ -171,14 +173,21 @@ const TobyImage = styled.img`
 const MainPage = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [showHospitalModal, setShowHospitalModal] = useState(false); // 병원 스토리 리스트 모달 상태
+
   const [modalType, setModalType] = useState(""); // 모달 종류를 결정하는 상태
 
   const handleAreaClick = (path: string) => {
-    setShowModal(true);
+    setShowHospitalModal(true);
     if (path === "/report") {
+      setShowModal(true);
       setModalType("password");
     } else if (path === "/police" || path === "/mart") {
+      setShowModal(true);
       setModalType("construction");
+    } else if (path === "/hospital") {
+      setShowHospitalModal(true);
+      setModalType("hospital");
     } else {
       navigate(path);
     }
@@ -254,6 +263,9 @@ const MainPage = () => {
       )}
       {showModal && modalType === "password" && (
         <PasswordModal onClose={() => setShowModal(false)} />
+      )}
+      {showHospitalModal && modalType === "hospital" && (
+        <HospitalStoryListModal onClose={() => setShowHospitalModal(false)} />
       )}
     </>
   );

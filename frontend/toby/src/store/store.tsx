@@ -1,9 +1,12 @@
 // store.tsx
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./rootReducer.tsx";
+import hospitalReducer from "./slices/hospitalSlice";
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    hospital: hospitalReducer,
+  },
 });
 
+export type RootState = ReturnType<typeof store.getState>;
 export default store;
