@@ -16,19 +16,25 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import garden.carrot.toby.common.auth.jwt.JwtFilter;
+import garden.carrot.toby.common.auth.jwt.TokenProvider;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	// private final TokenProvider tokenProvider;
+	private final TokenProvider tokenProvider;
 
 	private final String HOST;
 
-	public SecurityConfig(@Value("${DOMAIN.FRONT}") String host) {
+	public SecurityConfig(@Value("${DOMAIN.FRONT}") String host, TokenProvider tokenProvider) {
+
 		this.HOST = host;
+		this.tokenProvider = tokenProvider;
 	}
 
 	@Bean
@@ -46,7 +52,7 @@ public class SecurityConfig {
 			.sessionManagement((sessionManagement) ->
 				sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			)
-		// .addFilterAfter(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+			.addFilterAfter(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
 		;
 
 		return http.build();
