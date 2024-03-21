@@ -64,7 +64,7 @@ public class JwtFilter extends OncePerRequestFilter {
 			isValidate = tokenProvider.validateToken(token);
 		} catch (CustomException e) {
 			if (!request.getRequestURI().equals("/api/auth/refresh")) {
-				throw new CustomException(ErrorCode.EXPIRED_TOKEN);
+				throw e;
 			} else {
 				isRefresh = true;
 			}

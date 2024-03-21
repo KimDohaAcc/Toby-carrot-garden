@@ -19,18 +19,13 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: ${REDIS_HOST}
       port: 6379
+
 
 server:
   flyway:
     enabled: false
-
-  redis:
-    data:
-      host: ${REDIS_HOST}
-      port: 6379
-
   servlet:
     context-path: /api
 logging:
@@ -44,3 +39,4 @@ DOMAIN:
 KAKAO:
   CLIENT_ID: ${KAKAO_OAUTH2_CLIENT_ID}
   REDIRECT_URI: ${BACK_DOMAIN}/api/auth/oauth2/kakao/callback
+secretKeyPlain: ${SECURE_KEY_PLAIN} # 시큐리티 키

@@ -1,5 +1,6 @@
 package garden.carrot.toby.common.auth.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,16 @@ import lombok.Setter;
 import lombok.ToString;
 
 public class AuthDto {
+
+	@Getter
+	@NoArgsConstructor
+	@ToString
+	@AllArgsConstructor
+	public static class tokenRequest {
+		private String tokenCode;
+
+	}
+
 	@Getter
 	@NoArgsConstructor
 	@ToString

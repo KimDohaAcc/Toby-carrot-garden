@@ -23,12 +23,8 @@ public class AuthRestController {
 	 */
 
 	@PostMapping("/token")
-	public ApiResponse<AuthDto.SigninResponse> getOauth2Token(@RequestBody String tokenCode) {
-		System.out.println("토큰코드: " + tokenCode);
-
-		// TODO: 레디스에서 토큰 찾고, 해당 key를 레디스에서 삭제
-
-		AuthDto.SigninResponse tokens = authService.getOauthSigninToken(tokenCode);
+	public ApiResponse<AuthDto.SigninResponse> getOauth2Token(@RequestBody AuthDto.tokenRequest request) {
+		AuthDto.SigninResponse tokens = authService.getOauthSigninToken(request.getTokenCode());
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, tokens);
 	}
 }

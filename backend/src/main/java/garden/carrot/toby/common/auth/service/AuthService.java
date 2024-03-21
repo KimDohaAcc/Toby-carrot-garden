@@ -126,12 +126,14 @@ public class AuthService {
 	}
 
 	@Transactional
-	public AuthDto.SigninResponse getOauthSigninToken(String tokenCode) {
+	public AuthDto.SigninResponse getOauthSigninToken(String tokenCode) throws CustomException {
 		// 레디스에서 tokenCode에 해당하는 값 찾아서 반환
-		AuthDto.SigninResponse redisResponse = redisTemplate.opsForValue().get(tokenCode);
+		AuthDto.SigninResponse redisResponse = redisTemplate.opsForValue().getAndDelete(tokenCode);
+
 		if (redisResponse == null) {
-			throw new CustomException(ErrorCode.BAD_TOKENCODE);
+			throw new CustomException(ErrorCode.BAD_TOKENCODE, tokenCode);
 		}
+		
 		return redisResponse;
 	}
 }
