@@ -11,9 +11,13 @@ import Report from "./pages/Report";
 import NotFound from "./pages/NotFound";
 import StartPage from "./pages/StartPage";
 import Webcam from "./components/WebCam";
+import AuthPage from "./pages/AuthPage";
+import PrivacyConsentForm from "./pages/PrivacyConsentForm";
+import KakaoSignup from "./pages/KakaoSignup";
+
+import UserInfoForm from "./pages/UserInfoForm";
 
 import styled from "styled-components";
-import UserInfoForm from "./pages/UserInfoForm";
 
 const BackgroundContainer = styled.div`
   height: 100vh;
@@ -29,6 +33,9 @@ function App() {
     <BackgroundContainer>
       <Routes>
         <Route path="/" element={<StartPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/privacyConsentForm" element={<PrivacyConsentForm />} />
+        <Route path="/kakaoSignup" element={<KakaoSignup />} />
         <Route path="main" element={<MainPage />} />
         <Route path="school" element={<School />} />
         <Route path="hospital/*" element={<Hospital />} />
