@@ -48,6 +48,7 @@ public class KakaoDto {
 	@NoArgsConstructor
 	@Getter
 	public static class UserInfo {
+		// json이랑 이름이 똑같은데도 값이 안 들어와서 JsonProperty 추가
 		@JsonProperty("id")
 		private Long id;
 		@JsonProperty("connected_at")
