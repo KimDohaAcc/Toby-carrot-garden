@@ -1,6 +1,7 @@
 package garden.carrot.toby.common.auth.service;
 
 import java.net.URI;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +9,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import garden.carrot.toby.common.auth.dto.AuthDto;
 import garden.carrot.toby.common.auth.dto.KakaoDto;
+import garden.carrot.toby.common.auth.entity.Member;
+import garden.carrot.toby.common.auth.repository.MemberRepository;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 public class AuthService {
 	private final ExternalApiService externalApiService;
+	private final MemberRepository memberRepository;
 
 	// code: 인가코드
 	@Transactional
@@ -64,9 +68,24 @@ public class AuthService {
 
 		System.out.println(userInfo);
 
-		// === db에서 멤버 있는지 확인
-
-		// === 없으면 멤버 생성, signupComplete: false로 변경
+		// === db에서 멤버 있는지 확인, 없으면 멤버 생성
+		Long kakaoUserId = userInfo.getId();
+		// 추가 정보 입력 여부
+		boolean signupComplete = false;
+		Optional<Member> optionalMember = memberRepository.findMemberBySerialNumber(kakaoUserId);
+		if (optionalMember.isEmpty()) {
+			System.out.println("멤버 없어요~");
+			Member member = new Member(kakaoUserId);
+			memberRepository.save(member);
+		}
+		if (optionalMember.isPresent()) {
+			System.out.println("멤버 있어요~");
+			Member member = optionalMember.get();
+			if (member.getBirthDate() != null && member.getNickname() != null && member.getParentPassword() != null) {
+				signupComplete = true;
+				System.out.println("회원가입 완료된 멤버네요~");
+			}
+		}
 
 		// === 멤버 PK 이용해 access 토큰, refresh토큰 발급
 
