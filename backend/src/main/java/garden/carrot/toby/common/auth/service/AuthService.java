@@ -3,6 +3,10 @@ package garden.carrot.toby.common.auth.service;
 import java.net.URI;
 import java.util.Optional;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -10,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import garden.carrot.toby.common.auth.dto.AuthDto;
 import garden.carrot.toby.common.auth.dto.KakaoDto;
 import garden.carrot.toby.common.auth.entity.Member;
+import garden.carrot.toby.common.auth.jwt.TokenProvider;
 import garden.carrot.toby.common.auth.repository.MemberRepository;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
@@ -23,6 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthService {
 	private final ExternalApiService externalApiService;
 	private final MemberRepository memberRepository;
+	private final AuthenticationManagerBuilder authenticationManagerBuilder;
+	private final TokenProvider tokenProvider;
 
 	// code: 인가코드
 	@Transactional
@@ -73,14 +80,15 @@ public class AuthService {
 		// 추가 정보 입력 여부
 		boolean signupComplete = false;
 		Optional<Member> optionalMember = memberRepository.findMemberBySerialNumber(kakaoUserId);
+		Member member = null;
 		if (optionalMember.isEmpty()) {
 			System.out.println("멤버 없어요~");
-			Member member = new Member(kakaoUserId);
+			member = new Member(kakaoUserId);
 			memberRepository.save(member);
 		}
 		if (optionalMember.isPresent()) {
 			System.out.println("멤버 있어요~");
-			Member member = optionalMember.get();
+			member = optionalMember.get();
 			if (member.getBirthDate() != null && member.getNickname() != null && member.getParentPassword() != null) {
 				signupComplete = true;
 				System.out.println("회원가입 완료된 멤버네요~");
@@ -88,6 +96,21 @@ public class AuthService {
 		}
 
 		// === 멤버 PK 이용해 access 토큰, refresh토큰 발급
+
+		Authentication authentication = new UsernamePasswordAuthenticationToken(member.getId(),
+			member.getSerialNumber());
+		// SecurityContextHolder에 로그인 한 유저 정보 저장
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		log.info("로그인 후 SecurityContextHolder에 저장된 사용자 :::::: {}",
+			SecurityContextHolder.getContext().getAuthentication().getName());
+
+		AuthDto.SigninResponse authResponse = tokenProvider.generateTokenResponse(authentication);
+		authResponse.setSignupComplete(signupComplete);
+		log.info("Authentication : {}", authentication.toString());
+		System.out.println(authResponse);
+
+		// Refresh Token Redis에 저장
+		// tokenUtil.setRefreshToken(authResponse.getRefreshToken());
 
 		// === 토큰코드 생성 - uuid 생성
 
