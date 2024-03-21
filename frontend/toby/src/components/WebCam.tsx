@@ -30,16 +30,22 @@ const CapturedImage = styled.img`
   border-radius: 10px;
 `;
 
-const WebcamCapture = () => {
-  const webcamRef = useRef(null);
-  const [imageSrc, setImageSrc] = useState(null);
+interface WebcamRef extends Webcam {
+  getScreenshot: () => string | null;
+}
+
+const WebcamCapture: React.FC = () => {
+  const webcamRef = useRef<WebcamRef>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
 
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    convertToImageFile(imageSrc);
+    const imageSrc = webcamRef.current?.getScreenshot();
+    if (imageSrc) {
+      convertToImageFile(imageSrc);
+    }
   }, [webcamRef]);
 
-  const convertToImageFile = async (base64String) => {
+  const convertToImageFile = async (base64String: string) => {
     const blob = await fetch(base64String).then((res) => res.blob());
     const file = new File([blob], "captured.jpg", { type: "image/jpeg" });
     // 이미지 파일 처리 로직(예: 업로드)을 여기에 추가하세요. 예를 들어:

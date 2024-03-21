@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import Logo from "../components/Logo";
-// import { useNavigate, useLocation } from "react-router-dom";
-import { getKakaoPage, postKakaoToken } from "../apis/signupAPI";
+import { useNavigate } from "react-router-dom";
+
+// import { getKakaoPage } from "../apis/signupAPI";
 
 const StartPageContainer = styled.div`
   height: 100vh;
@@ -45,17 +46,10 @@ const LoginButton = styled.img`
 `;
 
 const StartPage = () => {
-  const handleSignupClick = async () => {
-    try {
-      const kakaoPageData = await getKakaoPage();
-      if (kakaoPageData && kakaoPageData.result && kakaoPageData.result.uri) {
-        window.location.href = kakaoPageData.result.uri;
-      } else {
-        console.error("카카오 로그인 페이지 URI를 받아오는 데 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("카카오 로그인 처리 중 에러가 발생했습니다.", error);
-    }
+  const navigate = useNavigate();
+
+  const handleSignupClick = () => {
+    navigate("/privacyConsentForm");
   };
   return (
     <>
