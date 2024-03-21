@@ -40,3 +40,6 @@ KAKAO:
   CLIENT_ID: ${KAKAO_OAUTH2_CLIENT_ID}
   REDIRECT_URI: ${BACK_DOMAIN}/api/auth/oauth2/kakao/callback
 secretKeyPlain: ${SECURE_KEY_PLAIN} # 시큐리티 키
+
+discord:
+  webhook: ${DISCORD_WEBHOOK}
