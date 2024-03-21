@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import garden.carrot.toby.common.auth.service.AuthService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,16 +18,6 @@ public class AuthController {
 	private final AuthService authService;
 	@Value("${DOMAIN.FRONT}")
 	private String FRONTEND_DOMAIN; // 도메인:포트
-
-	/*
-	하는 일: 브라우저 페이지를 kakao 로그인 페이지로 리다이렉트
-	이 api의 존재 이유: cliend_id, redirect_uri을 백엔드에서 관리하기 위함
-	 */
-	@GetMapping("/oauth2/kakao")
-	public String kakaoOauth2(HttpServletRequest request) {
-		return "redirect:https://kauth.kakao.com/oauth/authorize?client_id=" + KAKAO_CLIENT_ID
-			+ "&redirect_uri=" + BACKEND_DOMAIN + "/api/auth/oauth2/kakao/callback&response_type=code";
-	}
 
 	/*
 	하는 일: 인가코드를 이용해 카카오 토큰 받고, 우리 토큰 만들고, 우리토큰 코드를 query String 형태로 돌려주기

@@ -19,6 +19,13 @@ public class AuthDto {
 	}
 
 	@Getter
+	@AllArgsConstructor
+	@ToString
+	public static class kakaoUriResponse {
+		private String uri;
+	}
+
+	@Getter
 	@NoArgsConstructor
 	@ToString
 	public static class SigninResponse {
