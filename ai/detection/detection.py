@@ -29,7 +29,7 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
     result = inceptionV3[idx]
     print(result)
 
-    r = redis.Redis(host='localhost', port=6379, db=0)
+    r = redis.Redis(host='172.17.0.2', port=6379, db=0)
 
     if result == '' or result != correct_answer:
         result = 'Failure'

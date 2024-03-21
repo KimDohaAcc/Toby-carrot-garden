@@ -42,7 +42,7 @@ def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
     idx = prediction.argmax()
     result = doodle_ref[idx]
 
-    r = redis.Redis(host='localhost', port=6379, db=0)
+    r = redis.Redis(host='172.17.0.2', port=6379, db=0)
 
     r.set(f'quiz_answer_{member_id}_{quiz_id}', f'{100 + prediction[0][target_index]}')
     r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)

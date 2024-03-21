@@ -15,7 +15,6 @@ consumer = KafkaConsumer(str_topic_name, bootstrap_servers=bootstrap_servers,
                          enable_auto_commit=True,
                          group_id=str_group_name,
                          value_deserializer=lambda x: loads(x.decode('utf-8')),
-                         consumer_timeout_ms=60000 # 타임아웃지정(단위:밀리초)
                         )
 for message in consumer:
     print("그림 분석 요청", message)

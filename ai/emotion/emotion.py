@@ -44,7 +44,7 @@ def emotion(image_data, data_name, member_id, quiz_id, correct_answer):
     # 결과 이미지 저장
     cv2.imwrite('result/'+ data_name, image)
 
-    r = redis.Redis(host='localhost', port=6379, db=0)
+    r = redis.Redis(host='172.17.0.2', port=6379, db=0)
 
     if label == '':
         label = 'Failure'
