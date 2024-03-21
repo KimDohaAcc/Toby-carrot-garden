@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import garden.carrot.toby.common.auth.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,9 +40,17 @@ public class AuthController {
 	public String kakaoCallback(@RequestParam String code) {
 		System.out.println("인가코드: " + code);
 
-
 		// 우리 서버가 발급해준 토큰 코드_레디스 안에 키 값으로 쓰임. value에는 accesstoken과 refreshtoken이 있음.
-		String tokenCode = "my-token-code";
+		String tokenCode;
+		try {
+			// TODO: 인가코드로 카카오토큰 받고 우리 토큰 레디스에 저장
+			tokenCode = authService.kakaoCallback(code);
+		} catch (Exception e) {
+			System.out.println("에러 발생");
+			tokenCode = "error";
+			e.printStackTrace();
+		}
+
 		return "redirect:http://" + FRONTEND_DOMAIN + "/auth?tokenCode=" + tokenCode;
 	}
 }

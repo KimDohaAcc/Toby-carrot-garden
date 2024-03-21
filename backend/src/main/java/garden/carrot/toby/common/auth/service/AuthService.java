@@ -2,9 +2,10 @@ package garden.carrot.toby.common.auth.service;
 
 import java.net.URI;
 import java.util.Optional;
+import java.util.UUID;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthService {
 	private final ExternalApiService externalApiService;
 	private final MemberRepository memberRepository;
-	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final TokenProvider tokenProvider;
+	private final RedisTemplate<String, AuthDto.SigninResponse> redisTemplate;
 
 	// code: 인가코드
 	@Transactional
@@ -113,18 +114,24 @@ public class AuthService {
 		// tokenUtil.setRefreshToken(authResponse.getRefreshToken());
 
 		// === 토큰코드 생성 - uuid 생성
+		String uuid = UUID.randomUUID().toString();
+		String tokenCode = "tokencode-" + uuid;
 
 		// === 생성한 uuid를 키로 하고, accessToken, refreshToken, signupComplete 저장
+		redisTemplate.opsForValue().set(tokenCode, authResponse);
 
 		// === 토큰 코드 리턴
 
-		return "tokenCode";
+		return tokenCode;
 	}
 
 	@Transactional
 	public AuthDto.SigninResponse getOauthSigninToken(String tokenCode) {
 		// 레디스에서 tokenCode에 해당하는 값 찾아서 반환
-
-		return null;
+		AuthDto.SigninResponse redisResponse = redisTemplate.opsForValue().get(tokenCode);
+		if (redisResponse == null) {
+			throw new CustomException(ErrorCode.BAD_TOKENCODE);
+		}
+		return redisResponse;
 	}
 }

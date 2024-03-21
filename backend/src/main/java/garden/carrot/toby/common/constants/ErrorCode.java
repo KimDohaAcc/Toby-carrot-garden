@@ -26,6 +26,7 @@ public enum ErrorCode {
 	MALFORMED_TOKEN(UNAUTHORIZED, "토큰의 형식이 올바르지 않습니다."),
 	INVALID_SIGNATURE_TOKEN(UNAUTHORIZED, "서명이 유효하지 않습니다."),
 	UNSUPPORTED_JWT(UNAUTHORIZED, "지원하지 않는 JWT 기능이 사용되었습니다."),
+	BAD_TOKENCODE(UNAUTHORIZED, "존재하지 않는 토큰코드입니다."),
 
 	// 멤버
 	MEMBER_NOT_FOUND(BAD_REQUEST, "id에 해당하는 멤버가 없습니다."),

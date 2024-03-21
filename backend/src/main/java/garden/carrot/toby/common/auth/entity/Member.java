@@ -23,9 +23,10 @@ public class Member extends BaseEntity {
 	private LocalDate birthDate;
 	// 카카오에서 넘겨준 인증값
 	@Column(unique = true)
-	private long serialNumber;
+	private Long serialNumber;
 
-	public Member(long serialNumber) {
+	public Member(Long serialNumber) {
 		this.serialNumber = serialNumber;
 	}
+
 }
