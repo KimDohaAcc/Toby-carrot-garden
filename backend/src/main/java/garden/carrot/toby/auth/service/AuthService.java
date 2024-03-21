@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.auth.service;
+package garden.carrot.toby.auth.service;
 
 import java.net.URI;
 import java.util.Optional;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import garden.carrot.toby.common.auth.dto.AuthDto;
-import garden.carrot.toby.common.auth.dto.KakaoDto;
-import garden.carrot.toby.common.auth.entity.Member;
-import garden.carrot.toby.common.auth.jwt.TokenProvider;
-import garden.carrot.toby.common.auth.repository.MemberRepository;
+import garden.carrot.toby.auth.dto.AuthDto;
+import garden.carrot.toby.auth.dto.KakaoDto;
+import garden.carrot.toby.auth.entity.Member;
+import garden.carrot.toby.auth.jwt.TokenProvider;
+import garden.carrot.toby.auth.repository.MemberRepository;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
@@ -133,7 +133,7 @@ public class AuthService {
 		if (redisResponse == null) {
 			throw new CustomException(ErrorCode.BAD_TOKENCODE, tokenCode);
 		}
-		
+
 		return redisResponse;
 	}
 }

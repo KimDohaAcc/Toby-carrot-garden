@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.exception.logback;
+package garden.carrot.toby.common.logback;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +22,6 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import garden.carrot.toby.common.dto.ApiResponse;
-import garden.carrot.toby.common.logback.RequestWrapper;
-import garden.carrot.toby.common.logback.ResponseWrapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

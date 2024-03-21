@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.auth.controller;
+package garden.carrot.toby.auth.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import garden.carrot.toby.common.auth.constatnts.KakaoConstants;
-import garden.carrot.toby.common.auth.dto.AuthDto;
-import garden.carrot.toby.common.auth.service.AuthService;
+import garden.carrot.toby.auth.constatnts.KakaoConstants;
+import garden.carrot.toby.auth.dto.AuthDto;
+import garden.carrot.toby.auth.service.AuthService;
 import garden.carrot.toby.common.constants.SuccessCode;
 import garden.carrot.toby.common.dto.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;

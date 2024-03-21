@@ -1,10 +1,10 @@
-package garden.carrot.toby.common.auth.dto;
+package garden.carrot.toby.auth.dto;
 
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import garden.carrot.toby.common.auth.constatnts.KakaoConstants;
+import garden.carrot.toby.auth.constatnts.KakaoConstants;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

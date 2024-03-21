@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.auth.entity;
+package garden.carrot.toby.auth.entity;
 
 import java.time.LocalDate;
 

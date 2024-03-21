@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.auth.constatnts;
+package garden.carrot.toby.auth.constatnts;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

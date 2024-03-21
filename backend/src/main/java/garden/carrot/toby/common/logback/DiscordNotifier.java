@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.exception.logback;
+package garden.carrot.toby.common.logback;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package garden.carrot.toby.common.auth.service;
+package garden.carrot.toby.auth.service;
 
 import java.net.URI;
 import java.util.Map;
