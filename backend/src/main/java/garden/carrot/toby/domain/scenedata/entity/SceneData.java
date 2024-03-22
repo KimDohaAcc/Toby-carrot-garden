@@ -35,7 +35,7 @@ public class SceneData extends BaseEntity {
 
 	private String voiceUrl;
 
-	@OneToMany(mappedBy = "storyData", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "sceneData", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private List<QuizData> quizDataList = new ArrayList<>();
 }
