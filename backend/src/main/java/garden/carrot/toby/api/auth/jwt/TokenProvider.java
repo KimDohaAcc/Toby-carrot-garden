@@ -1,4 +1,4 @@
-package garden.carrot.toby.auth.jwt;
+package garden.carrot.toby.api.auth.jwt;
 
 import java.security.Key;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import garden.carrot.toby.auth.dto.AuthDto;
+import garden.carrot.toby.api.auth.dto.AuthDto;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
 import io.jsonwebtoken.Claims;

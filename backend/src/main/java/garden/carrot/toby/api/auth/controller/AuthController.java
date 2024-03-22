@@ -1,4 +1,4 @@
-package garden.carrot.toby.auth.controller;
+package garden.carrot.toby.api.auth.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import garden.carrot.toby.auth.service.AuthService;
+import garden.carrot.toby.api.auth.service.AuthService;
 import garden.carrot.toby.common.exception.ExceptionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

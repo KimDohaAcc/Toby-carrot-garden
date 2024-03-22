@@ -1,4 +1,4 @@
-package garden.carrot.toby.auth.dto;
+package garden.carrot.toby.api.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

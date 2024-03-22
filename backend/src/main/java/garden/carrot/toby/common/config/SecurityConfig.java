@@ -21,8 +21,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import garden.carrot.toby.auth.jwt.JwtFilter;
-import garden.carrot.toby.auth.jwt.TokenProvider;
+import garden.carrot.toby.api.auth.jwt.JwtFilter;
+import garden.carrot.toby.api.auth.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity

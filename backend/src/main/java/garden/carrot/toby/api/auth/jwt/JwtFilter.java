@@ -1,4 +1,4 @@
-package garden.carrot.toby.auth.jwt;
+package garden.carrot.toby.api.auth.jwt;
 
 import java.io.IOException;
 import java.util.Arrays;

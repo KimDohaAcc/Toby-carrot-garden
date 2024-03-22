@@ -1,4 +1,4 @@
-package garden.carrot.toby.auth.service;
+package garden.carrot.toby.api.auth.service;
 
 import java.net.URI;
 import java.util.Optional;
@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import garden.carrot.toby.auth.dto.AuthDto;
-import garden.carrot.toby.auth.dto.KakaoDto;
-import garden.carrot.toby.auth.entity.Member;
-import garden.carrot.toby.auth.jwt.TokenProvider;
-import garden.carrot.toby.auth.repository.MemberRepository;
+import garden.carrot.toby.api.auth.dto.AuthDto;
+import garden.carrot.toby.api.auth.dto.KakaoDto;
+import garden.carrot.toby.api.auth.jwt.TokenProvider;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
 import garden.carrot.toby.common.exception.ExceptionUtil;
+import garden.carrot.toby.domain.member.entity.Member;
+import garden.carrot.toby.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
