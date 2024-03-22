@@ -52,22 +52,22 @@ export const getRescore = async (memberQuizId, newScore) => {
 };
 
 //부모 비밀번호 인증
-export const postParentsPassword = async (memberQuizId, newScore) => {
+export const postParentsPassword = async (parentPassword) => {
   try {
     const requestBody = {
-      memberQuizId: memberQuizId,
-      score: newScore,
+      parentPassword,
     };
-    const response = await api.post("analysis/regrade", requestBody);
+    const response = await api.post("/analysis/certificate", requestBody);
 
     if (response.status === 200) {
-      console.log("재채점 완료", response.data.message);
+      console.log("부모 검증 완료", response.data.message);
+      return response.data.result.isCorrect;
     } else {
-      console.error("재채점 요청 실패", response.data.message);
+      return false;
     }
-    return response.data;
   } catch (error) {
-    console.error("재채점을 수행하지 못했습니다", error);
-    return null;
+    console.error("비밀번호 검증 중 오류가 발생했습니다", error);
+
+    return false;
   }
 };
