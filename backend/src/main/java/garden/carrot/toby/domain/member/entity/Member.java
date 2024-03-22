@@ -25,4 +25,10 @@ public class Member extends BaseEntity {
 		this.serialNumber = serialNumber;
 	}
 
+	public void signup(String parentPassword, String name, LocalDate birthDate) {
+		this.parentPassword = parentPassword;
+		this.name = name;
+		this.birthDate = birthDate;
+	}
+
 }

@@ -12,6 +12,7 @@ import garden.carrot.toby.api.auth.service.AuthService;
 import garden.carrot.toby.common.constants.SuccessCode;
 import garden.carrot.toby.common.dto.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,5 +41,14 @@ public class AuthRestController {
 	public ApiResponse<AuthDto.SigninResponse> getOauth2Token(@RequestBody AuthDto.TokenRequest request) {
 		AuthDto.SigninResponse tokens = authService.getOauthSigninToken(request.getTokenCode());
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, tokens);
+	}
+
+	/**
+	 * 회원가입 추가 진행
+	 */
+	@PostMapping("/signup")
+	public ApiResponse<AuthDto.SignupExtraResponse> signup(@Valid @RequestBody AuthDto.SignupExtraRequest request) {
+		AuthDto.SignupExtraResponse response = authService.signup(request);
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, response);
 	}
 }
