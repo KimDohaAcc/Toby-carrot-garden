@@ -51,7 +51,7 @@ const Button = styled.button`
   padding: 0; // 패딩 제거
 `;
 const RabbitImage1 = styled.img``;
-const RabbitImage2 = styled.img``;
+
 const CheckButton = styled.img``;
 const VillageButton = styled.img``;
 
@@ -144,20 +144,11 @@ function UserInfoForm() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              {/* <Button onClick={handleSubmit}>
-              <VillageButton
-                src="Image/button/gotoVillage.png"
-                alt="Go to Village"
-              />
-            
-            </Button> */}
-
-              <Button>
-                <CheckButton
-                  onClick={handleNextStep}
-                  src="Image/button/checkButton.png"
-                  alt="Check"
-                ></CheckButton>
+              <Button onClick={handleSubmit}>
+                <VillageButton
+                  src="Image/button/signupClearButton.png"
+                  alt="Go to Village"
+                />
               </Button>
             </PasswordContainer>
           </div>

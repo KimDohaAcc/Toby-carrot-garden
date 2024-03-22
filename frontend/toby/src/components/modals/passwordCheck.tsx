@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { postParentsPassword } from "../../apis/analysisApi";
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -72,17 +72,21 @@ const ConstructionText = styled.h2`
 const ConstructionModal = ({ onClose }) => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const handleConfirm = () => {
-    // 비밀번호 확인 로직을 여기에 추가
-    console.log(password); // 예시로 콘솔에 출력
-    onClose(); // 확인 후 모달 닫기
-    navigate("/report"); // /report 경로로 이동
+
+  const handleConfirm = async () => {
+    const isCorrect = await postParentsPassword(password);
+
+    if (isCorrect) {
+      navigate("/report");
+    } else {
+      alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+      setPassword("");
+    }
   };
 
   return (
     <ModalBackdrop onClick={onClose}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
-        {/* <img src={constructionImage} alt="Construction" /> */}
         <ConstructionText>비밀번호를 입력하시오</ConstructionText>
         <PasswordInput
           type="password"
