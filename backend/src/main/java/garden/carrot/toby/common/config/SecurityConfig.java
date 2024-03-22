@@ -16,19 +16,25 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import garden.carrot.toby.api.auth.jwt.JwtFilter;
+import garden.carrot.toby.api.auth.jwt.TokenProvider;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	// private final TokenProvider tokenProvider;
+	private final TokenProvider tokenProvider;
 
-	private final String HOST;
+	private final String FRONT_DOMAIN;
 
-	public SecurityConfig(@Value("${DOMAIN}") String host) {
-		this.HOST = host;
+	public SecurityConfig(@Value("${DOMAIN.FRONT}") String frontDomain, TokenProvider tokenProvider) {
+
+		this.FRONT_DOMAIN = frontDomain;
+		this.tokenProvider = tokenProvider;
 	}
 
 	@Bean
@@ -46,9 +52,9 @@ public class SecurityConfig {
 			.sessionManagement((sessionManagement) ->
 				sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			)
-		// .addFilterAfter(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+			.addFilterAfter(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
 		;
-		
+
 		return http.build();
 	}
 
@@ -70,9 +76,10 @@ public class SecurityConfig {
 
 		// 허용할 origin 목록
 		List<String> allowedOrigins = new ArrayList<>();
+		allowedOrigins.add(FRONT_DOMAIN);
 
 		for (String protocol : PROTOCOLS) {
-			allowedOrigins.add(protocol + HOST);
+
 			allowedOrigins.add(protocol + LOCALHOST + DEFAULT_PORT);
 
 			int allowedPort = ALLOWED_MIN_PORT;
@@ -101,7 +108,8 @@ public class SecurityConfig {
 			HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,
-			HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS
+			HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS,
+			HttpHeaders.CONTENT_TYPE
 		));
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

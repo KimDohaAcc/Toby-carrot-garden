@@ -20,7 +20,7 @@ public class SwaggerConfig {
 	public OpenAPI openAPI() {
 		Info info = new Info()
 			.version("v1.0.0")
-			.title("SEAS API")
+			.title("Toby API")
 			.description("JWT 토큰은 우측 Authorize 버튼 누르고 Bearer 문자열 없이 **토큰만** 넣어주세요");
 
 		// SecuritySecheme명

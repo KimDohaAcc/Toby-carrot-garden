@@ -7,7 +7,7 @@
             </pattern>
         </encoder>
     </appender>
-    <springProfile name="!(dev | prod)">
+    <springProfile name="(dev | prod)">
         <root level="info">
             <appender-ref ref="CONSOLE"/>
         </root>
