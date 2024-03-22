@@ -49,24 +49,22 @@ public class ExternalApiService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
 		return sendPostRequest(uri, requestDto, responseType, headers);
-
 	}
 
-	public MultiValueMap<String, String> convertDtoToMultiValueMap(Object dto) {
+	private MultiValueMap<String, String> convertDtoToMultiValueMap(Object dto) {
 		MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
 
-		try {
-			// DTO 객체를 Map으로 변환
-			Map<String, Object> dtoMap = objectMapper.convertValue(dto, Map.class);
+		if (dto == null) {
+			return multiValueMap;
+		}
 
-			// Map의 키와 값을 MultiValueMap에 추가 (Snake Case로 변환)
-			for (Map.Entry<String, Object> entry : dtoMap.entrySet()) {
-				String snakeCaseKey = camelToSnakeCase(entry.getKey());
-				multiValueMap.add(snakeCaseKey, entry.getValue().toString());
-			}
-		} catch (Exception e) {
-			// 예외 처리
-			e.printStackTrace();
+		// DTO 객체를 Map으로 변환
+		Map<String, Object> dtoMap = objectMapper.convertValue(dto, Map.class);
+
+		// Map의 키와 값을 MultiValueMap에 추가 (Snake Case로 변환)
+		for (Map.Entry<String, Object> entry : dtoMap.entrySet()) {
+			String snakeCaseKey = camelToSnakeCase(entry.getKey());
+			multiValueMap.add(snakeCaseKey, entry.getValue().toString());
 		}
 
 		return multiValueMap;

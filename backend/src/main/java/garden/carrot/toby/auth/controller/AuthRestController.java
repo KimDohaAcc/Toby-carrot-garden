@@ -1,6 +1,5 @@
 package garden.carrot.toby.auth.controller;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,26 +21,23 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("auth")
 public class AuthRestController {
 	private final AuthService authService;
-	@Value("${DOMAIN.FRONT}")
-	private String FRONTEND_DOMAIN; // 도메인:포트
 
-	/*
-		하는 일: 브라우저 페이지를 kakao 로그인 페이지로 리다이렉트
-		이 api의 존재 이유: cliend_id, redirect_uri을 백엔드에서 관리하기 위함
+	/**
+	 * 카카오 oauth2 로그인 주소 반환
 	 */
 	@GetMapping("/oauth2/kakao")
-	public ApiResponse<AuthDto.kakaoUriResponse> kakaoOauth2(HttpServletRequest request) {
+	public ApiResponse<AuthDto.KakaoUriResponse> kakaoOauth2(HttpServletRequest request) {
 		String uri = "https://kauth.kakao.com/oauth/authorize?client_id=" + KakaoConstants.getClientId()
 			+ "&redirect_uri=" + KakaoConstants.getRedirectUri() + "&response_type=code";
 
-		return ApiResponse.success(SuccessCode.GET_SUCCESS, new AuthDto.kakaoUriResponse(uri));
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, new AuthDto.KakaoUriResponse(uri));
 	}
-	/*
-		하는 일: 토큰 코드 검증 후 response body 안에 토큰 값 넣어 줄 것임.
-	 */
 
+	/**
+	 * 토큰 코드 검증 후 우리 서버 토큰 반환
+	 */
 	@PostMapping("/token")
-	public ApiResponse<AuthDto.SigninResponse> getOauth2Token(@RequestBody AuthDto.tokenRequest request) {
+	public ApiResponse<AuthDto.SigninResponse> getOauth2Token(@RequestBody AuthDto.TokenRequest request) {
 		AuthDto.SigninResponse tokens = authService.getOauthSigninToken(request.getTokenCode());
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, tokens);
 	}

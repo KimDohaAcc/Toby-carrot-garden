@@ -28,8 +28,6 @@ public class JwtFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
 
-		System.out.println("URI :::::::::: " + request.getRequestURI());
-
 		// 1. 토큰이 필요하지 않은 API URL에 대해서 배열로 구성한다.
 		List<String> list = Arrays.asList(
 			"/api/swagger-ui/swagger-initializer.js",
@@ -37,8 +35,6 @@ public class JwtFilter extends OncePerRequestFilter {
 			"/v3/api-docs",
 			"/api/v3/api-docs",
 			"/api/v3/api-docs/swagger-config"
-
-			// "/api/auth/refresh"		// 재발급 페이지 (후에 삭제)
 		);
 
 		// 2. 토큰이 필요하지 않은 API URL의 경우 -> 로직 처리없이 다음 필터로 이동한다.
@@ -56,7 +52,6 @@ public class JwtFilter extends OncePerRequestFilter {
 		if (token == null) {
 			throw new CustomException(ErrorCode.NO_TOKEN);
 		}
-		log.info("JwtFilter ::::::::: resolvedToken = {}", token.toString());
 
 		boolean isValidate = false;
 		boolean isRefresh = false;
@@ -71,18 +66,10 @@ public class JwtFilter extends OncePerRequestFilter {
 		}
 
 		if ((StringUtils.hasText(token) && isValidate) || isRefresh) {
-			log.info("JwtFilter ::::::::: 유효한 토큰입니다.");
 			//토큰 값에서 Authentication 값으로 가공해서 반환 후 저장
 			Authentication authentication;
-			// if(isRefresh) authentication = tokenProvider.getPlainAuthentication(token);
-			// else authentication = tokenProvider.getAuthentication(token);
 			authentication = tokenProvider.getAuthentication(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			log.info("JwtFilter ::::::::: Security Context에 '{}' 인증 정보를 저장했습니다", authentication.getName());
-			log.info("JwtFilter ::::::::: Security Context에 저장되어 있는 인증 정보 입니다. '{}'",
-				SecurityContextHolder.getContext().getAuthentication().getName());
-		} else {
-			log.info("JwtFilter ::::::::: 유효한 JWT 토큰이 없습니다.");
 		}
 
 		//다음 필터로 넘기기

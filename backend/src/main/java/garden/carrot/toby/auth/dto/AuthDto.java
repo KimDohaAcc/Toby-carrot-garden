@@ -13,7 +13,7 @@ public class AuthDto {
 	@NoArgsConstructor
 	@ToString
 	@AllArgsConstructor
-	public static class tokenRequest {
+	public static class TokenRequest {
 		private String tokenCode;
 
 	}
@@ -21,7 +21,7 @@ public class AuthDto {
 	@Getter
 	@AllArgsConstructor
 	@ToString
-	public static class kakaoUriResponse {
+	public static class KakaoUriResponse {
 		private String uri;
 	}
 

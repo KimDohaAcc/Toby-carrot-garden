@@ -29,11 +29,11 @@ import garden.carrot.toby.auth.jwt.TokenProvider;
 public class SecurityConfig {
 	private final TokenProvider tokenProvider;
 
-	private final String HOST;
+	private final String FRONT_DOMAIN;
 
-	public SecurityConfig(@Value("${DOMAIN.FRONT}") String host, TokenProvider tokenProvider) {
+	public SecurityConfig(@Value("${DOMAIN.FRONT}") String frontDomain, TokenProvider tokenProvider) {
 
-		this.HOST = host;
+		this.FRONT_DOMAIN = frontDomain;
 		this.tokenProvider = tokenProvider;
 	}
 
@@ -76,11 +76,11 @@ public class SecurityConfig {
 
 		// 허용할 origin 목록
 		List<String> allowedOrigins = new ArrayList<>();
+		allowedOrigins.add(FRONT_DOMAIN);
 
 		for (String protocol : PROTOCOLS) {
-			allowedOrigins.add(protocol + HOST);
+
 			allowedOrigins.add(protocol + LOCALHOST + DEFAULT_PORT);
-			allowedOrigins.add(protocol + LOCALHOST + "3000");
 
 			int allowedPort = ALLOWED_MIN_PORT;
 

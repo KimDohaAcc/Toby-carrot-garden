@@ -29,13 +29,11 @@ import lombok.extern.slf4j.Slf4j;
 public class TokenProvider {
 	private static final String AUTHORITIES_KEY = "Authentication";
 	private static final String BEARER_TYPE = "Bearer ";
-	private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 10; // * 60;
+	private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 24 * 100;
 	private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 24 * 7;
 	private final Key key;
 
 	public TokenProvider(@Value("${secretKeyPlain}") String secretKey) {
-		log.info("TokenProvider 생성자 짜잔 !!");
-
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
@@ -55,11 +53,6 @@ public class TokenProvider {
 			.signWith(key, SignatureAlgorithm.HS512)
 			.compact();
 
-		log.info("generateTokenResponse start =============");
-		log.info("access : {}", accessToken.toString());
-		log.info("refresh : {}", refreshToken.toString());
-		log.info("generateTokenResponse end ===============");
-
 		return AuthDto.SigninResponse.builder()
 			.memberId(auth.getName())
 			.accessToken(accessToken)
@@ -71,10 +64,6 @@ public class TokenProvider {
 		// Access Token 유효성 확인 및 파싱
 		Claims claims = paresClaims(accessToken);
 
-		// if (claims.get(AUTHORITIES_KEY) == null) {
-		// 	throw new RuntimeException();
-		// }
-
 		UserDetails principal = new User(claims.getSubject(), "", new ArrayList<>());
 
 		return new UsernamePasswordAuthenticationToken(principal, "");
@@ -83,12 +72,7 @@ public class TokenProvider {
 	public Authentication getPlainAuthentication(String accessToken) {
 		// Access Token 유효성 확인 및 파싱
 		String plainTextClaims = paresPlainTextClaims(accessToken);
-
-		// if (claims.get(AUTHORITIES_KEY) == null) {
-		// 	throw new RuntimeException();
-		// }
-
-		log.info("getPlainAuthentication ::::: plainTextClaims = {}", plainTextClaims.toString());
+		
 		UserDetails principal = new User(plainTextClaims.toString(), "", new ArrayList<>());
 
 		return new UsernamePasswordAuthenticationToken(principal, "");
