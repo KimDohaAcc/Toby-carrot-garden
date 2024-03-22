@@ -22,10 +22,10 @@ spring:
       host: ${REDIS_HOST}
       port: 6379
 
-
-server:
   flyway:
     enabled: false
+
+server:
   servlet:
     context-path: /api
 logging:
