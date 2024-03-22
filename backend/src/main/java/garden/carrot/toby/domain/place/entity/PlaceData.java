@@ -8,8 +8,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class PlaceData extends BaseEntity {
 
 	private String name;
