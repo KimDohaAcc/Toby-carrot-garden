@@ -35,9 +35,7 @@ public class AuthController {
 			// TODO: 인가코드로 카카오토큰 받고 우리 토큰 레디스에 저장
 			tokenCode = authService.kakaoCallback(code);
 		} catch (Exception e) {
-			System.out.println("에러 발생");
-			tokenCode = "error";
-			e.printStackTrace();
+			exceptionUtil.sendExceptionToDiscord(e);
 		}
 
 		return "redirect:http://" + FRONTEND_DOMAIN + "/auth?tokenCode=" + tokenCode;
