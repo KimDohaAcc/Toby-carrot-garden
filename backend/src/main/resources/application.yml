@@ -23,7 +23,7 @@ spring:
       port: 6379
 
   flyway:
-    enabled: false
+    enabled: true
 
 server:
   servlet:

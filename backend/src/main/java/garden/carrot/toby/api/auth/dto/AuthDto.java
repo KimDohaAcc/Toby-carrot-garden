@@ -1,5 +1,8 @@
 package garden.carrot.toby.api.auth.dto;
 
+import java.time.LocalDate;
+
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +26,23 @@ public class AuthDto {
 	@ToString
 	public static class KakaoUriResponse {
 		private String uri;
+	}
+
+	@Getter
+	@NoArgsConstructor
+	public static class SignupExtraRequest {
+		@Size(max = 30)
+		private String name;
+		private LocalDate birthDate;
+		@Size(max = 4)
+		private String parentPassword;
+	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class SignupExtraResponse {
+		private Integer memberId;
 	}
 
 	@Getter
