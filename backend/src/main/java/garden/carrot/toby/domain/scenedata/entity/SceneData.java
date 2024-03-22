@@ -1,12 +1,14 @@
-package garden.carrot.toby.domain.story.entity;
+package garden.carrot.toby.domain.scenedata.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import garden.carrot.toby.common.entity.BaseEntity;
-import garden.carrot.toby.domain.place.entity.PlaceData;
-import garden.carrot.toby.domain.scene.entity.SceneData;
+import garden.carrot.toby.domain.quizdata.entity.QuizData;
+import garden.carrot.toby.domain.storydata.entity.StoryData;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,20 +19,23 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class StoryData extends BaseEntity {
+public class SceneData extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "place_data_id")
+	@JoinColumn(name = "story_data_id")
 	@JsonBackReference
-	private PlaceData placeData;
+	private StoryData storyData;
 
-	private String title;
+	@Enumerated(EnumType.STRING)
+	private SceneType sceneType;
 
-	private String storyImageUrl;
+	private String sceneImageUrl;
 
-	private String recommendAge;
+	private String content;
+
+	private String voiceUrl;
 
 	@OneToMany(mappedBy = "storyData", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
-	private List<SceneData> sceneDataList = new ArrayList<>();
+	private List<QuizData> quizDataList = new ArrayList<>();
 }

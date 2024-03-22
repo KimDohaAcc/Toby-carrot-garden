@@ -1,8 +1,8 @@
-package garden.carrot.toby.domain.quiz.entity;
+package garden.carrot.toby.domain.quizdata.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import garden.carrot.toby.common.entity.BaseEntity;
-import garden.carrot.toby.domain.scene.entity.SceneData;
+import garden.carrot.toby.domain.scenedata.entity.SceneData;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

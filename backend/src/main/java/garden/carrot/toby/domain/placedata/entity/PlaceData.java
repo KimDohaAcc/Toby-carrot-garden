@@ -1,8 +1,8 @@
-package garden.carrot.toby.domain.place.entity;
+package garden.carrot.toby.domain.placedata.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import garden.carrot.toby.common.entity.BaseEntity;
-import garden.carrot.toby.domain.story.entity.StoryData;
+import garden.carrot.toby.domain.storydata.entity.StoryData;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
