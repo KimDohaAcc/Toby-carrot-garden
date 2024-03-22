@@ -1,4 +1,4 @@
-package garden.carrot.toby.domain.quiz.entity;
+package garden.carrot.toby.domain.quizdata.entity;
 
 public enum QuizType {
 	DRAWINGS, OBJECTS, FEELINGS, EMERGENCY

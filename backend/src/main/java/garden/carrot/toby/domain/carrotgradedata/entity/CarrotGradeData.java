@@ -1,4 +1,4 @@
-package garden.carrot.toby.domain.carrotGradeData.entity;
+package garden.carrot.toby.domain.carrotgradedata.entity;
 
 import garden.carrot.toby.common.entity.BaseEntity;
 import jakarta.persistence.Entity;

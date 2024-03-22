@@ -1,7 +1,7 @@
-package garden.carrot.toby.domain.memberQuiz.entity;
+package garden.carrot.toby.domain.memberquiz.entity;
 
 import garden.carrot.toby.common.entity.BaseEntity;
-import garden.carrot.toby.domain.quiz.entity.QuizData;
+import garden.carrot.toby.domain.quizdata.entity.QuizData;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;

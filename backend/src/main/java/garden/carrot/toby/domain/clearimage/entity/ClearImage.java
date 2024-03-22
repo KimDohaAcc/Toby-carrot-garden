@@ -1,7 +1,7 @@
-package garden.carrot.toby.domain.memberCarrot.entity;
+package garden.carrot.toby.domain.clearimage.entity;
 
 import garden.carrot.toby.common.entity.BaseEntity;
-import garden.carrot.toby.domain.place.entity.PlaceData;
+import garden.carrot.toby.domain.placedata.entity.PlaceData;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberCarrot extends BaseEntity {
+public class ClearImage extends BaseEntity {
 //	@ManyToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name = "member_id")
 //	private Member member;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "place_data")
+	@JoinColumn(name = "place_data_id")
 	private PlaceData placeData;
 
-	private int count;
+	private String clearImageUrl;
 }
