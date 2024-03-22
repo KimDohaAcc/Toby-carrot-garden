@@ -8,6 +8,7 @@ import club.minnced.discord.webhook.WebhookClientBuilder;
 
 @Component
 public class DiscordNotifier {
+	private final int MAX_LENGTH = 2000;
 	private final WebhookClient webhookClient;
 
 	public DiscordNotifier(@Value("${discord.webhook}") String webhookUrl) {
@@ -15,6 +16,13 @@ public class DiscordNotifier {
 	}
 
 	public void notify(String message) {
-		webhookClient.send(message);
+		int start = 0;
+		int end = message.length();
+		while (end > MAX_LENGTH && (start + MAX_LENGTH) < end) {
+			webhookClient.send(message.substring(start, start + MAX_LENGTH));
+			start += MAX_LENGTH;
+		}
+		webhookClient.send(message.substring(start, end));
+
 	}
 }
