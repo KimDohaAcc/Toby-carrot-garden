@@ -107,7 +107,7 @@ public class AuthService {
 	 */
 	private boolean isSignupComplete(Member member) {
 		// 회원가입 완료된 멤버
-		if (member.getBirthDate() != null && member.getNickname() != null && member.getParentPassword() != null) {
+		if (member.getBirthDate() != null && member.getName() != null && member.getParentPassword() != null) {
 			return true;
 		}
 		return false;
