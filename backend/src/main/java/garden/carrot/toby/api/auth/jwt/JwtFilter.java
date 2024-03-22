@@ -34,7 +34,8 @@ public class JwtFilter extends OncePerRequestFilter {
 			"/api/swagger-ui/index.html",              // localhost swagger
 			"/v3/api-docs",
 			"/api/v3/api-docs",
-			"/api/v3/api-docs/swagger-config"
+			"/api/v3/api-docs/swagger-config",
+			"/api/auth/token"
 		);
 
 		// 2. 토큰이 필요하지 않은 API URL의 경우 -> 로직 처리없이 다음 필터로 이동한다.
@@ -43,7 +44,8 @@ public class JwtFilter extends OncePerRequestFilter {
 			return;
 		}
 		// 3.토큰이 필요하지 않은 API URL의 경우 -> /api/auth/ 로 시작하는 URL인 경우 다음 필터로 이동한다.
-		if (request.getRequestURI().startsWith("/api/auth/") || request.getRequestURI().startsWith("/api/hello/")) {
+		if (request.getRequestURI().startsWith("/api/auth/oauth2") || request.getRequestURI()
+			.startsWith("/api/hello/")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
