@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store.tsx";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { getSceneList } from "../apis/hospitalApi";
 import { setSceneList } from "../store/slices/hospitalSlice.tsx";
@@ -11,6 +11,8 @@ import Logo from "../components/Logo";
 
 import StoryTitle from "../components/hospital/StoryTitle";
 import StoryContent from "../components/hospital/StoryContent";
+import StoryQuiz from "../components/hospital/StoryQuiz";
+import StoryClear from "../components/hospital/StoryClear";
 
 //더미 데이터
 // {
@@ -60,11 +62,19 @@ const dummyData = [
     content: "토끼가 일어났어요",
     voice: "s3에 저장된 mp3 파일",
   },
+
   {
     sceneId: 2,
-    quizType: "clear",
+    quizType: "quiz",
+    quiz: [
+      {
+        quizId: 1,
+        correctAnswer: "딸기",
+        quizType: "detections",
+      },
+    ],
     sceneImageUrl: "https://via.placeholder.com/150",
-    content: "사진 촬영하세요",
+    content: "토끼는 뭘 먹었을까요?",
     voice: "s3에 저장된 mp3 파일",
   },
   {
@@ -79,6 +89,27 @@ const dummyData = [
     ],
     sceneImageUrl: "https://via.placeholder.com/150",
     content: "토끼는 뭘 먹었을까요?",
+    voice: "s3에 저장된 mp3 파일",
+  },
+  {
+    sceneId: 4,
+    quizType: "quiz",
+    quiz: [
+      {
+        quizId: 1,
+        correctAnswer: "딸기",
+        quizType: "emotions",
+      },
+    ],
+    sceneImageUrl: "https://via.placeholder.com/150",
+    content: "토끼는 뭘 먹었을까요?",
+    voice: "s3에 저장된 mp3 파일",
+  },
+  {
+    sceneId: 5,
+    quizType: "clear",
+    sceneImageUrl: "https://via.placeholder.com/150",
+    content: "사진 촬영하세요",
     voice: "s3에 저장된 mp3 파일",
   },
 ];
@@ -174,6 +205,7 @@ const Hospital = () => {
   // }, []);
 
   const [pageType, setPageType] = useState<string>("title");
+  const [sceneIndex, setSceneIndex] = useState<number>(0);
 
   const location = useLocation();
   const { title, storyImageUrl } = location.state;
@@ -181,7 +213,7 @@ const Hospital = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const hospitalSceneList = useSelector(
+  const hospitalSceneList = useSelector<RootState, HospitalSceneList[]>(
     (state: RootState) => state.hospital.sceneList
   );
 
@@ -191,22 +223,26 @@ const Hospital = () => {
   }, [dispatch]);
 
   const renderSceneContent = () => {
+    console.log("pageType: ", pageType);
     switch (pageType) {
       case "title":
         return <StoryTitle title={title} storyImageUrl={storyImageUrl} />;
       case "normal":
-        return <StoryContent />;
-      // case "clear":
-      //   return <StoryContent />;
-      // case "quiz":
-      //   return <StoryContent />;
-      // default:
-      //   return <StoryContent />;
+        return <StoryContent index={sceneIndex - 1} />;
+      case "clear":
+        return <StoryClear index={sceneIndex - 1} />;
+      case "quiz":
+        return <StoryQuiz index={sceneIndex - 1} />;
     }
   };
 
   const handleOnclickNextBtn = () => {
-    setPageType("normal");
+    console.log("sceneIndex: ", sceneIndex);
+    setSceneIndex((prevIndex) => {
+      const nextIndex = prevIndex + 1;
+      setPageType(hospitalSceneList[sceneIndex].quizType);
+      return nextIndex;
+    });
   };
 
   return (
@@ -224,13 +260,18 @@ const Hospital = () => {
             >
               X
             </CloseBtn>
-            <NextBtn
-              onClick={() => {
-                handleOnclickNextBtn();
-              }}
-            >
-              다음
-            </NextBtn>
+
+            {pageType === "clear" ? (
+              <div>마지막 페이지임</div>
+            ) : (
+              <NextBtn
+                onClick={() => {
+                  handleOnclickNextBtn();
+                }}
+              >
+                다음
+              </NextBtn>
+            )}
           </StoryContentArea2>
         </StoryContentArea1>
       </StoryContainer>

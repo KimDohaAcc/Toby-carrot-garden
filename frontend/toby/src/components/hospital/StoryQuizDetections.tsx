@@ -1,0 +1,74 @@
+import React from "react";
+import styled from "styled-components";
+
+const StoryQuizDetectionsContainer = styled.div`
+  display: grid;
+  grid-template-areas:
+    "title title"
+    "image camera";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 5fr;
+  height: 100%;
+  border: 1px solid black;
+`;
+
+const StoryQuizDetectionsTitleArea = styled.div`
+  grid-area: title;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+`;
+
+const StoryQuizDetectionsImageArea = styled.div`
+  grid-area: image;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+`;
+
+const StoryQuizDetectionsImage = styled.img`
+  height: 95%;
+  border: 1px solid black;
+`;
+
+const StoryQuizDetectionCanmeraArea = styled.div`
+  grid-area: camera;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+`;
+
+const CameraArea = styled.div`
+  flex: 0 0 75%;
+`;
+
+const CameraBtnArea = styled.div`
+  flex: 0 0 25%;
+`;
+
+const StoryQuizDetections = ({ imageUrl }) => {
+  return (
+    <StoryQuizDetectionsContainer>
+      <StoryQuizDetectionsTitleArea>
+        <h1>StoryQuizDetections</h1>
+      </StoryQuizDetectionsTitleArea>
+      <StoryQuizDetectionsImageArea>
+        <StoryQuizDetectionsImage src={imageUrl} alt="image" />
+      </StoryQuizDetectionsImageArea>
+      <StoryQuizDetectionCanmeraArea>
+        <CameraArea>
+          <h1>Camera</h1>
+        </CameraArea>
+        <CameraBtnArea>
+          <button>Camera</button>
+        </CameraBtnArea>
+      </StoryQuizDetectionCanmeraArea>
+    </StoryQuizDetectionsContainer>
+  );
+};
+
+export default StoryQuizDetections;
