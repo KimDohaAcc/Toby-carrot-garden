@@ -6,7 +6,8 @@ export const getKakaoPage = async () => {
     const response = await api.get("auth/oauth2/kakao");
     return response.data;
   } catch (error) {
-    console.error("카카오 리다이렉트를 하지 못했습니다", error);
+    console.error("카카오 리다이렉트를 하지 zxxfz못했습니다", error);
+    console.log("안녕");
   }
 };
 

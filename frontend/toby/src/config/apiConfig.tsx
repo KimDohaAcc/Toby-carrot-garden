@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   // axios 인스턴스 생성
-  baseURL: "https://i10a202.p.ssafy.io/api/", // 기본 url 설정
+  baseURL: "https://j10a202.p.ssafy.io/api/", // 기본 url 설정
   headers: {
     "Content-Type": "application/json",
   },
