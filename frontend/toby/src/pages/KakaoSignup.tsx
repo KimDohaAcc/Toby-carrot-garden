@@ -38,12 +38,13 @@ function KakaoSignup() {
       if (kakaoPageData && kakaoPageData.result && kakaoPageData.result.uri) {
         window.location.href = kakaoPageData.result.uri;
       } else {
-        console.error("카카오 로그인 페이지 URI를 받아오는 데 실패했습니다.");
+        console.error(kakaoPageData.result.uri);
       }
     } catch (error) {
       console.error("카카오 로그인 처리 중 에러가 발생했습니다.", error);
     }
   };
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const tokenCode = queryParams.get("tokenCode");
