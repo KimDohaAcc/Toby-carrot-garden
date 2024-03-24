@@ -19,7 +19,7 @@ export default defineConfig({
         start_url: "/",
         scope: ".",
         display: "standalone",
-        orientation: "portrait", // landscape // portrait // portrait-primary
+        orientation: "landscape", // landscape // portrait // portrait-primary
         background_color: "#fff",
         theme_color: "#fff",
         description: "app description",
