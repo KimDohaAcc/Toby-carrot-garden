@@ -35,10 +35,16 @@ function KakaoSignup() {
   const handleSignupClick = async () => {
     try {
       const kakaoPageData = await getKakaoPage();
-      if (kakaoPageData && kakaoPageData.result && kakaoPageData.result.uri) {
+      // kakaoPageData.result가 존재하고, 그 안에 uri가 존재하는지 확인
+      if (
+        kakaoPageData &&
+        kakaoPageData.result &&
+        "uri" in kakaoPageData.result
+      ) {
         window.location.href = kakaoPageData.result.uri;
       } else {
-        console.error(kakaoPageData.result.uri);
+        // 적절한 오류 처리를 위해 kakaoPageData를 로그로 찍어보기
+        console.error("URI를 찾을 수 없습니다.", kakaoPageData);
       }
     } catch (error) {
       console.error("카카오 로그인 처리 중 에러가 발생했습니다.", error);

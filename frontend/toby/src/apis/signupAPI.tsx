@@ -4,10 +4,12 @@ import api from "../config/apiConfig.tsx";
 export const getKakaoPage = async () => {
   try {
     const response = await api.get("auth/oauth2/kakao");
+    console.log("API response:", response.data); // 이 줄 추가
+    console.log("여기까진 왔다");
     return response.data;
   } catch (error) {
-    console.error("카카오 리다이렉트를 하지 zxxfz못했습니다", error);
-    console.log("안녕");
+    console.error("카카오 리다이렉트를 하지 못했습니다", error);
+    //
   }
 };
 
