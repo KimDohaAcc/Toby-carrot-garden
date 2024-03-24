@@ -1,5 +1,5 @@
-import api from "../config/apiConfig.tsx";
-
+import { api } from "../config/apiConfig.tsx";
+import { saveTokens } from "../config/authAPI.tsx";
 //카카오 로그인 페이지 이동
 export const getKakaoPage = async () => {
   try {
@@ -22,6 +22,11 @@ export const postKakaoToken = async (tokenCode) => {
     const response = await api.post("auth/token", requestBody);
 
     if (response.status === 200) {
+      saveTokens({
+        accessToken: response.data.result.accessToken,
+        refreshToken: response.data.result.refreshToken,
+      });
+
       console.log("토큰전송완료", response.data.message);
     } else {
       console.error("재채점 요청 실패", response.data.message);
@@ -41,7 +46,11 @@ export const postSignInfo = async ({ name, birthDate, parentPassword }) => {
       birthDate: birthDate,
       parentPassword: parentPassword,
     };
-    const response = await api.post("auth/signup", requestBody);
+    const response = await api.post("auth/signup", requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (response.status === 200) {
       console.log("추가 정보 전송 완료", response.data.message);
