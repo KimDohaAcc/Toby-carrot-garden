@@ -12,20 +12,17 @@ const LogoWrapper = styled.div`
   align-items: center;
 `;
 
+const LogoImg = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
 const Logo = () => {
   const navigate = useNavigate();
 
   return (
     <LogoWrapper onClick={() => navigate("/main")}>
-      <img
-        src="/Image/common/logoImage.png"
-        alt="logo"
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "block",
-        }}
-      />
+      <LogoImg src="/Image/common/logoImage.png" alt="logo" />
     </LogoWrapper>
   );
 };

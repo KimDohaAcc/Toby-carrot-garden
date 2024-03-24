@@ -7,6 +7,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,png,jpg,svg,json}"],
+      },
       devOptions: {
         enabled: true,
       },
@@ -32,6 +35,16 @@ export default defineConfig({
             src: "/icon-512.png",
             type: "image/png",
             sizes: "512x512",
+          },
+          {
+            src: "/icon-512.png",
+            type: "image/png",
+            purpose: "maskable",
+          },
+          {
+            src: "/icon-512.png",
+            type: "image/png",
+            purpose: "any",
           },
         ],
       },

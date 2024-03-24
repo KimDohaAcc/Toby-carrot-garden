@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { getSceneList } from "../apis/hospitalApi";
+// import { getSceneList } from "../apis/hospitalApi";
 import { setSceneList } from "../store/slices/hospitalSlice.tsx";
 
 import Logo from "../components/Logo";
@@ -119,6 +119,8 @@ const StoryContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   border: 2px solid black;
 `;
 
@@ -140,9 +142,9 @@ const StoryContentArea1 = styled.div`
 const StoryContentArea2 = styled.div`
   display: grid;
   grid-template-areas:
-    "content closeBtn"
-    "content ."
-    "content nextBtn";
+    "conten closeBtn"
+    "conten ."
+    "conten nextBtn";
   grid-template-columns: 11fr 1fr;
   grid-template-rows: 1fr 10fr 1fr;
   width: 90%;
@@ -169,7 +171,7 @@ const NextBtn = styled.button`
 `;
 
 const Content = styled.div`
-  grid-area: content;
+  grid-area: conten;
   border: 1px solid black;
 `;
 
@@ -204,7 +206,7 @@ const Hospital = () => {
   //   fetchSceneList();
   // }, []);
 
-  const [pageType, setPageType] = useState<string>("title");
+  const [pageType, setPageType] = useState<string>("");
   const [sceneIndex, setSceneIndex] = useState<number>(0);
 
   const location = useLocation();
@@ -220,6 +222,7 @@ const Hospital = () => {
   useEffect(() => {
     // Dummy data를 Redux 스토어에 저장
     dispatch(setSceneList(dummyData));
+    setPageType("title");
   }, [dispatch]);
 
   const renderSceneContent = () => {

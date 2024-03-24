@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+
+import StoryDrawingModal from "../modals/StoryDrawingModal";
+
+import { submitQuiz } from "../../apis/drawingApi";
 
 const QuizContainer = styled.div`
   display: grid;
@@ -9,6 +13,7 @@ const QuizContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 5fr;
   height: 100%;
+  width: 100%;
   border: 1px solid black;
 `;
 
@@ -41,7 +46,19 @@ const QuizCanvasArea = styled.div`
   border: 1px solid black;
 `;
 
-const StoryQuizDrawings = ({ imageUrl }) => {
+const StoryQuizDrawings = ({ imageUrl, quizId }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    console.log("이미지 판독");
+    submitQuiz(quizId);
+  };
+
   return (
     <QuizContainer>
       <QuizTitleArea>
@@ -52,7 +69,9 @@ const StoryQuizDrawings = ({ imageUrl }) => {
       </QuizImageArea>
       <QuizCanvasArea>
         <h1>Canvas</h1>
+        <p onClick={openModal}>여기를 클릭하세요</p>
       </QuizCanvasArea>
+      <StoryDrawingModal isOpen={isModalOpen} onClose={closeModal} />
     </QuizContainer>
   );
 };

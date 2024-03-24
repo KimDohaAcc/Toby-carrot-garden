@@ -50,7 +50,15 @@ const CameraBtnArea = styled.div`
   flex: 0 0 25%;
 `;
 
+const CameraBtn = styled.button`
+  color: #b65050;
+`;
+
 const StoryQuizEmotions = ({ imageUrl }) => {
+  const handleTakePicture = () => {
+    console.log("Take a picture");
+  };
+
   return (
     <QuizContainer>
       <QuizTitleArea>
@@ -61,7 +69,15 @@ const StoryQuizEmotions = ({ imageUrl }) => {
       </QuizImageArea>
       <QuizCameraArea>
         <CameraArea>Camera</CameraArea>
-        <CameraBtnArea>CameraBtn</CameraBtnArea>
+        <CameraBtnArea>
+          <CameraBtn
+            onClick={() => {
+              handleTakePicture();
+            }}
+          >
+            찰칵 이미지
+          </CameraBtn>
+        </CameraBtnArea>
       </QuizCameraArea>
     </QuizContainer>
   );
