@@ -1,4 +1,4 @@
-import api from "../config/apiConfig";
+import { api } from "../config/apiConfig";
 
 // 클라이언트에서 사진과 퀴즈 아이디 전달
 // s3에 사진을 저장
