@@ -1,4 +1,4 @@
-import api from "../config/apiConfig.tsx";
+import { api } from "../config/apiConfig.tsx";
 
 //정답률 비교 막대그래프
 export const getCorrectAnswer = async () => {
