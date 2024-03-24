@@ -82,11 +82,15 @@ function UserInfoForm() {
   };
   const handleSubmit = async () => {
     try {
-      const response = await postSignInfo({
+      // 요청 전송 전 데이터를 콘솔에 출력
+      const requestData = {
         name,
-        birthDate: birthday,
+        birthDate: birthday, // birthday를 birthDate로 변경
         parentPassword: password,
-      });
+      };
+      console.log("보내기 전 요청 데이터:", requestData);
+
+      const response = await postSignInfo(requestData);
       console.log("추가 정보 전송 완료", response.message);
     } catch (error) {
       console.error("추가 정보 전송 실패", error);
