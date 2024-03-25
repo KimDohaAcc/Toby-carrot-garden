@@ -4,6 +4,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import garden.carrot.toby.common.constants.ErrorCode;
+import garden.carrot.toby.common.exception.CustomException;
 import garden.carrot.toby.common.s3.dto.S3Dto;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +27,6 @@ public class S3Service {
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
-
 	private final AmazonS3 amazonS3;
 
 	// 파일 업로드
@@ -44,7 +45,7 @@ public class S3Service {
 			amazonS3.putObject(new PutObjectRequest(bucket, fileKey, inputStream, objectMetadata)
 				.withCannedAcl(CannedAccessControlList.PublicRead));
 		} catch (IOException e) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드 실패");
+			throw new CustomException(ErrorCode.FILE_UPLOAD_FAIL);
 		}
 
 		return new S3Dto(fileKey, amazonS3.getUrl(bucket, fileKey).toString());

@@ -29,7 +29,7 @@ public class StoryService {
 	private final MemberUtil memberUtil;
 
 	@Transactional
-	public String submitQuiz(SubmitQuizRequest dto) {
+	public String submitQuiz(SubmitQuizRequest dto) throws Exception{
 
 		int memberId = memberUtil.getLoginMember().getId();
 		QuizData quizData = quizDataRepository.findById(dto.getQuizId())

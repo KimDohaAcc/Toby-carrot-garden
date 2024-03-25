@@ -22,7 +22,7 @@ public class StoryController {
 	private final StoryService storyService;
 
 	@PostMapping(value = "/quiz/submit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ApiResponse<String> submitQuiz(@ModelAttribute SubmitQuizRequest dto) {
+	public ApiResponse<String> submitQuiz(@ModelAttribute SubmitQuizRequest dto) throws Exception{
 		String url = storyService.submitQuiz(dto);
 
 		return ApiResponse.success(SuccessCode.POST_SUCCESS, url);
