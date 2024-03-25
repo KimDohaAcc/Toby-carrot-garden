@@ -1,4 +1,4 @@
-import api from "../config/apiConfig";
+import { api } from "../config/apiConfig";
 
 //URI : /place/{place_id} 장소 진입시 스토리 리스트 조회
 // {

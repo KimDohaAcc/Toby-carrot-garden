@@ -1,4 +1,4 @@
-import api from "../config/apiConfig.tsx";
+import { api } from "../config/apiConfig.tsx";
 
 // URI : /member/clear-image
 // 클리어사진 목록 열람

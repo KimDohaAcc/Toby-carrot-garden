@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { postSignInfo } from "../apis/signupAPI";
+import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -61,6 +62,7 @@ function UserInfoForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [birthday, setBirthday] = useState("");
+  const navigate = useNavigate();
 
   const handleNextStep = () => {
     if (step === 1 && (!name || !birthday)) {
@@ -92,6 +94,7 @@ function UserInfoForm() {
 
       const response = await postSignInfo(requestData);
       console.log("추가 정보 전송 완료", response.message);
+      navigate("/main");
     } catch (error) {
       console.error("추가 정보 전송 실패", error);
     }
