@@ -1,16 +1,15 @@
 package garden.carrot.toby.common.exception;
 
+import garden.carrot.toby.common.logback.DiscordNotifier;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import org.springframework.stereotype.Component;
-
-import garden.carrot.toby.common.logback.DiscordNotifier;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
 public class ExceptionUtil {
+
 	private final DiscordNotifier discordNotifier;
 	private final StringBuilder sb = new StringBuilder();
 

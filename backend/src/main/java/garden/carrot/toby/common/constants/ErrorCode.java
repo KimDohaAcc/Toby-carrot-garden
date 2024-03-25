@@ -12,6 +12,7 @@ import lombok.Getter;
 public enum ErrorCode {
 	/* 400 BAD_REQUEST: 잘못된 요청 구문 */
 	// 일반
+	NO_ID(BAD_REQUEST, "요청하신 정보가 없습니다"),
 	ALREADY_DELETED(BAD_REQUEST, "이미 삭제된 값입니다"),
 	BAD_PARAMETER(BAD_REQUEST, "요청 파라미터가 잘못되었습니다."),
 	BAD_PARAMETER_TYPE(BAD_REQUEST, "지원하지 않는 파라미터 형식입니다."),
@@ -35,6 +36,9 @@ public enum ErrorCode {
 
 	// 당근
 	INVALID_CARROT_COUNT(BAD_REQUEST, "당근 개수가 올바르지 않습니다. 0 ~ INTEGER.MAX_INT 값만 가능합니다."),
+
+	// S3
+	FILE_UPLOAD_FAIL(INTERNAL_SERVER_ERROR, "S3 파일 업로드에 실패하였습니다."),
 
 	/* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
 	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다.");

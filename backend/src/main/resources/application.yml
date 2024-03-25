@@ -43,3 +43,15 @@ secretKeyPlain: ${SECURE_KEY_PLAIN} # 시큐리티 키
 
 discord:
   webhook: ${DISCORD_WEBHOOK}
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${S3_ACCESSKEY}
+      secret-key: ${S3_SECRETKEY}
+    s3: #버킷이름
+      bucket: ${S3_BUCKET}
+    region: #S3 지역
+      static: ${S3_REGION}
+    stack:
+      auto: false

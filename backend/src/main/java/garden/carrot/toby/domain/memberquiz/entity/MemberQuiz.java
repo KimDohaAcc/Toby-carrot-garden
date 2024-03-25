@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,11 @@ public class MemberQuiz extends BaseEntity {
 
 	// 그림인 경우 일치율, 분석 이미지인 경우 100 또는 0
 	private double score;
+
+	@Builder
+	MemberQuiz(QuizData quizData, String imageUrl, double score) {
+		this.quizData = quizData;
+		this.imageUrl = imageUrl;
+		this.score = score;
+	}
 }

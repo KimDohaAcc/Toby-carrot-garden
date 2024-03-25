@@ -1,16 +1,15 @@
 package garden.carrot.toby.api.auth.dto;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import garden.carrot.toby.api.auth.constatnts.KakaoConstants;
+import java.io.Serializable;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 public class KakaoDto {
+
 	@Getter
 	@ToString
 	// 인가 코드로 토큰 발급을 요청
@@ -48,6 +47,7 @@ public class KakaoDto {
 	@NoArgsConstructor
 	@Getter
 	public static class UserInfo {
+
 		// json이랑 이름이 똑같은데도 값이 안 들어와서 JsonProperty 추가
 		@JsonProperty("id")
 		private Long id;
