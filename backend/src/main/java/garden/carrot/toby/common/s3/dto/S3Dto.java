@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class S3Dto {
-    String fileKey;
-    String fileUrl;
+
+	String fileKey;
+	String fileUrl;
 }

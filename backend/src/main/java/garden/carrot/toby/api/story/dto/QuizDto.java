@@ -7,21 +7,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class QuizDto {
 
-    @Getter
-    @AllArgsConstructor
-    public static class SubmitQuizRequest {
-        private MultipartFile analysisImage;
-        private int quizId;
-    }
+	@Getter
+	@AllArgsConstructor
+	public static class SubmitQuizRequest {
 
-    @Getter
-    @AllArgsConstructor
-    @ToString
-    public static class ProducerData {
-        private String imageKey;
-        private int memberId;
-        private int quizId;
-        private String correctAnswer;
-    }
+		private MultipartFile analysisImage;
+		private int quizId;
+	}
+
+	@Getter
+	@AllArgsConstructor
+	@ToString
+	public static class ProducerData {
+
+		private String imageKey;
+		private int memberId;
+		private int quizId;
+		private String correctAnswer;
+	}
 
 }

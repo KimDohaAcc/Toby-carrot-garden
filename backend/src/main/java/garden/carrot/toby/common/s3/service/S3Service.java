@@ -22,31 +22,32 @@ import org.springframework.web.server.ResponseStatusException;
 @Transactional(readOnly = true)
 @Slf4j
 public class S3Service {
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
 
-    private final AmazonS3 amazonS3;
+	@Value("${cloud.aws.s3.bucket}")
+	private String bucket;
 
-    // 파일 업로드
-    @Transactional
-    public S3Dto uploadFile(MultipartFile multipartFile) {
-        // 파일 업로드시, 파일명을 난수화하기 위해 UUID 를 활용하여 난수 생성
-        String fileKey = UUID.randomUUID().toString();
+	private final AmazonS3 amazonS3;
 
-        // AWS S3에 업로드할 객체의 메타데이터를 설정 -> 파일을 로컬에 따로 저장하지 않고 바로 S3에 저장하기 위함
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(multipartFile.getSize());
-        objectMetadata.setContentType(multipartFile.getContentType());
+	// 파일 업로드
+	@Transactional
+	public S3Dto uploadFile(MultipartFile multipartFile) {
+		// 파일 업로드시, 파일명을 난수화하기 위해 UUID 를 활용하여 난수 생성
+		String fileKey = UUID.randomUUID().toString();
 
-        // AWS S3에 파일 업로드 하는 부분.
-        try (InputStream inputStream = multipartFile.getInputStream()) {
-            amazonS3.putObject(new PutObjectRequest(bucket, fileKey, inputStream, objectMetadata)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-        } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드 실패");
-        }
+		// AWS S3에 업로드할 객체의 메타데이터를 설정 -> 파일을 로컬에 따로 저장하지 않고 바로 S3에 저장하기 위함
+		ObjectMetadata objectMetadata = new ObjectMetadata();
+		objectMetadata.setContentLength(multipartFile.getSize());
+		objectMetadata.setContentType(multipartFile.getContentType());
 
-        return new S3Dto(fileKey, amazonS3.getUrl(bucket, fileKey).toString());
-    }
+		// AWS S3에 파일 업로드 하는 부분.
+		try (InputStream inputStream = multipartFile.getInputStream()) {
+			amazonS3.putObject(new PutObjectRequest(bucket, fileKey, inputStream, objectMetadata)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
+		} catch (IOException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드 실패");
+		}
+
+		return new S3Dto(fileKey, amazonS3.getUrl(bucket, fileKey).toString());
+	}
 
 }

@@ -5,33 +5,28 @@ import garden.carrot.toby.api.story.dto.QuizDto.SubmitQuizRequest;
 import garden.carrot.toby.api.story.service.StoryService;
 import garden.carrot.toby.common.constants.SuccessCode;
 import garden.carrot.toby.common.dto.ApiResponse;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/story")
 @RequiredArgsConstructor
 @Slf4j
 public class StoryController {
-    private final StoryService storyService;
 
-    @PostMapping(value = "/quiz/submit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ApiResponse<String> submitQuiz(@ModelAttribute SubmitQuizRequest dto) {
-        String url = storyService.submitQuiz(dto);
+	private final StoryService storyService;
 
-        return ApiResponse.success(SuccessCode.POST_SUCCESS, url);
-    }
+	@PostMapping(value = "/quiz/submit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ApiResponse<String> submitQuiz(@ModelAttribute SubmitQuizRequest dto) {
+		String url = storyService.submitQuiz(dto);
+
+		return ApiResponse.success(SuccessCode.POST_SUCCESS, url);
+	}
 
 
 }
