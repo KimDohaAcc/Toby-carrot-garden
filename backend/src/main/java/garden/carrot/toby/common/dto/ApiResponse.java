@@ -1,13 +1,13 @@
 package garden.carrot.toby.common.dto;
 
-import org.springframework.http.HttpStatus;
-
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.constants.SuccessCode;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 public class ApiResponse<T> {
+
 	private final Integer status;
 	private final String message;
 	private T result;

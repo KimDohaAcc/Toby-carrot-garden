@@ -1,19 +1,19 @@
 package garden.carrot.toby.api.auth.util;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
-
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
 import garden.carrot.toby.domain.member.entity.Member;
 import garden.carrot.toby.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class MemberUtil {
+
 	private final MemberRepository memberRepository;
 
 	public Member getLoginMember() throws CustomException {

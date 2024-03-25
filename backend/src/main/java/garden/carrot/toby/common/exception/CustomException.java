@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class CustomException extends RuntimeException {
+
 	// exception의 원인이 된 값
 	private Object data;
 	private ErrorCode errorCode;

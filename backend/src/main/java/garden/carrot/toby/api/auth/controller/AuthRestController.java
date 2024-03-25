@@ -1,11 +1,5 @@
 package garden.carrot.toby.api.auth.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import garden.carrot.toby.api.auth.constatnts.KakaoConstants;
 import garden.carrot.toby.api.auth.dto.AuthDto;
 import garden.carrot.toby.api.auth.service.AuthService;
@@ -15,12 +9,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("auth")
 public class AuthRestController {
+
 	private final AuthService authService;
 
 	/**
@@ -28,8 +28,9 @@ public class AuthRestController {
 	 */
 	@GetMapping("/oauth2/kakao")
 	public ApiResponse<AuthDto.KakaoUriResponse> kakaoOauth2(HttpServletRequest request) {
-		String uri = "https://kauth.kakao.com/oauth/authorize?client_id=" + KakaoConstants.getClientId()
-			+ "&redirect_uri=" + KakaoConstants.getRedirectUri() + "&response_type=code";
+		String uri =
+			"https://kauth.kakao.com/oauth/authorize?client_id=" + KakaoConstants.getClientId()
+				+ "&redirect_uri=" + KakaoConstants.getRedirectUri() + "&response_type=code";
 
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, new AuthDto.KakaoUriResponse(uri));
 	}
@@ -38,7 +39,8 @@ public class AuthRestController {
 	 * 토큰 코드 검증 후 우리 서버 토큰 반환
 	 */
 	@PostMapping("/token")
-	public ApiResponse<AuthDto.SigninResponse> getOauth2Token(@RequestBody AuthDto.TokenRequest request) {
+	public ApiResponse<AuthDto.SigninResponse> getOauth2Token(
+		@RequestBody AuthDto.TokenRequest request) {
 		AuthDto.SigninResponse tokens = authService.getOauthSigninToken(request.getTokenCode());
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, tokens);
 	}
@@ -47,7 +49,8 @@ public class AuthRestController {
 	 * 회원가입 추가 진행
 	 */
 	@PostMapping("/signup")
-	public ApiResponse<AuthDto.SignupExtraResponse> signup(@Valid @RequestBody AuthDto.SignupExtraRequest request) {
+	public ApiResponse<AuthDto.SignupExtraResponse> signup(
+		@Valid @RequestBody AuthDto.SignupExtraRequest request) {
 		AuthDto.SignupExtraResponse response = authService.signup(request);
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, response);
 	}

@@ -1,17 +1,16 @@
 package garden.carrot.toby.common.logback;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.springframework.util.StreamUtils;
-
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import org.springframework.util.StreamUtils;
 
 public class RequestWrapper extends HttpServletRequestWrapper {
+
 	private byte[] cachedInputStream;
 
 	public RequestWrapper(HttpServletRequest request) throws IOException {

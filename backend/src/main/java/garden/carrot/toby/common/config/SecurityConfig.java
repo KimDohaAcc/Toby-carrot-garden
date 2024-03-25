@@ -1,8 +1,9 @@
 package garden.carrot.toby.common.config;
 
+import garden.carrot.toby.api.auth.jwt.JwtFilter;
+import garden.carrot.toby.api.auth.jwt.TokenProvider;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,17 +22,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import garden.carrot.toby.api.auth.jwt.JwtFilter;
-import garden.carrot.toby.api.auth.jwt.TokenProvider;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
 	private final TokenProvider tokenProvider;
 
 	private final String FRONT_DOMAIN;
 
-	public SecurityConfig(@Value("${DOMAIN.FRONT}") String frontDomain, TokenProvider tokenProvider) {
+	public SecurityConfig(@Value("${DOMAIN.FRONT}") String frontDomain,
+		TokenProvider tokenProvider) {
 
 		this.FRONT_DOMAIN = frontDomain;
 		this.tokenProvider = tokenProvider;
@@ -52,7 +52,8 @@ public class SecurityConfig {
 			.sessionManagement((sessionManagement) ->
 				sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			)
-			.addFilterAfter(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+			.addFilterAfter(new JwtFilter(tokenProvider),
+				UsernamePasswordAuthenticationFilter.class)
 		;
 
 		return http.build();
@@ -63,7 +64,7 @@ public class SecurityConfig {
 	CorsConfigurationSource corsConfigurationSource() {
 		final String LOCALHOST = "localhost:";
 
-		final String[] ALLOWED_HOSTS = new String[] {
+		final String[] ALLOWED_HOSTS = new String[]{
 			LOCALHOST,
 			"127.0.0.1:"
 		};
