@@ -6,7 +6,6 @@ import ConstructionModal from "../components/modals/constructionModal";
 import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 입력 모달
 import Logo from "../components/Logo";
 import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryListModal";
-import { set } from "date-fns";
 
 const MainpageContainer = styled.div`
   height: 100%;

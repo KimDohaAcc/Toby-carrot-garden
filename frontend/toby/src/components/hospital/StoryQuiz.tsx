@@ -45,11 +45,12 @@ const StoryQuiz = ({ index }: StoryQuizProps) => {
   console.log("ASdasdasd", sceneList[index]?.quiz?.[0]?.quizType);
 
   const imageUrl = sceneList[index]?.sceneImageUrl;
+  const quizId = sceneList[index]?.quiz?.[0]?.quizId;
 
   const renderQuiz = () => {
     switch (sceneList[index]?.quiz?.[0]?.quizType) {
       case "drawings":
-        return <StoryQuizDrawings imageUrl={imageUrl} />;
+        return <StoryQuizDrawings imageUrl={imageUrl} quizId={quizId} />;
       case "detections":
         return <StoryQuizDetections imageUrl={imageUrl} />;
       case "emotions":

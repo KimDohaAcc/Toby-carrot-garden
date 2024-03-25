@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 // import { getKakaoPage } from "../apis/signupAPI";
 
 const StartPageContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   position: relative;
   background-size: cover;
   background-image: url("Image/common/startImage.png");

@@ -33,7 +33,7 @@ const ModalConatiner = styled.div`
   border-radius: 20px;
   border: 2px solid black;
   padding: 50px;
-  background-color: white;
+  background-color: #cdcdcd;
   z-index: 100;
   display: flex;
   flex-direction: column;
