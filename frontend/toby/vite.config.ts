@@ -11,7 +11,7 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,png,jpg,svg,json}"],
         runtimeCaching: [
           {
-            urlPattern: new RegExp('^/api'), // '/api'로 시작하는 URL에 대해
+            urlPattern: new RegExp('/api'), // '/api'로 시작하는 URL에 대해
             handler: 'NetworkOnly', // 캐싱하지 않음
           },
           {
