@@ -15,7 +15,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import garden.carrot.toby.api.auth.dto.AuthDto;
 import garden.carrot.toby.api.auth.dto.KakaoDto;
+import garden.carrot.toby.api.auth.dto.MemberDto;
 import garden.carrot.toby.api.auth.jwt.TokenProvider;
+import garden.carrot.toby.api.auth.mapper.MemberMapper;
 import garden.carrot.toby.api.auth.util.MemberUtil;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
@@ -37,6 +39,7 @@ public class AuthService {
 	private final RedisTemplate<String, AuthDto.SigninResponse> redisTemplate;
 	private final MemberUtil memberUtil;
 	private final PasswordEncoder passwordEncoder;
+	private final MemberMapper memberMapper;
 
 	/**
 	 * 카카오 콜백
@@ -192,5 +195,13 @@ public class AuthService {
 		String encodedPassword = passwordEncoder.encode(request.getParentPassword());
 		member.signup(encodedPassword, request.getName(), request.getBirthDate());
 		return new AuthDto.SignupExtraResponse(member.getId());
+	}
+
+	public MemberDto.Response getMemberInfo() {
+		Member member = memberUtil.getLoginMember();
+		if (!isSignupComplete(member)) {
+			throw new CustomException(ErrorCode.SIGNUP_NOT_COMPLETE);
+		}
+		return memberMapper.MemberToMemberDtoResponse(member);
 	}
 }
