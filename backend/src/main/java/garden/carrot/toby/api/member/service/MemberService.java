@@ -11,11 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import garden.carrot.toby.api.auth.util.MemberUtil;
 import garden.carrot.toby.api.member.constatns.CarrotEnum;
 import garden.carrot.toby.api.member.dto.CarrotDto;
+import garden.carrot.toby.api.member.dto.ClearImageDto;
+import garden.carrot.toby.api.member.mapper.ClearImageMapper;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.dto.ListDto;
 import garden.carrot.toby.common.exception.CustomException;
 import garden.carrot.toby.domain.carrotgradedata.entity.CarrotGradeData;
 import garden.carrot.toby.domain.carrotgradedata.repository.CarrotGradeDataRepository;
+import garden.carrot.toby.domain.clearimage.repository.ClearImageRepository;
 import garden.carrot.toby.domain.member.entity.Member;
 import garden.carrot.toby.domain.membercarrot.entity.MemberCarrot;
 import garden.carrot.toby.domain.membercarrot.repoository.MemberCarrotRepository;
@@ -29,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	private final MemberCarrotRepository memberCarrotRepository;
 	private final CarrotGradeDataRepository carrotGradeDataRepository;
+	private final ClearImageRepository clearImageRepository;
+	private final ClearImageMapper clearImageMapper;
 	private final MemberUtil memberUtil;
 
 	private static final Map<Integer, Integer> placeIdToCarrotGradeMap = new HashMap<>();
@@ -102,6 +107,15 @@ public class MemberService {
 		}
 
 		ListDto<CarrotDto.Response> response = new ListDto<>(list);
+		return response;
+	}
+
+	public ListDto<ClearImageDto.Response> getClearImages() {
+		Member member = memberUtil.getLoginMember();
+		List<ClearImageDto.Response> list = clearImageRepository.findAllByMemberId(member.getId())
+			.stream().map(i -> clearImageMapper.clearImageToClearImageDtoResponse(i)).toList();
+
+		ListDto<ClearImageDto.Response> response = new ListDto<>(list);
 		return response;
 	}
 }
