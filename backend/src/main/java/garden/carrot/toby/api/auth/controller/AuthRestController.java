@@ -2,6 +2,7 @@ package garden.carrot.toby.api.auth.controller;
 
 import garden.carrot.toby.api.auth.constatnts.KakaoConstants;
 import garden.carrot.toby.api.auth.dto.AuthDto;
+import garden.carrot.toby.api.auth.dto.MemberDto;
 import garden.carrot.toby.api.auth.service.AuthService;
 import garden.carrot.toby.common.constants.SuccessCode;
 import garden.carrot.toby.common.dto.ApiResponse;
@@ -52,6 +53,16 @@ public class AuthRestController {
 	public ApiResponse<AuthDto.SignupExtraResponse> signup(
 		@Valid @RequestBody AuthDto.SignupExtraRequest request) {
 		AuthDto.SignupExtraResponse response = authService.signup(request);
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, response);
+	}
+
+	/**
+	 * 자기 정보 반환
+	 */
+	@GetMapping("/member-info")
+	public ApiResponse<MemberDto.Response> getMemberInfo() {
+		MemberDto.Response response = authService.getMemberInfo();
+
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, response);
 	}
 }
