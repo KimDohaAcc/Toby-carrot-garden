@@ -9,6 +9,16 @@ export default defineConfig({
       registerType: "autoUpdate",
       workbox: {
         globPatterns: ["**/*.{js,css,html,png,jpg,svg,json}"],
+        runtimeCaching: [
+          {
+            urlPattern: new RegExp('^/api'), // '/api'로 시작하는 URL에 대해
+            handler: 'NetworkOnly', // 캐싱하지 않음
+          },
+          {
+            urlPattern: new RegExp('.*'), // 나머지 모든 URL에 대해
+            handler: 'StaleWhileRevalidate', // 기본 캐싱 전략 적용 (Stale-While-Revalidate)
+          },
+        ],
       },
       devOptions: {
         enabled: true,
@@ -19,7 +29,7 @@ export default defineConfig({
         start_url: "/",
         scope: ".",
         display: "standalone",
-        orientation: "landscape", // landscape // portrait // portrait-primary
+        orientation: "landscape",
         background_color: "#fff",
         theme_color: "#fff",
         description: "app description",
