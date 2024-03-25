@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import Rescore from "../components/report/Rescore.tsx";
-
+import ReportGraphContent from "../components/report/ReportGraphContent.tsx";
 // 전체 컨테이너
 const ReportContainer = styled.div`
   display: flex;
@@ -17,6 +17,7 @@ const ReportCategory = styled.div`
   width: 20%;
   height: 100%;
   display: grid;
+  position: relative;
   grid-template-rows: 3fr 2fr 2fr 2fr 2fr;
   /* grid-row-gap: 10px; */
   grid-template-areas:
@@ -28,18 +29,18 @@ const ReportCategory = styled.div`
   border: 2px solid black;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.div`
   padding: 8px 16px;
   margin: 0 5px; // Adds a little space between the buttons
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
-  width: 60%;
+  border-radius: 5%;
+  width: 50%;
   height: 50%;
   justify-content: center;
   align-items: center;
-  border-radius: 5%;
+  position: absolute;
 
   cursor: pointer;
 
@@ -56,6 +57,7 @@ const Category1 = styled.div`
   gap: 10px; // Adds space between the buttons
   border: 2px solid black;
   flex-direction: column;
+  position: relative;
 `;
 
 const Category2 = styled.div`
@@ -66,6 +68,7 @@ const Category2 = styled.div`
   gap: 10px; // Adds space between the buttons
   border: 2px solid black;
   flex-direction: column;
+  position: relative;
 `;
 
 const Category3 = styled.div`
@@ -76,6 +79,7 @@ const Category3 = styled.div`
   gap: 10px; // Adds space between the buttons
   border: 2px solid black;
   flex-direction: column;
+  position: relative;
 `;
 
 //분석 내용을 담는 컨테이너
@@ -150,13 +154,34 @@ const Report = () => {
       <ReportContainer>
         <ReportCategory>
           <Category1>
-            <StyledButton onClick={handleAnalysisClick}>분석</StyledButton>
+            <StyledButton onClick={handleAnalysisClick}>
+              <img
+                src="/Image/report/reportAnalysis.png"
+                alt="분석아이콘"
+                style={{ width: "50px", height: "50px" }}
+              />
+              분석
+            </StyledButton>
           </Category1>
           <Category2>
-            <StyledButton onClick={handleHistoryClick}>히스토리</StyledButton>
+            <StyledButton onClick={handleHistoryClick}>
+              <img
+                src="/Image/report/reportHistory.png"
+                alt="히스토리아이콘"
+                style={{ width: "50px", height: "50px" }}
+              />
+              히스토리
+            </StyledButton>
           </Category2>
           <Category3>
-            <StyledButton onClick={handleMypageClick}>마이페이지</StyledButton>
+            <StyledButton onClick={handleMypageClick}>
+              <img
+                src="/Image/report/reportCarrot.png"
+                alt="히스토리아이콘"
+                style={{ width: "50px", height: "50px" }}
+              />
+              마이페이지
+            </StyledButton>
           </Category3>
         </ReportCategory>
         <ReportContent>
@@ -165,7 +190,9 @@ const Report = () => {
             {showBoxes && (
               <>
                 <ContentElse>
-                  <ContentGraph></ContentGraph>
+                  <ContentGraph>
+                    <ReportGraphContent />
+                  </ContentGraph>
                   <ContentExplain></ContentExplain>
                 </ContentElse>
                 <ContentExpress>박스 2</ContentExpress>
