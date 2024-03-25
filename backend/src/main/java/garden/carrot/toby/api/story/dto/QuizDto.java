@@ -18,8 +18,8 @@ public class QuizDto {
     @AllArgsConstructor
     @ToString
     public static class ProducerData {
-        private String imageUrl;
-        private String memberId;
+        private String imageKey;
+        private int memberId;
         private int quizId;
         private String correctAnswer;
     }
