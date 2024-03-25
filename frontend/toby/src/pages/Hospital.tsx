@@ -70,7 +70,7 @@ const dummyData = [
       {
         quizId: 1,
         correctAnswer: "딸기",
-        quizType: "detections",
+        quizType: "objects",
       },
     ],
     sceneImageUrl: "https://via.placeholder.com/150",
@@ -98,7 +98,7 @@ const dummyData = [
       {
         quizId: 1,
         correctAnswer: "딸기",
-        quizType: "emotions",
+        quizType: "feelings",
       },
     ],
     sceneImageUrl: "https://via.placeholder.com/150",
@@ -107,6 +107,20 @@ const dummyData = [
   },
   {
     sceneId: 5,
+    quizType: "quiz",
+    quiz: [
+      {
+        quizId: 1,
+        correctAnswer: "딸기",
+        quizType: "emergency",
+      },
+    ],
+    sceneImageUrl: "https://via.placeholder.com/150",
+    content: "토끼는 뭘 먹었을까요?",
+    voice: "s3에 저장된 mp3 파일",
+  },
+  {
+    sceneId: 6,
     quizType: "clear",
     sceneImageUrl: "https://via.placeholder.com/150",
     content: "사진 촬영하세요",
@@ -210,7 +224,7 @@ const Hospital = () => {
   const [sceneIndex, setSceneIndex] = useState<number>(0);
 
   const location = useLocation();
-  const { title, storyImageUrl } = location.state;
+  const { title, storyImageUrl } = location.state; // title, storyImageUrl 받아오기
 
   const navigate = useNavigate();
 

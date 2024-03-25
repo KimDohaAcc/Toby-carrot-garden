@@ -1,4 +1,4 @@
-import api from "../config/apiConfig.tsx";
+import { api } from "../config/apiConfig.tsx";
 
 // URI : /member/clear-image
 // 클리어사진 목록 열람
@@ -42,7 +42,7 @@ export const getClearImageList = async () => {
 export const getCarrotList = async () => {
   try {
     const response = await api.get("member/carrot");
-    return response.data.result;
+    return response.data.result.list;
   } catch (error) {
     console.error(error);
   }

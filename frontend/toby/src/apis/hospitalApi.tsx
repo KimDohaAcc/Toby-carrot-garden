@@ -1,4 +1,4 @@
-import api from "../config/apiConfig";
+import { api } from "../config/apiConfig";
 
 //URI : /place/{place_id} 장소 진입시 스토리 리스트 조회
 // {
@@ -26,7 +26,12 @@ import api from "../config/apiConfig";
 
 export const getStoryList = async (place_id: number) => {
   try {
-    const response = await api.get(`place/${place_id}`);
+    const response = await api.get(`place/${place_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
     return response.data.result.list;
   } catch (error) {
     console.error(error);
@@ -74,7 +79,11 @@ export const getStoryList = async (place_id: number) => {
 
 export const getSceneList = async (story_id: number) => {
   try {
-    const response = await api.get(`story/${story_id}`);
+    const response = await api.get(`story/${story_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data.result;
   } catch (error) {
     console.error(error);
