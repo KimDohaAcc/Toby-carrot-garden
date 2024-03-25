@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { getCarrotList } from "../../apis/mypageApi";
-import { set } from "date-fns";
 
 // getCarrotList 함수 대신 사용할 더미 데이터
 const dummyCarrotList = [

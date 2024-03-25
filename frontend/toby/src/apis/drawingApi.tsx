@@ -16,12 +16,25 @@ export const submitQuiz = async ({ analysisImage, quizId }) => {
     const formData = new FormData();
     formData.append("analysisImage", analysisImage);
 
-    const response = await api.post(`quiz/submit?quizId=${quizId}`, formData, {
+    // 멀티파트 폼 데이터의 Content-Type 설정
+    const response1 = await api.post(`quiz/submit`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    return response.data;
+
+    // JSON 데이터의 Content-Type 설정
+    const response2 = await api.post(
+      `quiz/submit`,
+      { quizId },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return [response1.data, response2.data];
   } catch (error) {
     console.error(error);
   }

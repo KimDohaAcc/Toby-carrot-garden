@@ -7,6 +7,7 @@ import { RootState } from "../../store/store";
 import StoryQuizDrawings from "./StoryQuizDrawings";
 import StoryQuizDetections from "./StoryQuizDetections";
 import StoryQuizEmotions from "./StoryQuizEmotions";
+import StoryEmergency from "./StoryEmergency";
 
 const StoryQuizContainer = styled.div`
   display: flex;
@@ -51,10 +52,12 @@ const StoryQuiz = ({ index }: StoryQuizProps) => {
     switch (sceneList[index]?.quiz?.[0]?.quizType) {
       case "drawings":
         return <StoryQuizDrawings imageUrl={imageUrl} quizId={quizId} />;
-      case "detections":
+      case "objects":
         return <StoryQuizDetections imageUrl={imageUrl} />;
-      case "emotions":
+      case "feelings":
         return <StoryQuizEmotions imageUrl={imageUrl} />;
+      case "emergency":
+        return <StoryEmergency imageUrl={imageUrl} />;
       default:
         return <div>Quiz Type Error</div>;
     }
