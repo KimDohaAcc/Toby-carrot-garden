@@ -33,6 +33,9 @@ public enum ErrorCode {
 	MEMBER_NOT_FOUND_WITH_TOKEN(BAD_REQUEST, "토큰인증을 하지 않는 곳에서 로그인한 멤버를 찾으려고 했습니다. 백엔드 문의 주세요."),
 	SIGNUP_NOT_COMPLETE(BAD_REQUEST, "회원가입이 완료되지 않았습니다. 추가 정보를 입력해주세요."),
 
+	// 당근
+	INVALID_CARROT_COUNT(BAD_REQUEST, "당근 개수가 올바르지 않습니다. 0 ~ INTEGER.MAX_INT 값만 가능합니다."),
+
 	/* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
 	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다.");
 
