@@ -1,17 +1,19 @@
 package garden.carrot.toby.common.constants;
 
-import static org.springframework.http.HttpStatus.*;
-
-import org.springframework.http.HttpStatus;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
 	/* 400 BAD_REQUEST: 잘못된 요청 구문 */
 	// 일반
+	NO_ID(BAD_REQUEST, "요청하신 정보가 없습니다"),
 	ALREADY_DELETED(BAD_REQUEST, "이미 삭제된 값입니다"),
 	BAD_PARAMETER(BAD_REQUEST, "요청 파라미터가 잘못되었습니다."),
 	BAD_PARAMETER_TYPE(BAD_REQUEST, "지원하지 않는 파라미터 형식입니다."),
@@ -32,6 +34,9 @@ public enum ErrorCode {
 	MEMBER_NOT_FOUND(BAD_REQUEST, "id에 해당하는 멤버가 없습니다."),
 	MEMBER_NOT_FOUND_WITH_TOKEN(BAD_REQUEST, "토큰인증을 하지 않는 곳에서 로그인한 멤버를 찾으려고 했습니다. 백엔드 문의 주세요."),
 	SIGNUP_NOT_COMPLETE(BAD_REQUEST, "회원가입이 완료되지 않았습니다. 추가 정보를 입력해주세요."),
+
+	// S3
+	FILE_UPLOAD_FAIL(INTERNAL_SERVER_ERROR, "S3 파일 업로드에 실패하였습니다."),
 
 	/* 500 INTERNAL_SERVER_ERROR : 서버 오류 */
 	SERVER_ERROR(INTERNAL_SERVER_ERROR, "서버 내부 오류로 인해 응답을 제공할 수 없습니다.");

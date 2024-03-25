@@ -1,10 +1,9 @@
 package garden.carrot.toby.domain.member.entity;
 
-import java.time.LocalDate;
-
 import garden.carrot.toby.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
+
 	private String parentPassword;
 	@Column(length = 30)
 	private String name;

@@ -1,16 +1,5 @@
 package garden.carrot.toby.api.auth.jwt;
 
-import java.security.Key;
-import java.util.ArrayList;
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
 import garden.carrot.toby.api.auth.dto.AuthDto;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
@@ -22,11 +11,21 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
 public class TokenProvider {
+
 	private static final String AUTHORITIES_KEY = "Authentication";
 	private static final String BEARER_TYPE = "Bearer ";
 	private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 24 * 100;
@@ -72,8 +71,8 @@ public class TokenProvider {
 	public Authentication getPlainAuthentication(String accessToken) {
 		// Access Token 유효성 확인 및 파싱
 		String plainTextClaims = paresPlainTextClaims(accessToken);
-		
-		UserDetails principal = new User(plainTextClaims.toString(), "", new ArrayList<>());
+
+		UserDetails principal = new User(plainTextClaims, "", new ArrayList<>());
 
 		return new UsernamePasswordAuthenticationToken(principal, "");
 	}
@@ -100,7 +99,8 @@ public class TokenProvider {
 
 	private Claims paresClaims(String accessToken) {
 		try {
-			return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
+			return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken)
+				.getBody();
 		} catch (ExpiredJwtException e) {
 			return e.getClaims();
 		}
@@ -108,7 +108,8 @@ public class TokenProvider {
 
 	private String paresPlainTextClaims(String accessToken) {
 		try {
-			return Jwts.parserBuilder().setSigningKey(key).build().parsePlaintextJws(accessToken).getBody();
+			return Jwts.parserBuilder().setSigningKey(key).build().parsePlaintextJws(accessToken)
+				.getBody();
 		} catch (ExpiredJwtException e) {
 			return e.getMessage();
 		}

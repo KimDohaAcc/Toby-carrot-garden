@@ -1,26 +1,25 @@
 package garden.carrot.toby.api.auth.jwt;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
+
 	private static final String AUTHORIZATION_HEADER = "Authorization";
 	private final TokenProvider tokenProvider;
 
@@ -79,15 +78,17 @@ public class JwtFilter extends OncePerRequestFilter {
 	}
 
 	/**
-	 * HttpServletRequest에서 `Authorization` 헤더를 받음.
-	 * 헤더에서 'Bearer'로 시작하는 토큰이 있으면 'Bearer' 부분 제거하고 토큰 값 반환 아니면 널 값 반환
+	 * HttpServletRequest에서 `Authorization` 헤더를 받음. 헤더에서 'Bearer'로 시작하는 토큰이 있으면 'Bearer' 부분 제거하고 토큰
+	 * 값 반환 아니면 널 값 반환
+	 *
 	 * @param request
 	 * @return
 	 */
 	private String resolveToken(HttpServletRequest request) {
 		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer "))
+		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
 			return bearerToken.substring(7);
+		}
 
 		return null;
 	}

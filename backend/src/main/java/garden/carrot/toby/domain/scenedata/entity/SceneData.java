@@ -1,11 +1,7 @@
 package garden.carrot.toby.domain.scenedata.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import garden.carrot.toby.common.entity.BaseEntity;
 import garden.carrot.toby.domain.quizdata.entity.QuizData;
 import garden.carrot.toby.domain.storydata.entity.StoryData;
@@ -17,6 +13,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 
 @Entity
