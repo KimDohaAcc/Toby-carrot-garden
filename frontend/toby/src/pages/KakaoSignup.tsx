@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100vw;
   position: relative;
   background-size: cover;
-  background-image: url("Image/common/startImage.png");
+  background-image: url("/Image/common/startImage.png");
 `;
 const ConsentBorder = styled.div`
   display: flex;
@@ -76,9 +76,9 @@ function KakaoSignup() {
     <>
       <Container>
         <ConsentBorder>
-          <RabbitImage src="Image/toby/cuteRabbit_text1.png" />
+          <RabbitImage src="/Image/toby/cuteRabbit_text1.png" />
           <KakaoButton
-            src="Image/button/kakao_login_large_wide.png"
+            src="/Image/button/kakao_login_large_wide.png"
             onClick={handleSignupClick}
           />
         </ConsentBorder>

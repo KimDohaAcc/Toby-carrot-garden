@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import Rescore from "../components/report/Rescore.tsx";
 import ReportGraphContent from "../components/report/ReportGraphContent.tsx";
+import ReportDrawings from "../components/report/ReportDrawings.tsx";
 // 전체 컨테이너
 const ReportContainer = styled.div`
   display: flex;
@@ -88,10 +89,12 @@ const ReportContent = styled.div`
   flex-direction: column;
   flex-grow: 1;
   border: 2px solid black;
+  height: 100%;
 `;
 
 const ContentCategory = styled.div`
-  flex-grow: 1;
+  flex: 0 0 18%;
+
   min-height: 18%;
   max-height: 18%;
   border: 2px solid black;
@@ -99,27 +102,35 @@ const ContentCategory = styled.div`
 
 // Content 컴포넌트에 대한 스타일 정의
 const Content = styled.div`
-  flex-grow: 5;
+  flex: 82%;
+  /* flex-grow: 5; */
   border: 2px solid black;
   display: flex;
   flex-direction: row;
-  overflow-y: auto; // 내용이 많아지면 스크롤바 생성
+  overflow: hidden;
+  height: 100%;
+  // 이 부분을 추가하여 스크롤바를 숨깁니다.
 `;
 const ContentExpress = styled.div`
+  flex: 0 0 50%;
   flex-grow: 1;
-  border: 2px solid red;
+  border: 2px solid blue;
+  height: 100%;
 `;
 const ContentElse = styled.div`
+  flex: 0 0 50%;
   flex-grow: 1;
-  border: 2px solid yellow;
+  border: 2px solid pink;
   display: flex;
   flex-direction: column;
 `;
 const ContentGraph = styled.div`
-  flex-grow: 3;
-  border: 2px solid red;
+  flex: 0 0 60%;
+  /* flex-grow: 3; */
+  border: 2px solid green;
 `;
 const ContentExplain = styled.div`
+  flex: 0 0 40%;
   flex-grow: 2;
   border: 2px solid yellow;
 `;
@@ -195,7 +206,9 @@ const Report = () => {
                   </ContentGraph>
                   <ContentExplain></ContentExplain>
                 </ContentElse>
-                <ContentExpress>박스 2</ContentExpress>
+                <ContentExpress>
+                  <ReportDrawings></ReportDrawings>
+                </ContentExpress>
               </>
             )}
             {showHistory && <Rescore />}{" "}

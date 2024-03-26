@@ -14,7 +14,7 @@ import Webcam from "./components/WebCam";
 import AuthPage from "./pages/AuthPage";
 import PrivacyConsentForm from "./pages/PrivacyConsentForm";
 import KakaoSignup from "./pages/KakaoSignup";
-
+import KakaoLogin from "./pages/KakaoLogin";
 import UserInfoForm from "./pages/UserInfoForm";
 
 import styled from "styled-components";
@@ -33,9 +33,10 @@ function App() {
     <BackgroundContainer>
       <Routes>
         <Route path="/" element={<StartPage />} />
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/privacyConsentForm" element={<PrivacyConsentForm />} />
-        <Route path="/kakaoSignup" element={<KakaoSignup />} />
+        <Route path="auth" element={<AuthPage />} />
+        <Route path="privacyConsentForm" element={<PrivacyConsentForm />} />
+        <Route path="kakaoSignup" element={<KakaoSignup />} />
+        <Route path="kakaoLogin" element={<KakaoLogin />} />
         <Route path="main" element={<MainPage />} />
         <Route path="school" element={<School />} />
         <Route path="hospital/*" element={<Hospital />} />
@@ -46,7 +47,7 @@ function App() {
         <Route path="signplus" element={<UserInfoForm />} />
         <Route path="webcam" element={<Webcam />} />
 
-        <Route path="*" element={<NotFound />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </BackgroundContainer>
   );
