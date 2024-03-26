@@ -7,6 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MemberQuizRegradeReqDto {
 
-    int id;
+    int memberQuizId;
     double score;
 }

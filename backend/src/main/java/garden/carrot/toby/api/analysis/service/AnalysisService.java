@@ -1,5 +1,6 @@
 package garden.carrot.toby.api.analysis.service;
 
+import garden.carrot.toby.api.auth.util.MemberUtil;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
 import garden.carrot.toby.domain.member.entity.Member;
@@ -9,12 +10,10 @@ import garden.carrot.toby.domain.memberquiz.repository.MemberQuizRepository;
 import garden.carrot.toby.domain.quizdata.entity.QuizType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,25 +21,23 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class AnalysisService {
 
-    @Autowired
-    private MemberQuizRepository memberQuizRepository;
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberQuizRepository memberQuizRepository;
+    private final MemberRepository memberRepository;
+    private final MemberUtil memberUtil;
 
-    public List<MemberQuiz> getMemberQuizList(int memberId, QuizType quizType) throws CustomException {
-        List<MemberQuiz> quizList = memberQuizRepository.getMemberQuizByTypeAndMemberId(memberId, quizType)
-                .orElseThrow(() -> new CustomException(ErrorCode.BAD_PARAMETER));
-
-        for(MemberQuiz memberQuiz: quizList) {
-            System.out.println(memberQuiz);
+    public List<MemberQuiz> getMemberQuizList(QuizType quizType) throws CustomException {
+        Member member = memberUtil.getLoginMember();
+        List<MemberQuiz> memberQuizList = memberQuizRepository.getMemberQuizByTypeAndMemberId(member.getId(), quizType);
+        if (memberQuizList.isEmpty()) {
+            throw new CustomException(ErrorCode.BAD_PARAMETER);
         }
 
-        return quizList;
+        return memberQuizList;
     }
 
     @Transactional
-    public MemberQuiz updateScoreById(int memberId, double score) throws CustomException {
-        MemberQuiz memberQuiz = memberQuizRepository.findById(memberId)
+    public MemberQuiz updateScoreByMemberQuizId(int memberQuizId, double score) throws CustomException {
+        MemberQuiz memberQuiz = memberQuizRepository.findById(memberQuizId)
                 .orElseThrow(() -> new CustomException(ErrorCode.BAD_PARAMETER));
 
         memberQuiz.setScore(score);
@@ -49,8 +46,9 @@ public class AnalysisService {
         return memberQuiz;
     }
 
-    public boolean verifyParentPassword(int memberId, String parentPassword) throws CustomException {
-        Member member = memberRepository.findById(memberId)
+    public boolean verifyParentPassword(String parentPassword) throws CustomException {
+        Member memberLoginId = memberUtil.getLoginMember();
+        Member member = memberRepository.findById(memberLoginId.getId())
                 .orElseThrow(() -> new CustomException(ErrorCode.BAD_PARAMETER));
 
         if(member != null && member.getParentPassword().equals(parentPassword)) {

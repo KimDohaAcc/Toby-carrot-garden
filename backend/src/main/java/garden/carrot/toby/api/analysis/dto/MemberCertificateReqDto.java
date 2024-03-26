@@ -6,9 +6,12 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@AllArgsConstructor
+//@AllArgsConstructor
 public class MemberCertificateReqDto {
-
-    int id;
     String parentPassword;
+    public MemberCertificateReqDto(){}
+
+    public MemberCertificateReqDto(String parentPassword) {
+        this.parentPassword = parentPassword;
+    }
 }

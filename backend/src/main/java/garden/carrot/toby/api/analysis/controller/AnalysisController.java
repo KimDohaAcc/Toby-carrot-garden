@@ -5,6 +5,7 @@ import garden.carrot.toby.api.analysis.dto.MemberQuizDto;
 import garden.carrot.toby.api.analysis.dto.MemberQuizHistoryDto;
 import garden.carrot.toby.api.analysis.dto.MemberQuizRegradeReqDto;
 import garden.carrot.toby.api.analysis.service.AnalysisService;
+import garden.carrot.toby.api.auth.util.MemberUtil;
 import garden.carrot.toby.common.constants.SuccessCode;
 import garden.carrot.toby.common.dto.ApiResponse;
 import garden.carrot.toby.common.exception.CustomException;
@@ -37,9 +38,8 @@ public class AnalysisController {
     }
 
     // * 퀴즈 히스토리 리스트 *
-    List<MemberQuizHistoryDto> getMemberQuizHistoryDtoListByType(int memberId, QuizType quizType) {
-
-        List<MemberQuiz> memberQuizList = analysisService.getMemberQuizList(memberId, quizType);
+    List<MemberQuizHistoryDto> getMemberQuizHistoryDtoListByType( QuizType quizType) {
+        List<MemberQuiz> memberQuizList = analysisService.getMemberQuizList(quizType);
         List<MemberQuizHistoryDto> response = new ArrayList<>();
 
         for(MemberQuiz memberQuiz : memberQuizList) {
@@ -53,9 +53,8 @@ public class AnalysisController {
 
     @GetMapping("/drawings")
     @Operation(summary = "표현 퀴즈 목록", description = "사용자의 최근 7일 이내 표현 퀴즈 히스토리를 정렬하여 돌려준다")
-    public ApiResponse<List<MemberQuizHistoryDto>> getDrawingsHistory(@RequestParam("id") int memberId) throws CustomException {
-        System.out.println("Drawings : " + memberId);
-        List<MemberQuizHistoryDto> response = getMemberQuizHistoryDtoListByType(memberId, QuizType.DRAWINGS);
+    public ApiResponse<List<MemberQuizHistoryDto>> getDrawingsHistory() throws CustomException {
+        List<MemberQuizHistoryDto> response = getMemberQuizHistoryDtoListByType(QuizType.DRAWINGS);
 
         return ApiResponse.success(SuccessCode.GET_SUCCESS, response);
     }
@@ -63,8 +62,7 @@ public class AnalysisController {
     @GetMapping("/emotion")
     @Operation(summary = "인지, 감정 퀴즈 목록", description = "사용자의 최근 7일 이내 인지, 감정 퀴즈 히스토리를 정렬하여 돌려준다")
     public ApiResponse<List<MemberQuizHistoryDto>> getFeelingsHistory(@RequestParam("id") int memberId) throws CustomException {
-        System.out.println("Emotions : " + memberId);
-        List<MemberQuizHistoryDto> response = getMemberQuizHistoryDtoListByType(memberId, QuizType.FEELINGS);
+        List<MemberQuizHistoryDto> response = getMemberQuizHistoryDtoListByType(QuizType.FEELINGS);
 
         return ApiResponse.success(SuccessCode.GET_SUCCESS, response);
     }
@@ -72,26 +70,17 @@ public class AnalysisController {
     @GetMapping("/objects")
     @Operation(summary = "물체 인식 퀴즈 목록", description = "사용자의 최근 7일 이내 물체 인식 퀴즈 히스토리를 정렬하여 돌려준다")
     public ApiResponse<List<MemberQuizHistoryDto>> getObjectsHistory(@RequestParam("id") int memberId) throws CustomException {
-        System.out.println("Feelings : " + memberId);
-        List<MemberQuizHistoryDto> response = getMemberQuizHistoryDtoListByType(memberId, QuizType.OBJECTS);
+        List<MemberQuizHistoryDto> response = getMemberQuizHistoryDtoListByType(QuizType.OBJECTS);
 
         return ApiResponse.success(SuccessCode.GET_SUCCESS, response);
     }
 
-    @GetMapping("/emergency")
-    @Operation(summary = "긴급 상황 퀴즈 목록", description = "사용자의 최근 7일 이내 긴급 상황 퀴즈 히스토리를 정렬하여 돌려준다")
-    public ApiResponse<List<MemberQuizHistoryDto>> getEmergencyHistory(@RequestParam("id") int memberId) throws CustomException {
-        System.out.println("Emergency : " + memberId);
-        List<MemberQuizHistoryDto> response = getMemberQuizHistoryDtoListByType(memberId, QuizType.EMERGENCY);
-
-        return ApiResponse.success(SuccessCode.GET_SUCCESS, response);
-    }
 
     @PatchMapping("/regrade")
     @Operation(summary = "재채점 업데이트", description = "재채점 결과를 받아서 사용자 퀴즈의 점수를 업데이트한다.")
     public ApiResponse<MemberQuizDto> patchMemberQuizScore(@RequestBody MemberQuizRegradeReqDto memberQuizRegradeReqDto) throws CustomException {
 
-        MemberQuiz updatedMemberQuiz = analysisService.updateScoreById(memberQuizRegradeReqDto.getId(), memberQuizRegradeReqDto.getScore());
+        MemberQuiz updatedMemberQuiz = analysisService.updateScoreByMemberQuizId(memberQuizRegradeReqDto.getMemberQuizId(), memberQuizRegradeReqDto.getScore());
         MemberQuizDto response = new MemberQuizDto(updatedMemberQuiz.getId(), updatedMemberQuiz.getScore());
 
         return ApiResponse.success(SuccessCode.GET_SUCCESS, response);
@@ -102,7 +91,7 @@ public class AnalysisController {
     public ApiResponse<Map<String, Boolean>> patchMemberQuizScore(@RequestBody MemberCertificateReqDto memberCertificateReqDto) throws CustomException {
         Map<String, Boolean> response = new HashMap<>();
 
-        boolean verifyResult = analysisService.verifyParentPassword(memberCertificateReqDto.getId(), memberCertificateReqDto.getParentPassword());
+        boolean verifyResult = analysisService.verifyParentPassword(memberCertificateReqDto.getParentPassword());
         response.put("isCorrect", verifyResult);
 
         return ApiResponse.success(SuccessCode.GET_SUCCESS, response);

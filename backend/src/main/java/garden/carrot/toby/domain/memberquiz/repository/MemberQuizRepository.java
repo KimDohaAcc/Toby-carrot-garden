@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface MemberQuizRepository extends JpaRepository<MemberQuiz, Integer> {
@@ -16,7 +15,7 @@ public interface MemberQuizRepository extends JpaRepository<MemberQuiz, Integer>
     @Query("SELECT mq FROM MemberQuiz mq " +
             "WHERE mq.quizData.quizType = :quizType AND mq.member.id = :memberId AND DATEDIFF(now(), mq.createdTime) <= 7 " +
             "ORDER BY mq.createdTime DESC")
-    Optional<List<MemberQuiz>> getMemberQuizByTypeAndMemberId(@Param("memberId") int memberId, @Param("quizType") QuizType quizType);
+    List<MemberQuiz> getMemberQuizByTypeAndMemberId(@Param("memberId") int memberId, @Param("quizType") QuizType quizType);
 
     @Query("SELECT AVG(mq.score) FROM MemberQuiz mq " +
             "WHERE mq.quizData.quizType = :quizType AND mq.member.id = :memberId")
