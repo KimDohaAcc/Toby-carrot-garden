@@ -11,22 +11,32 @@ export const getCorrectAnswer = async () => {
 };
 
 //최근 7일 이내 표현퀴즈 히스토리
-export const getExpressQuiz = async () => {
+export const getDrawingsQuiz = async () => {
   try {
     const response = await api.get("analysis/drawings");
     return response.data;
   } catch (error) {
-    console.error("표현퀴즈 히스토리를 갖고 오지 못했습니다", error);
+    console.error("그림퀴즈 히스토리를 갖고 오지 못했습니다", error);
   }
 };
 
 //아이가 풀었던 문제리스트
-export const getHistoryList = async () => {
+export const getEmotionList = async () => {
   try {
-    const response = await api.get("analysis/history");
+    const response = await api.get("analysis/emotion");
     return response.data;
   } catch (error) {
-    console.error("표현퀴즈 히스토리를 갖고 오지 못했습니다", error);
+    console.error("감정퀴즈 히스토리를 갖고 오지 못했습니다", error);
+  }
+};
+
+//아이가 풀었던 감정리스트
+export const getObjectList = async () => {
+  try {
+    const response = await api.get("analysis/object");
+    return response.data;
+  } catch (error) {
+    console.error("감정퀴즈 히스토리를 갖고 오지 못했습니다", error);
   }
 };
 
@@ -60,7 +70,7 @@ export const postParentsPassword = async (parentPassword) => {
     const response = await api.post("/analysis/certificate", requestBody);
 
     if (response.status === 200) {
-      console.log("부모 검증 완료", response.data.message);
+      console.log("부모 비밀번호 통신 완료", response.data.message);
       return response.data.result.isCorrect;
     } else {
       return false;

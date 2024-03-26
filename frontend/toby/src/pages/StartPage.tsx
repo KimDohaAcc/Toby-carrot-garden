@@ -71,6 +71,9 @@ const StartPage = () => {
   const handleSignupClick = () => {
     navigate("/privacyConsentForm");
   };
+  const handleLoginClick = () => {
+    navigate("/kakaoLogin");
+  };
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
@@ -81,7 +84,10 @@ const StartPage = () => {
             src="Image/button/signupButton.png"
             onClick={handleSignupClick} // 클릭 이벤트에 핸들러 연결
           />
-          <LoginButton src="Image/button/loginButton.png" />
+          <LoginButton
+            src="Image/button/loginButton.png"
+            onClick={handleLoginClick}
+          />
         </StartPageContainer>
         <Logo />
       </Suspense>
