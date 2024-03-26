@@ -1,9 +1,8 @@
 package garden.carrot.toby.common.config;
 
-import garden.carrot.toby.api.auth.jwt.JwtFilter;
-import garden.carrot.toby.api.auth.jwt.TokenProvider;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +20,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import garden.carrot.toby.api.auth.jwt.JwtFilter;
+import garden.carrot.toby.api.auth.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -64,7 +66,7 @@ public class SecurityConfig {
 	CorsConfigurationSource corsConfigurationSource() {
 		final String LOCALHOST = "localhost:";
 
-		final String[] ALLOWED_HOSTS = new String[]{
+		final String[] ALLOWED_HOSTS = new String[] {
 			LOCALHOST,
 			"127.0.0.1:"
 		};
@@ -92,7 +94,7 @@ public class SecurityConfig {
 				allowedPort += 1;
 			}
 		}
-
+		
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 
 		corsConfiguration.setAllowCredentials(true);
@@ -105,12 +107,14 @@ public class SecurityConfig {
 			HttpMethod.DELETE.name(),
 			HttpMethod.OPTIONS.name()
 		));
+
 		corsConfiguration.setAllowedHeaders(List.of(
 			HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS,
-			HttpHeaders.CONTENT_TYPE
+			HttpHeaders.CONTENT_TYPE,
+			HttpHeaders.AUTHORIZATION
 		));
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
