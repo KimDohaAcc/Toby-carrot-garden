@@ -210,19 +210,22 @@ const CarrotGradeImage = ({ carrotGrade }) => {
 const CarrotField = () => {
   const [carrotList, setCarrotList] = useState<CarrotList[]>(dummyCarrotList);
 
-  // useEffect(() => {
-  //   //당근 정보 가져옴
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getCarrotList();
-  //       setCarrotList(response);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
+  const [carrotapi, setCarrotapi] = useState<CarrotList[]>([]);
 
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    //당근 정보 가져옴
+    const fetchData = async () => {
+      try {
+        const response = await getCarrotList();
+        setCarrotapi(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(carrotapi);
 
   return (
     <>

@@ -47,7 +47,11 @@ export const getClearImageList = async () => {
 
 export const getCarrotList = async () => {
   try {
-    const response = await api.get("/member/carrot");
+    const response = await api.get("/member/carrot", {
+      headers: {
+        Authorization: `Bearer ${tempToken}`,
+      },
+    });
     return response.data.result.list;
   } catch (error) {
     console.error(error);
