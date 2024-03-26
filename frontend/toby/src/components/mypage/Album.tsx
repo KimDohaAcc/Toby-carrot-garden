@@ -1,41 +1,41 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-// import { getClearImageList } from "../../apis/mypageApi";
+import { getClearImageList } from "../../apis/mypageApi";
 
 // getClearImageList 대신에 더미 데이터를 사용합니다.
-const dummyImageList = [
-  {
-    clearImageId: 1,
-    clearImageUrl: "https://dummyimage.com/600x400/000/fff",
-    placeId: 1,
-    createdTime: "234234T3424",
-  },
-  {
-    clearImageId: 2,
-    clearImageUrl: "https://dummyimage.com/600x400/000/fc9",
-    placeId: 2,
-    createdTime: "234234T3424",
-  },
-  {
-    clearImageId: 3,
-    clearImageUrl: "https://dummyimage.com/600x400/000/fz8",
-    placeId: 3,
-    createdTime: "234234T3424",
-  },
-  {
-    clearImageId: 4,
-    clearImageUrl: "https://dummyimage.com/600x400/000/b58",
-    placeId: 4,
-    createdTime: "234234T3424",
-  },
-  {
-    clearImageId: 5,
-    clearImageUrl: "https://dummyimage.com/600x400/000/f0f",
-    placeId: 5,
-    createdTime: "234234T3424",
-  },
-];
+// const dummyImageList = [
+//   {
+//     clearImageId: 1,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/fff",
+//     placeId: 1,
+//     createdTime: "2024-03-25T17:06:08",
+//   },
+//   {
+//     clearImageId: 2,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/fc9",
+//     placeId: 2,
+//     createdTime: "2024-03-25T17:06:44",
+//   },
+//   {
+//     clearImageId: 3,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/fz8",
+//     placeId: 3,
+//     createdTime: "234234T3424",
+//   },
+//   {
+//     clearImageId: 4,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/b58",
+//     placeId: 4,
+//     createdTime: "234234T3424",
+//   },
+//   {
+//     clearImageId: 5,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/f0f",
+//     placeId: 5,
+//     createdTime: "234234T3424",
+//   },
+// ];
 
 const AlbumArea = styled.div`
   display: grid;
@@ -163,54 +163,57 @@ const Album = () => {
   //   setNextImage("");
   // };
 
-  // useEffect(() => {
-  //   // 이미지 리스트를 불러옴
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getClearImageList();
-  //       setImageList(response);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
-    // 이미지 리스트를 더미 데이터로 설정
-    setImageList(dummyImageList);
-    // presentImage를 초기 이미지로 설정
-    if (dummyImageList.length > 0) {
-      setPresentImage(dummyImageList[0].clearImageUrl);
-    }
+    // 이미지 리스트를 불러옴
+    const fetchData = async () => {
+      try {
+        const response = await getClearImageList();
+        setImageList(response);
+        if (response) {
+          setPresentImage(response[0].clearImageUrl);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   // 이미지 리스트를 더미 데이터로 설정
+  //   setImageList(dummyImageList);
+  //   // presentImage를 초기 이미지로 설정
+  //   if (dummyImageList.length > 0) {
+  //     setPresentImage(dummyImageList[0].clearImageUrl);
+  //   }
+  // }, []);
 
   //findIndex -> 배열에서 조건을 만족하는 첫 번째 요소의 인덱스를 반환
 
   const showPrevImage = () => {
     // 이미지 리스트의 첫 번째 이미지일 경우에는 마지막 이미지를 표시
-    const index = dummyImageList.findIndex(
+    const index = imageList.findIndex(
       (image) => image.clearImageUrl === presentImage
     );
     if (index === 0) {
-      setPresentImage(dummyImageList[dummyImageList.length - 1].clearImageUrl);
-      setPresentImageIndex(dummyImageList.length);
+      setPresentImage(imageList[imageList.length - 1].clearImageUrl);
+      setPresentImageIndex(imageList.length);
     } else {
-      setPresentImage(dummyImageList[index - 1].clearImageUrl);
+      setPresentImage(imageList[index - 1].clearImageUrl);
       setPresentImageIndex(index);
     }
   };
 
   const showNextImage = () => {
     // 이미지 리스트의 마지막 이미지일 경우에는 첫 번째 이미지를 표시
-    const index = dummyImageList.findIndex(
+    const index = imageList.findIndex(
       (image) => image.clearImageUrl === presentImage
     );
-    if (index === dummyImageList.length - 1) {
-      setPresentImage(dummyImageList[0].clearImageUrl);
+    if (index === imageList.length - 1) {
+      setPresentImage(imageList[0].clearImageUrl);
       setPresentImageIndex(1);
     } else {
-      setPresentImage(dummyImageList[index + 1].clearImageUrl);
+      setPresentImage(imageList[index + 1].clearImageUrl);
       setPresentImageIndex(index + 2);
     }
   };
@@ -243,7 +246,7 @@ const Album = () => {
             <PrevBtn onClick={showPrevImage}></PrevBtn>
             <OrderArea>
               <OrderArea>
-                {presentImageIndex} | {dummyImageList.length}
+                {presentImageIndex} | {imageList.length}
               </OrderArea>
             </OrderArea>
             <NextBtn onClick={showNextImage}></NextBtn>

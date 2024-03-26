@@ -19,21 +19,22 @@ export const api = axios.create({
 //   return config; // 요청을 보냄
 // });
 
-api.interceptors.request.use(
-  (config) => {
-    // 로컬 스토리지에서 accessToken 가져오기
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      // accessToken이 있으면 헤더에 추가
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
-    }
-    return config;
-  },
-  (error) => {
-    // 요청 에러 처리
-    return Promise.reject(error);
-  }
-);
+// api.interceptors.request.use(
+//   (config) => {
+//     // 로컬 스토리지에서 accessToken 가져오기
+//     const accessToken = localStorage.getItem("accessToken");
+//     if (accessToken) {
+//       // accessToken이 있으면 헤더에 추가
+//       config.headers["Authorization"] = `Bearer ${accessToken}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     // 요청 에러 처리
+//     console.log("error Promise rejected");
+//     return Promise.reject(error);
+//   }
+// );
 
 const swaggerapi = axios.create({
   // axios 인스턴스 생성
@@ -45,3 +46,6 @@ export { swaggerapi };
 // base url: [`https://i10a202.p.ssafy.io`]
 
 // swagger url: [`http://localhost:8080/swagger-ui/index.html`]
+
+export const tempToken =
+  "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE5OTcyODU2fQ.BRvOAWqb8P63P73BoMo1vokoWTgLmedEULuqlonphAeen2o81eO_08lYDeqRDFWCfk0V9iN7DWA89k7EZon8hg";

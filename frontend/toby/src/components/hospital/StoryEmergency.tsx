@@ -13,6 +13,7 @@ const EmergencyContainer = styled.div`
 `;
 
 const EmergencyTitle = styled.div`
+  grid-row: 1;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -20,13 +21,12 @@ const EmergencyTitle = styled.div`
 `;
 
 const EmergencyContent = styled.div`
-  display: flex;
+  grid-row: 2;
   width: 100%;
-  justify-content: center;
-  align-items: center;
 `;
 
 const EmergencyButton = styled.button`
+  grid-row: 3;
   display: flex;
   width: 100%;
   justify-content: center;

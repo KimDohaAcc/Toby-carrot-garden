@@ -1,5 +1,7 @@
 import { api } from "../config/apiConfig.tsx";
 
+import { tempToken } from "../config/apiConfig.tsx";
+
 // URI : /member/clear-image
 // 클리어사진 목록 열람
 // response :
@@ -32,7 +34,11 @@ import { api } from "../config/apiConfig.tsx";
 
 export const getClearImageList = async () => {
   try {
-    const response = await api.get("member/clear-image");
+    const response = await api.get("member/clear-image", {
+      headers: {
+        Authorization: `Bearer ${tempToken}`,
+      },
+    });
     return response.data.result.list;
   } catch (error) {
     console.error(error);
@@ -41,7 +47,7 @@ export const getClearImageList = async () => {
 
 export const getCarrotList = async () => {
   try {
-    const response = await api.get("member/carrot");
+    const response = await api.get("/member/carrot");
     return response.data.result.list;
   } catch (error) {
     console.error(error);
