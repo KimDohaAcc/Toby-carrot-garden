@@ -6,6 +6,7 @@ import garden.carrot.toby.api.story.dto.QuizDto.SubmitQuizRequest;
 import garden.carrot.toby.api.story.util.KafkaProducer;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
+import garden.carrot.toby.common.redis.service.RedisService;
 import garden.carrot.toby.common.s3.dto.S3Dto;
 import garden.carrot.toby.common.s3.service.S3Service;
 import garden.carrot.toby.domain.memberquiz.entity.MemberQuiz;
@@ -27,6 +28,7 @@ public class StoryService {
 	private final KafkaProducer kafkaProducer;
 	private final S3Service s3Service;
 	private final MemberUtil memberUtil;
+	private final RedisService redisService;
 
 	@Transactional
 	public String submitQuiz(SubmitQuizRequest dto) throws Exception{
@@ -52,4 +54,10 @@ public class StoryService {
 		return s3.getFileUrl();
 	}
 
+	public int getQuizResult(int quizID) {
+		int memberId = memberUtil.getLoginMember().getId();
+		String key = "quiz_answer_" + memberId  + "_" + quizID;
+
+        return Integer.parseInt(redisService.getValue(key));
+	}
 }
