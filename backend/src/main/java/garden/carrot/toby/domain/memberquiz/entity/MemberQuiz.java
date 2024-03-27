@@ -30,9 +30,14 @@ public class MemberQuiz extends BaseEntity {
 	private double score;
 
 	@Builder
-	MemberQuiz(QuizData quizData, String imageUrl, double score) {
+	MemberQuiz(Member member, QuizData quizData, String imageUrl, double score) {
+		this.member = member;
 		this.quizData = quizData;
 		this.imageUrl = imageUrl;
+		this.score = score;
+	}
+
+	public void updateScore(double score){
 		this.score = score;
 	}
 }
