@@ -44,7 +44,7 @@ public class AnalysisController {
 
         for(MemberQuiz memberQuiz : memberQuizList) {
             response.add(
-                    new MemberQuizHistoryDto(memberQuiz.getQuizData().getCorrectAnswer(), memberQuiz.getImageUrl(), memberQuiz.getCreatedTime(), memberQuiz.getScore())
+                    new MemberQuizHistoryDto(memberQuiz.getId(),memberQuiz.getQuizData().getCorrectAnswer(), memberQuiz.getImageUrl(), memberQuiz.getCreatedTime(), memberQuiz.getScore())
             );
         }
 

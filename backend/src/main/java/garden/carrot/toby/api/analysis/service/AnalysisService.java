@@ -10,6 +10,7 @@ import garden.carrot.toby.domain.memberquiz.repository.MemberQuizRepository;
 import garden.carrot.toby.domain.quizdata.entity.QuizType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ public class AnalysisService {
     private final MemberQuizRepository memberQuizRepository;
     private final MemberRepository memberRepository;
     private final MemberUtil memberUtil;
+    private final PasswordEncoder passwordEncoder;
 
     public List<MemberQuiz> getMemberQuizList(QuizType quizType) throws CustomException {
         Member member = memberUtil.getLoginMember();
@@ -51,10 +53,9 @@ public class AnalysisService {
         Member member = memberRepository.findById(memberLoginId.getId())
                 .orElseThrow(() -> new CustomException(ErrorCode.BAD_PARAMETER));
 
-        if(member != null && member.getParentPassword().equals(parentPassword)) {
+        if(member != null && passwordEncoder.matches(parentPassword, member.getParentPassword())){
             return true;
         }
-
         return false;
     }
 }

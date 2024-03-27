@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class MemberQuizHistoryDto {
-
+    int memberQuizId;
     String correctAnswer;
     String imageUrl;
     LocalDateTime createTime;
