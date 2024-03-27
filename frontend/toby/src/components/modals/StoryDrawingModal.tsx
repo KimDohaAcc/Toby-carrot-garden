@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
+import SignatureCanvas from "react-signature-canvas";
+import { submitQuiz2 } from "../../apis/drawingApi";
 
 const StoryDrawingModalContainer = styled.div`
   display: flex;
@@ -29,14 +31,48 @@ const CloseBtn = styled.button`
 
   border: none; /* 기본 버튼 스타일 제거 */
 `;
+const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
+  const signaturePadRef = useRef(null);
 
-const StoryDrawingModal = ({ isOpen, onClose }) => {
+  const handleSaveDrawing = async () => {
+    if (signaturePadRef.current && isOpen) {
+      const canvas = signaturePadRef.current.getCanvas();
+      if (canvas) {
+        console.log("있다");
+        const dataUrl = canvas.toDataURL("image/png");
+        const blob = await (await fetch(dataUrl)).blob();
+
+        const formData = new FormData();
+        formData.append("analysisImage", blob, "drawing.png");
+        formData.append("quizId", quizId); // quizId를 formData에 추가
+
+        try {
+          await submitQuiz2(formData); // 서버에 formData 전송
+          console.log("이미지 전송 성공");
+          onClose(); // 모달 닫기
+        } catch (error) {
+          console.error("이미지 전송 실패", error);
+        }
+      }
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
     <StoryDrawingModalContainer>
-      <ModalArea></ModalArea>
-      <CloseBtn onClick={onClose}>다 그렸어요 이미지</CloseBtn>
+      <ModalArea>
+        <SignatureCanvas
+          ref={signaturePadRef}
+          penColor="black"
+          canvasProps={{
+            width: 500, // 적절한 크기 설정
+            height: 400, // 적절한 크기 설정
+            className: "signature-canvas",
+          }}
+        />
+      </ModalArea>
+      <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
     </StoryDrawingModalContainer>
   );
 };

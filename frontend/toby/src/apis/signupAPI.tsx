@@ -16,35 +16,39 @@ export const getKakaoPage = async () => {
 //카카오 인증 토큰 보내기
 export const postKakaoToken = async (tokenCode) => {
   try {
-    // 요청 본문
     const requestBody = { tokenCode };
-
-    // API 요청
     const response = await api.post("auth/token", requestBody);
 
-    // 응답 로그 출력
-    console.log("응답:", response);
-
-    // 응답 검증 및 토큰 저장
     if (response.status === 200 && response.data && response.data.result) {
-      const { accessToken, refreshToken } = response.data.result;
+      const { accessToken, refreshToken, signupComplete } =
+        response.data.result;
 
-      // 토큰 존재 여부 확인
       if (accessToken && refreshToken) {
-        // 토큰 저장 및 로그 출력
+        // 토큰 저장
         saveTokens({ accessToken, refreshToken });
         console.log("토큰 전송 완료", response.data.message);
+
+        // 회원가입이 완료되었으면 추가 정보를 가져옵니다.
+        if (signupComplete) {
+          const memberInfo = await getMemberInfo();
+          if (memberInfo.status === 200 && memberInfo.result) {
+            const { name, birthDate } = memberInfo.result;
+
+            // localStorage에 사용자 정보 저장
+            localStorage.setItem("name", name);
+            localStorage.setItem("birthDate", birthDate);
+
+            console.log("회원 정보 저장 완료", memberInfo.message);
+          }
+        }
       } else {
-        // 응답 내 토큰 누락 시 오류 로그 출력
         console.error("응답 내 accessToken 또는 refreshToken 누락");
       }
     } else {
-      // 토큰 전송 실패 시 오류 로그 출력
       console.error("토큰 전송 실패", response.data?.message);
     }
     return response.data;
   } catch (error) {
-    // 요청 중 오류 발생 시 오류 로그 출력
     console.error("토큰 전송 중 오류 발생", error);
     return null;
   }
@@ -70,5 +74,16 @@ export const postSignInfo = async ({ name, birthDate, parentPassword }) => {
   } catch (error) {
     console.error("추가 정보 전송 실패", error);
     return null;
+  }
+};
+//유저 정보 갖고오기
+export const getMemberInfo = async () => {
+  try {
+    const response = await api.get("auth/member-info");
+
+    console.log("여기까진 왔다");
+    return response.data;
+  } catch (error) {
+    console.error("맴버정보를 갖고오지 못했습니다.", error);
   }
 };

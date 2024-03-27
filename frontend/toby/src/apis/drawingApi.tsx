@@ -39,3 +39,19 @@ export const submitQuiz = async ({ analysisImage, quizId }) => {
     console.error(error);
   }
 };
+
+export const submitQuiz2 = async (formData) => {
+  try {
+    // API 요청
+    const response = await api.post(`quiz/submit`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("그리기 파일 전송 완료");
+    return response.data;
+  } catch (error) {
+    console.error("그리기 파일 전송 실패", error);
+    throw error;
+  }
+};

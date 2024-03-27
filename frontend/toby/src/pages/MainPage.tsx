@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,6 +6,7 @@ import ConstructionModal from "../components/modals/constructionModal";
 import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 입력 모달
 import Logo from "../components/Logo";
 import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryListModal";
+import { getUserStorage } from "../apis/userStorageApi";
 
 const MainpageContainer = styled.div`
   height: 100%;
@@ -175,6 +176,14 @@ const MainPage = () => {
   const [showHospitalModal, setShowHospitalModal] = useState(false); // 병원 스토리 리스트 모달 상태
 
   const [modalType, setModalType] = useState(""); // 모달 종류를 결정하는 상태
+  const [userName, setUserName] = useState("");
+  useEffect(() => {
+    // 컴포넌트 마운트 시 getUserStorage를 호출하여 사용자 이름 가져오기
+    const userInfo = getUserStorage();
+    if (userInfo && userInfo.name) {
+      setUserName(`${userInfo.name}, 안녕`);
+    }
+  }, []);
 
   const handleAreaClick = (path: string) => {
     setShowHospitalModal(true);
@@ -247,7 +256,7 @@ const MainPage = () => {
           </PoliceArea>
         </Area3>
         <Area4>
-          <div></div>
+          <div> {userName && <h1>{userName}</h1>}</div>
           <TobyArea>
             <TobyImage
               src="\Image\toby\maintoby.png"
