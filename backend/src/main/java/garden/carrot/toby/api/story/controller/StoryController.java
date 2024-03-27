@@ -25,9 +25,9 @@ public class StoryController {
 		return ApiResponse.success(SuccessCode.POST_SUCCESS, storyService.submitQuiz(dto));
 	}
 
-	@GetMapping(value = "/quiz/{quiz_id}/result")
-	public ApiResponse<QuizResultResponse> getQuizResult(@PathVariable("quiz_id") int quizID) throws Exception{
-		return ApiResponse.success(SuccessCode.GET_SUCCESS, storyService.getQuizResult(quizID));
+	@GetMapping(value = "/quiz/{member_quiz_id}/result")
+	public ApiResponse<QuizResultResponse> getQuizResult(@PathVariable("member_quiz_id") int memberQuizID) throws Exception{
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, storyService.getQuizResult(memberQuizID));
 	}
 
 
