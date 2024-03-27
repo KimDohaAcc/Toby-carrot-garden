@@ -45,7 +45,9 @@ public class LoggingFilter extends OncePerRequestFilter {
 		stringBuilder.setLength(0);
 
 		stringBuilder.append("time: ").append(LocalDateTime.now()).append("\n");
+
 		MDC.put("traceId", UUID.randomUUID().toString());
+		stringBuilder.append("traceId: ").append(MDC.get("traceId")).append("\n");
 
 		try {
 			if (isAsyncDispatch(request)) {
@@ -58,9 +60,6 @@ public class LoggingFilter extends OncePerRequestFilter {
 		} catch (Exception ex) {
 			handleException(ex, response);
 		} finally {
-			if (!isSwagger) {
-				discordNotifier.notify(stringBuilder.append("========================").toString());
-			}
 			MDC.clear();
 		}
 	}
@@ -69,12 +68,23 @@ public class LoggingFilter extends OncePerRequestFilter {
 		FilterChain filterChain) throws ServletException, IOException {
 		try {
 			logRequest(request);
+			if (!isSwagger) {
+
+				discordNotifier.notify(stringBuilder.append("----------------").toString());
+				stringBuilder.setLength(0);
+			}
 			filterChain.doFilter(request, response);
 		} catch (Exception ex) {
 			handleException(ex, response);
 			throw ex; // Re-throw the exception to propagate it to the outer catch block
 		} finally {
+			stringBuilder.append("time: ").append(LocalDateTime.now()).append("\n");
+			stringBuilder.append("traceId: ").append(MDC.get("traceId")).append("\n");
 			logResponse(response);
+			if (!isSwagger) {
+
+				discordNotifier.notify(stringBuilder.append("========================").toString());
+			}
 			response.copyBodyToResponse();
 		}
 	}
