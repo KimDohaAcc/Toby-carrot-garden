@@ -1,19 +1,26 @@
 package garden.carrot.toby.api.clearimage.dto;
 
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ClearImageDto {
+
 	@Getter
-	@NoArgsConstructor
-	@ToString
+	@AllArgsConstructor
 	public static class ClearImageResponse {
+
 		private String clearImageUrl;
 	}
 
-	@NoArgsConstructor
+	@Getter
+	@AllArgsConstructor
 	public static class ClearImageRequest {
-		
+
+		@NotNull
+		MultipartFile image;
+		@NotNull
+		Integer placeId;
 	}
 }

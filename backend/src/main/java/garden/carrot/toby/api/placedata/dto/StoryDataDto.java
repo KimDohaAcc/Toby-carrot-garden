@@ -1,16 +1,15 @@
 package garden.carrot.toby.api.placedata.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 public class StoryDataDto {
 
 	@Getter
-	@NoArgsConstructor
-	@ToString
+	@AllArgsConstructor
 	public static class StoryResponse {
+
 		@Setter
 		Integer storyId;
 		String title;
