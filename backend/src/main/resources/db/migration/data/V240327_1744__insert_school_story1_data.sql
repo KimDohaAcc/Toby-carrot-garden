@@ -1,4 +1,10 @@
--- 씬 데이터
+insert into rabbit.story_data (id, created_time, updated_time, recommend_age, story_image_url, title, place_data_id)
+values (1, '2024-03-27 18:26:12.000000', '2024-03-27 18:26:14.000000', '3~4세',
+        'https://tobycarrotbucket.s3.ap-northeast-2.amazonaws.com/assets/image/school/story01/004.png', '등교하는 토비', 1),
+       (2, '2024-03-27 18:26:14.000000', '2024-03-27 18:26:15.000000', '3~4세',
+        'https://tobycarrotbucket.s3.ap-northeast-2.amazonaws.com/assets/image/hospital/story01/001.png', '병원아 지켜줘!',
+        2);
+
 INSERT INTO rabbit.scene_data (id, created_time, updated_time, content, scene_image_url, scene_type, voice_url,
                                story_data_id)
 VALUES (1, '2024-03-27 17:36:11.000000', '2024-03-27 17:36:12.000000', '기분 좋은 햇살이 들어오는 아침이에요. 토비는 눈을 뜨고 기지개를 켰어요.',
