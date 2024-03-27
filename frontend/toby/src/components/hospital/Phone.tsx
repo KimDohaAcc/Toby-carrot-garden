@@ -4,11 +4,8 @@ import styled from "styled-components";
 import { useState } from "react";
 
 const PhoneContainer = styled.div`
-  display: grid;
-  position: relative;
-  grid-template-rows: 1fr 2fr;
-  width: 100%;
   height: 100%;
+  width: 100%;
 `;
 
 const Screen = styled.div`
@@ -29,9 +26,6 @@ const KeypadBtnArea = styled.div`
   align-items: end;
   width: 100%;
 `;
-const PhoneBackground = styled.img`
-  position: absolute;
-`;
 
 const Phone = () => {
   const [phoneNum, setPhoneNum] = useState<string>("");
@@ -51,9 +45,7 @@ const Phone = () => {
 
   return (
     <PhoneContainer>
-      <PhoneBackground src="/Image/modal/s2424.png" alt="phone" />
-
-      <Screen>
+      {/* <Screen>
         <p>{phoneNum}</p>
       </Screen>
       <KeypadBtnArea>
@@ -144,7 +136,7 @@ const Phone = () => {
         <button onClick={handleCallClick}>video</button>
         <button onClick={handleCallClick}>call</button>
         <button onClick={handleClearClick}>clear</button>
-      </KeypadBtnArea>
+      </KeypadBtnArea> */}
     </PhoneContainer>
   );
 };

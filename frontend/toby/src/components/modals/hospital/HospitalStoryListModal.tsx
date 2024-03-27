@@ -1,27 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { getStoryList } from "../../../apis/hospitalApi";
 import { setStoryList } from "../../../store/slices/hospitalSlice";
-
-//더미 데이터
-const dummyData: HospitalStoryList[] = [
-  {
-    storyId: 1,
-    title: "더미 데이터 제목 1",
-    storyImageUrl: "https://via.placeholder.com/150",
-    recommendAge: "2",
-  },
-  {
-    storyId: 2,
-    title: "더미 데이터 제목 2",
-    storyImageUrl: "https://via.placeholder.com/150",
-    recommendAge: "3~4",
-  },
-  // 추가적인 더미 데이터들...
-];
 
 const ModalConatiner = styled.div`
   position: fixed;
@@ -33,17 +16,21 @@ const ModalConatiner = styled.div`
   border-radius: 20px;
   border: 2px solid black;
   padding: 50px;
-  background-color: #cdcdcd;
+  background-color: #e6e6fa;
   z-index: 100;
   display: flex;
   flex-direction: column;
+  font-size: 1.5rem;
 `;
 
 const ModalContent = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: center;
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
+  gap: 20px;
 `;
 
 const StoryContent = styled.div`
@@ -53,6 +40,9 @@ const StoryContent = styled.div`
   justify-content: center;
   padding: 20px;
   cursor: pointer;
+  flex-basis: calc(25% - 20px);
+  background-color: white;
+  border-radius: 10px;
 `;
 
 const CloseBtn = styled.button`
@@ -66,6 +56,23 @@ const CloseBtn = styled.button`
   cursor: pointer;
 `;
 
+const StoryTitle = styled.h1`
+  margin: 5px;
+  flex: 2; /* 5:2:1 비율 중 두 번째 행 */
+`;
+
+const StoryImage = styled.img`
+  width: 100%;
+  flex: 5; /* 5:2:1 비율 중 첫 번째 행 */
+`;
+
+const AgeRecommendation = styled.p`
+  font-size: 2rem;
+  margin: 5px;
+  background-color: #fdffb6;
+  flex: 1; /* 5:2:1 비율 중 세 번째 행 */
+`;
+
 interface HospitalStoryList {
   storyId: number;
   title: string;
@@ -74,40 +81,43 @@ interface HospitalStoryList {
 }
 
 const HospitalStoryListModal = ({ onClose }) => {
-  const place_id = 1;
-  // const [storyList, setStoryList] = useState([]);
-  const [storyList, setStoryList] = useState<HospitalStoryList[]>(dummyData);
+  const placeId = 1;
+  const dispatch = useDispatch();
+  const [storysList, setStorysList] = useState<HospitalStoryList[]>([]);
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchStoryList = async () => {
-  //     try {
-  //       const storyList = await getStoryList(place_id);
-  //       setStoryList(storyList);
-  //       console.log(storyList);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchStoryList();
-  // }, []);
+  useEffect(() => {
+    const fetchStoryList = async () => {
+      try {
+        const response = await getStoryList(placeId);
+        setStorysList(response);
+        dispatch(setStoryList(response));
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchStoryList();
+  }, [dispatch]);
 
   const handleOnClickStory = (
     storyId: number,
     title: string,
     storyImageUrl: string
   ) => {
-    navigate(`/hospital/${storyId}`, { state: { title, storyImageUrl } });
+    navigate(`/hospital/${storyId}`, {
+      state: { storyId, title, storyImageUrl },
+    });
   };
 
   return (
     <>
       <ModalConatiner>
         <CloseBtn onClick={onClose}>닫기</CloseBtn>
-        <div>병원 스토리 목록</div>
+        <p>병원 스토리 목록</p>
         <ModalContent>
-          {storyList.map((story: HospitalStoryList) => (
+          {storysList.map((story: HospitalStoryList) => (
             <StoryContent
               key={story.storyId}
               onClick={() =>
@@ -118,9 +128,11 @@ const HospitalStoryListModal = ({ onClose }) => {
                 )
               }
             >
-              <img src={story.storyImageUrl} alt={story.title} />
-              <h1>{story.title}</h1>
-              <p>권장 나이 : {story.recommendAge}</p>
+              <StoryImage src={story.storyImageUrl} alt={story.title} />
+              <StoryTitle>{story.title}</StoryTitle>
+              <AgeRecommendation>
+                권장 나이 : {story.recommendAge}
+              </AgeRecommendation>
             </StoryContent>
           ))}
         </ModalContent>

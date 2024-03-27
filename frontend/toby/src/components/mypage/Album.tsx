@@ -85,28 +85,34 @@ const BtnArea = styled.div`
   height: 100%;
   width: 60%;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 `;
 
-const PrevBtn = styled.button`
-  background-color: red;
+const PrevBtn = styled.img`
+  width: 20%;
+  height: auto;
+  cursor: pointer;
 `;
 
 const OrderArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
-  background-color: #fefefe;
+  font-size: 4rem;
+  flex: 1;
 `;
 
-const NextBtn = styled.button`
-  background-color: blue;
+const NextBtn = styled.img`
+  width: 20%;
+  height: auto;
+  cursor: pointer;
 `;
 
 const AlbumToby = styled.img`
   position: absolute;
+  height: 40%;
   bottom: 0;
   right: 0;
 `;
@@ -202,6 +208,7 @@ const Album = () => {
       setPresentImage(imageList[index - 1].clearImageUrl);
       setPresentImageIndex(index);
     }
+    console.log(index);
   };
 
   const showNextImage = () => {
@@ -216,6 +223,7 @@ const Album = () => {
       setPresentImage(imageList[index + 1].clearImageUrl);
       setPresentImageIndex(index + 2);
     }
+    console.log(index);
   };
 
   return (
@@ -231,7 +239,7 @@ const Album = () => {
             </h1>
           </NoImage>
           <GotoStory>당근 모으러 가기</GotoStory>
-          <AlbumToby src="" alt="albumtoby" />
+          <AlbumToby src="/Image/album/토비3.png" alt="albumtoby" />
         </NoImageArea>
       ) : (
         <AlbumArea>
@@ -243,13 +251,21 @@ const Album = () => {
             />
           </ImageArea>
           <BtnArea>
-            <PrevBtn onClick={showPrevImage}></PrevBtn>
+            <PrevBtn
+              src="Image/album/leftarrow.png"
+              alt="prev"
+              onClick={() => {
+                showPrevImage();
+              }}
+            ></PrevBtn>
             <OrderArea>
-              <OrderArea>
-                {presentImageIndex} | {imageList.length}
-              </OrderArea>
+              {presentImageIndex} | {imageList.length}
             </OrderArea>
-            <NextBtn onClick={showNextImage}></NextBtn>
+            <NextBtn
+              src="Image/album/rightarrow.png"
+              alt="next"
+              onClick={showNextImage}
+            ></NextBtn>
           </BtnArea>
         </AlbumArea>
       )}

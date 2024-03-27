@@ -16,7 +16,7 @@ const MypageContentContainer = styled.div`
   border-radius: 40px;
 `;
 
-const AlbumArea = styled.div`
+const Area = styled.div`
   display: grid;
   grid-template-rows: 1fr 9fr;
   width: 85%;
@@ -25,32 +25,46 @@ const AlbumArea = styled.div`
   border-radius: 30px;
 `;
 
-const CarrotArea = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 9fr;
-  width: 85%;
-  height: 90%;
-  border: 2px solid black;
-  border-radius: 30px;
+const TitleArea = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  position: relative;
+`;
+
+const ImageArea = styled.img`
+  position: absolute;
+  left: 10px;
+  height: 100%;
+  max-width: 100%;
+`;
+
+const Text = styled.div`
+  position: absolute;
+  left: 15%;
+  flex: 1;
 `;
 
 const MypageContent = () => {
   return (
     <MypageContentContainer>
-      <AlbumArea>
-        <div>
-          <img src="abc" alt="album" />
-          <span>앨범</span>
-        </div>
+      <Area>
+        <TitleArea>
+          <ImageArea src="/Image/album/앨범.png" alt="앨범" />
+          <Text>앨범</Text>
+        </TitleArea>
         <Album />
-      </AlbumArea>
-      <CarrotArea>
-        <div>
-          <img src="abc" alt="carrot" />
-          <span>당근 밭</span>
-        </div>
+      </Area>
+      <Area>
+        <TitleArea>
+          <ImageArea src="/Image/album/당근밭.png" alt="carrot" />
+          <Text>당근밭</Text>
+        </TitleArea>
+
         <CarrotField />
-      </CarrotArea>
+      </Area>
     </MypageContentContainer>
   );
 };

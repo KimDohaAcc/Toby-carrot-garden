@@ -23,6 +23,7 @@ const QuizTitleArea = styled.div`
 const QuizImageArea = styled.div`
   grid-area: image;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
@@ -54,7 +55,7 @@ const CameraBtn = styled.button`
   color: #b65050;
 `;
 
-const StoryQuizEmotions = ({ imageUrl }) => {
+const StoryQuizEmotions = ({ imageUrl, content }) => {
   const handleTakePicture = () => {
     console.log("Take a picture");
   };
@@ -66,6 +67,7 @@ const StoryQuizEmotions = ({ imageUrl }) => {
       </QuizTitleArea>
       <QuizImageArea>
         <QuizImage src={imageUrl} alt="image" />
+        <div style={{ fontSize: "3rem" }}>{content}</div>
       </QuizImageArea>
       <QuizCameraArea>
         <CameraArea>Camera</CameraArea>

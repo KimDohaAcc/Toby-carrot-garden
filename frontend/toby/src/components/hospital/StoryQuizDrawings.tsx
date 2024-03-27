@@ -28,6 +28,7 @@ const QuizTitleArea = styled.div`
 const QuizImageArea = styled.div`
   grid-area: image;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
@@ -46,7 +47,7 @@ const QuizCanvasArea = styled.div`
   border: 1px solid black;
 `;
 
-const StoryQuizDrawings = ({ imageUrl, quizId }) => {
+const StoryQuizDrawings = ({ imageUrl, quizId, content }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -66,6 +67,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId }) => {
       </QuizTitleArea>
       <QuizImageArea>
         <QuizImage src={imageUrl} alt="image" />
+        <div>{content}</div>
       </QuizImageArea>
       <QuizCanvasArea>
         <h1>Canvas</h1>

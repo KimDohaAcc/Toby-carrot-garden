@@ -1,5 +1,7 @@
 import { api } from "../config/apiConfig";
 
+import { tempToken } from "../config/apiConfig";
+
 //URI : /place/{place_id} 장소 진입시 스토리 리스트 조회
 // {
 //   “status” : 200,
@@ -28,7 +30,7 @@ export const getStoryList = async (place_id: number) => {
   try {
     const response = await api.get(`place/${place_id}`, {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${tempToken}`,
       },
     });
 
@@ -81,10 +83,10 @@ export const getSceneList = async (story_id: number) => {
   try {
     const response = await api.get(`story/${story_id}`, {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: `Bearer ${tempToken}`,
       },
     });
-    return response.data.result;
+    return response.data.result.list;
   } catch (error) {
     console.error(error);
   }

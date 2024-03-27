@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useSelector } from "react-redux";
@@ -22,44 +22,59 @@ type StoryQuizProps = {
   index: number;
 };
 
+interface Scene {
+  sceneId: number;
+  sceneType: string;
+  sceneImageUrl: string;
+  content: string;
+  voice: string;
+  quiz: Quiz;
+}
+
 interface Quiz {
   quizId: number;
   correctAnswer: string;
   quizType: string;
 }
 
-interface Scene {
-  sceneId: number;
-  quizType: string;
-  sceneImageUrl: string;
-  content: string;
-  voice: string;
-  quiz?: Quiz[];
-}
-
 const StoryQuiz = ({ index }: StoryQuizProps) => {
   const sceneList = useSelector<RootState, Scene[]>(
     (state: RootState) => state.hospital.sceneList
   );
-  console.log("index", index);
-  console.log("sceneList", sceneList);
-  console.log("ASdasdasd", sceneList[index]?.quiz?.[0]?.quizType);
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [quizId, setQuizId] = useState<number>(0);
+  const [content, setContent] = useState<string>("");
+  const [quizType, setQuizType] = useState<string>("");
 
-  const imageUrl = sceneList[index]?.sceneImageUrl;
-  const quizId = sceneList[index]?.quiz?.[0]?.quizId;
+  useEffect(() => {
+    if (sceneList[index]) {
+      setImageUrl(sceneList[index]?.sceneImageUrl);
+      setContent(sceneList[index]?.content);
+      if (sceneList[index]?.quiz) {
+        setQuizId(sceneList[index].quiz.quizId);
+        setQuizType(sceneList[index].quiz.quizType);
+      }
+    }
+  }, [index, sceneList]);
 
   const renderQuiz = () => {
-    switch (sceneList[index]?.quiz?.[0]?.quizType) {
-      case "drawings":
-        return <StoryQuizDrawings imageUrl={imageUrl} quizId={quizId} />;
-      case "objects":
-        return <StoryQuizDetections imageUrl={imageUrl} />;
-      case "feelings":
-        return <StoryQuizEmotions imageUrl={imageUrl} />;
-      case "emergency":
-        return <StoryEmergency imageUrl={imageUrl} />;
+    switch (quizType) {
+      case "DRAWINGS":
+        return (
+          <StoryQuizDrawings
+            imageUrl={imageUrl}
+            quizId={quizId}
+            content={content}
+          />
+        );
+      case "OBJECTS":
+        return <StoryQuizDetections imageUrl={imageUrl} content={content} />;
+      case "FEELINGS":
+        return <StoryQuizEmotions imageUrl={imageUrl} content={content} />;
+      case "EMERGENCY":
+        return <StoryEmergency />;
       default:
-        return <div>Quiz Type Error</div>;
+        return <div>Quiz Type Error!!!</div>;
     }
   };
 
