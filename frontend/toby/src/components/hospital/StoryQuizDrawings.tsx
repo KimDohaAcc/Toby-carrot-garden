@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+// import SignatureCanvas from "react-signature-canvas";
 
 import StoryDrawingModal from "../modals/StoryDrawingModal";
 
@@ -71,7 +72,12 @@ const StoryQuizDrawings = ({ imageUrl, quizId }) => {
         <h1>Canvas</h1>
         <p onClick={openModal}>여기를 클릭하세요</p>
       </QuizCanvasArea>
-      <StoryDrawingModal isOpen={isModalOpen} onClose={closeModal} />
+      <StoryDrawingModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        quizId={quizId}
+      />{" "}
+      {/* quizId prop 추가 */}
     </QuizContainer>
   );
 };
