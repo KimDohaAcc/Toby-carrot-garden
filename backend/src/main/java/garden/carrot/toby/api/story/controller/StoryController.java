@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping()
 @RequiredArgsConstructor
 @Slf4j
 public class StoryController {
@@ -39,7 +37,7 @@ public class StoryController {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, storyService.getQuizResult(memberQuizID));
 	}
 
-	@GetMapping("/{storyId}")
+	@GetMapping("/story/{storyId}")
 	public ApiResponse<ListDto<SceneDataDto.SceneDataResponse>> getSceneList(@PathVariable Integer storyId) {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, storyService.findSceneDataList(storyId));
 	}
