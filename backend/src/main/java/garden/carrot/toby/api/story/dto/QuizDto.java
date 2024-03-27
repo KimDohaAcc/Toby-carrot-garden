@@ -1,6 +1,8 @@
 package garden.carrot.toby.api.story.dto;
 
+import garden.carrot.toby.domain.quizdata.entity.QuizType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,4 +41,13 @@ public class QuizDto {
 		private String correctAnswer;
 	}
 
+	@Getter
+	@AllArgsConstructor
+	@Builder
+	public static class QuizDataResponse {
+
+		private Integer quizId;
+		private String correctAnswer;
+		private QuizType quizType;
+	}
 }

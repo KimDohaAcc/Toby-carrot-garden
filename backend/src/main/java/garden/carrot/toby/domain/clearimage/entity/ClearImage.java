@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ClearImage extends BaseEntity {
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
@@ -24,4 +26,11 @@ public class ClearImage extends BaseEntity {
 	private PlaceData placeData;
 
 	private String clearImageUrl;
+
+	@Builder
+	public ClearImage(Member member, PlaceData placeData, String clearImageUrl) {
+		this.member = member;
+		this.placeData = placeData;
+		this.clearImageUrl = clearImageUrl;
+	}
 }

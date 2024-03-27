@@ -8,16 +8,16 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
+import lombok.ToString;
 
 @Entity
 @Getter
 public class QuizData extends BaseEntity {
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "scene_data_id")
-	@JsonBackReference
 	private SceneData sceneData;
 
 	private String correctAnswer;

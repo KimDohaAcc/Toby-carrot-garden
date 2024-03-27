@@ -3,15 +3,18 @@ package garden.carrot.toby.api.story.controller;
 import garden.carrot.toby.api.member.dto.CarrotDto;
 import garden.carrot.toby.api.story.dto.QuizDto.QuizResultResponse;
 import garden.carrot.toby.api.story.dto.QuizDto.SubmitQuizRequest;
+import garden.carrot.toby.api.story.dto.SceneDataDto;
 import garden.carrot.toby.api.story.dto.QuizDto.SubmitQuizResponse;
 import garden.carrot.toby.api.story.service.StoryService;
 import garden.carrot.toby.common.constants.SuccessCode;
 import garden.carrot.toby.common.dto.ApiResponse;
+import garden.carrot.toby.common.dto.ListDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +39,12 @@ public class StoryController {
 		return ApiResponse.success(SuccessCode.GET_SUCCESS, storyService.getQuizResult(memberQuizID));
 	}
 
+	@GetMapping("/{storyId}")
+	public ApiResponse<ListDto<SceneDataDto.SceneDataResponse>> getSceneList(@PathVariable Integer storyId) {
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, storyService.findSceneDataList(storyId));
+	}
 	@PatchMapping(value = "/place/{place_id}/carrot")
-	public ApiResponse<CarrotDto.PatchResponse> submitQuiz(@PathVariable("place_id") int placeId) {
+	public ApiResponse<CarrotDto.PatchResponse> setQuizCarrot(@PathVariable("place_id") int placeId) {
 
 		return ApiResponse.success(SuccessCode.PATCH_SUCCESS, storyService.patchCarrotCount(placeId));
 	}

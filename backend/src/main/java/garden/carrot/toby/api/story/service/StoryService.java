@@ -8,9 +8,12 @@ import garden.carrot.toby.api.member.dto.CarrotDto;
 import garden.carrot.toby.api.story.dto.QuizDto.ProducerData;
 import garden.carrot.toby.api.story.dto.QuizDto.QuizResultResponse;
 import garden.carrot.toby.api.story.dto.QuizDto.SubmitQuizRequest;
+import garden.carrot.toby.api.story.dto.SceneDataDto;
+import garden.carrot.toby.api.story.mapper.SceneDataMapper;
 import garden.carrot.toby.api.story.dto.QuizDto.SubmitQuizResponse;
 import garden.carrot.toby.api.story.util.KafkaProducer;
 import garden.carrot.toby.common.constants.ErrorCode;
+import garden.carrot.toby.common.dto.ListDto;
 import garden.carrot.toby.common.exception.CustomException;
 import garden.carrot.toby.common.redis.service.RedisService;
 import garden.carrot.toby.common.s3.dto.S3Dto;
@@ -25,9 +28,14 @@ import garden.carrot.toby.domain.placedata.entity.PlaceData;
 import garden.carrot.toby.domain.placedata.repository.PlaceDataRepository;
 import garden.carrot.toby.domain.quizdata.entity.QuizData;
 import garden.carrot.toby.domain.quizdata.repository.QuizDataRepository;
+import garden.carrot.toby.domain.scenedata.repository.SceneDataRepository;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,11 +44,13 @@ public class StoryService {
 
 	private final MemberQuizRepository memberQuizRepository;
 	private final QuizDataRepository quizDataRepository;
+	private final SceneDataRepository sceneDataRepository;
 	private final PlaceDataRepository placeDataRepository;
 	private final MemberCarrotRepository memberCarrotRepository;
 	private final KafkaProducer kafkaProducer;
 	private final S3Service s3Service;
 	private final MemberUtil memberUtil;
+	private final SceneDataMapper sceneDataMapper;
 	private final RedisService redisService;
 
 	@Transactional
@@ -112,5 +122,13 @@ public class StoryService {
 		memberCarrotRepository.save(memberCarrot);
 
 		return new CarrotDto.PatchResponse(memberCarrot.getCount());
+	}
+	public ListDto<SceneDataDto.SceneDataResponse> findSceneDataList(Integer storyId) {
+		return Optional.ofNullable(sceneDataRepository.findAllByStoryData_Id(storyId))
+			.filter(dataList -> !dataList.isEmpty())
+			.map(dataList -> new ListDto<>(dataList.stream()
+				.map(sceneDataMapper::toSceneResponse)
+				.collect(Collectors.toList())))
+			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID, "[story_id : " + storyId + "] is not exist"));
 	}
 }
