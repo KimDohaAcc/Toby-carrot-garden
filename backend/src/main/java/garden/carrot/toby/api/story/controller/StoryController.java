@@ -13,7 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping()
 @RequiredArgsConstructor
 @Slf4j
 public class StoryController {

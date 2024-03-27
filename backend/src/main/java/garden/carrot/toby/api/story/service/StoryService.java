@@ -68,14 +68,14 @@ public class StoryService {
 		String redis = redisService.getValue(key);
 		MemberQuiz quizData = memberQuizRepository.findById(memberQuizID)
 			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID, memberQuizID));
-		double number = -1;
+		double score = -1;
 		if(redis != null){
-			number = Double.parseDouble(redis);
-			quizData.updateScore(number);
+			score = Double.parseDouble(redis);
+			quizData.setScore(score);
 		}else{
-			number = quizData.getScore();
+			score = quizData.getScore();
 		}
 
-        return new QuizResultResponse((int) number);
+        return new QuizResultResponse((int) score);
 	}
 }
