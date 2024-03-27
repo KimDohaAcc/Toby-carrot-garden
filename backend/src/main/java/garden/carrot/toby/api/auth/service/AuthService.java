@@ -1,9 +1,21 @@
 package garden.carrot.toby.api.auth.service;
 
+import garden.carrot.toby.api.auth.dto.AuthDto;
+import garden.carrot.toby.api.auth.dto.KakaoDto;
+import garden.carrot.toby.api.auth.dto.MemberDto;
+import garden.carrot.toby.api.auth.jwt.TokenProvider;
+import garden.carrot.toby.api.auth.mapper.MemberMapper;
+import garden.carrot.toby.api.auth.util.MemberUtil;
+import garden.carrot.toby.common.constants.ErrorCode;
+import garden.carrot.toby.common.exception.CustomException;
+import garden.carrot.toby.common.exception.ExceptionUtil;
+import garden.carrot.toby.domain.member.entity.Member;
+import garden.carrot.toby.domain.member.repository.MemberRepository;
 import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,23 +25,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import garden.carrot.toby.api.auth.dto.AuthDto;
-import garden.carrot.toby.api.auth.dto.KakaoDto;
-import garden.carrot.toby.api.auth.jwt.TokenProvider;
-import garden.carrot.toby.api.auth.util.MemberUtil;
-import garden.carrot.toby.common.constants.ErrorCode;
-import garden.carrot.toby.common.exception.CustomException;
-import garden.carrot.toby.common.exception.ExceptionUtil;
-import garden.carrot.toby.domain.member.entity.Member;
-import garden.carrot.toby.domain.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
 public class AuthService {
+
 	private final ExceptionUtil exceptionUtil;
 	private final ExternalApiService externalApiService;
 	private final MemberRepository memberRepository;
@@ -37,9 +38,11 @@ public class AuthService {
 	private final RedisTemplate<String, AuthDto.SigninResponse> redisTemplate;
 	private final MemberUtil memberUtil;
 	private final PasswordEncoder passwordEncoder;
+	private final MemberMapper memberMapper;
 
 	/**
 	 * 카카오 콜백
+	 *
 	 * @param code 카카오에서 발급해준 인가코드
 	 * @return 우리 서버에서 발급해준 토큰코드. 토큰코드로 레디스에 있는 토큰 값을 찾을 수 있다.
 	 */
@@ -83,6 +86,7 @@ public class AuthService {
 
 	/**
 	 * db에서 멤버 있는지 확인 후 없으면 create
+	 *
 	 * @param serialNumber 카카오 UserInfo의 id
 	 * @return 찾은 멤버
 	 */
@@ -106,19 +110,19 @@ public class AuthService {
 
 	/**
 	 * 회원가입 완료 여부 반환
+	 *
 	 * @param member DB에 저장된 멤버
 	 * @return 찾은 멤버
 	 */
 	private boolean isSignupComplete(Member member) {
 		// 회원가입 완료된 멤버
-		if (member.getBirthDate() != null && member.getName() != null && member.getParentPassword() != null) {
-			return true;
-		}
-		return false;
+		return member.getBirthDate() != null && member.getName() != null
+			&& member.getParentPassword() != null;
 	}
 
 	/**
 	 * 인가코드로 카카오 토큰 받기
+	 *
 	 * @param code 카카오가 발급해준 인가코드
 	 * @return 카카오 토큰
 	 * @throws CustomException
@@ -147,12 +151,14 @@ public class AuthService {
 
 	/**
 	 * 카카오 토큰으로 유저 정보 확인
+	 *
 	 * @param kakaoToken 카카오가 발급해준 xhzms
 	 * @return 카카오 토큰
 	 * @throws CustomException
 	 */
 	@Transactional
-	public KakaoDto.UserInfo getKakaoUserInfo(KakaoDto.TokenResponse kakaoToken) throws CustomException {
+	public KakaoDto.UserInfo getKakaoUserInfo(KakaoDto.TokenResponse kakaoToken)
+		throws CustomException {
 		URI kakaoUserInfoUri = UriComponentsBuilder
 			.fromUriString("https://kapi.kakao.com/v2")
 			.path("/user/me")
@@ -192,5 +198,13 @@ public class AuthService {
 		String encodedPassword = passwordEncoder.encode(request.getParentPassword());
 		member.signup(encodedPassword, request.getName(), request.getBirthDate());
 		return new AuthDto.SignupExtraResponse(member.getId());
+	}
+
+	public MemberDto.Response getMemberInfo() {
+		Member member = memberUtil.getLoginMember();
+		if (!isSignupComplete(member)) {
+			throw new CustomException(ErrorCode.SIGNUP_NOT_COMPLETE);
+		}
+		return memberMapper.MemberToMemberDtoResponse(member);
 	}
 }

@@ -60,6 +60,12 @@ dependencies {
     // mapstruct
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    // S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    // kafka
+    implementation 'org.springframework.kafka:spring-kafka'
 }
 
 tasks.named('test') {

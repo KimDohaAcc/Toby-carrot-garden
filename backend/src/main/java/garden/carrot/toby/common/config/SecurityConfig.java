@@ -27,11 +27,13 @@ import garden.carrot.toby.api.auth.jwt.TokenProvider;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
 	private final TokenProvider tokenProvider;
 
 	private final String FRONT_DOMAIN;
 
-	public SecurityConfig(@Value("${DOMAIN.FRONT}") String frontDomain, TokenProvider tokenProvider) {
+	public SecurityConfig(@Value("${DOMAIN.FRONT}") String frontDomain,
+		TokenProvider tokenProvider) {
 
 		this.FRONT_DOMAIN = frontDomain;
 		this.tokenProvider = tokenProvider;
@@ -52,7 +54,8 @@ public class SecurityConfig {
 			.sessionManagement((sessionManagement) ->
 				sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			)
-			.addFilterAfter(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+			.addFilterAfter(new JwtFilter(tokenProvider),
+				UsernamePasswordAuthenticationFilter.class)
 		;
 
 		return http.build();
@@ -91,7 +94,7 @@ public class SecurityConfig {
 				allowedPort += 1;
 			}
 		}
-
+		
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 
 		corsConfiguration.setAllowCredentials(true);
@@ -104,12 +107,14 @@ public class SecurityConfig {
 			HttpMethod.DELETE.name(),
 			HttpMethod.OPTIONS.name()
 		));
+
 		corsConfiguration.setAllowedHeaders(List.of(
 			HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS,
 			HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS,
-			HttpHeaders.CONTENT_TYPE
+			HttpHeaders.CONTENT_TYPE,
+			HttpHeaders.AUTHORIZATION
 		));
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

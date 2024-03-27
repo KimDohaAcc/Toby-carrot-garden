@@ -14,6 +14,7 @@ import lombok.Getter;
 @Entity
 @Getter
 public class QuizData extends BaseEntity {
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "scene_data_id")
 	@JsonBackReference
