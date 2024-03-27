@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import QuizWebCam from "../QuizWebCam";
 
-const QuizContainer = styled.div`
+const StoryQuizEmotionsContainer = styled.div`
   display: grid;
   grid-template-areas:
     "title title"
@@ -12,7 +13,7 @@ const QuizContainer = styled.div`
   border: 1px solid black;
 `;
 
-const QuizTitleArea = styled.div`
+const StoryQuizEmotionsTitleArea = styled.div`
   grid-area: title;
   display: flex;
   justify-content: center;
@@ -20,7 +21,7 @@ const QuizTitleArea = styled.div`
   border: 1px solid black;
 `;
 
-const QuizImageArea = styled.div`
+const StoryQuizEmotionsImageArea = styled.div`
   grid-area: image;
   display: flex;
   justify-content: center;
@@ -28,12 +29,12 @@ const QuizImageArea = styled.div`
   border: 1px solid black;
 `;
 
-const QuizImage = styled.img`
+const StoryQuizEmotionsImage = styled.img`
   height: 95%;
   border: 1px solid black;
 `;
 
-const QuizCameraArea = styled.div`
+const StoryQuizEmotionCanmeraArea = styled.div`
   grid-area: camera;
   display: flex;
   flex-direction: column;
@@ -43,33 +44,36 @@ const QuizCameraArea = styled.div`
 `;
 
 const CameraArea = styled.div`
-  flex: 0 0 75%;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
-const CameraBtnArea = styled.div`
-  flex: 0 0 25%;
-`;
+// const CameraBtnArea = styled.div`
+//   flex: 0 0 25%;
+// `;
 
-const CameraBtn = styled.button`
-  color: #b65050;
-`;
+// const CameraBtn = styled.button`
+//   color: #b65050;
+// `;
 
-const StoryQuizEmotions = ({ imageUrl }) => {
-  const handleTakePicture = () => {
-    console.log("Take a picture");
-  };
-
+const StoryQuizDetections = ({ imageUrl }) => {
+  // const handleTakePicture = () => {
+  //   console.log("Take a picture");
+  // };
   return (
-    <QuizContainer>
-      <QuizTitleArea>
-        <h1>StoryQuizEmotions</h1>
-      </QuizTitleArea>
-      <QuizImageArea>
-        <QuizImage src={imageUrl} alt="image" />
-      </QuizImageArea>
-      <QuizCameraArea>
-        <CameraArea>Camera</CameraArea>
-        <CameraBtnArea>
+    <StoryQuizEmotionsContainer>
+      <StoryQuizEmotionsTitleArea>
+        <h1>StoryQuizDetections</h1>
+      </StoryQuizEmotionsTitleArea>
+      <StoryQuizEmotionsImageArea>
+        <StoryQuizEmotionsImage src={imageUrl} alt="image" />
+      </StoryQuizEmotionsImageArea>
+      <StoryQuizEmotionCanmeraArea>
+        <CameraArea>
+          <QuizWebCam></QuizWebCam>
+        </CameraArea>
+        {/* <CameraBtnArea>
           <CameraBtn
             onClick={() => {
               handleTakePicture();
@@ -77,10 +81,10 @@ const StoryQuizEmotions = ({ imageUrl }) => {
           >
             찰칵 이미지
           </CameraBtn>
-        </CameraBtnArea>
-      </QuizCameraArea>
-    </QuizContainer>
+        </CameraBtnArea> */}
+      </StoryQuizEmotionCanmeraArea>
+    </StoryQuizEmotionsContainer>
   );
 };
 
-export default StoryQuizEmotions;
+export default StoryQuizDetections;
