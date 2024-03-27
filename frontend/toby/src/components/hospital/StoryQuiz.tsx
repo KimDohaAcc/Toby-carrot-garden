@@ -68,7 +68,13 @@ const StoryQuiz = ({ index }: StoryQuizProps) => {
           />
         );
       case "OBJECTS":
-        return <StoryQuizDetections imageUrl={imageUrl} content={content} />;
+        return (
+          <StoryQuizDetections
+            imageUrl={imageUrl}
+            content={content}
+            quizId={quizId}
+          />
+        );
       case "FEELINGS":
         return <StoryQuizEmotions imageUrl={imageUrl} content={content} />;
       case "EMERGENCY":

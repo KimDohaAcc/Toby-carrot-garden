@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import QuizWebCam from "../QuizWebCam";
 
 const StoryQuizDetectionsContainer = styled.div`
   display: grid;
@@ -44,24 +45,23 @@ const StoryQuizDetectionCanmeraArea = styled.div`
 `;
 
 const CameraArea = styled.div`
-  flex: 0 0 75%;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
-const CameraBtnArea = styled.div`
-  flex: 0 0 25%;
-`;
+// const CameraBtnArea = styled.div`
+//   flex: 0 0 25%;
+// `;
 
-const CameraBtn = styled.div`
-  img {
-    width: 100%;
-  }
-`;
+// const CameraBtn = styled.button`
+//   color: #b65050;
+// `;
 
-const StoryQuizDetections = ({ imageUrl, content }) => {
-  useEffect(() => {}, [content]);
-  const handleTakePicture = () => {
-    console.log("Take a picture");
-  };
+const StoryQuizDetections = ({ imageUrl, quizId, content }) => {
+  // const handleTakePicture = () => {
+  //   console.log("Take a picture");
+  // };
   return (
     <StoryQuizDetectionsContainer>
       <StoryQuizDetectionsTitleArea>
@@ -73,9 +73,9 @@ const StoryQuizDetections = ({ imageUrl, content }) => {
       </StoryQuizDetectionsImageArea>
       <StoryQuizDetectionCanmeraArea>
         <CameraArea>
-          <h1>Camera</h1>
+          <QuizWebCam quizId={quizId} />
         </CameraArea>
-        <CameraBtnArea>
+        {/* <CameraBtnArea>
           <CameraBtn
             onClick={() => {
               handleTakePicture();
@@ -83,7 +83,7 @@ const StoryQuizDetections = ({ imageUrl, content }) => {
           >
             <img src="Image/button/checkButton.png" alt="camera" />
           </CameraBtn>
-        </CameraBtnArea>
+        </CameraBtnArea> */}
       </StoryQuizDetectionCanmeraArea>
     </StoryQuizDetectionsContainer>
   );
