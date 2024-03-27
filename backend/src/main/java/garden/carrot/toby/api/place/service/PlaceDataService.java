@@ -1,7 +1,7 @@
-package garden.carrot.toby.api.placedata.service;
+package garden.carrot.toby.api.place.service;
 
-import garden.carrot.toby.api.placedata.dto.StoryDataDto;
-import garden.carrot.toby.api.placedata.mapper.StoryDataMapper;
+import garden.carrot.toby.api.place.dto.StoryDataDto;
+import garden.carrot.toby.api.place.mapper.StoryDataMapper;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.dto.ListDto;
 import garden.carrot.toby.common.exception.CustomException;
@@ -28,7 +28,7 @@ public class PlaceDataService {
 			.map(dataList -> new ListDto<>(dataList.stream()
 				.map(storyDataMapper::toStoryResponse)
 				.collect(Collectors.toList())))
-			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID, "[place_id : " + placeDataId + "] is not exist"));
+			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID, "[place_id : " + placeDataId + "] does not exist"));
 	}
 
 	public Optional<PlaceData> getPlaceDataById(Integer placeDataId) {

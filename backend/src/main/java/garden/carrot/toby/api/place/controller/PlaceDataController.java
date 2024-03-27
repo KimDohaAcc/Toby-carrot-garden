@@ -1,7 +1,7 @@
-package garden.carrot.toby.api.placedata.controller;
+package garden.carrot.toby.api.place.controller;
 
-import garden.carrot.toby.api.placedata.dto.StoryDataDto;
-import garden.carrot.toby.api.placedata.service.PlaceDataService;
+import garden.carrot.toby.api.place.dto.StoryDataDto;
+import garden.carrot.toby.api.place.service.PlaceDataService;
 import garden.carrot.toby.common.constants.SuccessCode;
 import garden.carrot.toby.common.dto.ApiResponse;
 import garden.carrot.toby.common.dto.ListDto;

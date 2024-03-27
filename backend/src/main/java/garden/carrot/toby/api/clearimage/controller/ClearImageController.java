@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/clearImage")
+@RequestMapping("/clear-image")
 public class ClearImageController {
 
 	private final ClearImageService clearImageService;

@@ -1,6 +1,6 @@
-package garden.carrot.toby.api.placedata.mapper;
+package garden.carrot.toby.api.place.mapper;
 
-import garden.carrot.toby.api.placedata.dto.StoryDataDto;
+import garden.carrot.toby.api.place.dto.StoryDataDto;
 import garden.carrot.toby.domain.storydata.entity.StoryData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

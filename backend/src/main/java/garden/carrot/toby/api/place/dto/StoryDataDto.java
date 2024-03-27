@@ -1,4 +1,4 @@
-package garden.carrot.toby.api.placedata.dto;
+package garden.carrot.toby.api.place.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
