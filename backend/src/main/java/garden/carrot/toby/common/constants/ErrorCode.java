@@ -16,6 +16,7 @@ public enum ErrorCode {
 	ALREADY_DELETED(BAD_REQUEST, "이미 삭제된 값입니다"),
 	BAD_PARAMETER(BAD_REQUEST, "요청 파라미터가 잘못되었습니다."),
 	BAD_PARAMETER_TYPE(BAD_REQUEST, "지원하지 않는 파라미터 형식입니다."),
+	FILE_SIZE_LIMIT(BAD_REQUEST, "파일 업로드는 2MB까지 가능합니다."),
 
 	// 카카오 OAuth
 	KAKAO_TOKEN_NOT_ISSUED(INTERNAL_SERVER_ERROR, "카카오 토큰 발급에 문제가 생겼습니다"),

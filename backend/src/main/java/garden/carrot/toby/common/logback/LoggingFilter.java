@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -40,44 +42,84 @@ public class LoggingFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
-
 		stringBuilder.setLength(0);
 
 		stringBuilder.append("time: ").append(LocalDateTime.now()).append("\n");
+
 		MDC.put("traceId", UUID.randomUUID().toString());
+		stringBuilder.append("traceId: ").append(MDC.get("traceId")).append("\n");
+
 		try {
 			if (isAsyncDispatch(request)) {
 				filterChain.doFilter(request, response);
+			} else if (request.getContentType() != null && request.getContentType().contains("multipart/form-data")) {
+				doFilterWrapped(request, new ResponseWrapper(response), filterChain);
 			} else {
 				doFilterWrapped(new RequestWrapper(request), new ResponseWrapper(response), filterChain);
 			}
 		} catch (Exception ex) {
 			handleException(ex, response);
 		} finally {
-			if (!isSwagger) {
-				discordNotifier.notify(stringBuilder.append("========================").toString());
-			}
-
 			MDC.clear();
 		}
 	}
 
-	protected void doFilterWrapped(RequestWrapper request, ContentCachingResponseWrapper response,
+	protected void doFilterWrapped(HttpServletRequest request, ContentCachingResponseWrapper response,
 		FilterChain filterChain) throws ServletException, IOException {
 		try {
 			logRequest(request);
+			if (!isSwagger) {
+
+				discordNotifier.notify(stringBuilder.append("----------------").toString());
+				stringBuilder.setLength(0);
+			}
 			filterChain.doFilter(request, response);
 		} catch (Exception ex) {
 			handleException(ex, response);
 			throw ex; // Re-throw the exception to propagate it to the outer catch block
 		} finally {
+			stringBuilder.append("time: ").append(LocalDateTime.now()).append("\n");
+			stringBuilder.append("traceId: ").append(MDC.get("traceId")).append("\n");
 			logResponse(response);
+			if (!isSwagger) {
+
+				discordNotifier.notify(stringBuilder.append("========================").toString());
+			}
 			response.copyBodyToResponse();
 		}
 	}
 
-	private void logRequest(RequestWrapper request) throws IOException {
+	private void logMultipartRequest(HttpServletRequest request) throws ServletException, IOException {
+		Collection<Part> parts = request.getParts();
+		StringBuilder multipartPayload = new StringBuilder();
 
+		// 각 파트에서 필요한 작업 수행
+		for (Part part : parts) {
+			String paramName = part.getName();
+
+			// 파일 파트인 경우
+			if (part.getContentType() != null) {
+				String fileName = part.getSubmittedFileName();
+				// 파일 처리 로직
+				multipartPayload.append(paramName).append(": ").append(fileName).append("\n");
+			}
+			// 텍스트 파트인 경우
+			else {
+				String paramValue = request.getParameter(paramName);
+				// 텍스트 파트 처리 로직
+				multipartPayload.append(paramName).append(": ").append(paramValue).append("\n");
+			}
+		}
+
+		log.info("{} Payload: {}", "Multipart Request", multipartPayload.toString());
+
+		stringBuilder.append("Multipart Request")
+			.append(" Payload: ****\n")
+			.append(multipartPayload.toString())
+			.append("****\n");
+	}
+
+	private void logRequest(HttpServletRequest request) throws IOException, ServletException {
 		String queryString = request.getQueryString();
 		log.info("Request : {} uri=[{}] content-type=[{}]", request.getMethod(),
 			queryString == null ? request.getRequestURI() : request.getRequestURI() + queryString,
@@ -98,14 +140,19 @@ public class LoggingFilter extends OncePerRequestFilter {
 		stringBuilder.append("Origin: ").append(request.getHeader("Origin")).append("\n");
 		stringBuilder.append(logMessage).append("\n");
 
-		logPayload("Request", request.getContentType(), request.getInputStream());
+		if (request.getContentType() != null && request.getContentType().contains("multipart/form-data")) {
+			logMultipartRequest(request);
+		} else {
+
+			logPayload("Request", request.getContentType(), request.getInputStream());
+		}
+
 	}
 
 	private void logResponse(ContentCachingResponseWrapper response) throws IOException {
 		if (isSwagger) {
 			return;
 		}
-
 		String logMessage = String.format("Response : %s", response.getStatus());
 		stringBuilder.append(logMessage).append("\n");
 		logPayload("Response", response.getContentType(), response.getContentInputStream());
@@ -130,8 +177,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 	private boolean isVisible(MediaType mediaType) {
 		final List<MediaType> VISIBLE_TYPES = Arrays.asList(MediaType.valueOf("text/*"),
 			MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-			MediaType.valueOf("application/*+json"), MediaType.valueOf("application/*+xml"),
-			MediaType.MULTIPART_FORM_DATA);
+			MediaType.valueOf("application/*+json"), MediaType.valueOf("application/*+xml"));
 		return VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
 	}
 
