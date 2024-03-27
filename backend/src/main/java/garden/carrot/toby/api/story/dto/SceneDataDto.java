@@ -17,6 +17,7 @@ public class SceneDataDto {
 		@Setter
 		private QuizDto.QuizDataResponse quiz;
 		private String sceneImageUrl;
+		private String content;
 		@Setter
 		private String voice;
 	}
