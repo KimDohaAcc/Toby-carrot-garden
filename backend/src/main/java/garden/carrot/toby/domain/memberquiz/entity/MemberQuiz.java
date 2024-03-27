@@ -15,6 +15,7 @@ import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberQuiz extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
