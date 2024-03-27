@@ -6,12 +6,16 @@ import org.springframework.transaction.annotation.Transactional;
 import garden.carrot.toby.api.auth.util.MemberUtil;
 import garden.carrot.toby.api.member.dto.CarrotDto;
 import garden.carrot.toby.api.story.dto.QuizDto.ProducerData;
+import garden.carrot.toby.api.story.dto.QuizDto.QuizResultResponse;
 import garden.carrot.toby.api.story.dto.QuizDto.SubmitQuizRequest;
+import garden.carrot.toby.api.story.dto.QuizDto.SubmitQuizResponse;
 import garden.carrot.toby.api.story.util.KafkaProducer;
 import garden.carrot.toby.common.constants.ErrorCode;
 import garden.carrot.toby.common.exception.CustomException;
+import garden.carrot.toby.common.redis.service.RedisService;
 import garden.carrot.toby.common.s3.dto.S3Dto;
 import garden.carrot.toby.common.s3.service.S3Service;
+import garden.carrot.toby.domain.member.entity.Member;
 import garden.carrot.toby.domain.member.entity.Member;
 import garden.carrot.toby.domain.membercarrot.entity.MemberCarrot;
 import garden.carrot.toby.domain.membercarrot.repoository.MemberCarrotRepository;
@@ -21,6 +25,7 @@ import garden.carrot.toby.domain.placedata.entity.PlaceData;
 import garden.carrot.toby.domain.placedata.repository.PlaceDataRepository;
 import garden.carrot.toby.domain.quizdata.entity.QuizData;
 import garden.carrot.toby.domain.quizdata.repository.QuizDataRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,29 +41,51 @@ public class StoryService {
 	private final KafkaProducer kafkaProducer;
 	private final S3Service s3Service;
 	private final MemberUtil memberUtil;
+	private final RedisService redisService;
 
 	@Transactional
-	public String submitQuiz(SubmitQuizRequest dto) throws Exception {
+	public SubmitQuizResponse submitQuiz(SubmitQuizRequest dto) throws Exception{
 
-		int memberId = memberUtil.getLoginMember().getId();
+		Member member = memberUtil.getLoginMember();
 		QuizData quizData = quizDataRepository.findById(dto.getQuizId())
 			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID, dto.getQuizId()));
 
 		// s3 데이터 저장
 		S3Dto s3 = s3Service.uploadFile(dto.getAnalysisImage());
 
-		// kafka 데이터 전송
-		ProducerData data = new ProducerData(s3.getFileKey()
-			, memberId, dto.getQuizId(), quizData.getCorrectAnswer());
-		kafkaProducer.sendMessage(data, quizData.getQuizType().toString());
-
+		// member Quiz 데이터 저장
 		MemberQuiz quiz = MemberQuiz.builder()
+			.member(member)
 			.quizData(quizData)
 			.imageUrl(s3.getFileUrl())
 			.score(-1).build();
 		memberQuizRepository.save(quiz);
 
-		return s3.getFileUrl();
+		// kafka 데이터 전송
+		ProducerData data = new ProducerData(s3.getFileKey()
+			, member.getId(), quiz.getId(), quizData.getCorrectAnswer());
+		kafkaProducer.sendMessage(data, quizData.getQuizType().toString());
+
+		return new SubmitQuizResponse(s3.getFileUrl(), quiz.getId());
+	}
+
+	@Transactional
+	public QuizResultResponse getQuizResult(int memberQuizID) {
+		int memberId = memberUtil.getLoginMember().getId();
+
+		String key = "quiz_answer_" + memberId  + "_" + memberQuizID;
+		String redis = redisService.getValue(key);
+		MemberQuiz quizData = memberQuizRepository.findById(memberQuizID)
+			.orElseThrow(() -> new CustomException(ErrorCode.NO_ID, memberQuizID));
+		double score = -1;
+		if(redis != null){
+			score = Double.parseDouble(redis);
+			quizData.setScore(score);
+		}else{
+			score = quizData.getScore();
+		}
+
+        return new QuizResultResponse((int) score);
 	}
 
 	@Transactional

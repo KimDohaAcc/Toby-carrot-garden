@@ -17,9 +17,22 @@ public class QuizDto {
 
 	@Getter
 	@AllArgsConstructor
+	public static class SubmitQuizResponse {
+		private String imageUrl;
+		private int memberQuizId;
+	}
+
+	@Getter
+	@AllArgsConstructor
+	public static class QuizResultResponse {
+		private int score;
+	}
+
+
+	@Getter
+	@AllArgsConstructor
 	@ToString
 	public static class ProducerData {
-
 		private String imageKey;
 		private int memberId;
 		private int quizId;
