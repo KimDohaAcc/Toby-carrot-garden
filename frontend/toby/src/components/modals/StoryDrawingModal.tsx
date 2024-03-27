@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import SignatureCanvas from "react-signature-canvas";
-import { submitQuiz2 } from "../../apis/drawingApi";
+import { submitQuiz2 } from "../../apis/quizApi";
 
 const StoryDrawingModalContainer = styled.div`
   display: flex;
@@ -29,14 +29,13 @@ const CloseBtn = styled.button`
   background-image: url("경로/이미지.png");
   background-size: cover; /* 이미지를 버튼에 맞게 크기 조정 */
 
-  border: none; /* 기본 버튼 스타일 제거 */
+  border: none;
 `;
 const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const signaturePadRef = useRef(null);
   const [canvasWidth, setCanvasWidth] = useState(500);
   const [canvasHeight, setCanvasHeight] = useState(400);
 
-  // Adjust canvas size based on modal size
   useEffect(() => {
     function updateCanvasSize() {
       if (isOpen) {

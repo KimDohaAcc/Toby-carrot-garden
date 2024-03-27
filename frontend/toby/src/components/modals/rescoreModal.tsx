@@ -78,10 +78,10 @@ const RescoreModal = ({ isOpen, onClose, quizId }) => {
         <h2>재채점 하시겠습니까?</h2>
         <ConfirmationContent>
           {/* Pass the respective status to handleRescore on button click */}
-          <ConfirmationButton onClick={() => handleRescore("correct")}>
+          <ConfirmationButton onClick={() => handleRescore("100")}>
             O
           </ConfirmationButton>
-          <ConfirmationButton onClick={() => handleRescore("incorrect")}>
+          <ConfirmationButton onClick={() => handleRescore("0")}>
             X
           </ConfirmationButton>
         </ConfirmationContent>

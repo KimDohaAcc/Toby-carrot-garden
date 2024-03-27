@@ -10,7 +10,7 @@ import Mart from "./pages/Mart";
 import Report from "./pages/Report";
 import NotFound from "./pages/NotFound";
 import StartPage from "./pages/StartPage";
-import Webcam from "./components/WebCam";
+import QuizWebcam from "./components/QuizWebCam";
 import AuthPage from "./pages/AuthPage";
 import PrivacyConsentForm from "./pages/PrivacyConsentForm";
 import KakaoSignup from "./pages/KakaoSignup";
@@ -45,7 +45,7 @@ function App() {
         <Route path="mart" element={<Mart />} />
         <Route path="report" element={<Report />} />
         <Route path="signplus" element={<UserInfoForm />} />
-        <Route path="webcam" element={<Webcam />} />
+        <Route path="webcam" element={<QuizWebcam />} />
 
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>

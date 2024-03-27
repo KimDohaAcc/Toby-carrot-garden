@@ -8,7 +8,7 @@ interface QuizItem {
   imageUrl: string;
   createdTime: string; // 'timestamp'를 'string'으로 처리
   score: number; // 'double' 타입은 'number'로 표현
-  id: number;
+  memberQuizId: number;
 }
 
 // interface QuizListResponse {
@@ -115,27 +115,27 @@ const dummyData: QuizItem[] = [
     imageUrl: "https://example.com/image1.jpg",
     createdTime: "20200482T33832912",
     score: 89.2,
-    id: 1,
+    memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
     createdTime: "20200482T33832912",
     score: 85,
-    id: 2,
+    memberQuizId: 2,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
     createdTime: "20200482T33832912",
     score: 85,
-    id: 3,
+    memberQuizId: 3,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
     createdTime: "20200482T33832912",
-    id: 4,
+    memberQuizId: 4,
     score: 90,
   },
   {
@@ -143,35 +143,35 @@ const dummyData: QuizItem[] = [
     imageUrl: "https://example.com/image2.jpg",
     createdTime: "20200482T33832912",
     score: 85,
-    id: 5,
+    memberQuizId: 5,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
     createdTime: "20200482T33832912",
     score: 85,
-    id: 5,
+    memberQuizId: 5,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
     createdTime: "20200482T33832912",
     score: 85,
-    id: 7,
+    memberQuizId: 7,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
     createdTime: "20200482T33832912",
     score: 85,
-    id: 8,
+    memberQuizId: 8,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
     createdTime: "20200482T33832912",
     score: 85,
-    id: 9,
+    memberQuizId: 9,
   },
 ];
 
@@ -263,7 +263,7 @@ const RecoreContent = () => {
                   생성 시간: {quiz.createdTime}
                 </RecoreBoxRescoreDate>
                 <RecoreBoxRescoreButton>
-                  <Button onClick={() => handleOpenModal(quiz.id)}>
+                  <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
                     재채점
                   </Button>
                 </RecoreBoxRescoreButton>

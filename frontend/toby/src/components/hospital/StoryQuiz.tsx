@@ -53,7 +53,7 @@ const StoryQuiz = ({ index }: StoryQuizProps) => {
       case "drawings":
         return <StoryQuizDrawings imageUrl={imageUrl} quizId={quizId} />;
       case "objects":
-        return <StoryQuizDetections imageUrl={imageUrl} />;
+        return <StoryQuizDetections imageUrl={imageUrl} quizId={quizId} />;
       case "feelings":
         return <StoryQuizEmotions imageUrl={imageUrl} />;
       case "emergency":

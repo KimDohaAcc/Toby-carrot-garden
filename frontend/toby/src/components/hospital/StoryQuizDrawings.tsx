@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import StoryDrawingModal from "../modals/StoryDrawingModal";
 
-import { submitQuiz } from "../../apis/drawingApi";
+import { submitQuiz } from "../../apis/quizApi";
 
 const QuizContainer = styled.div`
   display: grid;
