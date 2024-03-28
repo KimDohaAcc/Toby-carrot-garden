@@ -54,19 +54,23 @@ def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
 
         probabilities = np.exp(prediction) / np.sum(np.exp(prediction))  # 소프트맥스 함수를 사용하여 로짓 값을 확률로 변환
 
+        # print("{:2.0f}".format(probabilities * 100))
+
+        formatted_probabilities = ["{:2.0f}".format(prob * 100) for prob in probabilities]
+        print("---------------------------"+formatted_probabilities)
         # 백분율로 환산
         # percentages = probabilities * 100
         # print(percentages, flush=True)
 
-        percentage_values = [value * 100 for value in probabilities]
-        print(percentage_values, flush=True)
-
-        for idx, value in enumerate(percentage_values[0]):
-            if idx == target_index:
-                print(f"인덱스 번호 {target_index} 값: {value}", flush=True)
+        # percentage_values = [value * 100 for value in probabilities]
+        # print(percentage_values, flush=True)
+        #
+        # for idx, value in enumerate(percentage_values[0]):
+        #     if idx == target_index:
+        #         print(f"인덱스 번호 {target_index} 값: {value}", flush=True)
 
         # 결과
-        result = prediction[target_index] + 100
+        # result = prediction[target_index] + 100
 
     except Exception as e:
         print("모델 에러 발생 ", e, flush=True)
