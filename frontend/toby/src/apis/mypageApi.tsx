@@ -34,11 +34,7 @@ import { tempToken } from "../config/apiConfig.tsx";
 
 export const getClearImageList = async () => {
   try {
-    const response = await api.get("member/clear-image", {
-      headers: {
-        Authorization: `Bearer ${tempToken}`,
-      },
-    });
+    const response = await api.get("member/clear-image");
     return response.data.result.list;
   } catch (error) {
     console.error(error);
