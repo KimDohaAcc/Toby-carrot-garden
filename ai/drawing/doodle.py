@@ -58,6 +58,7 @@ def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
 
         formatted_probabilities = ["{:2.0f}".format(prob * 100) for prob in probabilities]
         print("---------------------------"+formatted_probabilities)
+        print("---------------------------" + formatted_probabilities[target_index])
         # 백분율로 환산
         # percentages = probabilities * 100
         # print(percentages, flush=True)
@@ -71,6 +72,7 @@ def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
 
         # 결과
         # result = prediction[target_index] + 100
+        result=0
 
     except Exception as e:
         print("모델 에러 발생 ", e, flush=True)
