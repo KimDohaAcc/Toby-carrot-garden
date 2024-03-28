@@ -11,55 +11,55 @@ const initialDrawingsList = [
     correctAnswer: "사자",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
     createdTime: "2020-04-28T13:38:32.912",
-    score: 89.2,
+    score: 100,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
     createdTime: "2020-04-28T13:38:32.912",
-    score: 85,
+    score: 100,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
     createdTime: "2020-04-28T13:38:32.912",
-    score: 85,
+    score: 100,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
     createdTime: "2020-04-28T13:38:32.912",
-    score: 85,
+    score: 100,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
     createdTime: "2020-04-28T13:38:32.912",
-    score: 85,
+    score: 100,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
     createdTime: "2020-04-28T13:38:32.912",
-    score: 85,
+    score: 100,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
     createdTime: "2020-04-28T13:38:32.912",
-    score: 85,
+    score: 100,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
     createdTime: "2020-04-28T13:38:32.912",
-    score: 85,
+    score: 100,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
     createdTime: "2020-04-28T13:38:32.912",
-    score: 85,
+    score: 100,
   },
   // 더 많은 퀴즈 데이터를 추가할 수 있습니다.
 ];
@@ -110,7 +110,8 @@ const ReportDrawings = () => {
           response.result &&
           response.result.list
         ) {
-          setDrawingsList(response.result.list); // 서버에서 받은 데이터로 상태 업데이트
+          setDrawingsList(response.result.list);
+          console.log("잘 갖고왔습니당"); // 서버에서 받은 데이터로 상태 업데이트
         }
       } catch (error) {
         console.error("그림 퀴즈 데이터를 가져오는데 실패했습니다.", error);
