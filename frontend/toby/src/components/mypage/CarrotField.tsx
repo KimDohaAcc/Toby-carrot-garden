@@ -201,15 +201,15 @@ const CarrotGradeImage = ({ carrotGrade }) => {
       ImageAlt = "baby";
       break;
     case 4:
-      ImageURL = "Image/carrot/어른 당근.png";
+      ImageURL = "Image/carrot/어른당근.png";
       ImageAlt = "adult";
       break;
     case 5:
-      ImageURL = "Image/carrot/학생 당근.png";
+      ImageURL = "Image/carrot/학생당근.png";
       ImageAlt = "schoolmaster";
       break;
     case 6:
-      ImageURL = "Image/carrot/의사 당근.png";
+      ImageURL = "Image/carrot/의사당근.png";
       ImageAlt = "hospitalmaster";
       break;
     case 7:
