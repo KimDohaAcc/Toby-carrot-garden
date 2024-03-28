@@ -3,6 +3,8 @@ from json import loads
 from doodle import analyze_object
 from s3_reader import s3_image_reader
 
+print("서버.......... 시작.........", flush=True)
+
 bootstrap_servers = ["kafka:9092"]
 
 # 카프카 토픽
