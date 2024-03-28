@@ -62,7 +62,7 @@ def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
         print("우리가 찾는 그거............" + percentage_values[0][target_index], flush=True)
 
         # 결과
-        result = prediction[0][target_index] + 100
+        result = prediction[target_index] + 100
 
     except Exception as e:
         print("모델 에러 발생 ", e, flush=True)
