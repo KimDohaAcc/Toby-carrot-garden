@@ -45,7 +45,7 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
         r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
 
         if result == '' or result != correct_answer:
-            result = 'Failure'
+            result = -1
         r.set(f'quiz_answer_{member_id}_{quiz_id}', result)
         r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
         r.close()
