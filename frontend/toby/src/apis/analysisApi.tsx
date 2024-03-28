@@ -1,13 +1,23 @@
 import { api } from "../config/apiConfig.tsx";
 import { getUserStorage } from "./userStorageApi.tsx";
-
+import { tempToken } from "../config/apiConfig.tsx";
 //정답률 비교 막대그래프
 export const getCorrectAnswer = async () => {
   const { accessToken } = getUserStorage();
   try {
     // accessToken을 콘솔에 출력합니다.
-    console.log("현재 accessToken:", accessToken);
-    const response = await api.get("analysis/");
+    console.log(
+      "현재 accessToken: "
+      // accessToken
+    );
+    console.log(accessToken);
+    const response = await api.get("analysis/", {
+      headers: {
+        Authorization: `Bearer ${tempToken}`,
+      },
+    });
+    // const response = await api.get("analysis/");
+    console.log("잘 연결되었습니다");
     return response.data;
   } catch (error) {
     console.error("정답률 갖고오지 못했습니다", error);
@@ -18,7 +28,13 @@ export const getCorrectAnswer = async () => {
 //최근 7일 이내 표현퀴즈 히스토리
 export const getDrawingsQuiz = async () => {
   try {
-    const response = await api.get("analysis/drawings");
+    const response = await api.get("analysis/drawings", {
+      headers: {
+        Authorization: `Bearer ${tempToken}`,
+      },
+    });
+    // const response = await api.get("analysis/drawings");
+    console.log("잘 갖고왔다");
     return response.data;
   } catch (error) {
     console.error("그림퀴즈 히스토리를 갖고 오지 못했습니다", error);
