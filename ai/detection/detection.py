@@ -17,6 +17,9 @@ load_dotenv(dotenv_path=dotenv_path)
 REDIS_HOST = os.getenv("REDIS_HOST")
 REDIS_PORT = os.getenv("REDIS_PORT")
 
+cup = [3, 60, 117, 122, 248, 250, 347, 438, 440, 463, 470, 497, 503, 504, 512, 518, 572, 575, 626, 647, 659, 688, 719, 725, 727, 738, 766, 778, 792, 809, 813, 835, 849, 859, 876, 898, 899, 901, 968]
+bag = [406, 414, 456, 463, 464, 520, 529, 533, 553, 569, 588, 591, 636, 665, 692, 701, 728, 747, 748, 785, 790, 797, 840, 893]
+
 def detection(image_data, data_name, member_id, quiz_id, correct_answer, inceptionV3_model):
     try:
         # 이미지 데이터를 PIL.Image 객체로 변환합니다.
@@ -35,7 +38,15 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
 
         # 결과 후처리
         idx = prediction.argmax()
-        result = inceptionV3[idx]
+        # result = inceptionV3[idx]
+
+        result = 0
+
+        if correct_answer == "cup" and idx in cup:
+            result = "100" + inceptionV3[idx]
+        if correct_answer == "bag" and idx in bag:
+            result = "100" + inceptionV3[idx]
+
         print(result, flush=True)
     except Exception as e:
         print("모델 에러 발생 ", e, flush=True)
@@ -43,9 +54,6 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
     try:
         print("redis 저장 시작", flush=True)
         r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
-
-        if result == '' or result != correct_answer:
-            result = -1
         r.set(f'quiz_answer_{member_id}_{quiz_id}', result)
         r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
         r.close()
