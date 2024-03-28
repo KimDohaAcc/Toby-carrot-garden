@@ -25,9 +25,13 @@ spring:
   flyway:
     enabled: true
 
+  kafka:
+    bootstrap-servers: kafka:9092
+
 server:
   servlet:
     context-path: /api
+
 logging:
   level:
     root: info
