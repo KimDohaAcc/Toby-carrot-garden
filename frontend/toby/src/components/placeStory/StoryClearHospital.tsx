@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
-import QuizWebcam from "../QuizWebCam";
+import ClearWebcam from "../ClearWebCam";
 
 const ClearContainer = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ interface Scene {
 const StoryClear = ({ index }: StoryClearProps) => {
   console.log("index", index);
   const [quizId, setQuizId] = React.useState<number>(0);
-
+  const placeId = 2;
   const sceneList = useSelector<RootState, Scene[]>(
     (state: RootState) => state.hospital.sceneList
   );
@@ -48,7 +48,7 @@ const StoryClear = ({ index }: StoryClearProps) => {
   return (
     <ClearContainer>
       <StoryClearContent>{sceneList[index].content}</StoryClearContent>
-      <QuizWebcam quizId={quizId} />
+      <ClearWebcam placeId={placeId} />
     </ClearContainer>
   );
 };

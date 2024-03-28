@@ -57,10 +57,10 @@ const QuizWebCam = ({ quizId }) => {
     }
 
     const formData = new FormData();
-    formData.append("imageFile", file);
+    formData.append("analysisImage", file);
     formData.append("quizId", quizId.toString());
 
-    submitQuiz({ formData })
+    submitQuiz(formData)
       .then((response) => {
         console.log(response);
       })
