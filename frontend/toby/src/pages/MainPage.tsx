@@ -6,6 +6,7 @@ import ConstructionModal from "../components/modals/constructionModal";
 import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 입력 모달
 import Logo from "../components/Logo";
 import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryListModal";
+import SchoolStoryListModal from "../components/modals/school/SchoolStoryListModal";
 import { getUserStorage } from "../apis/userStorageApi";
 
 const MainpageContainer = styled.div`
@@ -174,7 +175,7 @@ const MainPage = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showHospitalModal, setShowHospitalModal] = useState(false); // 병원 스토리 리스트 모달 상태
-
+  const [showSchoolModal, setShowSchoolModal] = useState(false);
   const [modalType, setModalType] = useState(""); // 모달 종류를 결정하는 상태
   const [userName, setUserName] = useState("");
   useEffect(() => {
@@ -186,7 +187,7 @@ const MainPage = () => {
   }, []);
 
   const handleAreaClick = (path: string) => {
-    setShowHospitalModal(true);
+    // setShowHospitalModal(true);
     if (path === "/report") {
       setShowModal(true);
       setModalType("password");
@@ -196,6 +197,9 @@ const MainPage = () => {
     } else if (path === "/hospital") {
       setShowHospitalModal(true);
       setModalType("hospital");
+    } else if (path === "/school") {
+      setShowSchoolModal(true);
+      setModalType("school");
     } else {
       navigate(path);
     }
@@ -274,6 +278,9 @@ const MainPage = () => {
       )}
       {showHospitalModal && modalType === "hospital" && (
         <HospitalStoryListModal onClose={() => setShowHospitalModal(false)} />
+      )}
+      {showSchoolModal && modalType === "school" && (
+        <SchoolStoryListModal onClose={() => setShowSchoolModal(false)} />
       )}
     </>
   );

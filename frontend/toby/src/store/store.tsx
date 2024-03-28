@@ -1,10 +1,11 @@
 // store.tsx
 import { configureStore } from "@reduxjs/toolkit";
 import hospitalReducer from "./slices/hospitalSlice";
-
+import schoolReducer from "./slices/schoolSlice";
 const store = configureStore({
   reducer: {
     hospital: hospitalReducer,
+    school: schoolReducer,
   },
 });
 
