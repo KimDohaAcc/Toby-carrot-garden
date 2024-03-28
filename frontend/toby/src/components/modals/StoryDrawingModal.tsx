@@ -62,6 +62,14 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       const formData = new FormData();
       formData.append("analysisImage", blob, "drawing.png");
       formData.append("quizId", quizId.toString());
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+        // 파일의 경우, 파일 이름 등 추가 정보를 로그로 찍을 수 있습니다.
+        if (value instanceof Blob) {
+          console.log(`File name: ${value.name}, File type: ${value.type}`);
+        }
+      }
+      // console.log()
 
       try {
         await submitQuiz2(formData);
