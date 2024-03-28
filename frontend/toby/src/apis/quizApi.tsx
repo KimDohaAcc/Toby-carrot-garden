@@ -41,6 +41,8 @@ export const submitQuiz = async ({ analysisImage, quizId }) => {
 };
 
 export const submitQuiz2 = async (formData) => {
+  console.log("여기까지 옴");
+  console.log(localStorage.getItem("accessToken"));
   try {
     // API 요청
     const response = await api.post(`quiz/submit`, formData, {
