@@ -6,7 +6,9 @@ from classes.doodle_ref import ref as doodle_ref
 import redis
 from dotenv import load_dotenv
 import os
+import traceback
 from pathlib import Path
+
 
 dotenv_path = Path(".env")
 load_dotenv(dotenv_path=dotenv_path)
@@ -59,13 +61,16 @@ def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
         percentage_values = [value * 100 for value in probabilities]
         print(percentage_values, flush=True)
 
-        print("우리가 찾는 그거............" + percentage_values[0][target_index], flush=True)
+        for idx, value in enumerate(percentage_values[0]):
+            if idx == target_index:
+                print(f"인덱스 번호 {target_index} 값: {value}", flush=True)
 
         # 결과
         result = prediction[target_index] + 100
 
     except Exception as e:
         print("모델 에러 발생 ", e, flush=True)
+        traceback.print_exc()
 
     try:
         r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
