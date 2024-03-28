@@ -16,14 +16,15 @@ import garden.carrot.toby.api.analysis.dto.MemberCertificateReqDto;
 import garden.carrot.toby.api.analysis.dto.MemberQuizDto;
 import garden.carrot.toby.api.analysis.dto.MemberQuizHistoryDto;
 import garden.carrot.toby.api.analysis.dto.MemberQuizRegradeReqDto;
+import garden.carrot.toby.api.analysis.dto.StatisticsDto;
 import garden.carrot.toby.api.analysis.service.AnalysisService;
 import garden.carrot.toby.common.constants.SuccessCode;
 import garden.carrot.toby.common.dto.ApiResponse;
+import garden.carrot.toby.common.dto.ListDto;
 import garden.carrot.toby.common.exception.CustomException;
 import garden.carrot.toby.domain.memberquiz.entity.MemberQuiz;
 import garden.carrot.toby.domain.quizdata.entity.QuizType;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,9 +37,10 @@ public class AnalysisController {
 	private final AnalysisService analysisService;
 
 	@GetMapping("/")
-	public ApiResponse<String> testConnect(HttpServletRequest request) {
+	@Operation(summary = "통계", description = "사용자의 정보를 바탕으로 통계를 만들어 돌려준다")
+	public ApiResponse<ListDto<StatisticsDto>> getStatistics() {
 
-		return ApiResponse.success(SuccessCode.GET_SUCCESS, "Hello Analysis");
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, analysisService.getStatistics());
 	}
 
 	// * 퀴즈 히스토리 리스트 *

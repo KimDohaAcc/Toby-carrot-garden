@@ -1,13 +1,16 @@
 package garden.carrot.toby.api.analysis.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import garden.carrot.toby.api.analysis.dto.StatisticsDto;
 import garden.carrot.toby.api.auth.util.MemberUtil;
 import garden.carrot.toby.common.constants.ErrorCode;
+import garden.carrot.toby.common.dto.ListDto;
 import garden.carrot.toby.common.exception.CustomException;
 import garden.carrot.toby.domain.member.entity.Member;
 import garden.carrot.toby.domain.member.repository.MemberRepository;
@@ -54,5 +57,20 @@ public class AnalysisService {
 			return true;
 		}
 		return false;
+	}
+
+	public ListDto<StatisticsDto> getStatistics() {
+		List<StatisticsDto> list = new ArrayList<>();
+		Member member = memberUtil.getLoginMember();
+		final QuizType[] types = {QuizType.FEELINGS, QuizType.OBJECTS};
+		for (QuizType type : types) {
+			double correctRateAll = memberQuizRepository.findAverageScoreByQuizType(type).orElse((double)-1);
+			double correctRateAge = memberQuizRepository.findAverageScoreByQuizTypeAndBirthYear(type,
+				member.getBirthDate()).orElse((double)-1);
+			double correctRateMe = memberQuizRepository.findAverageScoreByQuizTypeAndMemberId(type, member.getId())
+				.orElse((double)-1);
+			list.add(new StatisticsDto(type, correctRateAll, correctRateAge, correctRateMe));
+		}
+		return new ListDto<>(list);
 	}
 }
