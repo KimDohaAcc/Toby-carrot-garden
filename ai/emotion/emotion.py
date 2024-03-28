@@ -50,9 +50,7 @@ def emotion(image_data, data_name, member_id, quiz_id, correct_answer):
                 label = class_labels[preds.argmax()]
                 label_position = (x, y)
                 cv2.putText(image, label, label_position, cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 0), 3)
-    
-        # 결과 이미지 저장
-        cv2.imwrite('result/'+ data_name, image)
+
 
     except Exception as e:
         print("모델 에러 발생 ", e)

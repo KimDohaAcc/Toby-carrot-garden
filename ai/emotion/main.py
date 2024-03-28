@@ -11,6 +11,7 @@ str_topic_name = 'FEELINGS'
 
 # 카프카 소비자 group1 생성
 str_group_name = 'group1'
+consumer = ''
 try:
     consumer = KafkaConsumer(str_topic_name, bootstrap_servers=bootstrap_servers,
                              auto_offset_reset='earliest', # 가장 처음부터 소비
@@ -18,6 +19,7 @@ try:
                              group_id=str_group_name,
                              value_deserializer=lambda x: loads(x.decode('utf-8'))
                             )
+    print("카프카 소비자 생성")
 except Exception as e:
     print("카프카 소비자 생성 실패:", e)
 
