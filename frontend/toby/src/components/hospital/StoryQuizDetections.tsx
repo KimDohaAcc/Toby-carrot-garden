@@ -50,14 +50,6 @@ const CameraArea = styled.div`
   flex-direction: column;
 `;
 
-// const CameraBtnArea = styled.div`
-//   flex: 0 0 25%;
-// `;
-
-// const CameraBtn = styled.button`
-//   color: #b65050;
-// `;
-
 const StoryQuizDetections = ({ imageUrl, quizId, content }) => {
   // const handleTakePicture = () => {
   //   console.log("Take a picture");
@@ -75,15 +67,6 @@ const StoryQuizDetections = ({ imageUrl, quizId, content }) => {
         <CameraArea>
           <QuizWebCam quizId={quizId} />
         </CameraArea>
-        {/* <CameraBtnArea>
-          <CameraBtn
-            onClick={() => {
-              handleTakePicture();
-            }}
-          >
-            <img src="Image/button/checkButton.png" alt="camera" />
-          </CameraBtn>
-        </CameraBtnArea> */}
       </StoryQuizDetectionCanmeraArea>
     </StoryQuizDetectionsContainer>
   );

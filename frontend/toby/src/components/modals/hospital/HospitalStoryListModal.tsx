@@ -81,7 +81,7 @@ interface HospitalStoryList {
 }
 
 const HospitalStoryListModal = ({ onClose }) => {
-  const placeId = 1;
+  const placeId = 2;
   const dispatch = useDispatch();
   const [storysList, setStorysList] = useState<HospitalStoryList[]>([]);
 
