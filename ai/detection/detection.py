@@ -39,15 +39,23 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
         # 결과 후처리
         idx = prediction.argmax()
         # result = inceptionV3[idx]
-        print("prediction[414] : ", prediction[414])
+        print("prediction[414] _ bag : ", prediction[414])
+
+        print("prediction[438] : ", prediction[438])
+        print("prediction[441] : ", prediction[441])
+        print("prediction[647] : ", prediction[647])
+        print("prediction[898] : ", prediction[898])
+        print("prediction[968] : ", prediction[968])
+
 
         result = 0
-        print("분석 결과  : "+inceptionV3[idx], flush=True)
 
-        if correct_answer == "cup" and idx in cup:
+        if correct_answer == "cup" and prediction[438] < 4:
             result = "100"
-        if correct_answer == "bag" and idx in bag:
+        if correct_answer == "bag" and prediction[414] < 4:
             result = "100"
+
+
 
         print(result, flush=True)
     except Exception as e:
