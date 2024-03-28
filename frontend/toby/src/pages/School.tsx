@@ -82,6 +82,14 @@ const NextBtn = styled.div`
 const Content = styled.div`
   grid-area: conten;
   border: 1px solid black;
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+`;
+
+const Image = styled.img`
+  object-fit: cover;
+  height: 100%; /* 이미지의 높이를 100%로 설정하여 부모 요소에 맞게 확장 */
 `;
 
 const School = () => {
@@ -93,14 +101,13 @@ const School = () => {
         <StoryContentArea1>
           <StoryContentArea2>
             <Content>
-              <img
+              <Image
                 style={{ objectFit: "cover" }}
                 src="/Image/002.png"
                 alt="학교"
               />
             </Content>
             <CloseBtn>X</CloseBtn>
-
             <NextBtn>
               <img src="/Image/button/nextBtn.png" alt="다음 버튼" />
             </NextBtn>

@@ -1,97 +1,95 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
-import Webcam from "react-webcam";
-import { submitQuiz2, getQuizAnswer } from "../apis/quizApi";
+import Webcam, { WebcamRef } from "react-webcam";
+import { submitQuiz, getQuizAnswer } from "../apis/quizApi";
 
-const StyledWebcam = styled(Webcam)`
-  flex: 0 0 80%;
-`;
+const base64ToMultipartFile = (
+  base64String: string,
+  fileName: string
+): File | null => {
+  const byteString = atob(base64String.split(",")[1]);
+  const mimeString = base64String.split(",")[0].split(":")[1].split(";")[0];
 
-const CaptureButton = styled.button`
-  margin-top: 5%;
-  padding: 10px 10px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #0056b3;
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
   }
-`;
+
+  const blob = new Blob([ab], { type: mimeString });
+  return new File([blob], fileName, { type: mimeString });
+};
+
+const videoConstraints = {
+  width: 600,
+  height: 600,
+  facingMode: "user",
+};
 
 const QuizWebCam = ({ quizId }) => {
-  const webcamRef = useRef(null);
-  const [resultImage, setResultImage] = useState("");
+  const webcamRef = useRef<WebcamRef>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
 
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current?.getScreenshot();
-    if (imageSrc) {
-      convertToImageFile(imageSrc);
+    if (webcamRef.current) {
+      const imageSrcs = webcamRef.current.getScreenshot();
+      setImageSrc(imageSrcs);
+    } else {
+      console.error("webcamRef is null");
     }
   }, [webcamRef]);
+  console.log(imageSrc);
 
-  const convertToImageFile = useCallback(async (base64String) => {
-    const blob = await fetch(base64String).then((res) => res.blob());
-    const file = new File([blob], "captured.jpg", { type: "image/jpeg" });
-    uploadImage(file);
-  }, []);
+  const retake = () => {
+    setImageSrc(null);
+  };
 
-  const uploadImage = useCallback(
-    async (file) => {
-      const formData = new FormData();
-      formData.append("imageFile", file);
-      formData.append("quizId", quizId.toString());
+  const submit = () => {
+    if (!imageSrc) {
+      console.error("No image to submit");
+      return;
+    }
 
-      try {
-        await submitQuiz2(formData);
-        setResultImage(""); // 초기 상태로 설정하여 결과 이미지를 미리 비움
-        pollQuizResult();
-      } catch (error) {
-        console.error("업로드 실패:", error);
-      }
-    },
-    [quizId]
-  );
+    const file = base64ToMultipartFile(imageSrc, "captured.jpg");
+    if (!file) {
+      console.error("Failed to convert image to file");
+      return;
+    }
 
-  const pollQuizResult = () => {
-    let count = 0;
-    const intervalId = setInterval(() => {
-      if (count < 10) {
-        getQuizAnswer(quizId)
-          .then((data) => {
-            if (data.result.score !== -1) {
-              clearInterval(intervalId);
-              if (data.result.score === 100) {
-                setResultImage("/Image/toby/carrotRabbit.png");
-              } else if (data.result.score === 0) {
-                setResultImage("/Image/toby/failRabbit.png");
-              }
-            }
-          })
-          .catch((error) => {
-            console.error("퀴즈 결과 조회 실패:", error);
-          });
-        count++;
-      } else {
-        clearInterval(intervalId);
-      }
-    }, 1000);
+    const formData = new FormData();
+    formData.append("imageFile", file);
+    formData.append("quizId", quizId.toString());
 
-    return () => clearInterval(intervalId);
+    submitQuiz({ formData })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
     <>
-      <StyledWebcam
-        audio={false}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-      />
-      <CaptureButton onClick={capture}>찰칵!</CaptureButton>
-      {resultImage && <img src={resultImage} alt="Quiz Result" />}
+      {imageSrc ? (
+        <>
+          <img src={imageSrc} alt="captured" />
+          <button onClick={retake}>Retake</button>
+          <button onClick={submit}>Sumbit</button>
+        </>
+      ) : (
+        <>
+          <Webcam
+            audio={false}
+            height={600}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            width={600}
+            videoConstraints={videoConstraints}
+          />
+          <button onClick={capture}>Capture photo</button>
+        </>
+      )}
     </>
   );
 };

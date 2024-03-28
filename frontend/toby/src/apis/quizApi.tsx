@@ -1,5 +1,7 @@
 import { api } from "../config/apiConfig";
 
+import { tempToken } from "../config/apiConfig";
+
 // 클라이언트에서 사진과 퀴즈 아이디 전달
 // s3에 사진을 저장
 // 퀴즈 아이디로 정답과 타입 조회
@@ -11,53 +13,32 @@ import { api } from "../config/apiConfig";
 // }
 // /quiz/submit
 
-export const submitQuiz = async ({ analysisImage, quizId }) => {
+export const submitQuiz = async ({ formData }) => {
   try {
-    const formData = new FormData();
-    formData.append("analysisImage", analysisImage);
-
-    // 멀티파트 폼 데이터의 Content-Type 설정
-    const response1 = await api.post(`quiz/submit`, formData, {
+    const response = await api.post("quiz/submit", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        // Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        Authorization: `Bearer ${tempToken}`,
       },
     });
-
-    // JSON 데이터의 Content-Type 설정
-    const response2 = await api.post(
-      `quiz/submit`,
-      { quizId },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    return [response1.data, response2.data];
+    return response.data;
   } catch (error) {
-    console.error(error);
+    console.error("퀴즈 제출을 실패했습니다.", error);
   }
 };
 
-export const submitQuiz2 = async (formData) => {
+export const submitQuiz2 = async ({ formData }) => {
   try {
-    // API 요청
-    const response = await api.post(`quiz/submit`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log("그리기 파일 전송 완료");
+    const response = await api.post("quiz/submit", formData);
     return response.data;
   } catch (error) {
-    console.error("그리기 파일 전송 실패", error);
-    throw error;
+    console.error("퀴즈 제출을 실패했습니다.", error);
   }
 };
 
 //아이가 풀었던 퀴즈 정답
-export const getQuizAnswer = async (quizId) => {
+export const getQuizAnswer = async ({ quizId }) => {
   try {
     const response = await api.get(`quiz/${quizId}/result`);
     return response.data;
