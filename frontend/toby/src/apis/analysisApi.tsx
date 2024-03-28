@@ -28,7 +28,7 @@ export const getCorrectAnswer = async () => {
 //최근 7일 이내 표현퀴즈 히스토리
 export const getDrawingsQuiz = async () => {
   try {
-    const response = await api.get("analysis/", {
+    const response = await api.get("analysis/drawings", {
       headers: {
         Authorization: `Bearer ${tempToken}`,
       },
