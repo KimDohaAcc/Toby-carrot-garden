@@ -41,11 +41,12 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
         # result = inceptionV3[idx]
 
         result = 0
+        print("분석 결과  : "+inceptionV3[idx], flush=True)
 
         if correct_answer == "cup" and idx in cup:
-            result = "100" + inceptionV3[idx]
+            result = "100"
         if correct_answer == "bag" and idx in bag:
-            result = "100" + inceptionV3[idx]
+            result = "100"
 
         print(result, flush=True)
     except Exception as e:
