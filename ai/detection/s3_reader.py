@@ -21,10 +21,10 @@ def s3_connection():
             aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
         )
     except Exception as e:
-        print("No S3 connection")
+        print("No S3 connection", flush=True)
         return None
     else:
-        print("s3 bucket connected!")
+        print("s3 bucket connected!", flush=True)
         return s3
 
 
@@ -35,9 +35,9 @@ def s3_image_reader(s3_key):
         # S3에서 이미지 읽기
         response = s3.get_object(Bucket=AWS_BUCKET_NAME, Key=s3_key)
         image_data = response['Body'].read()
-        print("s3 객체 읽기 성공")
+        print("s3 객체 읽기 성공", flush=True)
         return image_data
 
     except Exception as e:
-        print("Error reading image from S3:", e)
+        print("Error reading image from S3:", e, flush=True)
         return None

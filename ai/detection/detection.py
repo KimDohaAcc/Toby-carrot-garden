@@ -36,11 +36,12 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
         # 결과 후처리
         idx = prediction.argmax()
         result = inceptionV3[idx]
-        print(result)
+        print(result, flush=True)
     except Exception as e:
-        print("모델 에러 발생 ", e)
+        print("모델 에러 발생 ", e, flush=True)
 
     try:
+        print("redis 저장 시작", flush=True)
         r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
 
         if result == '' or result != correct_answer:
@@ -48,7 +49,7 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
         r.set(f'quiz_answer_{member_id}_{quiz_id}', result)
         r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
         r.close()
-        print("redis 저장 완료")
+        print("redis 저장 완료", flush=True)
 
     except Exception as e:
-        print("redis 에러 ", e)
+        print("redis 에러 ", e, flush=True)

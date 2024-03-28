@@ -20,7 +20,7 @@ try:
                              value_deserializer=lambda x: loads(x.decode('utf-8'))
                             )
 except Exception as e:
-    print("카프카 소비자 생성 실패:", e)
+    print("카프카 소비자 생성 실패:", e, flush=True)
 
 try:
     # 모델 로드
@@ -34,15 +34,15 @@ try:
         classifier_activation="softmax",
     )
 except Exception as e:
-    print("모델 로드 실패:", e)
+    print("모델 로드 실패:", e, flush=True)
 
 for message in consumer:
     try:
-        print("물체 감지 분석 요청", message)
+        print("물체 감지 분석 요청", message, flush=True)
         image_data = s3_image_reader(message.value['imageKey'])
 
         if image_data is not None:
             detection(image_data, message.value['imageKey'], message.value['memberId'],
                       message.value['quizId'], message.value['correctAnswer'], inceptionV3_model)
     except Exception as e:
-        print("물체 분석 실패:", e)
+        print("물체 분석 실패:", e, flush=True)
