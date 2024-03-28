@@ -37,8 +37,9 @@ interface Quiz {
   quizType: string;
 }
 
-const StoryQuiz = ({ index }: StoryQuizProps) => {
+const StoryQuizHospitial = ({ index }: StoryQuizProps) => {
   const sceneList = useSelector<RootState, Scene[]>(
+    // (state: RootState) => state.school.sceneList
     (state: RootState) => state.hospital.sceneList
   );
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -87,4 +88,4 @@ const StoryQuiz = ({ index }: StoryQuizProps) => {
   return <StoryQuizContainer>{renderQuiz()}</StoryQuizContainer>;
 };
 
-export default StoryQuiz;
+export default StoryQuizHospitial;

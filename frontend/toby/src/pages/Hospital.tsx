@@ -10,10 +10,10 @@ import { getSceneList } from "../apis/storyApi.tsx";
 
 import Logo from "../components/Logo";
 
-import StoryTitle from "../components/hospital/StoryTitle";
-import StoryContent from "../components/hospital/StoryContent";
-import StoryQuiz from "../components/hospital/StoryQuiz";
-import StoryClear from "../components/hospital/StoryClear";
+import StoryTitle from "../components/placeStory/StoryTitle.tsx";
+import StoryContent from "../components/placeStory/StoryContentHospital.tsx";
+import StoryQuiz from "../components/placeStory/StoryQuizHospitial.tsx";
+import StoryClear from "../components/placeStory/StoryClearHospital.tsx";
 
 //더미 데이터
 // {
