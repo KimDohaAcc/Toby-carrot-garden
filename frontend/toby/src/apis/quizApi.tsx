@@ -13,26 +13,59 @@ import { tempToken } from "../config/apiConfig";
 // }
 // /quiz/submit
 
-export const submitQuiz = async ({ formData }) => {
-  try {
-    const response = await api.post("quiz/submit", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        // Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        Authorization: `Bearer ${tempToken}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("퀴즈 제출을 실패했습니다.", error);
+// export const submitQuiz = async (formData) => {
+//   try {
+//     const response = await api.post("/quiz/submit", formData, {
+//       headers: {
+//         Authorization: `Bearer ${tempToken}`,
+//         // "Content-Type": undefined, // 이 줄을 추가하여 axios가 Content-Type을 자동으로 설정하도록 합니다.
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("퀴즈 제출을 실패했습니다.", error);
+//   }
+// };
+export const submitQuiz = async (formData) => {
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}: ${value}`);
   }
+  return new Promise((resolve, reject) => {
+    api
+      .request({
+        method: "post",
+        url: `/quiz/submit`,
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${tempToken}`,
+        },
+      })
+      .then((res) => {
+        resolve(res);
+        console.log("업로드 완료");
+      })
+      .catch((err) => {
+        reject(err);
+        console.log(err);
+        for (let [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`);
+        }
+      });
+  });
 };
 
 export const submitQuiz2 = async (formData) => {
   console.log("여기까지 옴");
   console.log(localStorage.getItem("accessToken"));
   try {
-    const response = await api.post("quiz/submit", formData);
+    // const response = await api.post("quiz/submit", formData);
+    const response = await api.post("quiz/submit", formData, {
+      headers: {
+        Authorization: `Bearer ${tempToken}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error("퀴즈 제출을 실패했습니다.", error);
