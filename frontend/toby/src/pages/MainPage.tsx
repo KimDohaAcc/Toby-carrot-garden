@@ -7,7 +7,7 @@ import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 
 import Logo from "../components/Logo";
 import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryListModal";
 import SchoolStoryListModal from "../components/modals/school/SchoolStoryListModal";
-import { getUserStorage } from "../apis/userStorageApi";
+import { getUserStorage, clearUserStorage } from "../apis/userStorageApi";
 
 const MainpageContainer = styled.div`
   height: 100%;
@@ -148,6 +148,37 @@ const PoliceImage = styled.img`
   position: absolute;
   top: -3%;
 `;
+const UserArea = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+  border: 1px solid black;
+  position: relative;
+`;
+const UserButton = styled.img`
+  position: absolute;
+  width: 150%;
+  left: -100%;
+  top: 5%;
+`;
+
+const LogoutButton = styled.img`
+  position: absolute;
+  width: 30%;
+  left: 55%;
+  top: 5%;
+`;
+const UserName = styled.div`
+  position: absolute;
+  top: 7%; /* 필요에 따라 조정 */
+  left: 9%;
+  transform: translateX(-50%);
+  color: #ffffff; /* 텍스트 색상 */
+  font-size: 44px; /* 텍스트 크기 */
+  z-index: 1; /* UserButton 이미지 위에 표시되도록 함 */
+`;
 
 const Area4 = styled.div`
   display: grid;
@@ -185,7 +216,10 @@ const MainPage = () => {
       setUserName(`${userInfo.name}, 안녕`);
     }
   }, []);
-
+  const handleLogout = () => {
+    clearUserStorage();
+    navigate("/");
+  };
   const handleAreaClick = (path: string) => {
     // setShowHospitalModal(true);
     if (path === "/report") {
@@ -260,7 +294,16 @@ const MainPage = () => {
           </PoliceArea>
         </Area3>
         <Area4>
-          <div> {userName && <h1>{userName}</h1>}</div>
+          {/* <div> {userName && <h1>{userName}</h1>}</div> */}
+          <UserArea>
+            <UserName>{userName}어린이</UserName>
+            <UserButton src="\Image\button\nameBackground.png" />
+
+            <LogoutButton
+              src="\Image\button\logoutButton.png"
+              onClick={handleLogout} // 로그아웃 버튼 클릭 이벤트 핸들러 추가
+            />
+          </UserArea>
           <TobyArea>
             <TobyImage
               src="\Image\toby\maintoby.png"

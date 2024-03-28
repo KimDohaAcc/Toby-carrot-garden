@@ -75,9 +75,17 @@ export const submitQuiz2 = async (formData) => {
 //아이가 풀었던 퀴즈 정답
 export const getQuizAnswer = async ({ quizId }) => {
   try {
-    const response = await api.get(`quiz/${quizId}/result`);
+    // `headers`를 포함하는 옵션 객체를 `get` 메소드의 두 번째 인자로 전달합니다.
+    // const response = await api.get(`quiz/${quizId}/result`, {
+    const response = await api.get(`quiz/48/result`, {
+      headers: {
+        Authorization: `Bearer ${tempToken}`, // `tempToken`은 유효한 토큰 문자열이어야 합니다.
+      },
+    });
+    // const response = await api.get(`quiz/${quizId}/result`);
     return response.data;
   } catch (error) {
-    console.error("웨이팅토끼를 갖고오지 못했습니다.", error);
+    console.error("당근토끼를 갖고오지 못했습니다.", error);
+    return null; // 에러 발생 시 명시적으로 null 반환을 고려할 수 있습니다.
   }
 };
