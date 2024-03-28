@@ -48,6 +48,10 @@ def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
         # 모델 구동
         prediction = doodle_model.predict(image_tensor)
 
+        print("일치율 확인", flush=True)
+        print(prediction, flush=True)
+
+
         # 결과
         result = prediction[0][target_index] + 100
 
