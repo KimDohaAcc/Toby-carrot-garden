@@ -1,12 +1,9 @@
-import React, { useRef, useCallback } from "react";
-import Webcam from "react-webcam";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
-import { api } from "../config/apiConfig"; // 서버 통신을 위한 API 설정을 불러옵니다.
-import { submitQuiz2 } from "../apis/quizApi";
+import Webcam from "react-webcam";
+import { submitQuiz2, getQuizAnswer } from "../apis/quizApi";
 
 const StyledWebcam = styled(Webcam)`
-  /* width: 100%; // 부모 컨테이너에 맞춰 조정
-  height: auto; // 비율을 유지하면서 너비에 맞게 높이 조정 */
   flex: 0 0 80%;
 `;
 
@@ -26,40 +23,64 @@ const CaptureButton = styled.button`
 `;
 
 const QuizWebCam = ({ quizId }) => {
-  const webcamRef = useRef<Webcam>(null);
-  //   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const webcamRef = useRef(null);
+  const [resultImage, setResultImage] = useState("");
 
   const capture = useCallback(() => {
-    setTimeout(() => {
-      const imageSrc = webcamRef.current?.getScreenshot();
-      if (imageSrc) {
-        convertToImageFile(imageSrc);
-      }
-    }, 3000); // 3초 후에 capture 함수를 실행
-  }, []);
+    const imageSrc = webcamRef.current?.getScreenshot();
+    if (imageSrc) {
+      convertToImageFile(imageSrc);
+    }
+  }, [webcamRef]);
 
-  const convertToImageFile = async (base64String: string) => {
+  const convertToImageFile = useCallback(async (base64String) => {
     const blob = await fetch(base64String).then((res) => res.blob());
     const file = new File([blob], "captured.jpg", { type: "image/jpeg" });
-    uploadImage(file); // 서버로 이미지 업로드
-  };
+    uploadImage(file);
+  }, []);
 
-  // 이미지 파일을 서버로 업로드하는 함수
-  const uploadImage = async (file: File) => {
-    const formData = new FormData();
-    formData.append("imageFile", file); // 'imageFile'은 서버가 요구하는 필드 이름입니다.
-    formData.append("quizId", quizId);
+  const uploadImage = useCallback(
+    async (file) => {
+      const formData = new FormData();
+      formData.append("imageFile", file);
+      formData.append("quizId", quizId.toString());
 
-    try {
-      const response = await api.post("/path/to/your/endpoint", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log("업로드 성공:", response.data);
-    } catch (error) {
-      console.error("업로드 실패:", error);
-    }
+      try {
+        await submitQuiz2(formData);
+        setResultImage(""); // 초기 상태로 설정하여 결과 이미지를 미리 비움
+        pollQuizResult();
+      } catch (error) {
+        console.error("업로드 실패:", error);
+      }
+    },
+    [quizId]
+  );
+
+  const pollQuizResult = () => {
+    let count = 0;
+    const intervalId = setInterval(() => {
+      if (count < 10) {
+        getQuizAnswer(quizId)
+          .then((data) => {
+            if (data.result.score !== -1) {
+              clearInterval(intervalId);
+              if (data.result.score === 100) {
+                setResultImage("/Image/toby/carrotRabbit.png");
+              } else if (data.result.score === 0) {
+                setResultImage("/Image/toby/failRabbit.png");
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("퀴즈 결과 조회 실패:", error);
+          });
+        count++;
+      } else {
+        clearInterval(intervalId);
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
   };
 
   return (
@@ -70,6 +91,7 @@ const QuizWebCam = ({ quizId }) => {
         screenshotFormat="image/jpeg"
       />
       <CaptureButton onClick={capture}>찰칵!</CaptureButton>
+      {resultImage && <img src={resultImage} alt="Quiz Result" />}
     </>
   );
 };
