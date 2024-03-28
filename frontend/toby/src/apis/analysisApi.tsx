@@ -44,7 +44,12 @@ export const getDrawingsQuiz = async () => {
 //아이가 풀었던 문제리스트
 export const getEmotionList = async () => {
   try {
-    const response = await api.get("analysis/emotion");
+    const response = await api.get("analysis/emotion", {
+      headers: {
+        Authorization: `Bearer ${tempToken}`,
+      },
+    });
+    // const response = await api.get("analysis/emotion");
     return response.data;
   } catch (error) {
     console.error("감정퀴즈 히스토리를 갖고 오지 못했습니다", error);
@@ -54,7 +59,12 @@ export const getEmotionList = async () => {
 //아이가 풀었던 감정리스트
 export const getObjectList = async () => {
   try {
-    const response = await api.get("analysis/object");
+    const response = await api.get("analysis/objects", {
+      headers: {
+        Authorization: `Bearer ${tempToken}`,
+      },
+    });
+    // const response = await api.get("analysis/object");
     return response.data;
   } catch (error) {
     console.error("감정퀴즈 히스토리를 갖고 오지 못했습니다", error);
@@ -62,14 +72,19 @@ export const getObjectList = async () => {
 };
 
 //재채점
-export const getRescore = async (memberQuizId, newScore) => {
+export const getRescore = async (memberQuizId, score) => {
   try {
     const requestBody = {
       memberQuizId: memberQuizId,
-      score: newScore,
+      score: score,
     };
-    const response = await api.patch("analysis/regrade", requestBody);
-
+    // api.patch 호출 시 requestBody와 headers를 올바르게 분리하여 전달합니다.
+    const response = await api.patch("analysis/regrade", requestBody, {
+      headers: {
+        Authorization: `Bearer ${tempToken}`,
+      },
+    });
+    // const response = await api.patch("analysis/regrade", requestBody);
     if (response.status === 200) {
       console.log("재채점 완료", response.data.message);
     } else {
