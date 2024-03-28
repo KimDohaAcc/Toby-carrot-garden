@@ -3,7 +3,7 @@ from json import loads
 from doodle import analyze_object
 from s3_reader import s3_image_reader
 
-bootstrap_servers = ["host.docker.internal:9092"]
+bootstrap_servers = ["kafka:9092"]
 
 # 카프카 토픽
 str_topic_name = 'DRAWINGS'
