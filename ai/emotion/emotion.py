@@ -59,8 +59,11 @@ def emotion(image_data, data_name, member_id, quiz_id, correct_answer):
         # 네트워크 설정 필요
         r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
 
-        if label == '':
-            label = 'Failure'
+        if label == correct_answer:
+            label = 100
+        else:
+            label = 0
+            
         r.set(f'quiz_answer_{member_id}_{quiz_id}', label)
         r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
         r.close()
