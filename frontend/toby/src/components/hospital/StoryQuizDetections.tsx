@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import QuizWebCam from "../QuizWebCam";
 
@@ -24,13 +24,14 @@ const StoryQuizDetectionsTitleArea = styled.div`
 const StoryQuizDetectionsImageArea = styled.div`
   grid-area: image;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
 `;
 
 const StoryQuizDetectionsImage = styled.img`
-  height: 95%;
+  height: 90%;
   border: 1px solid black;
 `;
 
@@ -57,7 +58,7 @@ const CameraArea = styled.div`
 //   color: #b65050;
 // `;
 
-const StoryQuizDetections = ({ imageUrl, quizId }) => {
+const StoryQuizDetections = ({ imageUrl, quizId, content }) => {
   // const handleTakePicture = () => {
   //   console.log("Take a picture");
   // };
@@ -68,6 +69,7 @@ const StoryQuizDetections = ({ imageUrl, quizId }) => {
       </StoryQuizDetectionsTitleArea>
       <StoryQuizDetectionsImageArea>
         <StoryQuizDetectionsImage src={imageUrl} alt="image" />
+        <div>{content}</div>
       </StoryQuizDetectionsImageArea>
       <StoryQuizDetectionCanmeraArea>
         <CameraArea>
@@ -79,7 +81,7 @@ const StoryQuizDetections = ({ imageUrl, quizId }) => {
               handleTakePicture();
             }}
           >
-            찰칵 이미지
+            <img src="Image/button/checkButton.png" alt="camera" />
           </CameraBtn>
         </CameraBtnArea> */}
       </StoryQuizDetectionCanmeraArea>

@@ -24,6 +24,7 @@ const StoryQuizEmotionsTitleArea = styled.div`
 const StoryQuizEmotionsImageArea = styled.div`
   grid-area: image;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
@@ -53,14 +54,11 @@ const CameraArea = styled.div`
 //   flex: 0 0 25%;
 // `;
 
-// const CameraBtn = styled.button`
-//   color: #b65050;
-// `;
+const CameraBtn = styled.button`
+  color: #b65050;
+`;
 
-const StoryQuizDetections = ({ imageUrl }) => {
-  // const handleTakePicture = () => {
-  //   console.log("Take a picture");
-  // };
+const StoryQuizEmotions = ({ imageUrl, content }) => {
   return (
     <StoryQuizEmotionsContainer>
       <StoryQuizEmotionsTitleArea>
@@ -87,4 +85,4 @@ const StoryQuizDetections = ({ imageUrl }) => {
   );
 };
 
-export default StoryQuizDetections;
+export default StoryQuizEmotions;

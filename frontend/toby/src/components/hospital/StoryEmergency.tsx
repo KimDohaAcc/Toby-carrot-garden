@@ -1,44 +1,55 @@
 import React from "react";
 import styled from "styled-components";
 
-import Phone from "./Phone";
-
 const EmergencyContainer = styled.div`
   display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-rows: 3fr 8fr 2fr;
+  grid-template-areas:
+    "title title title"
+    ". content ."
+    ". button .";
+  grid-template-rows: 3fr 8fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   height: 100%;
 `;
 
 const EmergencyTitle = styled.div`
-  grid-row: 1;
+  grid-area: title;
   display: flex;
-  width: 100%;
   justify-content: center;
   align-items: center;
 `;
 
 const EmergencyContent = styled.div`
-  grid-row: 2;
+  grid-area: content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  height: 100%;
 `;
 
 const EmergencyButton = styled.button`
-  grid-row: 3;
+  grid-area: button;
   display: flex;
-  width: 100%;
   justify-content: center;
   align-items: center;
+`;
+
+const PhoneBackground = styled.img`
+  height: 100%;
+  width: auto;
+  object-fit: cover;
 `;
 
 const StoryEmergency = () => {
   return (
     <EmergencyContainer>
-      <EmergencyTitle>Emergency</EmergencyTitle>
+      <EmergencyTitle>번호를 눌러주세요 이미지</EmergencyTitle>
       <EmergencyContent>
-        <Phone />
+        <PhoneBackground src="/Image/modal/phone.png" alt="phone" />
       </EmergencyContent>
       <EmergencyButton
         onClick={() => {

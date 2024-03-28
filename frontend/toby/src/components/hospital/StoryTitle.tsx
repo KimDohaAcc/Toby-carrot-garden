@@ -13,6 +13,8 @@ const StoryTitleText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 7rem;
+  font-weight: bold;
   border: 1px solid black;
 `;
 

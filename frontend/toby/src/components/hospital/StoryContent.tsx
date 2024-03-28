@@ -47,7 +47,7 @@ interface Scene {
   sceneImageUrl: string;
   content: string;
   voice: string;
-  quiz?: Quiz[];
+  quiz?: Quiz | null;
 }
 
 const StoryContent = ({ index }: StoryContentProps) => {

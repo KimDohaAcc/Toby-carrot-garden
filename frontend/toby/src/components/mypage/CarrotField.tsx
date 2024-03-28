@@ -4,42 +4,48 @@ import styled from "styled-components";
 import { getCarrotList } from "../../apis/mypageApi";
 
 // getCarrotList 함수 대신 사용할 더미 데이터
-const dummyCarrotList = [
-  {
-    placeId: 1,
-    carrotCount: 3,
-    gradeMax: 20,
-    carrotGrade: 1,
-  },
-  {
-    placeId: 2,
-    carrotCount: 23,
-    gradeMax: 60,
-    carrotGrade: 2,
-  },
-  {
-    placeId: 3,
-    carrotCount: 33,
-    gradeMax: 60,
-    carrotGrade: 7,
-  },
-  {
-    placeId: 4,
-    carrotCount: 31,
-    gradeMax: 60,
-    carrotGrade: 4,
-  },
-];
+// const dummyCarrotList = [
+//   {
+//     placeId: 1,
+//     carrotCount: 3,
+//     gradeMax: 20,
+//     carrotGrade: 1,
+//   },
+//   {
+//     placeId: 2,
+//     carrotCount: 23,
+//     gradeMax: 60,
+//     carrotGrade: 2,
+//   },
+//   {
+//     placeId: 3,
+//     carrotCount: 33,
+//     gradeMax: 60,
+//     carrotGrade: 7,
+//   },
+//   {
+//     placeId: 4,
+//     carrotCount: 31,
+//     gradeMax: 60,
+//     carrotGrade: 4,
+//   },
+// ];
 
 const NoCarrot = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-size: 1.5rem;
+  color: white;
 `;
 
-const GotoStory = styled.button`
-  background-color: #f5f5f5d9;
+const GotoStory = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  color: white;
   border: none;
   width: 100%;
   height: 100%;
@@ -56,6 +62,7 @@ const NoCarrotArea = styled.div`
   justify-items: center;
   align-items: center;
   position: relative;
+  background-image: url("Image/album/당근밭배경.png");
 `;
 
 // const CarrotFieldArea = styled.div`
@@ -69,7 +76,7 @@ const NoCarrotArea = styled.div`
 
 const CarrotFieldContent = styled.div`
   position: relative;
-  background-color: #f5f5f5d9;
+  background-image: url("Image/album/당근밭배경.png");
   display: grid;
   grid-template-areas:
     ". . . . ."
@@ -123,6 +130,7 @@ const ShovelImage = styled.img`
 
 const CarrotToby = styled.img`
   position: absolute;
+  height: 40%;
   bottom: 0;
   right: 0;
 `;
@@ -178,58 +186,67 @@ interface CarrotList {
 
 const CarrotGradeImage = ({ carrotGrade }) => {
   let ImageURL: string = "";
+  let ImageAlt: string = "carrot";
   switch (carrotGrade) {
     case 1:
-      ImageURL = "seed";
+      ImageURL = "Image/carrot/씨앗.png";
+      ImageAlt = "seed";
       break;
     case 2:
-      ImageURL = "seedling";
+      ImageURL = "Image/carrot/새싹.png";
+      ImageAlt = "seedling";
       break;
     case 3:
-      ImageURL = "baby";
+      ImageURL = "Image/carrot/아기당근.png";
+      ImageAlt = "baby";
       break;
     case 4:
-      ImageURL = "adult";
+      ImageURL = "Image/carrot/어른당근.png";
+      ImageAlt = "adult";
       break;
     case 5:
-      ImageURL = "schoolmaster";
+      ImageURL = "Image/carrot/학생당근.png";
+      ImageAlt = "schoolmaster";
       break;
     case 6:
-      ImageURL = "hospitalmaster";
+      ImageURL = "Image/carrot/의사당근.png";
+      ImageAlt = "hospitalmaster";
       break;
     case 7:
-      ImageURL = "martmaster";
+      ImageURL = "martmasterurl";
+      ImageAlt = "martmaster";
       break;
     case 8:
-      ImageURL = "policemaster";
+      ImageURL = "policemasterurl";
+      ImageAlt = "policemaster";
       break;
   }
-  return <img src={ImageURL} alt={ImageURL} />;
+  return <img src={ImageURL} alt={ImageAlt} />;
 };
 
 const CarrotField = () => {
-  const [carrotList, setCarrotList] = useState<CarrotList[]>(dummyCarrotList);
-
-  const [carrotapi, setCarrotapi] = useState<CarrotList[]>([]);
+  const [carrotList, setCarrotList] = useState<CarrotList[]>([]);
 
   useEffect(() => {
     //당근 정보 가져옴
     const fetchData = async () => {
       try {
         const response = await getCarrotList();
-        setCarrotapi(response);
+        setCarrotList(response);
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchData();
   }, []);
-  console.log(carrotapi);
 
   return (
     <>
-      {!carrotList ? (
+      {carrotList.length == 0 ||
+      (carrotList[0].carrotCount == 0 &&
+        carrotList[1].carrotCount == 0 &&
+        carrotList[2].carrotCount == 0 &&
+        carrotList[3].carrotCount == 0) ? (
         <NoCarrotArea>
           <NoCarrot>
             <h1>
@@ -238,12 +255,13 @@ const CarrotField = () => {
               당근이 자라고 있어요!
             </h1>
           </NoCarrot>
-          <GotoStory>당근 모으러 가기</GotoStory>
-          <CarrotToby src="ads" alt="caarrottoby" />
+          <GotoStory>당근 모으러 가기 -▷</GotoStory>
+          <CarrotToby src="Image/album/토비1.png" alt="caarrottoby" />
         </NoCarrotArea>
       ) : (
         <CarrotFieldContent>
           <ScholCarrot>
+            학교당근
             <CarrotGradeImage carrotGrade={carrotList[0].carrotGrade} />
             <img src="abc" alt="school" />
             <span>
