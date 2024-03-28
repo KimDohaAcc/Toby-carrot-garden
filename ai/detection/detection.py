@@ -39,6 +39,11 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
         # 결과 후처리
         idx = prediction.argmax()
         # result = inceptionV3[idx]
+
+        print("분석 결과  : " + inceptionV3[idx], flush=True)
+
+        print("prediction[483] : ", prediction[483])
+
         print("prediction[414] _ bag : ", prediction[414])
 
         print("prediction[438] : ", prediction[438])
