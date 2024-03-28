@@ -6,7 +6,7 @@ import RescoreModal from "../modals/rescoreModal";
 interface QuizItem {
   correctAnswer: string;
   imageUrl: string;
-  createdTime: string; // 'timestamp'를 'string'으로 처리
+  createTime: string; // 'timestamp'를 'string'으로 처리
   score: number; // 'double' 타입은 'number'로 표현
   memberQuizId: number;
 }
@@ -113,63 +113,63 @@ const dummyData: QuizItem[] = [
   {
     correctAnswer: "사자",
     imageUrl: "https://example.com/image1.jpg",
-    createdTime: "20200482T33832912",
+    createTime: "20200482T33832912",
     score: 89.2,
     memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
-    createdTime: "20200482T33832912",
+    createTime: "20200482T33832912",
     score: 85,
     memberQuizId: 2,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
-    createdTime: "20200482T33832912",
+    createTime: "20200482T33832912",
     score: 85,
     memberQuizId: 3,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
-    createdTime: "20200482T33832912",
+    createTime: "20200482T33832912",
     memberQuizId: 4,
     score: 90,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
-    createdTime: "20200482T33832912",
+    createTime: "20200482T33832912",
     score: 85,
     memberQuizId: 5,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
-    createdTime: "20200482T33832912",
+    createTime: "20200482T33832912",
     score: 85,
     memberQuizId: 5,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
-    createdTime: "20200482T33832912",
+    createTime: "20200482T33832912",
     score: 85,
     memberQuizId: 7,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
-    createdTime: "20200482T33832912",
+    createTime: "20200482T33832912",
     score: 85,
     memberQuizId: 8,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://example.com/image2.jpg",
-    createdTime: "20200482T33832912",
+    createTime: "20200482T33832912",
     score: 85,
     memberQuizId: 9,
   },
@@ -177,108 +177,89 @@ const dummyData: QuizItem[] = [
 
 const RecoreContent = () => {
   const [category, setCategory] = useState<string>("감정평가입니다.");
-  const [quizList, setQuizList] = useState<QuizItem[]>([]);
+  const [quizList, setQuizList] = useState<QuizItem[]>(dummyData); // 초기 상태를 dummyData로 설정
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentQuizId, setCurrentQuizId] = useState(null);
-
-  useEffect(() => {
-    const fetchEmotionData = async () => {
-      try {
-        const response = await getEmotionList();
-        if (response.status === 200 && response.result.list.length > 0) {
-          setQuizList(response.result.list);
-        } else {
-          setQuizList(dummyData);
-        }
-      } catch (error) {
-        console.error("Error fetching emotion data", error);
-        setQuizList(dummyData);
-      }
-    };
-
-    fetchEmotionData();
-  }, []);
-
-  const handleEmotionClick = async () => {
+  const [currentQuizId, setCurrentQuizId] = useState<number | null>(null);
+  const loadEmotionData = async () => {
     setCategory("감정평가입니다.");
     try {
       const response = await getEmotionList();
-      if (response.status === 200 && response.result.list.length > 0) {
-        setQuizList(response.result.list);
+      if (response && response.status === 200) {
+        setQuizList(response.result);
       } else {
-        setQuizList(dummyData);
+        console.log("감정 데이터 조회 실패");
       }
     } catch (error) {
       console.error("Error fetching emotion data", error);
-      setQuizList(dummyData);
     }
   };
 
-  const handleObjectClick = async () => {
+  // 사물 데이터 로딩
+  const loadObjectData = async () => {
     setCategory("사물평가입니다.");
     try {
       const response = await getObjectList();
-      if (response.status === 200 && response.result.list.length > 0) {
-        setQuizList(response.result.list);
+      if (response && response.status === 200) {
+        setQuizList(response.result); // 응답 데이터로 상태 업데이트
       } else {
-        setQuizList(dummyData);
+        console.log("사물 데이터 조회 실패");
       }
     } catch (error) {
       console.error("Error fetching object data", error);
-      setQuizList(dummyData);
     }
   };
-  const handleOpenModal = (quizId) => {
+
+  // 재채점 모달 열기
+  const handleOpenModal = (quizId: number) => {
     setCurrentQuizId(quizId);
     setIsModalOpen(true);
   };
 
+  // 재채점 모달 닫기
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setCurrentQuizId(null); // 모달을 닫을 때 현재 퀴즈 ID 리셋
+    setCurrentQuizId(null); // 모달 닫을 때 현재 퀴즈 ID 리셋
   };
 
   return (
     <>
       <RecoreContentContainer>
         <RecoreButtonContainer>
-          <Button onClick={handleEmotionClick}>감정</Button>
-          <Button onClick={handleObjectClick}>사물</Button>
+          <Button onClick={loadEmotionData}>감정</Button>
+          <Button onClick={loadObjectData}>사물</Button>
         </RecoreButtonContainer>
         <RecoreBoxTitle>{category}</RecoreBoxTitle>
-        {quizList ? (
-          quizList.map((quiz, index) => (
-            <RecoreBox key={index}>
-              <RecoreBoxImage>
-                <img src={quiz.imageUrl} alt="Quiz" />
-              </RecoreBoxImage>
-              <RecoreBoxAnswer>
-                <RecoreBoxAnswerText>
-                  정답: {quiz.correctAnswer}
-                </RecoreBoxAnswerText>
-                <RecoreBoxAnswerCheck>점수: {quiz.score}</RecoreBoxAnswerCheck>
-              </RecoreBoxAnswer>
-              <RecoreBoxRescore>
-                <RecoreBoxRescoreDate>
-                  생성 시간: {quiz.createdTime}
-                </RecoreBoxRescoreDate>
-                <RecoreBoxRescoreButton>
-                  <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
-                    재채점
-                  </Button>
-                </RecoreBoxRescoreButton>
-              </RecoreBoxRescore>
-            </RecoreBox>
-          ))
-        ) : (
-          <p>No data available</p>
-        )}
+        {quizList.map((quiz, index) => (
+          <RecoreBox key={index}>
+            <RecoreBoxImage>
+              <img src={quiz.imageUrl} alt={`Quiz ${index}`} />
+            </RecoreBoxImage>
+            <RecoreBoxAnswer>
+              <RecoreBoxAnswerText>
+                정답: {quiz.correctAnswer}
+              </RecoreBoxAnswerText>
+              <RecoreBoxAnswerCheck>점수: {quiz.score}</RecoreBoxAnswerCheck>
+            </RecoreBoxAnswer>
+            <RecoreBoxRescore>
+              <RecoreBoxRescoreDate>
+                생성 시간: {quiz.createTime}
+              </RecoreBoxRescoreDate>
+              <RecoreBoxRescoreButton>
+                <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
+                  재채점
+                </Button>
+              </RecoreBoxRescoreButton>
+            </RecoreBoxRescore>
+          </RecoreBox>
+        ))}
       </RecoreContentContainer>
-      <RescoreModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        quizId={currentQuizId}
-      />
+      {isModalOpen && (
+        <RescoreModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          quizId={currentQuizId}
+        />
+      )}
     </>
   );
 };
