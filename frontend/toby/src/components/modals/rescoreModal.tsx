@@ -57,9 +57,9 @@ const ConfirmationButton = styled.button`
 // RescoreModal component
 const RescoreModal = ({ isOpen, onClose, quizId }) => {
   // Modified handleRescore function to accept newScore
-  const handleRescore = async (newScore) => {
+  const handleRescore = async (score) => {
     try {
-      const response = await getRescore(quizId, newScore);
+      const response = await getRescore(quizId, score);
       if (response.status === 200) {
         console.log("Rescore successful", response.data);
         onClose(); // Close the modal after successful rescore
@@ -68,6 +68,8 @@ const RescoreModal = ({ isOpen, onClose, quizId }) => {
       }
     } catch (error) {
       console.error("Error fetching rescore data", error);
+      console.log(score);
+      console.log(quizId);
     }
   };
 
@@ -78,10 +80,10 @@ const RescoreModal = ({ isOpen, onClose, quizId }) => {
         <h2>재채점 하시겠습니까?</h2>
         <ConfirmationContent>
           {/* Pass the respective status to handleRescore on button click */}
-          <ConfirmationButton onClick={() => handleRescore("100")}>
+          <ConfirmationButton onClick={() => handleRescore(100)}>
             O
           </ConfirmationButton>
-          <ConfirmationButton onClick={() => handleRescore("0")}>
+          <ConfirmationButton onClick={() => handleRescore(0)}>
             X
           </ConfirmationButton>
         </ConfirmationContent>
