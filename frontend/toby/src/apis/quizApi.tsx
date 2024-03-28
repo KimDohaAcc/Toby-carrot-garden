@@ -55,3 +55,13 @@ export const submitQuiz2 = async (formData) => {
     throw error;
   }
 };
+
+//아이가 풀었던 퀴즈 정답
+export const getQuizAnswer = async (quizId) => {
+  try {
+    const response = await api.get(`quiz/${quizId}/result`);
+    return response.data;
+  } catch (error) {
+    console.error("웨이팅토끼를 갖고오지 못했습니다.", error);
+  }
+};
