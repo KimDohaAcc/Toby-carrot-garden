@@ -229,7 +229,7 @@ const Hospital = () => {
   const [scenesList, setScenesList] = useState<HospitalSceneList[]>([]); // 받아온 장면 목록 저장해주는 곳
 
   const [sceneType, setSceneType] = useState<string>(""); // 장면 타입
-  const [sceneIndex, setSceneIndex] = useState<number>(0); // 장면 인덱스
+  const [sceneIndex, setSceneIndex] = useState<number>(-1); // 장면 인덱스
 
   const location = useLocation();
   console.log(location.state);
@@ -267,7 +267,7 @@ const Hospital = () => {
 
   const renderSceneContent = () => {
     console.log("sceneType: ", sceneType);
-    if (sceneIndex === 0) {
+    if (sceneIndex === -1) {
       return <StoryTitle title={title} storyImageUrl={storyImageUrl} />;
     } else {
       switch (sceneType) {
