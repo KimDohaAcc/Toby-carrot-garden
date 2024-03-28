@@ -45,9 +45,8 @@ function App() {
         <Route path="mart" element={<Mart />} />
         <Route path="report" element={<Report />} />
         <Route path="signplus" element={<UserInfoForm />} />
-        <Route path="webcam" element={<QuizWebcam />} />
 
-        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BackgroundContainer>
   );
