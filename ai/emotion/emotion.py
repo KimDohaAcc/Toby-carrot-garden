@@ -16,7 +16,7 @@ REDIS_PORT = os.getenv("REDIS_PORT")
 
 def emotion(image_data, data_name, member_id, quiz_id, correct_answer):
     try:
-        print("모델 분석 시작")
+        print("모델 분석 시작", flush=True)
     
         face_classifier = cv2.CascadeClassifier('model/haarcascade_frontalface_default.xml')
         classifier = load_model('model/Emotion_Detection.h5')
@@ -53,7 +53,7 @@ def emotion(image_data, data_name, member_id, quiz_id, correct_answer):
 
 
     except Exception as e:
-        print("모델 에러 발생 ", e)
+        print("모델 에러 발생 ", e, flush=True)
 
     try:
         # 네트워크 설정 필요
@@ -64,10 +64,10 @@ def emotion(image_data, data_name, member_id, quiz_id, correct_answer):
         r.set(f'quiz_answer_{member_id}_{quiz_id}', label)
         r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
         r.close()
-        print("redis 저장 완료")
+        print("redis 저장 완료", flush=True)
 
     except Exception as e:
-        print("redis 에러 ", e)
+        print("redis 에러 ", e, flush=True)
 
-    print(f'분석 성공 - emotion {label}')
-    print("Image analysis complete. Result saved.")
+    print(f'분석 성공 - emotion {label}', flush=True)
+    print("Image analysis complete. Result saved.", flush=True)
