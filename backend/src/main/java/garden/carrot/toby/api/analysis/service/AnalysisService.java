@@ -59,11 +59,18 @@ public class AnalysisService {
 		return false;
 	}
 
-	public ListDto<StatisticsDto> getStatictics() {
+	public ListDto<StatisticsDto> getStatistics() {
 		List<StatisticsDto> list = new ArrayList<>();
-
-		list.add(new StatisticsDto(QuizType.FEELINGS, 1, 2, 3));
-		list.add(new StatisticsDto(QuizType.OBJECTS, 1, 2, 3));
-		return new ListDto<StatisticsDto>(list);
+		Member member = memberUtil.getLoginMember();
+		final QuizType[] types = {QuizType.FEELINGS, QuizType.OBJECTS};
+		for (QuizType type : types) {
+			double correctRateAll = memberQuizRepository.findAverageScoreByQuizType(type).orElse((double)-1);
+			double correctRateAge = memberQuizRepository.findAverageScoreByQuizTypeAndBirthYear(type,
+				member.getBirthDate()).orElse((double)-1);
+			double correctRateMe = memberQuizRepository.findAverageScoreByQuizTypeAndMemberId(type, member.getId())
+				.orElse((double)-1);
+			list.add(new StatisticsDto(type, correctRateAll, correctRateAge, correctRateMe));
+		}
+		return new ListDto<>(list);
 	}
 }

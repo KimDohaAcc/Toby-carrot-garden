@@ -40,7 +40,7 @@ public class AnalysisController {
 	@Operation(summary = "통계", description = "사용자의 정보를 바탕으로 통계를 만들어 돌려준다")
 	public ApiResponse<ListDto<StatisticsDto>> getStatistics() {
 
-		return ApiResponse.success(SuccessCode.GET_SUCCESS, analysisService.getStatictics());
+		return ApiResponse.success(SuccessCode.GET_SUCCESS, analysisService.getStatistics());
 	}
 
 	// * 퀴즈 히스토리 리스트 *
