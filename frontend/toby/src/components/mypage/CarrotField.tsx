@@ -135,6 +135,10 @@ const CarrotToby = styled.img`
   right: 0;
 `;
 
+const CarrotCount = styled.span`
+  color: white;
+`;
+
 //데이터 형식 예시
 // {
 //   “status” : 200,
@@ -264,33 +268,33 @@ const CarrotField = () => {
             학교당근
             <CarrotGradeImage carrotGrade={carrotList[0].carrotGrade} />
             <img src="abc" alt="school" />
-            <span>
+            <CarrotCount>
               {carrotList[0].carrotCount} / {carrotList[0].gradeMax}
-            </span>
+            </CarrotCount>
           </ScholCarrot>
           <HospitalCarrot>
             병원 당근
             <CarrotGradeImage carrotGrade={carrotList[1].carrotGrade} />
             <img src="abc" alt="hospital" />
-            <span>
+            <CarrotCount>
               {carrotList[1].carrotCount} / {carrotList[1].gradeMax}
-            </span>
+            </CarrotCount>
           </HospitalCarrot>
           <MartCarrot>
             상점 당근
             <CarrotGradeImage carrotGrade={carrotList[2].carrotGrade} />
             <img src="abc" alt="mart" />
-            <span>
+            <CarrotCount>
               {carrotList[2].carrotCount} / {carrotList[2].gradeMax}
-            </span>
+            </CarrotCount>
           </MartCarrot>
           <PoliceCarrot>
             경찰서 당근
             <CarrotGradeImage carrotGrade={carrotList[3].carrotGrade} />
             <img src="abc" alt="police" />
-            <span>
+            <CarrotCount>
               {carrotList[3].carrotCount} / {carrotList[3].gradeMax}
-            </span>
+            </CarrotCount>
           </PoliceCarrot>
           <ShovelImage src="ads" alt="shovel" />
         </CarrotFieldContent>

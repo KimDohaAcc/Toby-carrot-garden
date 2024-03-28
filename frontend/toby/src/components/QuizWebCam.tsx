@@ -25,7 +25,7 @@ const CaptureButton = styled.button`
   }
 `;
 
-const QuizWebCam: React.FC = ({ quizId }) => {
+const QuizWebCam = ({ quizId }) => {
   const webcamRef = useRef<Webcam>(null);
   //   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
