@@ -54,11 +54,11 @@ def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
 
         probabilities = np.exp(prediction) / np.sum(np.exp(prediction))  # 소프트맥스 함수를 사용하여 로짓 값을 확률로 변환
 
-        # print("{:2.0f}".format(probabilities * 100))
+        print("{:2.0f}".format(probabilities[target_index] * 100))
 
-        formatted_probabilities = ["{:2.0f}".format(prob * 100) for prob in probabilities]
-        print("---------------------------"+formatted_probabilities)
-        print("---------------------------" + formatted_probabilities[target_index])
+        # formatted_probabilities = ["{:2.0f}".format(prob * 100) for prob in probabilities]
+        # print("---------------------------"+formatted_probabilities)
+        # print("---------------------------" + formatted_probabilities[target_index])
         # 백분율로 환산
         # percentages = probabilities * 100
         # print(percentages, flush=True)
