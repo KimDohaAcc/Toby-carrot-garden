@@ -19,12 +19,12 @@ try:
                              value_deserializer=lambda x: loads(x.decode('utf-8')),
                             )
 except Exception as e:
-    print("카프카 소비자 생성 실패:", e)
+    print("카프카 소비자 생성 실패:", e, flush=True)
 
 for message in consumer:
     try:
-        print("그림 분석 요청", message)
+        print("그림 분석 요청", message, flush=True)
         image_data = s3_image_reader(message.value['imageKey'])
         analyze_object(image_data, message.value['imageKey'], message.value['memberId'], message.value['quizId'], message.value['correctAnswer'] )
     except Exception as e:
-        print("그림 분석 실패:", e)
+        print("그림 분석 실패:", e, flush=True)

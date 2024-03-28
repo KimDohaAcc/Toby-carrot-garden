@@ -48,25 +48,21 @@ def analyze_object(image_data, object_name, member_id, quiz_id, correct_answer):
         # 모델 구동
         prediction = doodle_model.predict(image_tensor)
 
-        # 결과 후처리
-        idx = prediction.argmax()
-        result = doodle_ref[idx]
+        # 결과
+        result = prediction[0][target_index] + 100
 
     except Exception as e:
-        print("모델 에러 발생 ", e)
+        print("모델 에러 발생 ", e, flush=True)
 
     try:
         r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
-
-        if result == '' or result != correct_answer:
-            result = 'Failure'
-        r.set(f'quiz_answer_{member_id}_{quiz_id}', 100 + prediction[0][target_index])
+        r.set(f'quiz_answer_{member_id}_{quiz_id}', result)
         r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
         r.close()
-        print("redis 저장 완료")
+        print("redis 저장 완료", flush=True)
 
     except Exception as e:
-        print("redis 에러 ", e)
+        print("redis 에러 ", e, flush=True)
 
     # print(prediction)
-    print(f"{doodle_ref[target_index]}는  {100 + prediction[0][target_index]}%")
+    print(f"{doodle_ref[target_index]}는  {100 + prediction[0][target_index]}%", flush=True)
