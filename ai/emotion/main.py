@@ -13,6 +13,7 @@ str_topic_name = 'FEELINGS'
 str_group_name = 'group1'
 consumer = ''
 try:
+    print("카프카 소비자 생성 시작")
     consumer = KafkaConsumer(str_topic_name, bootstrap_servers=bootstrap_servers,
                              auto_offset_reset='earliest', # 가장 처음부터 소비
                              enable_auto_commit=True,
