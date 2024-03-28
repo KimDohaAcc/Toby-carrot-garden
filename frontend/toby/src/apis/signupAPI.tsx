@@ -22,11 +22,12 @@ export const postKakaoToken = async (tokenCode) => {
     if (response.status === 200 && response.data && response.data.result) {
       const { accessToken, refreshToken, signupComplete } =
         response.data.result;
-
+      console.log("여기까지 왔습니다.");
       if (accessToken && refreshToken) {
         // 토큰 저장
         saveTokens({ accessToken, refreshToken });
         console.log("토큰 전송 완료", response.data.message);
+        console.log(localStorage.getItem(accessToken));
 
         // 회원가입이 완료되었으면 추가 정보를 가져옵니다.
         if (signupComplete) {

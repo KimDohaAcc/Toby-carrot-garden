@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { getCorrectAnswer } from "../../apis/analysisApi";
+import { getUserStorage } from "../../apis/userStorageApi";
+const userStorage = getUserStorage();
+const accessToken = userStorage.accessToken;
 
 // 더미 데이터 정의
 const initialData = [

@@ -28,7 +28,9 @@ export const submitQuiz = async ({ formData }) => {
   }
 };
 
-export const submitQuiz2 = async ({ formData }) => {
+export const submitQuiz2 = async (formData) => {
+  console.log("여기까지 옴");
+  console.log(localStorage.getItem("accessToken"));
   try {
     const response = await api.post("quiz/submit", formData);
     return response.data;
