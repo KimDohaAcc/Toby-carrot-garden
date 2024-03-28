@@ -6,9 +6,9 @@ import { submitQuiz2 } from "../../apis/quizApi";
 const StoryDrawingModalContainer = styled.div`
   display: flex;
   position: absolute;
-  top: 50%; /* 부모 요소의 50% 위치에 배치 */
-  left: 50%; /* 부모 요소의 50% 위치에 배치 */
-  transform: translate(-50%, -50%); /* 요소의 가로와 세로 중앙 정렬 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 80%;
   height: 80%;
   border: 2px solid black;
@@ -19,6 +19,7 @@ const StoryDrawingModalContainer = styled.div`
 
 const ModalArea = styled.div`
   display: flex;
+  flex: 1;
   border: 2px solid black;
 `;
 
@@ -26,29 +27,27 @@ const CloseBtn = styled.button`
   position: absolute;
   bottom: 5px;
   right: 5px;
-  background-image: url("경로/이미지.png");
-  background-size: cover; /* 이미지를 버튼에 맞게 크기 조정 */
-
+  /* background-image: url("경로/이미지.png"); */
+  background-size: cover;
   border: none;
 `;
+
 const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const signaturePadRef = useRef(null);
-  const [canvasWidth, setCanvasWidth] = useState(500);
-  const [canvasHeight, setCanvasHeight] = useState(400);
+  const modalRef = useRef(null);
+  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     function updateCanvasSize() {
-      if (isOpen) {
-        // Assuming modal takes up 80% of the view width and height
-        const width = window.innerWidth * 0.8;
-        const height = window.innerHeight * 0.8;
-        setCanvasWidth(width);
-        setCanvasHeight(height);
+      if (modalRef.current) {
+        const { width, height } = modalRef.current.getBoundingClientRect();
+        // Border의 두께를 고려하지 않는 경우, 아래와 같이 설정할 수 있습니다.
+        // 즉, ModalArea 자체의 크기를 직접 사용합니다.
+        setCanvasSize({ width, height });
       }
     }
 
     updateCanvasSize();
-    // Optional: Resize listener if you want canvas to be responsive
     window.addEventListener("resize", updateCanvasSize);
 
     return () => window.removeEventListener("resize", updateCanvasSize);
@@ -62,12 +61,12 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
 
       const formData = new FormData();
       formData.append("analysisImage", blob, "drawing.png");
-      formData.append("quizId", quizId); // quizId를 formData에 추가
+      formData.append("quizId", quizId.toString());
 
       try {
-        await submitQuiz2(formData); // 서버에 formData 전송
+        await submitQuiz2(formData);
         console.log("이미지 전송 성공");
-        onClose(); // 모달 닫기
+        onClose();
       } catch (error) {
         console.error("이미지 전송 실패", error);
       }
@@ -78,13 +77,13 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
 
   return (
     <StoryDrawingModalContainer>
-      <ModalArea>
+      <ModalArea ref={modalRef}>
         <SignatureCanvas
           ref={signaturePadRef}
           penColor="black"
           canvasProps={{
-            width: canvasWidth, // Dynamic width
-            height: canvasHeight, // Dynamic height
+            width: canvasSize.width,
+            height: canvasSize.height,
             className: "signature-canvas",
           }}
         />
