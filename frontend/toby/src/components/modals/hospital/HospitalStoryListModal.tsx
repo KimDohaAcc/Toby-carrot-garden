@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { getStoryList } from "../../../apis/hospitalApi";
+import { getStoryList } from "../../../apis/storyApi";
 import { setStoryList } from "../../../store/slices/hospitalSlice";
 
 const ModalConatiner = styled.div`
@@ -31,6 +31,16 @@ const ModalContent = styled.div`
   justify-content: center;
   overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
   gap: 20px;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #d5d5fb;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #fbeaf8;
+  }
 `;
 
 const StoryContent = styled.div`
@@ -59,6 +69,7 @@ const CloseBtn = styled.button`
 const StoryTitle = styled.h1`
   margin: 5px;
   flex: 2; /* 5:2:1 비율 중 두 번째 행 */
+  overflow: hidden;
 `;
 
 const StoryImage = styled.img`
@@ -129,7 +140,11 @@ const HospitalStoryListModal = ({ onClose }) => {
               }
             >
               <StoryImage src={story.storyImageUrl} alt={story.title} />
-              <StoryTitle>{story.title}</StoryTitle>
+              <StoryTitle>
+                {story.title.length > 8
+                  ? story.title.slice(0, 5) + "..."
+                  : story.title}
+              </StoryTitle>
               <AgeRecommendation>
                 권장 나이 : {story.recommendAge}
               </AgeRecommendation>

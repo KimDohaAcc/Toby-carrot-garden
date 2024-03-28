@@ -28,6 +28,7 @@ const StoryContentText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 4rem;
   border: 1px solid black;
 `;
 
@@ -64,9 +65,7 @@ const StoryContent = ({ index }: StoryContentProps) => {
           alt="imageUrl"
         />
       </StoryContentImageArea>
-      <StoryContentText>
-        <h1>StoryContent</h1>
-      </StoryContentText>
+      <StoryContentText>{sceneList[index].content}</StoryContentText>
     </StoryContentContainer>
   );
 };

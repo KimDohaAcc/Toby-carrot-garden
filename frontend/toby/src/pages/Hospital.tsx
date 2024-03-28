@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { setSceneList } from "../store/slices/hospitalSlice.tsx";
 
-import { getSceneList } from "../apis/hospitalApi";
+import { getSceneList } from "../apis/storyApi.tsx";
 
 import Logo from "../components/Logo";
 
@@ -178,18 +178,19 @@ const CloseBtn = styled.button`
   justify-content: center;
   align-items: center; /* 버튼 내에서 텍스트를 수직 가운데 정렬 */
   grid-area: closeBtn;
-  border: 1px solid black;
-  background-color: #ff0e0e;
-  color: black;
+  border-radius: 10%;
+  background-color: #ff9d9d;
+  color: #ff0000;
   cursor: pointer;
-  padding: 8px 16px;
+  padding: 0;
+  margin: 0;
   transition: background-color 0.3s ease; /* 마우스 호버 시 배경색이 부드럽게 변경되도록 트랜지션 추가. */
   font-size: 3rem;
   font-weight: bold;
   box-sizing: border-box;
 
   &:hover {
-    background-color: #a9a9a9; /* 마우스를 올렸을 때 밝은 회색으로 배경색이 변경됩니다. */
+    background-color: #ffffff;
   }
 `;
 
@@ -305,7 +306,7 @@ const Hospital = () => {
                 navigate("/main");
               }}
             >
-              X
+              ✘
             </CloseBtn>
 
             {sceneType === "CLEAR" ? (

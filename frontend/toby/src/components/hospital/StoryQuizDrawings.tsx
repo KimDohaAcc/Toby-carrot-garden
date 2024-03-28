@@ -71,7 +71,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content }) => {
         <div>{content}</div>
       </QuizImageArea>
       <QuizCanvasArea>
-        <h1>Canvas</h1>
+        <img src="" />
         <p onClick={openModal}>여기를 클릭하세요</p>
       </QuizCanvasArea>
       <StoryDrawingModal

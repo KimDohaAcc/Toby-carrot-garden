@@ -24,7 +24,7 @@ const EmergencyTitle = styled.div`
 
 const EmergencyContent = styled.div`
   grid-area: content;
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
   width: 100%;
