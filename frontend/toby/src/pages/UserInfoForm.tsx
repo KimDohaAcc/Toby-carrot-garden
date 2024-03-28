@@ -18,7 +18,6 @@ const ConsentBorder = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   border: 15px solid #ec903b;
   width: 60%;
   height: 70%;
@@ -26,10 +25,10 @@ const ConsentBorder = styled.div`
   background-color: white;
 `;
 const InputInline = styled.input`
-  margin: 0 5px;
-  padding: 5px;
+  padding: 20px 15px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
+  font-size: 20px;
   &:focus {
     outline: none;
     border-color: #ec903b;
@@ -42,18 +41,36 @@ const PasswordContainer = styled.div`
   margin-top: 20px; // 상단 여백
 `;
 const TextContainer = styled.div`
-  /* margin: 20px 0; */
+  display: flex;
+  flex-flow: wrap column;
+  margin-left: 5rem;
   text-align: left;
+  font-size: 40pt;
+  line-height: 5rem;
+  padding: 0;
 `;
 const Button = styled.button`
+  dislplay: flex;
+  flex-flow: wrap row;
+  align-items: flex-end;
   background-color: transparent; // 버튼 배경 투명하게
   border: none; // 버튼 테두리 제거
-
   padding: 0; // 패딩 제거
+  align-self: flex-end;
 `;
-const RabbitImage1 = styled.img``;
+const RabbitImage1 = styled.img`
+  height: 50%;
+  position: absolute;
+  top: 1%;
+  right: 7%;
+`;
 
-const CheckButton = styled.img``;
+const CheckButton = styled.img`
+  width: 30%;
+  margin-left: 50%;
+  margin-top: 5%;
+  margin-bottom: 0;
+`;
 const VillageButton = styled.img``;
 
 function UserInfoForm() {
@@ -103,11 +120,11 @@ function UserInfoForm() {
   return (
     <Container>
       <ConsentBorder>
+       <RabbitImage1 src="Image/toby/cuteRabbit_text2.png" alt="Rabbit" />
         {step === 1 && (
           <TextContainer>
-            <RabbitImage1 src="Image/toby/cuteRabbit_text2.png" alt="Rabbit" />
             <p>
-              내 이름은{" "}
+              내 이름은{" "}<br/>
               <InputInline
                 type="text"
                 placeholder="이름"
@@ -116,7 +133,7 @@ function UserInfoForm() {
               />
               이고,
             </p>
-            <p>
+            <span>
               내 생일은{" "}
               <InputInline
                 type="date"
@@ -124,7 +141,7 @@ function UserInfoForm() {
                 onChange={(e) => setBirthday(e.target.value)}
               />
               이야.
-            </p>
+            </span>
             <Button>
               <CheckButton
                 onClick={handleNextStep}

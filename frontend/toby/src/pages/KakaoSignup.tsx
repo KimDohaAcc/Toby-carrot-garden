@@ -25,9 +25,15 @@ const ConsentBorder = styled.div`
   background-color: white;
 `;
 
-const RabbitImage = styled.img``;
+const RabbitImage = styled.img`
+  height: 70%;
+  margin-bottom: 2%;
+  margin-left: 20%;
+`;
 
-const KakaoButton = styled.img``;
+const KakaoButton = styled.img`
+  width: 50%;
+`;
 
 function KakaoSignup() {
   const navigate = useNavigate();
