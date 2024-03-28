@@ -10,56 +10,65 @@ const initialDrawingsList = [
   {
     correctAnswer: "사자",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
-    createdTime: "2020-04-28T13:38:32.912",
+    creatTime: "2020-04-28T13:38:32.912",
     score: 100,
+    memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
-    createdTime: "2020-04-28T13:38:32.912",
+    creatTime: "2020-04-28T13:38:32.912",
     score: 100,
+    memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
-    createdTime: "2020-04-28T13:38:32.912",
+    creatTime: "2020-04-28T13:38:32.912",
     score: 100,
+    memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
-    createdTime: "2020-04-28T13:38:32.912",
+    creatTime: "2020-04-28T13:38:32.912",
     score: 100,
+    memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
-    createdTime: "2020-04-28T13:38:32.912",
+    creatTime: "2020-04-28T13:38:32.912",
     score: 100,
+    memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
-    createdTime: "2020-04-28T13:38:32.912",
+    creatTime: "2020-04-28T13:38:32.912",
     score: 100,
+    memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
-    createdTime: "2020-04-28T13:38:32.912",
+    creatTime: "2020-04-28T13:38:32.912",
     score: 100,
+    memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
-    createdTime: "2020-04-28T13:38:32.912",
+    creatTime: "2020-04-28T13:38:32.912",
     score: 100,
+    memberQuizId: 1,
   },
   {
     correctAnswer: "호랑이",
     imageUrl: "https://placekitten.com/200/200", // 예시 이미지 URL
-    createdTime: "2020-04-28T13:38:32.912",
+    creatTime: "2020-04-28T13:38:32.912",
     score: 100,
+    memberQuizId: 1,
   },
   // 더 많은 퀴즈 데이터를 추가할 수 있습니다.
 ];
@@ -99,28 +108,27 @@ const InfoContainer = styled.div`
 `;
 
 const ReportDrawings = () => {
-  const [drawingsList, setDrawingsList] = useState(initialDrawingsList);
+  const [drawingsList, setDrawingsList] = useState([]);
+
   useEffect(() => {
     const fetchDrawingsQuiz = async () => {
       try {
-        const response = await getDrawingsQuiz(); // API 호출
-        if (
-          response &&
-          response.status === 200 &&
-          response.result &&
-          response.result.list
-        ) {
-          setDrawingsList(response.result.list);
-          console.log("잘 갖고왔습니당"); // 서버에서 받은 데이터로 상태 업데이트
+        const response = await getDrawingsQuiz();
+        // API 호출 결과 검증 및 상태 업데이트
+        if (response && Array.isArray(response.result)) {
+          setDrawingsList(response.result);
+          console.log("API로부터 그림 퀴즈 데이터를 성공적으로 받았습니다.");
+        } else {
+          console.log("응답 데이터 형식이 예상과 다릅니다:", response);
         }
       } catch (error) {
         console.error("그림 퀴즈 데이터를 가져오는데 실패했습니다.", error);
-        // API 호출에 실패했을 때 더미 데이터 유지
       }
     };
 
     fetchDrawingsQuiz();
   }, []);
+
   return (
     <ListContainer>
       {drawingsList.map((drawing, index) => (
@@ -134,7 +142,7 @@ const ReportDrawings = () => {
               <strong>점수:</strong> {drawing.score}
             </div>
             <div>
-              <strong>생성 시간:</strong> {drawing.createdTime}
+              <strong>생성 시간:</strong> {drawing.createTime}
             </div>
           </InfoContainer>
         </DrawingItem>
