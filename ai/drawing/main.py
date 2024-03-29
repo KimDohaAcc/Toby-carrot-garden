@@ -29,5 +29,5 @@ for message in consumer:
     except Exception as e:
         print("그림 분석 실패:", e, flush=True)
 
-# image_data = s3_image_reader("구름.png")
+# image_data = s3_image_reader("031df2aa-d1da-42a9-8516-92aa6a948ed3")
 # analyze_object(image_data, 1, 1, 'cloud')

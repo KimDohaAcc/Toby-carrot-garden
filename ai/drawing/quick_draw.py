@@ -42,16 +42,16 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
         # Perform inference
         logits = model(image)
 
-        top_values, top_indices = torch.topk(logits[0], k=5)
+        top_values, top_indices = torch.topk(logits[0], k=10)
 
         result = 0
 
-        for value, index in zip(top_values, top_indices):
+        for rank, (value, index) in enumerate(zip(top_values, top_indices), start=0):
             print(
-                f"인덱스: {index}  값: {CLASSES[index]} 유사도: {value}",
+                f"순위: {rank}  인덱스: {index}  값: {CLASSES[index]} 유사도: {value}",
                 flush=True)
             if correct_answer == CLASSES[index]:
-                result = 100
+                result = 100 - (rank * 10)
 
         try:
             r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
