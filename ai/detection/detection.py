@@ -10,6 +10,7 @@ from json import loads
 from dotenv import load_dotenv
 import os
 from pathlib import Path
+import traceback
 
 dotenv_path = Path(".env")
 load_dotenv(dotenv_path=dotenv_path)
@@ -35,10 +36,9 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
 
         # 결과 후처리
         idx = prediction.argmax()
-        # result = inceptionV3[idx]
+        result = inceptionV3[idx]
 
         print("가장 유사한 결과값  __ idx : " + idx + "  inceptionV3[idx] : " + inceptionV3[idx], flush=True)
-
 
         # result = 0
         # if correct_answer == "cup" and prediction[441] < 3:
@@ -52,6 +52,7 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
 
     except Exception as e:
         print("모델 에러 발생 ", e, flush=True)
+        traceback.print_exc()
 
     # try:
     #     print("redis 저장 시작", flush=True)
