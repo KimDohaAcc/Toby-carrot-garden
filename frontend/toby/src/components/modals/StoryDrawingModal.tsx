@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import SignatureCanvas from "react-signature-canvas";
-import { submitQuiz2 } from "../../apis/quizApi";
+import { submitQuiz } from "../../apis/quizApi";
 
 const StoryDrawingModalContainer = styled.div`
   display: flex;
@@ -57,23 +57,31 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
     if (signaturePadRef.current && isOpen) {
       const canvas = signaturePadRef.current.getCanvas();
       const dataUrl = canvas.toDataURL("image/png");
-      const blob = await (await fetch(dataUrl)).blob();
+
+      // dataURL을 Blob으로 변환
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+
+      // Blob을 File 객체로 변환
+      const file = new File([blob], "drawing.png", { type: "image/png" });
 
       const formData = new FormData();
-      formData.append("analysisImage", blob, "drawing.png");
+      formData.append("analysisImage", file);
       formData.append("quizId", quizId.toString());
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-        // 파일의 경우, 파일 이름 등 추가 정보를 로그로 찍을 수 있습니다.
-        if (value instanceof Blob) {
-          console.log(`File name: ${value.name}, File type: ${value.type}`);
-        }
-      }
-      // console.log()
 
       try {
-        await submitQuiz2(formData);
-        console.log("이미지 전송 성공");
+        const response = await submitQuiz(formData);
+        console.log("이미지 전송 성공", response);
+        for (let [key, value] of formData.entries()) {
+          console.log(`${key}:`, value);
+
+          // 파일 객체의 경우, 추가적인 정보를 로그로 출력
+          if (value instanceof File) {
+            console.log(
+              `File details - Name: ${value.name}, Type: ${value.type}, Size: ${value.size} bytes`
+            );
+          }
+        }
         onClose();
       } catch (error) {
         console.error("이미지 전송 실패", error);

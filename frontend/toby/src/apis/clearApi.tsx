@@ -1,17 +1,31 @@
 import { api } from "../config/apiConfig";
+import { tempToken } from "../config/apiConfig";
 
-export const submitQuiz2 = async (formData) => {
-  try {
-    // API 요청
-    const response = await api.post(`clear-image`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log("클리어 파일 전송 완료");
-    return response.data;
-  } catch (error) {
-    console.error("클리어 파일 전송 실패", error);
-    throw error;
+export const postClearImage = async (formData) => {
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}: ${value}`);
   }
+  return new Promise((resolve, reject) => {
+    api
+      .request({
+        method: "post",
+        url: `clear-image`,
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${tempToken}`,
+        },
+      })
+      .then((res) => {
+        resolve(res);
+        console.log("업로드 완료");
+      })
+      .catch((err) => {
+        reject(err);
+        console.log(err);
+        for (let [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`);
+        }
+      });
+  });
 };

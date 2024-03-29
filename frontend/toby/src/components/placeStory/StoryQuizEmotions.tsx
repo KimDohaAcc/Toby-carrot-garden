@@ -58,7 +58,7 @@ const CameraBtn = styled.button`
   color: #b65050;
 `;
 
-const StoryQuizEmotions = ({ imageUrl, content }) => {
+const StoryQuizEmotions = ({ imageUrl, quizId, content }) => {
   return (
     <StoryQuizEmotionsContainer>
       <StoryQuizEmotionsTitleArea>
@@ -66,10 +66,11 @@ const StoryQuizEmotions = ({ imageUrl, content }) => {
       </StoryQuizEmotionsTitleArea>
       <StoryQuizEmotionsImageArea>
         <StoryQuizEmotionsImage src={imageUrl} alt="image" />
+        <div>{content}</div>
       </StoryQuizEmotionsImageArea>
       <StoryQuizEmotionCanmeraArea>
         <CameraArea>
-          <QuizWebCam></QuizWebCam>
+          <QuizWebCam quizId={quizId} />
         </CameraArea>
         {/* <CameraBtnArea>
           <CameraBtn

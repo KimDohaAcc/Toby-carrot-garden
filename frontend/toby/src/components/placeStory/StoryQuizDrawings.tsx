@@ -78,6 +78,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content }) => {
         isOpen={isModalOpen}
         onClose={closeModal}
         quizId={quizId}
+        // Make sure this prop is used correctly in the modal
       />{" "}
       {/* quizId prop 추가 */}
     </QuizContainer>
