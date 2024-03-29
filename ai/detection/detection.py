@@ -38,7 +38,7 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
         idx = prediction.argmax()
         result = inceptionV3[idx]
 
-        print("가장 유사한 결과값  __ idx : " + idx + "  inceptionV3[idx] : " + inceptionV3[idx], flush=True)
+        print("가장 유사한 결과값  __ idx : ", idx, "  inceptionV3[idx] : ", inceptionV3[idx], flush=True)
 
         # result = 0
         # if correct_answer == "cup" and prediction[441] < 3:
