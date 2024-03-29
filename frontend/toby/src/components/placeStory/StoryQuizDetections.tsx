@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import QuizWebCam from "../QuizWebCam";
 
@@ -6,7 +6,7 @@ const StoryQuizDetectionsContainer = styled.div`
   display: grid;
   grid-template-areas:
     "title title"
-    "image camera";
+    "imaage camera";
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 5fr;
   height: 100%;
@@ -22,17 +22,14 @@ const StoryQuizDetectionsTitleArea = styled.div`
 `;
 
 const StoryQuizDetectionsImageArea = styled.div`
-  grid-area: image;
+  grid-area: imaage;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
-`;
-
-const StoryQuizDetectionsImage = styled.img`
-  height: 90%;
-  border: 1px solid black;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
 const StoryQuizDetectionCanmeraArea = styled.div`
@@ -42,12 +39,35 @@ const StoryQuizDetectionCanmeraArea = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid black;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
-const CameraArea = styled.div`
-  flex: 0 0 100%;
+const ImageArea = styled.div`
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  flex: 0 0 1;
+`;
+
+const ConteentArea = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  flex: 0 0 12.5%;
+`;
+
+const QuizImage = styled.img`
+  height: 100%;
+  width: auto;
+  position: relative;
+  display: block;
+  border: 1px solid black;
+  margin: 0 auto;
 `;
 
 const StoryQuizDetections = ({ imageUrl, quizId, content }) => {
@@ -60,13 +80,13 @@ const StoryQuizDetections = ({ imageUrl, quizId, content }) => {
         <h1>StoryQuizDetections</h1>
       </StoryQuizDetectionsTitleArea>
       <StoryQuizDetectionsImageArea>
-        <StoryQuizDetectionsImage src={imageUrl} alt="image" />
-        <div>{content}</div>
+        <ImageArea>
+          <QuizImage src={imageUrl} alt="image" />
+        </ImageArea>
+        <ConteentArea>{content}</ConteentArea>
       </StoryQuizDetectionsImageArea>
       <StoryQuizDetectionCanmeraArea>
-        <CameraArea>
-          <QuizWebCam quizId={quizId} />
-        </CameraArea>
+        <QuizWebCam quizId={quizId} />
       </StoryQuizDetectionCanmeraArea>
     </StoryQuizDetectionsContainer>
   );

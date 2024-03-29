@@ -37,10 +37,16 @@ import { getClearImageList } from "../../apis/mypageApi";
 //   },
 // ];
 
+const AlbumContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
 const AlbumArea = styled.div`
   display: grid;
   grid-template-rows: 4fr 1fr;
   background-color: #f5f5f5d9;
+  background-size: cover;
   border-radius: 30px;
   justify-items: center;
   align-items: center;
@@ -72,11 +78,10 @@ const NoImage = styled.div`
 `;
 
 const GotoStory = styled.button`
-  background-color: #f5f5f5d9;
   border: none;
   width: 100%;
   height: 100%;
-  border-radius: 5px;
+  border-radius: 30px;
   position: relative;
   cursor: pointer;
 `;
@@ -227,7 +232,7 @@ const Album = () => {
   };
 
   return (
-    <>
+    <AlbumContainer>
       {/** 이미지 없을 때 보여줄 화면 */}
       {!imageList ? (
         <NoImageArea>
@@ -269,7 +274,7 @@ const Album = () => {
           </BtnArea>
         </AlbumArea>
       )}
-    </>
+    </AlbumContainer>
   );
 };
 

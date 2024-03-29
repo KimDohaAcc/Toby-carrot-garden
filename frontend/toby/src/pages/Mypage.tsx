@@ -18,7 +18,8 @@ const LogoArea = styled.div`
 `;
 
 const MypageContentContainer = styled.div`
-  flex-grow: 1;
+  height: 100%;
+  flex: 0 0 85%;
   flex-direction: column;
   border: 2px solid black;
   display: flex;
@@ -27,7 +28,7 @@ const MypageContentContainer = styled.div`
 const LogoutArea = styled.div`
   display: flex;
   justify-content: flex-end;
-  flex-grow: 1;
+  flex: 0 0 15%;
   border: 2px solid black;
 `;
 
@@ -35,7 +36,7 @@ const MypageContentArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 0 0 85%;
+  flex-grow: 1;
   border: 2px solid black;
 `;
 
