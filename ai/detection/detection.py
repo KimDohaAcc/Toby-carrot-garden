@@ -40,26 +40,26 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
         print("가장 유사한 결과값  __ idx : " + idx + "  inceptionV3[idx] : " + inceptionV3[idx], flush=True)
 
 
-        result = 0
-        if correct_answer == "cup" and prediction[441] < 3:
-            print("컵 유사도 : ", prediction[441], flush=True)
-            result = "100"
-        if correct_answer == "bag" and prediction[414] < 3:
-            print("가방 유사도 : ", prediction[414], flush=True)
-            result = "100"
+        # result = 0
+        # if correct_answer == "cup" and prediction[441] < 3:
+        #     print("컵 유사도 : ", prediction[441], flush=True)
+        #     result = "100"
+        # if correct_answer == "bag" and prediction[414] < 3:
+        #     print("가방 유사도 : ", prediction[414], flush=True)
+        #     result = "100"
 
-        print(result, flush=True)
+        # print(result, flush=True)
 
     except Exception as e:
         print("모델 에러 발생 ", e, flush=True)
 
-    try:
-        print("redis 저장 시작", flush=True)
-        r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
-        r.set(f'quiz_answer_{member_id}_{quiz_id}', result)
-        r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
-        r.close()
-        print("redis 저장 완료", flush=True)
-
-    except Exception as e:
-        print("redis 에러 ", e, flush=True)
+    # try:
+    #     print("redis 저장 시작", flush=True)
+    #     r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0)
+    #     r.set(f'quiz_answer_{member_id}_{quiz_id}', result)
+    #     r.expire(f'quiz_answer_{member_id}_{quiz_id}', 60)
+    #     r.close()
+    #     print("redis 저장 완료", flush=True)
+    #
+    # except Exception as e:
+    #     print("redis 에러 ", e, flush=True)
