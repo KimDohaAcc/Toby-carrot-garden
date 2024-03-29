@@ -172,12 +172,12 @@ const LogoutButton = styled.img`
 `;
 const UserName = styled.div`
   position: absolute;
-  top: 7%; /* 필요에 따라 조정 */
+  top: 6%;
   left: 3%;
   transform: translateX(-50%);
-  color: #ffffff; /* 텍스트 색상 */
-  font-size: 44px; /* 텍스트 크기 */
-  z-index: 1; /* UserButton 이미지 위에 표시되도록 함 */
+  color: #ffffff;
+  font-size: calc(2vw); /* 기본 텍스트 크기를 반응형으로 설정 */
+  z-index: 1;
 `;
 
 const Area4 = styled.div`
