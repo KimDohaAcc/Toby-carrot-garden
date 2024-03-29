@@ -1,9 +1,7 @@
 from kafka import KafkaConsumer
 from json import loads
-from doodle import analyze_object
+from quick_draw import analyze_object
 from s3_reader import s3_image_reader
-
-print("서버.......... 시작.........", flush=True)
 
 bootstrap_servers = ["kafka:9092"]
 
@@ -27,6 +25,6 @@ for message in consumer:
     try:
         print("그림 분석 요청", message, flush=True)
         image_data = s3_image_reader(message.value['imageKey'])
-        analyze_object(image_data, message.value['imageKey'], message.value['memberId'], message.value['quizId'], message.value['correctAnswer'] )
+        analyze_object(image_data, message.value['memberId'], message.value['quizId'], message.value['correctAnswer'] )
     except Exception as e:
         print("그림 분석 실패:", e, flush=True)
