@@ -6,10 +6,10 @@ import numpy as np
 import redis
 
 from inceptionV3 import ref as inceptionV3
-from json import loads
 from dotenv import load_dotenv
 import os
 from pathlib import Path
+import traceback
 
 dotenv_path = Path(".env")
 load_dotenv(dotenv_path=dotenv_path)
@@ -79,6 +79,7 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
         # 모델 구동
         prediction = inceptionV3_model.predict(image)[0]
 
+
         # top 5
         top_5_indices = np.argsort(prediction)[::-1][:5]
 
@@ -94,8 +95,10 @@ def detection(image_data, data_name, member_id, quiz_id, correct_answer, incepti
 
         print(f"결과: {result} {'💖정답' if result == 100 else '🐛오답'}")
 
+
     except Exception as e:
         print("모델 에러 발생 ", e, flush=True)
+        traceback.print_exc()
 
     try:
         print("redis 저장 시작", flush=True)
