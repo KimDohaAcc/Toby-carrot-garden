@@ -173,7 +173,7 @@ const LogoutButton = styled.img`
 const UserName = styled.div`
   position: absolute;
   top: 7%; /* 필요에 따라 조정 */
-  left: 0%;
+  left: 3%;
   transform: translateX(-50%);
   color: #ffffff; /* 텍스트 색상 */
   font-size: 44px; /* 텍스트 크기 */
@@ -213,7 +213,7 @@ const MainPage = () => {
     // 컴포넌트 마운트 시 getUserStorage를 호출하여 사용자 이름 가져오기
     const userInfo = getUserStorage();
     if (userInfo && userInfo.name) {
-      setUserName(`${userInfo.name}`);
+      setUserName(`${userInfo.name}` + " ");
     }
   }, []);
   const handleLogout = () => {

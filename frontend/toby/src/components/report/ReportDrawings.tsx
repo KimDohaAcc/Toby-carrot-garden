@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getDrawingsQuiz } from "../../apis/analysisApi";
 import { getUserStorage } from "../../apis/userStorageApi";
+import { format } from "date-fns";
 const userStorage = getUserStorage();
 const accessToken = userStorage.accessToken;
 
@@ -114,10 +115,16 @@ const ReportDrawings = () => {
     const fetchDrawingsQuiz = async () => {
       try {
         const response = await getDrawingsQuiz();
-        // API 호출 결과 검증 및 상태 업데이트
         if (response && Array.isArray(response.result)) {
-          setDrawingsList(response.result);
-          console.log("API로부터 그림 퀴즈 데이터를 성공적으로 받았습니다.");
+          // 날짜 형식 변환 적용
+          const updatedList = response.result.map((drawing) => ({
+            ...drawing,
+            createTime: format(
+              new Date(drawing.createTime),
+              "yy년 M월 d일 H시 m분"
+            ),
+          }));
+          setDrawingsList(updatedList);
         } else {
           console.log("응답 데이터 형식이 예상과 다릅니다:", response);
         }
@@ -135,14 +142,16 @@ const ReportDrawings = () => {
         <DrawingItem key={index}>
           <Image src={drawing.imageUrl} alt={`Drawing ${index}`} />
           <InfoContainer>
-            <div>
-              <strong>정답:</strong> {drawing.correctAnswer}
+            <div style={{ fontSize: "70px" }}>
+              <strong>{drawing.correctAnswer}</strong>
             </div>
             <div>
-              <strong>점수:</strong> {drawing.score}
+              <strong style={{ fontSize: "40px" }}>
+                일치율&nbsp;&nbsp;{drawing.score}&nbsp;%
+              </strong>
             </div>
-            <div>
-              <strong>생성 시간:</strong> {drawing.createTime}
+            <div style={{ fontSize: "40px" }}>
+              <strong>{drawing.createTime}</strong>
             </div>
           </InfoContainer>
         </DrawingItem>
