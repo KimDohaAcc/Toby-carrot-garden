@@ -153,6 +153,14 @@ const ExplainImage = styled.img`
   display: flex;
   position: absolute;
 `;
+const Taehun = styled.h1`
+  line-height: 60%;
+  font-size: 70px;
+`;
+const Taehun2 = styled.h2`
+  line-height: 60%;
+  font-size: 40px;
+`;
 const Report = () => {
   const navigate = useNavigate();
   const [contentText, setContentText] = useState<React.ReactNode>("");
@@ -171,10 +179,10 @@ const Report = () => {
       case "analysis":
         setContentText(
           <>
-            <h1 style={{ fontSize: "60px" }}>분석</h1>
-            <h2 style={{ fontSize: "35px" }}>
+            <Taehun>분석</Taehun>
+            <Taehun2>
               우리 아이가 풀었던 문제에 대한 통계 자료를 볼 수 있어요!
-            </h2>
+            </Taehun2>
           </>
         );
         setShowBoxes(true);
@@ -182,7 +190,11 @@ const Report = () => {
         break;
       case "history":
         setContentText(
-          "히스토리: 우리 아이가 풀었던 문제를 확인 할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점 해주세요!"
+          <>
+            <Taehun> 히스토리</Taehun>
+            <Taehun2>우리 아이가 풀었던 문제를 확인할 수 있어요!</Taehun2>
+            <Taehun2>채점이 잘못되었다면 부모님이 다시 채점해주세요!</Taehun2>
+          </>
         );
         setShowBoxes(false);
         setShowHistory(true);
