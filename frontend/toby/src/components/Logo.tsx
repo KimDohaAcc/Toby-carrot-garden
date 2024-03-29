@@ -10,11 +10,13 @@ const LogoWrapper = styled.div`
   border: 2px solid cyan;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 `;
 
 const LogoImg = styled.img`
   width: 100%;
   height: 100%;
+  z-index: 5;
 `;
 
 const Logo = () => {

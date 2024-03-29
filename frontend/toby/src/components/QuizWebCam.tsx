@@ -62,7 +62,7 @@ const QuizWebCam = ({ quizId }) => {
 
     const formData = new FormData();
     formData.append("analysisImage", file);
-    formData.append("quizId", quizId.toString());
+    formData.append("quizId", quizId);
 
     //   submitQuiz(formData)
     //     .then((response) => {
@@ -106,7 +106,7 @@ const QuizWebCam = ({ quizId }) => {
         } catch (error) {
           console.error("Error fetching quiz answer", error);
           clearInterval(interval); // 에러 발생 시 폴링 중단
-          clearTimeout(timeout); // 10초 타임아웃 해제
+          clearTimeout(timeout); // 10초c 타임아웃 해제
         }
       }, 1000);
 

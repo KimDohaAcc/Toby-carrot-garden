@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,9 @@ const ReportContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  background-image: url("Image/common/startImage.png");
+  position: relative;
+  background-size: cover;
 `;
 
 //  카테고리와 내용을 나누기 위한 컨테이너
@@ -28,28 +31,23 @@ const ReportCategory = styled.div`
     "category3"
     "category4";
   border: 2px solid black;
+  flex: 0 0 20%;
 `;
 
 const StyledButton = styled.div`
-  padding: 8px 16px;
-  margin: 0 5px; // Adds a little space between the buttons
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5%;
-  width: 50%;
-  height: 50%;
-  justify-content: center;
-  align-items: center;
+  /* padding: 8px 16px; */
+  margin: 1% 1% 1% 1%; // Adds a little space between the buttons
+
+  display: flex;
   position: absolute;
-
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
+  /* width: 80%; // 버튼의 폭 고정
+  height: 60%; // 버튼의 높이 고정 */
 `;
-
+const Image = styled.img`
+  width: 70%; // 이미지 크기 조정
+  height: 70%;
+  margin-right: 2%;
+`;
 const Category1 = styled.div`
   grid-area: category1;
   display: flex;
@@ -125,39 +123,95 @@ const ContentElse = styled.div`
   flex-direction: column;
 `;
 const ContentGraph = styled.div`
-  flex: 0 0 60%;
+  flex: 0 0 70%;
   /* flex-grow: 3; */
   border: 2px solid green;
+  display: flex;
+  flex-direction: column;
+`;
+const ReportGraphContentStyled = styled.div`
+  flex-grow: 1; // 가능한 모든 공간을 차지
+`;
+const ContentGraphExplain = styled.div`
+  flex: 0 0 15%;
+  border: 3px solid pink;
 `;
 const ContentExplain = styled.div`
-  flex: 0 0 40%;
-  flex-grow: 2;
+  flex: 0 0 30%;
+  flex-grow: 3;
   border: 2px solid yellow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+const GraphIndex = styled.img`
+  display: flex;
+  position: absolute;
+`;
+const ExplainImage = styled.img`
+  display: flex;
+  position: absolute;
 `;
 const Report = () => {
   const navigate = useNavigate();
-  const [contentText, setContentText] = useState("");
+  const [contentText, setContentText] = useState<React.ReactNode>("");
   const [showBoxes, setShowBoxes] = useState(false);
-  const [showHistory, setShowHistory] = useState(false); // 상태 업데이트 함수명 수정
+  const [showHistory, setShowHistory] = useState(false);
+  const [activeButton, setActiveButton] = useState("");
+  // 버튼 클릭 핸들러
 
-  const handleAnalysisClick = () => {
-    setContentText(
-      "분석: 우리 아이가 풀었던 문제에 대한 통계 자료를 볼 수 있어요!"
-    );
-    setShowBoxes(true);
-    setShowHistory(false); // 다른 버튼을 클릭할 때 showHistory를 false로 설정
+  useEffect(() => {
+    // 초기 분석 탭 설정
+    handleButtonClick("analysis");
+  }, []);
+  const handleButtonClick = (buttonName) => {
+    setActiveButton(buttonName); // 클릭된 버튼 이름으로 상태 업데이트
+    switch (buttonName) {
+      case "analysis":
+        setContentText(
+          <>
+            <h1 style={{ fontSize: "60px" }}>분석</h1>
+            <h2 style={{ fontSize: "35px" }}>
+              우리 아이가 풀었던 문제에 대한 통계 자료를 볼 수 있어요!
+            </h2>
+          </>
+        );
+        setShowBoxes(true);
+        setShowHistory(false);
+        break;
+      case "history":
+        setContentText(
+          "히스토리: 우리 아이가 풀었던 문제를 확인 할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점 해주세요!"
+        );
+        setShowBoxes(false);
+        setShowHistory(true);
+        break;
+      case "mypage":
+        navigate("/mypage");
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleHistoryClick = () => {
-    setContentText(
-      "히스토리: 우리 아이가 풀었던 문제를 확인 할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점 해주세요!"
-    );
-    setShowBoxes(false);
-    setShowHistory(true); // 히스토리 버튼 클릭 시 true로 설정
-  };
-
-  const handleMypageClick = () => {
-    navigate("/mypage");
+  // 버튼 이미지 선택 함수
+  const getButtonImageSrc = (buttonName) => {
+    const buttonImages = {
+      analysis:
+        activeButton === "analysis"
+          ? "/Image/button/analysisButtonOn.png"
+          : "/Image/button/analysisButtonOff.png",
+      history:
+        activeButton === "history"
+          ? "/Image/button/historyButtonOn.png"
+          : "/Image/button/historyButtonOff.png",
+      mypage:
+        activeButton === "mypage"
+          ? "/Image/button/mypageButtonOn.png"
+          : "/Image/button/mypageButtonOff.png",
+    };
+    return buttonImages[buttonName];
   };
   return (
     <>
@@ -165,33 +219,21 @@ const Report = () => {
       <ReportContainer>
         <ReportCategory>
           <Category1>
-            <StyledButton onClick={handleAnalysisClick}>
-              <img
-                src="/Image/report/reportAnalysis.png"
-                alt="분석아이콘"
-                style={{ width: "50px", height: "50px" }}
-              />
-              분석
+            <StyledButton onClick={() => handleButtonClick("analysis")}>
+              <Image src={getButtonImageSrc("analysis")} alt="분석 아이콘" />
             </StyledButton>
           </Category1>
           <Category2>
-            <StyledButton onClick={handleHistoryClick}>
-              <img
-                src="/Image/report/reportHistory.png"
-                alt="히스토리아이콘"
-                style={{ width: "50px", height: "50px" }}
-              />
-              히스토리
+            <StyledButton onClick={() => handleButtonClick("history")}>
+              <Image src={getButtonImageSrc("history")} alt="히스토리 아이콘" />
             </StyledButton>
           </Category2>
           <Category3>
-            <StyledButton onClick={handleMypageClick}>
-              <img
-                src="/Image/report/reportCarrot.png"
-                alt="히스토리아이콘"
-                style={{ width: "50px", height: "50px" }}
+            <StyledButton onClick={() => handleButtonClick("mypage")}>
+              <Image
+                src={getButtonImageSrc("mypage")}
+                alt="마이페이지 아이콘"
               />
-              마이페이지
             </StyledButton>
           </Category3>
         </ReportCategory>
@@ -202,9 +244,16 @@ const Report = () => {
               <>
                 <ContentElse>
                   <ContentGraph>
-                    <ReportGraphContent />
+                    <ReportGraphContentStyled>
+                      <ReportGraphContent />
+                    </ReportGraphContentStyled>
+                    <ContentGraphExplain>
+                      <GraphIndex src="/Image/report/graphIndex.png" />
+                    </ContentGraphExplain>
                   </ContentGraph>
-                  <ContentExplain></ContentExplain>
+                  <ContentExplain>
+                    <ExplainImage src="/Image/report/wordExplain.png" />
+                  </ContentExplain>
                 </ContentElse>
                 <ContentExpress>
                   <ReportDrawings></ReportDrawings>

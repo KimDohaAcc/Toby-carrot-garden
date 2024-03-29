@@ -8,7 +8,7 @@ const accessToken = userStorage.accessToken;
 // 더미 데이터 정의
 const initialData = [
   {
-    항목: "감성",
+    항목: "감정",
     우리애평균: 50,
     나이평균: 40,
     총평균: 50,
@@ -35,7 +35,7 @@ const MyResponsiveBar = () => {
           response.result.list
         ) {
           const transformedData = response.result.list.map((item) => ({
-            항목: item.quizType === "feelings" ? "감성" : "인지",
+            항목: item.quizType === "FEELINGS" ? "감정" : "인지",
             우리애평균: item.correctRateMe,
             나이평균: item.correctRateAge,
             총평균: item.correctRateAll,
@@ -111,7 +111,7 @@ const MyResponsiveBar = () => {
           axis: {
             ticks: {
               text: {
-                fontSize: 20, // 축 틱 레이블의 글자 크기 조정
+                fontSize: 30, // 축 틱 레이블의 글자 크기 조정
               },
             },
             legend: {
@@ -127,7 +127,7 @@ const MyResponsiveBar = () => {
           },
           labels: {
             text: {
-              fontSize: 20, // 막대 내부 레이블의 글자 크기 조정
+              fontSize: 25, // 막대 내부 레이블의 글자 크기 조정
             },
           },
         }}
