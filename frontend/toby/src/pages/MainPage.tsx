@@ -174,6 +174,7 @@ const UserName = styled.div`
   position: absolute;
   top: 6%;
   left: 3%;
+  width: 150%;
   transform: translateX(-50%);
   color: #ffffff;
   font-size: calc(2vw); /* 기본 텍스트 크기를 반응형으로 설정 */
@@ -296,7 +297,7 @@ const MainPage = () => {
         <Area4>
           {/* <div> {userName && <h1>{userName}</h1>}</div> */}
           <UserArea>
-            <UserName>{userName}어린이</UserName>
+            <UserName>{userName} 어린이</UserName>
             <UserButton src="\Image\button\nameBackground.png" />
 
             <LogoutButton
