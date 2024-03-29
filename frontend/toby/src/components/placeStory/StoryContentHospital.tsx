@@ -17,10 +17,14 @@ const StoryContentImageArea = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid black;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
 const StoryContentImage = styled.img`
-  height: 95%;
+  height: 100%;
+  width: auto;
+  display: block;
   border: 1px solid black;
 `;
 
@@ -28,7 +32,7 @@ const StoryContentText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 4rem;
+  font-size: 3rem;
   border: 1px solid black;
 `;
 

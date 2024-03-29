@@ -23,9 +23,9 @@ const BackgroundContainer = styled.div`
   height: 100vh;
   width: 100vw;
   z-index: -5;
-  background-size: cover;
+  background-size: 100% 100%;
   background-image: url("/Image/common/backgroundImage.png");
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 function App() {

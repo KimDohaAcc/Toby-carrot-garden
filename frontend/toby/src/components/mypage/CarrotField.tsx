@@ -77,6 +77,8 @@ const NoCarrotArea = styled.div`
 const CarrotFieldContent = styled.div`
   position: relative;
   background-image: url("Image/album/당근밭배경.png");
+  background-size: cover;
+  border-radius: 30px;
   display: grid;
   grid-template-areas:
     ". . . . ."
@@ -90,7 +92,7 @@ const ScholCarrot = styled.div`
   grid-area: school;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
 `;
@@ -99,7 +101,7 @@ const HospitalCarrot = styled.div`
   grid-area: hospital;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
 `;
@@ -108,7 +110,7 @@ const MartCarrot = styled.div`
   grid-area: mart;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
 `;
@@ -117,7 +119,7 @@ const PoliceCarrot = styled.div`
   grid-area: police;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
 `;
@@ -137,6 +139,10 @@ const CarrotToby = styled.img`
 
 const CarrotCount = styled.span`
   color: white;
+`;
+
+const CarrotSign = styled.img`
+  position: relative;
 `;
 
 //데이터 형식 예시
@@ -265,33 +271,29 @@ const CarrotField = () => {
       ) : (
         <CarrotFieldContent>
           <ScholCarrot>
-            학교당근
             <CarrotGradeImage carrotGrade={carrotList[0].carrotGrade} />
-            <img src="abc" alt="school" />
+            <CarrotSign src="Image/carrot/학교팻말.png" alt="school" />
             <CarrotCount>
               {carrotList[0].carrotCount} / {carrotList[0].gradeMax}
             </CarrotCount>
           </ScholCarrot>
           <HospitalCarrot>
-            병원 당근
             <CarrotGradeImage carrotGrade={carrotList[1].carrotGrade} />
-            <img src="abc" alt="hospital" />
+            <CarrotSign src="Image/carrot/병원팻말.png" alt="hospital" />
             <CarrotCount>
               {carrotList[1].carrotCount} / {carrotList[1].gradeMax}
             </CarrotCount>
           </HospitalCarrot>
           <MartCarrot>
-            상점 당근
             <CarrotGradeImage carrotGrade={carrotList[2].carrotGrade} />
-            <img src="abc" alt="mart" />
+            <CarrotSign src="Image/carrot/마트팻말.png" alt="mart" />
             <CarrotCount>
               {carrotList[2].carrotCount} / {carrotList[2].gradeMax}
             </CarrotCount>
           </MartCarrot>
           <PoliceCarrot>
-            경찰서 당근
             <CarrotGradeImage carrotGrade={carrotList[3].carrotGrade} />
-            <img src="abc" alt="police" />
+            <CarrotSign src="Image/carrot/경찰서팻말.png" alt="police" />
             <CarrotCount>
               {carrotList[3].carrotCount} / {carrotList[3].gradeMax}
             </CarrotCount>

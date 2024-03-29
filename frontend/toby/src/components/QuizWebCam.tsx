@@ -143,6 +143,7 @@ const QuizWebCam = ({ quizId }) => {
       ) : (
         <>
           <Webcam
+            style={{ width: "100%", height: "80%" }}
             audio={false}
             ref={webcamRef}
             screenshotFormat="image/jpeg"

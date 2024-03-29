@@ -77,7 +77,13 @@ const StoryQuizHospitial = ({ index }: StoryQuizProps) => {
           />
         );
       case "FEELINGS":
-        return <StoryQuizEmotions imageUrl={imageUrl} content={content} />;
+        return (
+          <StoryQuizEmotions
+            imageUrl={imageUrl}
+            content={content}
+            quizId={quizId}
+          />
+        );
       case "EMERGENCY":
         return <StoryEmergency />;
       default:

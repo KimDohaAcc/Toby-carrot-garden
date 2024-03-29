@@ -173,11 +173,18 @@ const StoryContentArea2 = styled.div`
   top: 7%;
 `;
 
+const CloseBtnArea = styled.div`
+  grid-area: closeBtn;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border: 1px solid black;
+`;
+
 const CloseBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center; /* 버튼 내에서 텍스트를 수직 가운데 정렬 */
-  grid-area: closeBtn;
   border-radius: 10%;
   background-color: #ff9d9d;
   color: #ff0000;
@@ -207,6 +214,7 @@ const NextBtn = styled.div`
 
 const Content = styled.div`
   grid-area: conten;
+  display: flex;
   border: 1px solid black;
 `;
 
@@ -301,13 +309,15 @@ const Hospital = () => {
         <StoryContentArea1>
           <StoryContentArea2>
             <Content>{renderSceneContent()}</Content>
-            <CloseBtn
-              onClick={() => {
-                navigate("/main");
-              }}
-            >
-              ✘
-            </CloseBtn>
+            <CloseBtnArea>
+              <CloseBtn
+                onClick={() => {
+                  navigate("/main");
+                }}
+              >
+                ✘
+              </CloseBtn>
+            </CloseBtnArea>
 
             {sceneType === "CLEAR" ? (
               <NextBtn>

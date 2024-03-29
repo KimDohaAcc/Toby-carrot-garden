@@ -66,19 +66,27 @@ const CloseBtn = styled.button`
   cursor: pointer;
 `;
 
-const StoryTitle = styled.h1`
+const StoryTitle = styled.p`
   margin: 5px;
+  font-size: 2.7rem;
   flex: 2; /* 5:2:1 비율 중 두 번째 행 */
   overflow: hidden;
 `;
 
-const StoryImage = styled.img`
-  width: 100%;
+const StoryImageArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   flex: 5; /* 5:2:1 비율 중 첫 번째 행 */
 `;
 
+const StoryImage = styled.img`
+  width: 100%;
+`;
+
 const AgeRecommendation = styled.p`
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin: 5px;
   background-color: #fdffb6;
   flex: 1; /* 5:2:1 비율 중 세 번째 행 */
@@ -139,10 +147,12 @@ const HospitalStoryListModal = ({ onClose }) => {
                 )
               }
             >
-              <StoryImage src={story.storyImageUrl} alt={story.title} />
+              <StoryImageArea>
+                <StoryImage src={story.storyImageUrl} alt={story.title} />
+              </StoryImageArea>
               <StoryTitle>
                 {story.title.length > 8
-                  ? story.title.slice(0, 5) + "..."
+                  ? story.title.slice(0, 6) + "..."
                   : story.title}
               </StoryTitle>
               <AgeRecommendation>

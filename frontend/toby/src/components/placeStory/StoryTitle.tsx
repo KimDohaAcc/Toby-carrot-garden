@@ -13,20 +13,28 @@ const StoryTitleText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 7rem;
+  font-size: 5rem;
   font-weight: bold;
   border: 1px solid black;
 `;
 
 const StoryTitleImageArea = styled.div`
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
   border: 1px solid black;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
 const StoryTitleImage = styled.img`
-  height: 95%;
+  width: auto;
+  height: 100%;
+
+  display: block;
   border: 1px solid black;
 `;
 

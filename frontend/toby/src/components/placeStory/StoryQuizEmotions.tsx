@@ -6,7 +6,7 @@ const StoryQuizEmotionsContainer = styled.div`
   display: grid;
   grid-template-areas:
     "title title"
-    "image camera";
+    "imaage camera";
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 5fr;
   height: 100%;
@@ -22,12 +22,15 @@ const StoryQuizEmotionsTitleArea = styled.div`
 `;
 
 const StoryQuizEmotionsImageArea = styled.div`
-  grid-area: image;
+  grid-area: imaage;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
   align-items: center;
   border: 1px solid black;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
 const StoryQuizEmotionsImage = styled.img`
@@ -50,37 +53,50 @@ const CameraArea = styled.div`
   flex-direction: column;
 `;
 
-// const CameraBtnArea = styled.div`
-//   flex: 0 0 25%;
-// `;
+const ImageArea = styled.div`
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  flex: 0 0 1;
+  text-align: center;
+`;
 
-const CameraBtn = styled.button`
-  color: #b65050;
+const ConteentArea = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  flex: 0 0 12.5%;
+`;
+
+const QuizImage = styled.img`
+  height: 100%;
+  width: auto;
+  position: relative;
+  display: block;
+  border: 1px solid black;
+  margin: 0 auto;
 `;
 
 const StoryQuizEmotions = ({ imageUrl, quizId, content }) => {
   return (
     <StoryQuizEmotionsContainer>
       <StoryQuizEmotionsTitleArea>
-        <h1>StoryQuizDetections</h1>
+        <h1>StoryQuizEmotions</h1>
       </StoryQuizEmotionsTitleArea>
       <StoryQuizEmotionsImageArea>
-        <StoryQuizEmotionsImage src={imageUrl} alt="image" />
-        <div>{content}</div>
+        <ImageArea>
+          <QuizImage src={imageUrl} alt="image" />
+        </ImageArea>
+        <ConteentArea>{content}</ConteentArea>
       </StoryQuizEmotionsImageArea>
       <StoryQuizEmotionCanmeraArea>
         <CameraArea>
           <QuizWebCam quizId={quizId} />
         </CameraArea>
-        {/* <CameraBtnArea>
-          <CameraBtn
-            onClick={() => {
-              handleTakePicture();
-            }}
-          >
-            찰칵 이미지
-          </CameraBtn>
-        </CameraBtnArea> */}
       </StoryQuizEmotionCanmeraArea>
     </StoryQuizEmotionsContainer>
   );
