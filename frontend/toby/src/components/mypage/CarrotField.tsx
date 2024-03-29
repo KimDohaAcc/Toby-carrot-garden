@@ -84,15 +84,21 @@ const CarrotFieldContent = styled.div`
     ". . . . ."
     ". mart . police ."
     ". . . . .";
+  border-radius: 30px;
+  height: 90%;
 `;
 
-const ScholCarrot = styled.div`
+
+
+const SchoolCarrot = styled.div`
   grid-area: school;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+  width: 100%;
+  height: 90%;
 `;
 
 const HospitalCarrot = styled.div`
@@ -102,6 +108,8 @@ const HospitalCarrot = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  width: 100%;
+  height: 90%;
 `;
 
 const MartCarrot = styled.div`
@@ -111,6 +119,8 @@ const MartCarrot = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  width: 100%;
+  height: 90%;
 `;
 
 const PoliceCarrot = styled.div`
@@ -120,12 +130,15 @@ const PoliceCarrot = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  width: 100%;
+  height: 90%;
 `;
 
 const ShovelImage = styled.img`
   position: absolute;
   bottom: 0;
   right: 0;
+  width: 20%;
 `;
 
 const CarrotToby = styled.img`
@@ -225,7 +238,7 @@ const CarrotGradeImage = ({ carrotGrade }) => {
       ImageAlt = "policemaster";
       break;
   }
-  return <img src={ImageURL} alt={ImageAlt} />;
+  return <img src={ImageURL} alt={ImageAlt} width="80%" height="80%"/>;
 };
 
 const CarrotField = () => {
@@ -264,18 +277,18 @@ const CarrotField = () => {
         </NoCarrotArea>
       ) : (
         <CarrotFieldContent>
-          <ScholCarrot>
+          <SchoolCarrot>
             학교당근
             <CarrotGradeImage carrotGrade={carrotList[0].carrotGrade} />
-            <img src="abc" alt="school" />
+            <img src="Image/signpost/school.png" alt="school"  width="30%"/>
             <CarrotCount>
               {carrotList[0].carrotCount} / {carrotList[0].gradeMax}
             </CarrotCount>
-          </ScholCarrot>
+          </SchoolCarrot>
           <HospitalCarrot>
             병원 당근
             <CarrotGradeImage carrotGrade={carrotList[1].carrotGrade} />
-            <img src="abc" alt="hospital" />
+            <img src="Image/signpost/hospital.png" alt="hospital"  width="30%"/>
             <CarrotCount>
               {carrotList[1].carrotCount} / {carrotList[1].gradeMax}
             </CarrotCount>
@@ -283,7 +296,7 @@ const CarrotField = () => {
           <MartCarrot>
             상점 당근
             <CarrotGradeImage carrotGrade={carrotList[2].carrotGrade} />
-            <img src="abc" alt="mart" />
+            <img src="Image/signpost/mart.png" alt="mart"  width="30%"/>
             <CarrotCount>
               {carrotList[2].carrotCount} / {carrotList[2].gradeMax}
             </CarrotCount>
@@ -291,12 +304,12 @@ const CarrotField = () => {
           <PoliceCarrot>
             경찰서 당근
             <CarrotGradeImage carrotGrade={carrotList[3].carrotGrade} />
-            <img src="abc" alt="police" />
+            <img src="Image/signpost/police.png" alt="police"  width="30%"/>
             <CarrotCount>
               {carrotList[3].carrotCount} / {carrotList[3].gradeMax}
             </CarrotCount>
           </PoliceCarrot>
-          <ShovelImage src="ads" alt="shovel" />
+          <ShovelImage src="Image/common/shovel.png" alt="shovel"/>
         </CarrotFieldContent>
       )}
     </>
