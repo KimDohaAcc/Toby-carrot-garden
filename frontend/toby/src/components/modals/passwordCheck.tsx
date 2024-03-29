@@ -16,21 +16,28 @@ const ModalBackdrop = styled.div`
 `;
 
 const ModalBox = styled.div`
-  padding: 20px;
+  padding: 5% 10%;
   background-color: #fff;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  align-items: center; /* 수직 정렬을 위해 추가 */
   img {
     width: 100%;
     height: auto;
   }
 `;
 
+const ButtonGroup = styled.div`
+  margin-top: 20%;
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+  width: 100%;
+`;
+
 const CloseButton = styled.button`
-  align-self: center;
-  padding: 10px 20px;
-  margin-top: 20px;
+  padding: 6% 11%;
   background-color: #007bff;
   color: white;
   border: none;
@@ -43,9 +50,7 @@ const CloseButton = styled.button`
 `;
 
 const ConfirmButton = styled.button`
-  align-self: center;
-  padding: 10px 20px;
-  margin-top: 10px;
+  padding: 6% 11%;
   background-color: #28a745;
   color: white;
   border: none;
@@ -59,7 +64,7 @@ const ConfirmButton = styled.button`
 
 const PasswordInput = styled.input`
   margin-top: 20px;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
@@ -94,8 +99,10 @@ const ConstructionModal = ({ onClose }) => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="비밀번호"
         />
+         <ButtonGroup> {/* 버튼 그룹으로 감싸기 */}
         <ConfirmButton onClick={handleConfirm}>확인</ConfirmButton>
         <CloseButton onClick={onClose}>닫기</CloseButton>
+        </ButtonGroup>
       </ModalBox>
     </ModalBackdrop>
   );
