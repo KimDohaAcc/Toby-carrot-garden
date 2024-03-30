@@ -14,6 +14,7 @@ const ReportContainer = styled.div`
   background-image: url("Image/common/startImage.png");
   position: relative;
   background-size: cover;
+  z-index: 1;
 `;
 
 //  카테고리와 내용을 나누기 위한 컨테이너
