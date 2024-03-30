@@ -35,9 +35,19 @@ const RecoreContentContainer = styled.div`
   width: 100%;
   max-height: 100%; // 컨테이너의 최대 높이를 100%로 설정하여 내부 내용이 넘치면 스크롤바 생성
   border: 5px solid black;
+  flex-direction: row;
+  overflow-y: auto; // 내용이 많아지면 스크롤바 생성
+  padding: 10px;
+`;
+const RecoreContentContainer2 = styled.div`
+  display: flex;
+  width: 100%;
+  max-height: 100%; // 컨테이너의 최대 높이를 100%로 설정하여 내부 내용이 넘치면 스크롤바 생성
+  border: 5px solid black;
   flex-direction: column;
   overflow-y: auto; // 내용이 많아지면 스크롤바 생성
   padding: 10px;
+  flex: 0 0 50%;
 `;
 const RecoreButtonContainer = styled.div`
   flex: 0 0 10%;
@@ -55,7 +65,7 @@ const RecoreBoxTitle = styled.div`
   height: 10%;
   width: 100%;
 
-  border: 2px solid yellow;
+  border: 2px solid pink;
 `;
 const RecoreBoxImage = styled.div`
   width: 100%;
@@ -176,83 +186,96 @@ const dummyData: QuizItem[] = [
 ];
 
 const RecoreContent = () => {
-  const [category, setCategory] = useState<string>("감정평가입니다.");
-  const [quizList, setQuizList] = useState<QuizItem[]>(dummyData); // 초기 상태를 dummyData로 설정
+  const [emotionQuizList, setEmotionQuizList] = useState([]);
+  const [objectQuizList, setObjectQuizList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentQuizId, setCurrentQuizId] = useState<number | null>(null);
-  const loadEmotionData = async () => {
-    setCategory("감정평가입니다.");
-    try {
-      const response = await getEmotionList();
-      if (response && response.status === 200) {
-        setQuizList(response.result);
-      } else {
-        console.log("감정 데이터 조회 실패");
-      }
-    } catch (error) {
-      console.error("Error fetching emotion data", error);
-    }
-  };
 
-  // 사물 데이터 로딩
-  const loadObjectData = async () => {
-    setCategory("사물평가입니다.");
-    try {
-      const response = await getObjectList();
-      if (response && response.status === 200) {
-        setQuizList(response.result); // 응답 데이터로 상태 업데이트
-      } else {
-        console.log("사물 데이터 조회 실패");
+  useEffect(() => {
+    const fetchQuizData = async () => {
+      try {
+        const emotionResponse = await getEmotionList();
+        const objectResponse = await getObjectList();
+        if (emotionResponse.status === 200) {
+          setEmotionQuizList(emotionResponse.result);
+        }
+        if (objectResponse.status === 200) {
+          setObjectQuizList(objectResponse.result);
+        }
+      } catch (error) {
+        console.error("Error fetching quiz data", error);
       }
-    } catch (error) {
-      console.error("Error fetching object data", error);
-    }
-  };
+    };
 
-  // 재채점 모달 열기
+    fetchQuizData();
+  }, []);
+
   const handleOpenModal = (quizId: number) => {
     setCurrentQuizId(quizId);
     setIsModalOpen(true);
   };
 
-  // 재채점 모달 닫기
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setCurrentQuizId(null); // 모달 닫을 때 현재 퀴즈 ID 리셋
+    setCurrentQuizId(null);
   };
 
   return (
     <>
       <RecoreContentContainer>
-        <RecoreButtonContainer>
-          <Button onClick={loadEmotionData}>감정</Button>
-          <Button onClick={loadObjectData}>사물</Button>
-        </RecoreButtonContainer>
-        <RecoreBoxTitle>{category}</RecoreBoxTitle>
-        {quizList.map((quiz, index) => (
-          <RecoreBox key={index}>
-            <RecoreBoxImage>
-              <img src={quiz.imageUrl} alt={`Quiz ${index}`} />
-            </RecoreBoxImage>
-            <RecoreBoxAnswer>
-              <RecoreBoxAnswerText>
-                정답: {quiz.correctAnswer}
-              </RecoreBoxAnswerText>
-              <RecoreBoxAnswerCheck>점수: {quiz.score}</RecoreBoxAnswerCheck>
-            </RecoreBoxAnswer>
-            <RecoreBoxRescore>
-              <RecoreBoxRescoreDate>
-                생성 시간: {quiz.createTime}
-              </RecoreBoxRescoreDate>
-              <RecoreBoxRescoreButton>
-                <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
-                  재채점
-                </Button>
-              </RecoreBoxRescoreButton>
-            </RecoreBoxRescore>
-          </RecoreBox>
-        ))}
+        {/* Emotion Quizzes */}
+        <RecoreContentContainer2>
+          <RecoreButtonContainer>감정</RecoreButtonContainer>
+          {emotionQuizList.map((quiz, index) => (
+            <RecoreBox key={quiz.memberQuizId}>
+              <RecoreBoxImage>
+                <img src={quiz.imageUrl} alt={`Quiz ${quiz.memberQuizId}`} />
+              </RecoreBoxImage>
+              <RecoreBoxAnswer>
+                <RecoreBoxAnswerText>
+                  정답: {quiz.correctAnswer}
+                </RecoreBoxAnswerText>
+                <RecoreBoxAnswerCheck>점수: {quiz.score}</RecoreBoxAnswerCheck>
+              </RecoreBoxAnswer>
+              <RecoreBoxRescore>
+                <RecoreBoxRescoreDate>{quiz.createTime}</RecoreBoxRescoreDate>
+                <RecoreBoxRescoreButton>
+                  <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
+                    재채점
+                  </Button>
+                </RecoreBoxRescoreButton>
+              </RecoreBoxRescore>
+            </RecoreBox>
+          ))}
+        </RecoreContentContainer2>
+
+        {/* Object Quizzes */}
+        <RecoreContentContainer2>
+          <RecoreButtonContainer>감정</RecoreButtonContainer>
+          {objectQuizList.map((quiz, index) => (
+            <RecoreBox key={quiz.memberQuizId}>
+              <RecoreBoxImage>
+                <img src={quiz.imageUrl} alt={`Quiz ${quiz.memberQuizId}`} />
+              </RecoreBoxImage>
+              <RecoreBoxAnswer>
+                <RecoreBoxAnswerText>
+                  정답: {quiz.correctAnswer}
+                </RecoreBoxAnswerText>
+                <RecoreBoxAnswerCheck>점수: {quiz.score}</RecoreBoxAnswerCheck>
+              </RecoreBoxAnswer>
+              <RecoreBoxRescore>
+                <RecoreBoxRescoreDate>{quiz.createTime}</RecoreBoxRescoreDate>
+                <RecoreBoxRescoreButton>
+                  <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
+                    재채점
+                  </Button>
+                </RecoreBoxRescoreButton>
+              </RecoreBoxRescore>
+            </RecoreBox>
+          ))}
+        </RecoreContentContainer2>
       </RecoreContentContainer>
+
       {isModalOpen && (
         <RescoreModal
           isOpen={isModalOpen}
