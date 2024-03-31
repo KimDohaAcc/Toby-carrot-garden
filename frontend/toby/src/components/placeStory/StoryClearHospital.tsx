@@ -13,11 +13,25 @@ const ClearContainer = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
 const StoryClearContent = styled.div`
   font-size: 3rem;
   text-align: center;
+`;
+
+const ClearWebcamArea = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
 type StoryClearProps = {
@@ -48,7 +62,9 @@ const StoryClear = ({ index }: StoryClearProps) => {
   return (
     <ClearContainer>
       <StoryClearContent>{sceneList[index].content}</StoryClearContent>
-      <ClearWebcam placeId={placeId} />
+      <ClearWebcamArea>
+        <ClearWebcam placeId={placeId} />
+      </ClearWebcamArea>
     </ClearContainer>
   );
 };

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useCallback } from "react";
-// import styled from "styled-components";
 import Webcam, { WebcamRef } from "react-webcam";
 
 import { postClearImage } from "../apis/clearApi";
