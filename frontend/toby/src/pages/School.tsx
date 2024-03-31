@@ -63,19 +63,19 @@ const CloseBtn = styled.button`
   justify-content: center;
   align-items: center; /* 버튼 내에서 텍스트를 수직 가운데 정렬 */
   grid-area: closeBtn;
-  border-radius: 10%;
-  background-color: #ff9d9d;
-  color: #ff0000;
+  border: 1px solid black;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 0;
-  margin: 0;
+  padding: 10px;
+  margin: 10px;
   transition: background-color 0.3s ease; /* 마우스 호버 시 배경색이 부드럽게 변경되도록 트랜지션 추가. */
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: bold;
   box-sizing: border-box;
 
   &:hover {
-    background-color: #ffffff;
+    background-color: rgba(255, 185, 185, 0.5);
+    border: rgba(255, 185, 185, 0.5) solid 1px;
   }
 `;
 
@@ -198,14 +198,7 @@ const School = () => {
         <StoryContentArea1>
           <StoryContentArea2>
             <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
-            <CloseBtn
-              onClick={() => {
-                navigate("/main");
-              }}
-            >
-              ✘
-            </CloseBtn>
-
+            <CloseBtn onClick={() => {navigate("/main");}}>❌</CloseBtn>
             {sceneType === "CLEAR" ? (
               <NextBtn>
                 <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
