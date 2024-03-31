@@ -24,7 +24,7 @@ const ModalContainer = styled.div`
   transform: translate(-50%, -50%);
   border-radius: 20px;
   padding: 50px;
-  background-image: url("/Image/common/storyListBackground.png");  
+  background-image: url("/Image/storyList/hospitalBackground.png");  
   background-position: center;
   background-repeat : no-repeat;
   background-size : 100% 100%;
@@ -115,7 +115,7 @@ const AgeRecommendation = styled.p`
 `;
 
 const List = styled.p`
-  margin-left: 7%;
+  margin-left: 8%;
   font-size: calc(1.5em + 1vw);
   font-weight: bold;
   color: white;

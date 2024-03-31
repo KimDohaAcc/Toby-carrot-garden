@@ -12,6 +12,7 @@ const ModalBackdrop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 `;
 
 const ModalBox = styled.div`
@@ -30,15 +31,15 @@ const CloseButton = styled.button`
   align-self: center;
   padding: 10px 20px;
   margin-top: 20px;
-  background-color: #007bff;
+  background-color: #80cee1;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 15%;
   cursor: pointer;
 
-  &:hover {
+  /* &:hover {
     background-color: #0056b3;
-  }
+  } */
 `;
 
 const ConfirmButton = styled.button`

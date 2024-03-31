@@ -80,7 +80,11 @@ function UserInfoForm() {
   const [name, setName] = useState("");
   const [birthday, setBirthday] = useState("");
   const navigate = useNavigate();
+  const today = new Date().toISOString().split("T")[0];
 
+  // 생일 입력 필드에 대한 최소 및 최대 날짜 설정
+  const minDate = "2000-01-01";
+  const maxDate = today;
   const handleNextStep = () => {
     if (step === 1 && (!name || !birthday)) {
       alert("이름과 생일을 모두 입력해주세요.");
@@ -120,11 +124,11 @@ function UserInfoForm() {
   return (
     <Container>
       <ConsentBorder>
-       <RabbitImage1 src="Image/toby/cuteRabbit_text2.png" alt="Rabbit" />
+        <RabbitImage1 src="Image/toby/cuteRabbit_text2.png" alt="Rabbit" />
         {step === 1 && (
           <TextContainer>
             <p>
-              내 이름은{" "}<br/>
+              내 이름은 <br />
               <InputInline
                 type="text"
                 placeholder="이름"
@@ -139,6 +143,8 @@ function UserInfoForm() {
                 type="date"
                 value={birthday}
                 onChange={(e) => setBirthday(e.target.value)}
+                min={minDate} // 최소 날짜 설정
+                max={maxDate} // 최대 날짜 설정
               />
               이야.
             </span>
