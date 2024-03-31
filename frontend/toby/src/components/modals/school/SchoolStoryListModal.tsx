@@ -23,7 +23,7 @@ const ModalContainer = styled.div`
   height: 80%;
   transform: translate(-50%, -50%);
   padding: 3%;
-  background-image: url("/Image/common/storyListBackground.png");  
+  background-image: url("/Image/storyList/schoolBackground.png");  
   background-position: center;
   background-repeat : no-repeat;
   background-size : 100% 100%;
@@ -106,7 +106,7 @@ const AgeRecommendation = styled.p`
   flex: 1; /* 5:2:1 비율 중 세 번째 행 */
 `;
 const List = styled.p`
-  margin-left: 7%;
+  margin-left: 8%;
   font-size: calc(1.5em + 1vw);
   font-weight: bold;
   color: white;
