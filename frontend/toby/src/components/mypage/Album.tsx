@@ -58,11 +58,14 @@ const ImageArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const NoImageArea = styled.div`
-  display: flex; /* 기존 grid에서 flex로 변경 */
-  flex-direction: column; /* 내용을 세로로 정렬 */
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr; /* 기존 grid에서 flex로 변경 */
+  /* flex-direction: column; 내용을 세로로 정렬 */
   align-items: center; /* 가로 중앙 정렬 */
   justify-content: center; /* 세로 중앙 정렬 */
   background-color: #f5f5f5d9;
@@ -81,7 +84,27 @@ const GotoMainTextAndTobyContainer = styled.div`
   position: absolute; /* 위치 조정을 위해 absolute 사용 */
   bottom: 10%; /* 하단에 위치 */
 `;
+const MiddleTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+`;
+const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
 
+const AlbumToby = styled.img`
+  width: 25%; // Adjust size as needed
+  margin-left: 3%; // Space between text and image
+  right: 60%;
+`;
 const NoImage = styled.div`
   display: flex;
   flex-direction: column;
@@ -128,12 +151,12 @@ const NextBtn = styled.img`
   cursor: pointer;
 `;
 
-const AlbumToby = styled.img`
-  position: absolute;
-  height: 400%;
-  left: 74%;
-  top: -200%;
-`;
+// const AlbumToby = styled.img`
+//   position: absolute;
+//   height: 400%;
+//   left: 74%;
+//   top: -200%;
+// `;
 const GotoMainText = styled.div`
   cursor: pointer;
   color: #000;
@@ -258,14 +281,15 @@ const Album = () => {
       {/** 이미지 없을 때 보여줄 화면 */}
       {!imageList ? (
         <NoImageArea>
-          <NoImage>
+          <div> {/* Empty top container for spacing */} </div>
+          <MiddleTextContainer>
             <h1>
               토비와 함께
               <br />
               사진 찍으러 가볼까요?
             </h1>
-          </NoImage>
-          <GotoMainTextAndTobyContainer>
+          </MiddleTextContainer>
+          <BottomContainer>
             <GotoMainText onClick={handleGoToMain}>
               당근 모으러 가기 -▷
             </GotoMainText>
@@ -274,7 +298,7 @@ const Album = () => {
               alt="albumtoby"
               onClick={handleGoToMain}
             />
-          </GotoMainTextAndTobyContainer>
+          </BottomContainer>
         </NoImageArea>
       ) : (
         <AlbumArea>

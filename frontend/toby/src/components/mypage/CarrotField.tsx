@@ -57,15 +57,46 @@ const GotoStory = styled.div`
 
 const NoCarrotArea = styled.div`
   display: grid;
-  grid-template-rows: 4fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   background-color: #f5f5f5d9;
   border-radius: 30px;
   justify-items: center;
   align-items: center;
-  position: relative;
+  /* position: relative; */
+  width: 100%;
   background-image: url("Image/album/당근밭배경.png");
+  height: 100%;
+  width: auto;
+  overflow: hidden;
+  object-fit: contain;
+`;
+const MiddleTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+`;
+const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
+const CarrotToby = styled.img`
+  width: 25%; // Adjust size as needed
+  margin-left: 3%; // Space between text and image
+  right: 60%;
+`;
+const GotoMainText = styled.div`
+  cursor: pointer;
+  color: #000;
+  font-size: 40px;
+  margin-bottom: 20px;
+`;
 // const CarrotFieldArea = styled.div`
 //   background-color: #f5f5f5d9;
 //   border-radius: 30px;
@@ -143,12 +174,12 @@ const ShovelImage = styled.img`
   width: 20%;
 `;
 
-const CarrotToby = styled.img`
-  position: absolute;
-  height: 40%;
-  bottom: 0;
-  right: 0;
-`;
+// const CarrotToby = styled.img`
+//   position: absolute;
+//   height: 40%;
+//   bottom: 0;
+//   right: 0;
+// `;
 
 const CarrotCount = styled.span`
   color: white;
@@ -278,19 +309,24 @@ const CarrotField = () => {
         carrotList[2].carrotCount == 0 &&
         carrotList[3].carrotCount == 0) ? (
         <NoCarrotArea>
-          <NoCarrot>
+          <div></div>
+          <MiddleTextContainer>
             <h1>
               아직
               <br />
               당근이 자라고 있어요!
             </h1>
-          </NoCarrot>
-          <GotoStory>당근 모으러 가기 -▷</GotoStory>
-          <CarrotToby
-            src="Image/album/토비1.png"
-            alt="caarrottoby"
-            onClick={handleGoToMain}
-          />
+          </MiddleTextContainer>
+          <BottomContainer>
+            <GotoMainText onClick={handleGoToMain}>
+              당근 모으러 가기 -▷
+            </GotoMainText>
+            <CarrotToby
+              src="Image/album/토비1.png"
+              alt="caarrottoby"
+              onClick={handleGoToMain}
+            />
+          </BottomContainer>
         </NoCarrotArea>
       ) : (
         <CarrotFieldContent>
