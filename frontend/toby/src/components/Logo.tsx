@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getUserStorage } from "../apis/userStorageApi";
 
 const LogoWrapper = styled.div`
   position: fixed;
@@ -21,9 +22,15 @@ const LogoImg = styled.img`
 
 const Logo = () => {
   const navigate = useNavigate();
-
+  const handleLogoClick = () => {
+    if (accessToken) {
+      navigate("/main");
+    } else {
+      console.log("Access Denied. No accessToken found.");
+    }
+  };
   return (
-    <LogoWrapper onClick={() => navigate("/main")}>
+    <LogoWrapper onClick={handleLogoClick}>
       <LogoImg src="/Image/common/logoImage.png" alt="logo" />
     </LogoWrapper>
   );

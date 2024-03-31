@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { postParentsPassword } from "../../apis/analysisApi";
 
@@ -15,30 +15,48 @@ const ModalBackdrop = styled.div`
   align-items: center;
   z-index: 15;
 `;
-
-const ModalBox = styled.div`
-  padding: 5% 10%;
-  background-color: #fff;
-  border-radius: 10px;
+const fadeInAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+const ModalContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 20%;
+  height: 20%;
+  transform: translate(-50%, -50%);
+  padding: 3%;
+  background-image: url("/Image/modal/passwordModal.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  align-items: center; /* 수직 정렬을 위해 추가 */
-  img {
-    width: 100%;
-    height: auto;
-  }
+  justify-content: center;
+  align-items: center;
+  animation: ${fadeInAnimation} 0.5s ease;
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 20%;
+  margin-top: 5%;
   display: flex;
   justify-content: center;
+  align-content: center;
+
   gap: 10%;
   width: 100%;
+  height: auto;
+  /* height: 40%; */
 `;
 
 const CloseButton = styled.button`
-  padding: 6% 11%;
+  padding: 3% 8%;
   background-color: #80cee1;
   color: white;
   border: none;
@@ -51,7 +69,7 @@ const CloseButton = styled.button`
 `;
 
 const ConfirmButton = styled.button`
-  padding: 6% 11%;
+  padding: 3% 8%;
   background-color: #9ad255;
   color: white;
   border: none;
@@ -64,15 +82,16 @@ const ConfirmButton = styled.button`
 `;
 
 const PasswordInput = styled.input`
-  margin-top: 20px;
-  padding: 20px;
+  /* margin-top: 20px; */
+  padding: 4%;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 100%;
+  width: 80%;
 `;
 
 const ConstructionText = styled.h2`
   text-align: center;
+  font-size: calc(1.5em + 1vw);
 `;
 
 const ConstructionModal = ({ onClose }) => {
@@ -92,7 +111,7 @@ const ConstructionModal = ({ onClose }) => {
 
   return (
     <ModalBackdrop onClick={onClose}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
+      <ModalContainer onClick={(e) => e.stopPropagation()}>
         <ConstructionText>비밀번호 입력해주세요</ConstructionText>
         <PasswordInput
           type="password"
@@ -106,7 +125,7 @@ const ConstructionModal = ({ onClose }) => {
           <ConfirmButton onClick={handleConfirm}>확인</ConfirmButton>
           <CloseButton onClick={onClose}>닫기</CloseButton>
         </ButtonGroup>
-      </ModalBox>
+      </ModalContainer>
     </ModalBackdrop>
   );
 };

@@ -27,9 +27,10 @@ const MypageContentContainer = styled.div`
 
 const LogoutArea = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   flex: 0 0 15%;
   border: 2px solid black;
+  flex-direction: row;
 `;
 
 const MypageContentArea = styled.div`
@@ -39,15 +40,23 @@ const MypageContentArea = styled.div`
   flex-grow: 1;
   border: 2px solid black;
 `;
-
+const Text1 = styled.h1`
+  line-height: 60%;
+  font-size: 70px;
+`;
+const Text2 = styled.h2`
+  line-height: 60%;
+  font-size: 40px;
+`;
 const Mypage = () => {
   return (
     <>
       <Logo />
       <MypageContainer>
-        <LogoArea />
+        <LogoArea></LogoArea>
         <MypageContentContainer>
           <LogoutArea>
+            <Text1>마이페이지</Text1>
             <LogoutBtn />
           </LogoutArea>
           <MypageContentArea>

@@ -10,7 +10,6 @@ const fadeInAnimation = keyframes`
   }
 `;
 
-
 const ModalContainer = styled.div`
   position: fixed;
   top: 50%;
@@ -19,10 +18,10 @@ const ModalContainer = styled.div`
   height: 80%;
   transform: translate(-50%, -50%);
   padding: 3%;
-  background-image: url("/Image/storyList/martBackground.png");  
+  background-image: url("/Image/storyList/martBackground.png");
   background-position: center;
-  background-repeat : no-repeat;
-  background-size : 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -65,7 +64,7 @@ const Image = styled.img`
   margin: calc(5%);
   height: auto;
   align-self: center;
-`
+`;
 
 const MartStoryListModal = ({ onClose }) => {
   return (
@@ -74,7 +73,7 @@ const MartStoryListModal = ({ onClose }) => {
       <ModalContainer>
         <CloseBtn onClick={onClose}>❌</CloseBtn>
         <List>마트 스토리 목록</List>
-        <Image src="/Image/modal/constructionImage.png"/>
+        <Image src="/Image/modal/constructionImage.png" />
       </ModalContainer>
     </>
   );
