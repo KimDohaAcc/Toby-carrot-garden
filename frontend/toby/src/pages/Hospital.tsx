@@ -8,7 +8,7 @@ import { setSceneList } from "../store/slices/hospitalSlice.tsx";
 
 import { getSceneList } from "../apis/storyApi.tsx";
 
-import Logo from "../components/Logo";
+import Logo2 from "../components/Logo2";
 
 import StoryTitle from "../components/placeStory/StoryTitle.tsx";
 import StoryContent from "../components/placeStory/StoryContentHospital.tsx";
@@ -139,6 +139,7 @@ const StoryContainer = styled.div`
 
 // 로고와 병원 내용을 나누기 위한 컨테이너
 const LogoArea = styled.div`
+  position: relative;
   flex: 0 0 14%;
   border: 2px solid black;
   box-sizing: border-box;
@@ -211,6 +212,25 @@ const NextBtn = styled.div`
   img {
     width: 100%;
   }
+
+  cursor: pointer;
+  box-shadow: none;
+  transition: box-shadow 0.1s ease;
+  &:active {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+  }
+`;
+
+const NextBtn2 = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  grid-area: nextBtn;
+  border: 1px solid black;
+  img {
+    width: 100%;
+  }
 `;
 
 const Content = styled.div<{ fadeIn: boolean }>`
@@ -242,7 +262,7 @@ const Hospital = () => {
 
   const [sceneType, setSceneType] = useState<string>(""); // 장면 타입
   const [sceneIndex, setSceneIndex] = useState<number>(-1); // 장면 인덱스
-  
+
   const [fadeIn, setFadeIn] = useState(false);
 
   const location = useLocation();
@@ -303,7 +323,7 @@ const Hospital = () => {
 
   const handleOnclickNextBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
-    setFadeIn(false)
+    setFadeIn(false);
     setSceneIndex((prevIndex) => {
       const nextIndex = prevIndex + 1;
       setSceneType(hospitalSceneList[nextIndex].sceneType);
@@ -314,20 +334,27 @@ const Hospital = () => {
 
   return (
     <>
-      <Logo />
       <StoryContainer>
-        <LogoArea />
+        <LogoArea>
+          <Logo2 />
+        </LogoArea>
         <StoryContentArea1>
           <StoryContentArea2>
-          <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
+            <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
             <CloseBtnArea>
-              <CloseBtn onClick={() => {navigate("/main");}}>❌</CloseBtn>
+              <CloseBtn
+                onClick={() => {
+                  navigate("/main");
+                }}
+              >
+                ❌
+              </CloseBtn>
             </CloseBtnArea>
 
             {sceneType === "CLEAR" ? (
-              <NextBtn>
+              <NextBtn2>
                 <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
-              </NextBtn>
+              </NextBtn2>
             ) : (
               <NextBtn
                 onClick={() => {

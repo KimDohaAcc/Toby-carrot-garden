@@ -1,17 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getUserStorage } from "../apis/userStorageApi";
 
 const LogoWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: calc(20%);
-  border: 2px solid cyan;
+  position: absolute;
+  height: auto;
+  width: 100%;
+  border: 2px solid black;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  object-fit: contain;
+  overflow: hidden;
+  cursor: pointer;
 `;
 
 const LogoWrapper2 = styled.div`
@@ -23,7 +23,6 @@ const LogoWrapper2 = styled.div`
   align-items: center;
   object-fit: contain;
   overflow: hidden;
-  cursor: pointer;
 `;
 
 const LogoImg = styled.img`
@@ -33,17 +32,11 @@ const LogoImg = styled.img`
 
 const Logo = () => {
   const navigate = useNavigate();
-  const handleLogoClick = () => {
-    if (accessToken) {
-      navigate("/main");
-    } else {
-      console.log("Access Denied. No accessToken found.");
-    }
-  };
+
   return (
-    <LogoWrapper2 onClick={() => navigate("/main")}>
+    <LogoWrapper onClick={() => navigate("/main")}>
       <LogoImg src="/Image/common/logoImage.png" alt="logo" />
-    </LogoWrapper2>
+    </LogoWrapper>
   );
 };
 

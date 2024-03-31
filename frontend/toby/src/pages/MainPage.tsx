@@ -38,11 +38,19 @@ const ReportImage = styled.img`
   /* max-width: 100%;
   max-height: 100%; */
   max-width: 100%;
-  width: 100%;
+  width: 90%;
   height: 100%;
   position: absolute;
 
   top: -5%;
+  box-shadow: none;
+  transition: box-shadow 0.1s ease;
+
+  &:active {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+  }
+  cursor: pointer;
 `;
 
 const MartArea = styled.div`
@@ -63,6 +71,14 @@ const MartImage = styled.img`
   position: absolute;
   left: 15%;
   top: 7%;
+  box-shadow: none;
+  transition: box-shadow 0.1s ease;
+
+  &:active {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+  }
+  cursor: pointer;
 `;
 
 const Area2 = styled.div`
@@ -89,6 +105,15 @@ const SchoolImage = styled.img`
   height: 80%;
   position: absolute;
   top: 3%;
+
+  box-shadow: none;
+  transition: box-shadow 0.1s ease;
+
+  &:active {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+  }
+  cursor: pointer;
 `;
 
 const MypageArea = styled.div`
@@ -109,6 +134,14 @@ const MyPageImage = styled.img`
   position: relative;
   top: -42%;
   position: absolute;
+  box-shadow: none;
+  transition: box-shadow 0.1s ease;
+
+  &:active {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+  }
+  cursor: pointer;
 `;
 
 const Area3 = styled.div`
@@ -136,6 +169,15 @@ const HospitalImage = styled.img`
   position: absolute;
   top: 11%;
   left: 18%;
+
+  box-shadow: none;
+  transition: box-shadow 0.1s ease;
+
+  &:active {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+  }
+  cursor: pointer;
 `;
 
 const PoliceArea = styled.div`
@@ -155,6 +197,15 @@ const PoliceImage = styled.img`
   height: 100%;
   position: absolute;
   top: -3%;
+
+  box-shadow: none;
+  transition: box-shadow 0.1s ease;
+
+  &:active {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+  }
+  cursor: pointer;
 `;
 const UserArea = styled.div`
   display: flex;
@@ -177,6 +228,7 @@ const LogoutButton = styled.img`
   width: 30%;
   left: 55%;
   top: 5%;
+  cursor: pointer;
 `;
 const UserName = styled.div`
   position: absolute;
@@ -210,6 +262,7 @@ const TobyImage = styled.img`
   max-height: 100%;
   width: 80%;
   height: 90%;
+  cursor: pointer;
 `;
 
 const MainPage = () => {

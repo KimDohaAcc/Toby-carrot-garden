@@ -70,6 +70,21 @@ const QuizCanvasArea = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid black;
+  object-fit: contain;
+  overflow: hidden;
+`;
+
+const CanvasImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+`;
+const ClickText = styled.div`
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
 `;
 
 const StoryQuizDrawings = ({ imageUrl, quizId, content }) => {
@@ -97,8 +112,12 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content }) => {
         <ConteentArea>{content}</ConteentArea>
       </QuizImageArea>
       <QuizCanvasArea>
-        <img src="" />
-        <p onClick={openModal}>여기를 클릭하세요</p>
+        <CanvasImg
+          src="/Image/common/캔버스.png"
+          alt="canvas"
+          onClick={openModal}
+        />
+        <ClickText onClick={openModal}>클릭 하세요</ClickText>
       </QuizCanvasArea>
       <StoryDrawingModal
         isOpen={isModalOpen}

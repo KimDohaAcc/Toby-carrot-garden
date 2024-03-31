@@ -18,6 +18,7 @@ import KakaoLogin from "./pages/KakaoLogin";
 import UserInfoForm from "./pages/UserInfoForm";
 
 import styled from "styled-components";
+import Example from "./pages/Example";
 
 const BackgroundContainer = styled.div`
   height: 100vh;
@@ -45,6 +46,7 @@ function App() {
         <Route path="mart" element={<Mart />} />
         <Route path="report" element={<Report />} />
         <Route path="signplus" element={<UserInfoForm />} />
+        <Route path="example" element={<Example />} />
         {/* <Route path="webcam" element={<QuizWebcam />} /> */}
 
         <Route path="*" element={<NotFound />} />
