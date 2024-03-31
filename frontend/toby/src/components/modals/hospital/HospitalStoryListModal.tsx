@@ -164,7 +164,7 @@ const HospitalStoryListModal = ({ onClose }) => {
       <ModalBackground onClick={onClose} />
       <ModalContainer>
         <CloseBtn onClick={onClose}>❌</CloseBtn>
-        <List>학교 스토리 목록</List>
+        <List>병원 스토리 목록</List>
         <ModalContent>
           {storysList.map((story: HospitalStoryList) => (
             <StoryContent
