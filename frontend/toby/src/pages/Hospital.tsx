@@ -212,10 +212,13 @@ const NextBtn = styled.div`
   }
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ fadeIn: boolean }>`
   grid-area: conten;
   display: flex;
   border: 1px solid black;
+
+  opacity: ${({ fadeIn }) => (fadeIn ? 1 : 0)};
+  transition: ${({ fadeIn }) => (fadeIn ? "opacity 0.5s ease-in" : "none")};
 `;
 
 interface Quiz {
@@ -238,6 +241,8 @@ const Hospital = () => {
 
   const [sceneType, setSceneType] = useState<string>(""); // 장면 타입
   const [sceneIndex, setSceneIndex] = useState<number>(-1); // 장면 인덱스
+  
+  const [fadeIn, setFadeIn] = useState(false);
 
   const location = useLocation();
   console.log(location.state);
@@ -250,6 +255,10 @@ const Hospital = () => {
     (state: RootState) => state.hospital.sceneList // hospital 슬라이스의 sceneList 가져오기
   );
   console.log(hospitalSceneList);
+
+  useEffect(() => {
+    setFadeIn(true);
+  }, [sceneIndex]);
 
   useEffect(() => {
     const fetchSceneList = async () => {
@@ -293,6 +302,7 @@ const Hospital = () => {
 
   const handleOnclickNextBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
+    setFadeIn(false)
     setSceneIndex((prevIndex) => {
       const nextIndex = prevIndex + 1;
       setSceneType(hospitalSceneList[nextIndex].sceneType);
@@ -308,7 +318,7 @@ const Hospital = () => {
         <LogoArea />
         <StoryContentArea1>
           <StoryContentArea2>
-            <Content>{renderSceneContent()}</Content>
+          <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
             <CloseBtnArea>
               <CloseBtn
                 onClick={() => {
