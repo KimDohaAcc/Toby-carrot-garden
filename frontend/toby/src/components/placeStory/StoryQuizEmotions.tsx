@@ -33,11 +33,6 @@ const StoryQuizEmotionsImageArea = styled.div`
   overflow: hidden;
 `;
 
-const StoryQuizEmotionsImage = styled.img`
-  height: 95%;
-  border: 1px solid black;
-`;
-
 const StoryQuizEmotionCanmeraArea = styled.div`
   grid-area: camera;
   display: flex;

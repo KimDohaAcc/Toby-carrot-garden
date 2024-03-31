@@ -36,6 +36,7 @@ const ReportImage = styled.img`
   /* max-width: 100%;
   max-height: 100%; */
   max-width: 100%;
+  width: 100%;
   height: 100%;
   position: absolute;
 
@@ -55,6 +56,7 @@ const MartImage = styled.img`
   max-width: 100%;
   max-height: 100%;
   width: 85%;
+  height: 100%;
 
   position: absolute;
   left: 15%;
@@ -82,6 +84,7 @@ const SchoolImage = styled.img`
   max-width: 150%;
   max-height: 150%;
   width: 150%;
+  height: 80%;
   position: absolute;
   top: 3%;
 `;
@@ -100,6 +103,7 @@ const MyPageImage = styled.img`
   max-width: 150%;
   max-height: 150%;
   width: 120%;
+  height: 105%;
   position: relative;
   top: -42%;
   position: absolute;
@@ -126,6 +130,7 @@ const HospitalImage = styled.img`
   max-width: 95%;
   max-height: 95%;
   width: 95%;
+  height: 85%;
   position: absolute;
   top: 11%;
   left: 18%;
@@ -145,6 +150,7 @@ const PoliceImage = styled.img`
   max-width: 100%;
   max-height: 100%;
   width: 100%;
+  height: 100%;
   position: absolute;
   top: -3%;
 `;
@@ -201,6 +207,7 @@ const TobyImage = styled.img`
   max-width: 100%;
   max-height: 100%;
   width: 80%;
+  height: 90%;
 `;
 
 const MainPage = () => {
