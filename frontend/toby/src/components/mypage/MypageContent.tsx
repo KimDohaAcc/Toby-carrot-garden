@@ -23,6 +23,8 @@ const Area = styled.div`
   height: 90%;
   border: 2px solid black;
   border-radius: 30px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const TitleArea = styled.div`
@@ -32,6 +34,7 @@ const TitleArea = styled.div`
   font-size: 30px;
   font-weight: bold;
   position: relative;
+  flex: 0 0 10%;
 `;
 
 const ImageArea = styled.img`
@@ -45,6 +48,7 @@ const Text = styled.div`
   position: absolute;
   left: 15%;
   flex: 1;
+  font-size: 170%;
 `;
 
 const MypageContent = () => {
