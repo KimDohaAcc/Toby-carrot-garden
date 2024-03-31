@@ -18,6 +18,7 @@ import KakaoLogin from "./pages/KakaoLogin";
 import UserInfoForm from "./pages/UserInfoForm";
 
 import styled from "styled-components";
+import Example from "./pages/Example";
 
 const BackgroundContainer = styled.div`
   height: 100vh;
@@ -25,7 +26,7 @@ const BackgroundContainer = styled.div`
   z-index: -5;
   background-size: 100% 100%;
   background-image: url("/Image/common/backgroundImage.png");
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Route path="mart" element={<Mart />} />
         <Route path="report" element={<Report />} />
         <Route path="signplus" element={<UserInfoForm />} />
+        <Route path="example" element={<Example />} />
         {/* <Route path="webcam" element={<QuizWebcam />} /> */}
 
         <Route path="*" element={<NotFound />} />

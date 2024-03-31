@@ -89,3 +89,18 @@ export const getQuizAnswer = async ({ quizId }) => {
     return null; // 에러 발생 시 명시적으로 null 반환을 고려할 수 있습니다.
   }
 };
+
+//119문제 당근 부여
+export const getEmergencyQuiz = async ({ place_id }) => {
+  try {
+    const response = await api.patch(`place/${place_id}/carrot`, {
+      headers: {
+        Authorization: `Bearer ${tempToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("119문제를 가져오지 못했습니다.", error);
+    return null;
+  }
+};
