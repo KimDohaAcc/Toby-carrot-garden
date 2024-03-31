@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Logo from "../components/Logo";
+import Logo2 from "../components/Logo2";
 import MypageContent from "../components/mypage/MypageContent";
 import LogoutBtn from "../components/LogoutBtn";
 
@@ -13,6 +13,7 @@ const MypageContainer = styled.div`
 `;
 
 const LogoArea = styled.div`
+  position: relative;
   flex: 0 0 15%;
   border: 2px solid black;
 `;
@@ -43,9 +44,10 @@ const MypageContentArea = styled.div`
 const Mypage = () => {
   return (
     <>
-      <Logo />
       <MypageContainer>
-        <LogoArea />
+        <LogoArea>
+          <Logo2 />
+        </LogoArea>
         <MypageContentContainer>
           <LogoutArea>
             <LogoutBtn />

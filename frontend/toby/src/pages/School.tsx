@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { setSceneList } from "../store/slices/schoolSlice.tsx";
 import { getSceneList } from "../apis/storyApi.tsx";
 
-import Logo from "../components/Logo";
+import Logo2 from "../components/Logo2";
 
 import StoryTitle from "../components/placeStory/StoryTitle";
 import StoryContent from "../components/placeStory/StoryContentSchool.tsx";
@@ -24,6 +24,7 @@ const StoryContainer = styled.div`
 
 // 로고와 병원 내용을 나누기 위한 컨테이너
 const LogoArea = styled.div`
+  position: relative;
   flex: 0 0 14%;
   border: 2px solid black;
   box-sizing: border-box;
@@ -87,6 +88,14 @@ const NextBtn = styled.div`
   border: 1px solid black;
   img {
     width: 100%;
+  }
+
+  cursor: pointer;
+  box-shadow: none;
+  transition: box-shadow 0.1s ease;
+  &:active {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
   }
 `;
 
@@ -182,7 +191,7 @@ const School = () => {
 
   const handleOnclickNextBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
-    setFadeIn(false)
+    setFadeIn(false);
     setSceneIndex((prevIndex) => {
       const nextIndex = prevIndex + 1;
       setSceneType(SchoolSceneList[nextIndex].sceneType);
@@ -192,13 +201,20 @@ const School = () => {
 
   return (
     <>
-      <Logo />
       <StoryContainer>
-        <LogoArea />
+        <LogoArea>
+          <Logo2 />
+        </LogoArea>
         <StoryContentArea1>
           <StoryContentArea2>
             <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
-            <CloseBtn onClick={() => {navigate("/main");}}>❌</CloseBtn>
+            <CloseBtn
+              onClick={() => {
+                navigate("/main");
+              }}
+            >
+              ❌
+            </CloseBtn>
             {sceneType === "CLEAR" ? (
               <NextBtn>
                 <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />

@@ -228,6 +228,7 @@ const LogoutButton = styled.img`
   width: 30%;
   left: 55%;
   top: 5%;
+  cursor: pointer;
 `;
 const UserName = styled.div`
   position: absolute;
