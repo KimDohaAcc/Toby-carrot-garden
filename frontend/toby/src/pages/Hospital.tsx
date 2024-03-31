@@ -212,6 +212,25 @@ const NextBtn = styled.div`
   img {
     width: 100%;
   }
+
+  cursor: pointer;
+  box-shadow: none;
+  transition: box-shadow 0.1s ease;
+  &:active {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+  }
+`;
+
+const NextBtn2 = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  grid-area: nextBtn;
+  border: 1px solid black;
+  img {
+    width: 100%;
+  }
 `;
 
 const Content = styled.div<{ fadeIn: boolean }>`
@@ -333,9 +352,9 @@ const Hospital = () => {
             </CloseBtnArea>
 
             {sceneType === "CLEAR" ? (
-              <NextBtn>
+              <NextBtn2>
                 <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
-              </NextBtn>
+              </NextBtn2>
             ) : (
               <NextBtn
                 onClick={() => {

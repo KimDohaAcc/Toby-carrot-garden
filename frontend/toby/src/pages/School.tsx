@@ -99,6 +99,17 @@ const NextBtn = styled.div`
   }
 `;
 
+const NextBtn2 = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  grid-area: nextBtn;
+  border: 1px solid black;
+  img {
+    width: 100%;
+  }
+`;
+
 const Content = styled.div<{ fadeIn: boolean }>`
   grid-area: conten;
   border: 1px solid black;
@@ -216,9 +227,9 @@ const School = () => {
               ❌
             </CloseBtn>
             {sceneType === "CLEAR" ? (
-              <NextBtn>
+              <NextBtn2>
                 <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
-              </NextBtn>
+              </NextBtn2>
             ) : (
               <NextBtn
                 onClick={() => {
