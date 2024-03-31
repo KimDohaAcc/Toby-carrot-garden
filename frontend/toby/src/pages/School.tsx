@@ -90,9 +90,12 @@ const NextBtn = styled.div`
   }
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ fadeIn: boolean }>`
   grid-area: conten;
   border: 1px solid black;
+
+  opacity: ${({ fadeIn }) => (fadeIn ? 1 : 0)};
+  transition: ${({ fadeIn }) => (fadeIn ? "opacity 0.5s ease-in" : "none")};
 `;
 interface Quiz {
   quizId: number;
@@ -119,6 +122,8 @@ const School = () => {
   const [sceneType, setSceneType] = useState<string>(""); // 장면 타입
   const [sceneIndex, setSceneIndex] = useState<number>(-1); // 장면 인덱스
 
+  const [fadeIn, setFadeIn] = useState(false);
+
   const location = useLocation();
   console.log(location.state);
   const { storyId, title, storyImageUrl } = location.state; // storyId, title, storyImageUrl navigate의 state로 받아오기
@@ -130,6 +135,10 @@ const School = () => {
     (state: RootState) => state.school.sceneList // hospital 슬라이스의 sceneList 가져오기
   );
   console.log(SchoolSceneList);
+
+  useEffect(() => {
+    setFadeIn(true);
+  }, [sceneIndex]);
 
   useEffect(() => {
     const fetchSceneList = async () => {
@@ -173,6 +182,7 @@ const School = () => {
 
   const handleOnclickNextBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
+    setFadeIn(false)
     setSceneIndex((prevIndex) => {
       const nextIndex = prevIndex + 1;
       setSceneType(SchoolSceneList[nextIndex].sceneType);
@@ -187,7 +197,7 @@ const School = () => {
         <LogoArea />
         <StoryContentArea1>
           <StoryContentArea2>
-            <Content>{renderSceneContent()}</Content>
+            <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
             <CloseBtn
               onClick={() => {
                 navigate("/main");
