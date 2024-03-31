@@ -101,7 +101,10 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
             width: canvasSize.width,
             height: canvasSize.height,
             className: "signature-canvas",
+            style: { backgroundColor: "white" }, // 배경을 흰색으로 설정
           }}
+          minWidth={5} // 펜 굵기 최소값
+          maxWidth={5} // 펜 굵기 최대값
         />
       </ModalArea>
       <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
