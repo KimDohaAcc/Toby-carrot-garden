@@ -29,7 +29,7 @@ const videoConstraints = {
 };
 
 const QuizWebCam = ({ quizId }) => {
-  const webcamRef = useRef(null);
+  const webcamRef = useRef<WebcamRef>(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [modalState, setModalState] = useState<
     "none" | "wait" | "success" | "fail"
