@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { getCarrotList } from "../../apis/mypageApi";
+import { useNavigate } from "react-router-dom";
 
 // getCarrotList 함수 대신 사용할 더미 데이터
 // const dummyCarrotList = [
@@ -88,6 +89,7 @@ const CarrotFieldContent = styled.div`
     ". . . . .";
   border-radius: 30px;
   height: 90%;
+  /* flex: 0 0 90%; */
 `;
 
 const SchoolCarrot = styled.div`
@@ -150,10 +152,13 @@ const CarrotToby = styled.img`
 
 const CarrotCount = styled.span`
   color: white;
+  font-size: 30px;
 `;
 
 const CarrotSign = styled.img`
   position: relative;
+  width: 30%;
+  height: auto;
 `;
 
 //데이터 형식 예시
@@ -246,7 +251,11 @@ const CarrotGradeImage = ({ carrotGrade }) => {
 };
 
 const CarrotField = () => {
+  const navigate = useNavigate();
   const [carrotList, setCarrotList] = useState<CarrotList[]>([]);
+  const handleGoToMain = () => {
+    navigate("/main"); // '/main'으로 이동하는 함수
+  };
 
   useEffect(() => {
     //당근 정보 가져옴
@@ -277,7 +286,11 @@ const CarrotField = () => {
             </h1>
           </NoCarrot>
           <GotoStory>당근 모으러 가기 -▷</GotoStory>
-          <CarrotToby src="Image/album/토비1.png" alt="caarrottoby" />
+          <CarrotToby
+            src="Image/album/토비1.png"
+            alt="caarrottoby"
+            onClick={handleGoToMain}
+          />
         </NoCarrotArea>
       ) : (
         <CarrotFieldContent>

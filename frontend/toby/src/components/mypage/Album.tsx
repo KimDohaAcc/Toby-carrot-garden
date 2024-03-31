@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import { useNavigate } from "react-router-dom";
 import { getClearImageList } from "../../apis/mypageApi";
 
 // getClearImageList 대신에 더미 데이터를 사용합니다.
@@ -61,13 +61,25 @@ const ImageArea = styled.div`
 `;
 
 const NoImageArea = styled.div`
-  display: grid;
-  grid-template-rows: 4fr 1fr;
+  display: flex; /* 기존 grid에서 flex로 변경 */
+  flex-direction: column; /* 내용을 세로로 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+  justify-content: center; /* 세로 중앙 정렬 */
   background-color: #f5f5f5d9;
   border-radius: 30px;
-  justify-items: center;
-  align-items: center;
   position: relative;
+  height: 100%;
+  width: 100%; /* 너비를 100%로 설정하여 부모 컨테이너를 꽉 채움 */
+`;
+
+const GotoMainTextAndTobyContainer = styled.div`
+  display: flex; /* 수평 정렬을 위해 flex 사용 */
+  flex-direction: column; /* 내용을 세로로 정렬 */
+  align-items: center; /* 가로 방향 중앙 정렬 */
+  justify-content: space-around; /* 요소 사이에 공간을 균등하게 분배 */
+  width: 100%;
+  position: absolute; /* 위치 조정을 위해 absolute 사용 */
+  bottom: 10%; /* 하단에 위치 */
 `;
 
 const NoImage = styled.div`
@@ -75,16 +87,17 @@ const NoImage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 23px;
 `;
 
-const GotoStory = styled.button`
-  border: none;
-  width: 100%;
-  height: 100%;
-  border-radius: 30px;
-  position: relative;
-  cursor: pointer;
-`;
+// const GotoStory = styled.button`
+//   border: none;
+//   width: 100%;
+//   height: 250%;
+//   border-radius: 30px;
+//   position: relative;
+//   cursor: pointer;
+// `;
 
 const BtnArea = styled.div`
   height: 100%;
@@ -117,9 +130,15 @@ const NextBtn = styled.img`
 
 const AlbumToby = styled.img`
   position: absolute;
-  height: 40%;
-  bottom: 0;
-  right: 0;
+  height: 400%;
+  left: 74%;
+  top: -200%;
+`;
+const GotoMainText = styled.div`
+  cursor: pointer;
+  color: #000;
+  font-size: 40px;
+  margin-bottom: 20px;
 `;
 
 // 데이터 형식 예시
@@ -158,6 +177,7 @@ interface Image {
 }
 
 const Album = () => {
+  const navigate = useNavigate();
   const [presentImage, setPresentImage] = useState("");
   const [imageList, setImageList] = useState<Image[]>([]);
   const [presentImageIndex, setPresentImageIndex] = useState(1);
@@ -173,7 +193,9 @@ const Album = () => {
   //   setPresentImage(nextImage);
   //   setNextImage("");
   // };
-
+  const handleGoToMain = () => {
+    navigate("/main"); // '/main'으로 이동하는 함수
+  };
   useEffect(() => {
     // 이미지 리스트를 불러옴
     const fetchData = async () => {
@@ -243,8 +265,16 @@ const Album = () => {
               사진 찍으러 가볼까요?
             </h1>
           </NoImage>
-          <GotoStory>당근 모으러 가기</GotoStory>
-          <AlbumToby src="/Image/album/토비3.png" alt="albumtoby" />
+          <GotoMainTextAndTobyContainer>
+            <GotoMainText onClick={handleGoToMain}>
+              당근 모으러 가기 -▷
+            </GotoMainText>
+            <AlbumToby
+              src="/Image/album/토비3.png"
+              alt="albumtoby"
+              onClick={handleGoToMain}
+            />
+          </GotoMainTextAndTobyContainer>
         </NoImageArea>
       ) : (
         <AlbumArea>

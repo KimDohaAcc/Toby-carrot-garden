@@ -108,6 +108,17 @@ const InfoContainer = styled.div`
   flex-direction: column;
 `;
 
+const translateAnswer = (answer) => {
+  const translations = {
+    door: "문",
+    "t-shirt": "티셔츠",
+    // You can add more translations here
+  };
+
+  // If the answer has a translation, return it; otherwise, return the original answer
+  return translations[answer] || answer;
+};
+
 const ReportDrawings = () => {
   const [drawingsList, setDrawingsList] = useState([]);
 
@@ -119,10 +130,8 @@ const ReportDrawings = () => {
           // 날짜 형식 변환 적용
           const updatedList = response.result.map((drawing) => ({
             ...drawing,
-            createTime: format(
-              new Date(drawing.createTime),
-              "yy년 M월 d일 H시 m분"
-            ),
+            correctAnswer: translateAnswer(drawing.correctAnswer),
+            createTime: format(new Date(drawing.createTime), "M월 d일 H시 m분"),
           }));
           setDrawingsList(updatedList);
         } else {
