@@ -26,16 +26,10 @@ const StoryQuizEmotionsImageArea = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
   align-items: center;
   border: 1px solid black;
   object-fit: contain;
   overflow: hidden;
-`;
-
-const StoryQuizEmotionsImage = styled.img`
-  height: 95%;
-  border: 1px solid black;
 `;
 
 const StoryQuizEmotionCanmeraArea = styled.div`
@@ -45,12 +39,8 @@ const StoryQuizEmotionCanmeraArea = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid black;
-`;
-
-const CameraArea = styled.div`
-  flex: 0 0 100%;
-  display: flex;
-  flex-direction: column;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
 const ImageArea = styled.div`
@@ -94,9 +84,7 @@ const StoryQuizEmotions = ({ imageUrl, quizId, content }) => {
         <ConteentArea>{content}</ConteentArea>
       </StoryQuizEmotionsImageArea>
       <StoryQuizEmotionCanmeraArea>
-        <CameraArea>
-          <QuizWebCam quizId={quizId} />
-        </CameraArea>
+        <QuizWebCam quizId={quizId} />
       </StoryQuizEmotionCanmeraArea>
     </StoryQuizEmotionsContainer>
   );

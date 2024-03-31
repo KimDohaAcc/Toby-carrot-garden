@@ -185,19 +185,20 @@ const CloseBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center; /* 버튼 내에서 텍스트를 수직 가운데 정렬 */
-  border-radius: 10%;
-  background-color: #ff9d9d;
-  color: #ff0000;
+  grid-area: closeBtn;
+  border: 1px solid black;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 0;
-  margin: 0;
+  padding: 10px;
+  margin: 10px;
   transition: background-color 0.3s ease; /* 마우스 호버 시 배경색이 부드럽게 변경되도록 트랜지션 추가. */
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: bold;
   box-sizing: border-box;
 
   &:hover {
-    background-color: #ffffff;
+    background-color: rgba(255, 185, 185, 0.5);
+    border: rgba(255, 185, 185, 0.5) solid 1px;
   }
 `;
 
@@ -212,10 +213,13 @@ const NextBtn = styled.div`
   }
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ fadeIn: boolean }>`
   grid-area: conten;
   display: flex;
   border: 1px solid black;
+
+  opacity: ${({ fadeIn }) => (fadeIn ? 1 : 0)};
+  transition: ${({ fadeIn }) => (fadeIn ? "opacity 0.5s ease-in" : "none")};
 `;
 
 interface Quiz {
@@ -238,6 +242,8 @@ const Hospital = () => {
 
   const [sceneType, setSceneType] = useState<string>(""); // 장면 타입
   const [sceneIndex, setSceneIndex] = useState<number>(-1); // 장면 인덱스
+  
+  const [fadeIn, setFadeIn] = useState(false);
 
   const location = useLocation();
   console.log(location.state);
@@ -250,6 +256,10 @@ const Hospital = () => {
     (state: RootState) => state.hospital.sceneList // hospital 슬라이스의 sceneList 가져오기
   );
   console.log(hospitalSceneList);
+
+  useEffect(() => {
+    setFadeIn(true);
+  }, [sceneIndex]);
 
   useEffect(() => {
     const fetchSceneList = async () => {
@@ -293,6 +303,7 @@ const Hospital = () => {
 
   const handleOnclickNextBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
+    setFadeIn(false)
     setSceneIndex((prevIndex) => {
       const nextIndex = prevIndex + 1;
       setSceneType(hospitalSceneList[nextIndex].sceneType);
@@ -308,15 +319,9 @@ const Hospital = () => {
         <LogoArea />
         <StoryContentArea1>
           <StoryContentArea2>
-            <Content>{renderSceneContent()}</Content>
+          <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
             <CloseBtnArea>
-              <CloseBtn
-                onClick={() => {
-                  navigate("/main");
-                }}
-              >
-                ✘
-              </CloseBtn>
+              <CloseBtn onClick={() => {navigate("/main");}}>❌</CloseBtn>
             </CloseBtnArea>
 
             {sceneType === "CLEAR" ? (

@@ -63,19 +63,19 @@ const CloseBtn = styled.button`
   justify-content: center;
   align-items: center; /* 버튼 내에서 텍스트를 수직 가운데 정렬 */
   grid-area: closeBtn;
-  border-radius: 10%;
-  background-color: #ff9d9d;
-  color: #ff0000;
+  border: 1px solid black;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 0;
-  margin: 0;
+  padding: 10px;
+  margin: 10px;
   transition: background-color 0.3s ease; /* 마우스 호버 시 배경색이 부드럽게 변경되도록 트랜지션 추가. */
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: bold;
   box-sizing: border-box;
 
   &:hover {
-    background-color: #ffffff;
+    background-color: rgba(255, 185, 185, 0.5);
+    border: rgba(255, 185, 185, 0.5) solid 1px;
   }
 `;
 
@@ -90,9 +90,12 @@ const NextBtn = styled.div`
   }
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ fadeIn: boolean }>`
   grid-area: conten;
   border: 1px solid black;
+
+  opacity: ${({ fadeIn }) => (fadeIn ? 1 : 0)};
+  transition: ${({ fadeIn }) => (fadeIn ? "opacity 0.5s ease-in" : "none")};
 `;
 interface Quiz {
   quizId: number;
@@ -119,6 +122,8 @@ const School = () => {
   const [sceneType, setSceneType] = useState<string>(""); // 장면 타입
   const [sceneIndex, setSceneIndex] = useState<number>(-1); // 장면 인덱스
 
+  const [fadeIn, setFadeIn] = useState(false);
+
   const location = useLocation();
   console.log(location.state);
   const { storyId, title, storyImageUrl } = location.state; // storyId, title, storyImageUrl navigate의 state로 받아오기
@@ -130,6 +135,10 @@ const School = () => {
     (state: RootState) => state.school.sceneList // hospital 슬라이스의 sceneList 가져오기
   );
   console.log(SchoolSceneList);
+
+  useEffect(() => {
+    setFadeIn(true);
+  }, [sceneIndex]);
 
   useEffect(() => {
     const fetchSceneList = async () => {
@@ -173,6 +182,7 @@ const School = () => {
 
   const handleOnclickNextBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
+    setFadeIn(false)
     setSceneIndex((prevIndex) => {
       const nextIndex = prevIndex + 1;
       setSceneType(SchoolSceneList[nextIndex].sceneType);
@@ -187,15 +197,8 @@ const School = () => {
         <LogoArea />
         <StoryContentArea1>
           <StoryContentArea2>
-            <Content>{renderSceneContent()}</Content>
-            <CloseBtn
-              onClick={() => {
-                navigate("/main");
-              }}
-            >
-              ✘
-            </CloseBtn>
-
+            <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
+            <CloseBtn onClick={() => {navigate("/main");}}>❌</CloseBtn>
             {sceneType === "CLEAR" ? (
               <NextBtn>
                 <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />

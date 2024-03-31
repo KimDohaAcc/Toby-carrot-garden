@@ -7,6 +7,8 @@ import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 
 import Logo from "../components/Logo";
 import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryListModal";
 import SchoolStoryListModal from "../components/modals/school/SchoolStoryListModal";
+import MartStoryListModal from "../components/modals/mart/MartStoryListModal";
+import PoliceStoryListModal from "../components/modals/police/PoliceStoryListModal";
 import { getUserStorage, clearUserStorage } from "../apis/userStorageApi";
 
 const MainpageContainer = styled.div`
@@ -36,6 +38,7 @@ const ReportImage = styled.img`
   /* max-width: 100%;
   max-height: 100%; */
   max-width: 100%;
+  width: 100%;
   height: 100%;
   position: absolute;
 
@@ -55,6 +58,7 @@ const MartImage = styled.img`
   max-width: 100%;
   max-height: 100%;
   width: 85%;
+  height: 100%;
 
   position: absolute;
   left: 15%;
@@ -82,6 +86,7 @@ const SchoolImage = styled.img`
   max-width: 150%;
   max-height: 150%;
   width: 150%;
+  height: 80%;
   position: absolute;
   top: 3%;
 `;
@@ -100,6 +105,7 @@ const MyPageImage = styled.img`
   max-width: 150%;
   max-height: 150%;
   width: 120%;
+  height: 105%;
   position: relative;
   top: -42%;
   position: absolute;
@@ -126,6 +132,7 @@ const HospitalImage = styled.img`
   max-width: 95%;
   max-height: 95%;
   width: 95%;
+  height: 85%;
   position: absolute;
   top: 11%;
   left: 18%;
@@ -145,6 +152,7 @@ const PoliceImage = styled.img`
   max-width: 100%;
   max-height: 100%;
   width: 100%;
+  height: 100%;
   position: absolute;
   top: -3%;
 `;
@@ -201,6 +209,7 @@ const TobyImage = styled.img`
   max-width: 100%;
   max-height: 100%;
   width: 80%;
+  height: 90%;
 `;
 
 const MainPage = () => {
@@ -208,6 +217,8 @@ const MainPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showHospitalModal, setShowHospitalModal] = useState(false); // 병원 스토리 리스트 모달 상태
   const [showSchoolModal, setShowSchoolModal] = useState(false);
+  const [showMartModal, setShowMartModal] = useState(false); // 병원 스토리 리스트 모달 상태
+  const [showPoliceModal, setShowPoliceModal] = useState(false);
   const [modalType, setModalType] = useState(""); // 모달 종류를 결정하는 상태
   const [userName, setUserName] = useState("");
   useEffect(() => {
@@ -226,9 +237,12 @@ const MainPage = () => {
     if (path === "/report") {
       setShowModal(true);
       setModalType("password");
-    } else if (path === "/police" || path === "/mart") {
-      setShowModal(true);
-      setModalType("construction");
+    } else if (path === "/police") {
+      setShowPoliceModal(true);
+      setModalType("police");
+    } else if (path === "/mart") {
+      setShowMartModal(true);
+      setModalType("mart");
     } else if (path === "/hospital") {
       setShowHospitalModal(true);
       setModalType("hospital");
@@ -314,8 +328,11 @@ const MainPage = () => {
           </TobyArea>
         </Area4>
       </MainpageContainer>
-      {showModal && modalType === "construction" && (
-        <ConstructionModal onClose={() => setShowModal(false)} />
+      {showMartModal && modalType === "mart" && (
+        <MartStoryListModal onClose={() => setShowMartModal(false)} />
+      )}
+      {showPoliceModal && modalType === "police" && (
+        <PoliceStoryListModal onClose={() => setShowPoliceModal(false)} />
       )}
       {showModal && modalType === "password" && (
         <PasswordModal onClose={() => setShowModal(false)} />

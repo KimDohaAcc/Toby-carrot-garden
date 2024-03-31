@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getUserStorage, clearUserStorage } from "../apis/userStorageApi";
+import { clearUserStorage } from "../apis/userStorageApi";
+import { useNavigate } from "react-router-dom";
 
-// const UserArea = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
 
-//   box-sizing: border-box;
-//   border: 1px solid black;
-//   position: relative;
-// `;
-const UserButton = styled.img`
-  position: absolute;
-  width: 100%;
-  left: -100%;
-  top: 5%;
+const LogoutArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  width: calc(8%);
+  margin: calc(1%);
+  font-size: calc(2rem);
+  align-items: center;
+  justify-content: center;
+`;
+
+const Image = styled.img`
+  width: calc(50%);
 `;
 
 const LogoutButton = styled.img`
@@ -36,30 +37,18 @@ const UserName = styled.div`
   z-index: 1;
 `;
 const LogoutBtn = () => {
-  const [userName, setUserName] = useState("");
+
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const userInfo = getUserStorage();
-    if (userInfo && userInfo.name) {
-      setUserName(`${userInfo.name}` + " ");
-    }
-  }, []);
-
+  
   const handleLogout = () => {
     clearUserStorage();
     navigate("/");
   };
-
   return (
-    <>
-      <UserName>{userName}어린이</UserName>
-      <UserButton src="/Image/button/nameBackground.png" />
-      <LogoutButton
-        src="/Image/button/logoutButton.png"
-        onClick={handleLogout}
-      />
-    </>
+    <LogoutArea onClick={() => handleLogout()}>
+      <Image src="/Image/button/logoutButton.png" alt="logout" />
+      <div>로그아웃</div>
+    </LogoutArea>
   );
 };
 

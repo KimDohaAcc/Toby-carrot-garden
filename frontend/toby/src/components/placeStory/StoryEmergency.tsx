@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 
 const EmergencyContainer = styled.div`
@@ -7,7 +7,7 @@ const EmergencyContainer = styled.div`
   align-items: center;
   grid-template-areas:
     "title title title"
-    ". content ."
+    ". conteent ."
     ". button .";
   grid-template-rows: 3fr 8fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
@@ -23,12 +23,13 @@ const EmergencyTitle = styled.div`
 `;
 
 const EmergencyContent = styled.div`
-  grid-area: content;
+  grid-area: conteent;
   display: grid;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 
 const EmergencyButton = styled.button`
@@ -41,15 +42,24 @@ const EmergencyButton = styled.button`
 const PhoneBackground = styled.img`
   height: 100%;
   width: auto;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 const StoryEmergency = () => {
+  const clickref = useRef(null);
   return (
     <EmergencyContainer>
       <EmergencyTitle>번호를 눌러주세요 이미지</EmergencyTitle>
       <EmergencyContent>
-        <PhoneBackground src="/Image/modal/phone.png" alt="phone" />
+        <PhoneBackground
+          src="/Image/modal/phone.png"
+          alt="phone"
+          ref={clickref}
+          onClick={() => {
+            console.log("Phone Image Clicked");
+            console.log(clickref.current);
+          }}
+        />
       </EmergencyContent>
       <EmergencyButton
         onClick={() => {

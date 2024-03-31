@@ -6,7 +6,7 @@ const LogoWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  height: 25%;
+  height: calc(20%);
   border: 2px solid cyan;
   justify-content: center;
   align-items: center;
