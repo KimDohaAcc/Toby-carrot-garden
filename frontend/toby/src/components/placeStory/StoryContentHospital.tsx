@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useSelector } from "react-redux";
@@ -42,13 +42,25 @@ const AudioPlayer = styled.audio`
   position: absolute;
 `;
 
-const AudioBtn = styled.button`
-  position: absolute;
-  bottom: 0;
-  left: 0;
+const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
+  width: 3vw;
+  height: 3vw;
+  background-image: url(${props => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;  
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent; 
+  }
 `;
 
+const AudioArea = styled.div`
+  position: absolute;
+  margin: calc(2%);
+`;
 type StoryContentProps = {
   index: number;
 };
@@ -72,28 +84,49 @@ const StoryContent = ({ index }: StoryContentProps) => {
   const sceneList = useSelector<RootState, Scene[]>(
     (state: RootState) => state.hospital.sceneList
   );
-  const audioRef = React.useRef<HTMLAudioElement>(null);
 
-  const handlePlay = () => {
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+
+  const handleTogglePlay = () => {
     if (audioRef.current) {
-      audioRef.current.play();
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    } else {
+      console.log("audioRef is null");
     }
   };
 
-  //sceneList[index].sceneImageUrl
-  console.log("index", index);
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+    }
+    setIsPlaying(true);
+  }, [index]);
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+  };
+  
   return (
     <StoryContentContainer>
+      <AudioArea>
+        <AudioPlayer ref={audioRef} controls autoPlay preload="metadata" hidden
+                     onEnded={handleAudioEnded}>
+          <source src={sceneList[index].voice} type="audio/mpeg" />
+        </AudioPlayer>
+        <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
+      </AudioArea>
       <StoryContentImageArea>
         <StoryContentImage
           src={sceneList[index].sceneImageUrl}
           alt="imageUrl"
         />
       </StoryContentImageArea>
-      <AudioPlayer ref={audioRef} controls preload="metadata" hidden>
-        <source src={sceneList[index].voice} type="audio/mpeg" />
-      </AudioPlayer>
-      <AudioBtn onClick={handlePlay}>재생</AudioBtn>
       <StoryContentText>{sceneList[index].content}</StoryContentText>
     </StoryContentContainer>
   );

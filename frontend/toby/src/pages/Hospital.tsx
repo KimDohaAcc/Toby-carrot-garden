@@ -183,23 +183,27 @@ const CloseBtnArea = styled.div`
 `;
 
 const CloseBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center; /* 버튼 내에서 텍스트를 수직 가운데 정렬 */
+  position: absolute; 
+  top: calc(35%); 
+  right: calc(20%); 
   grid-area: closeBtn;
-  border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
-  padding: 10px;
-  margin: 10px;
-  transition: background-color 0.3s ease; /* 마우스 호버 시 배경색이 부드럽게 변경되도록 트랜지션 추가. */
-  font-size: 1.5rem;
-  font-weight: bold;
-  box-sizing: border-box;
+  width: 3vw;
+  height: 3vw;
+  box-sizing: border-box;  
+  background-image: url("/Image/button/close.png");
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;  
 
+  &:focus,
   &:hover {
-    background-color: rgba(255, 185, 185, 0.5);
-    border: rgba(255, 185, 185, 0.5) solid 1px;
+    outline: none;
+    background-color: transparent;
+  }
+  &:active {
+    transform: scale(0.95); /* 클릭시 버튼이 살짝 축소되는 효과 */
   }
 `;
 
@@ -342,13 +346,7 @@ const Hospital = () => {
           <StoryContentArea2>
             <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
             <CloseBtnArea>
-              <CloseBtn
-                onClick={() => {
-                  navigate("/main");
-                }}
-              >
-                ❌
-              </CloseBtn>
+              <CloseBtn onClick={() => { navigate("/main"); }} />
             </CloseBtnArea>
 
             {sceneType === "CLEAR" ? (
