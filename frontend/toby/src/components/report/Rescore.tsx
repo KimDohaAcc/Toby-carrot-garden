@@ -4,7 +4,7 @@ import { getEmotionList, getObjectList } from "../../apis/analysisApi";
 import RescoreModal from "../modals/rescoreModal";
 import { format } from "date-fns";
 import { getRescore } from "../../apis/analysisApi";
-// RecoreContentContainer 컴포넌트에 대한 스타일 정의
+
 interface QuizItem {
   correctAnswer: string;
   imageUrl: string;
@@ -22,91 +22,111 @@ interface QuizItem {
 // }
 
 const Button = styled.button`
-  /* padding: 10px 20px; */
-  /* margin: 10px; */
   background-color: #80cee1;
   color: white;
   border: none;
   border-radius: 15px;
-  flex: 0 0 40%;
   height: 60%;
   font-size: 24px;
-
-  /* cursor: pointer; */
 `;
+
 const RecoreContentContainer = styled.div`
   display: flex;
   width: 100%;
-  max-height: auto; // 컨테이너의 최대 높이를 100%로 설정하여 내부 내용이 넘치면 스크롤바 생성
-  border: 5px solid black;
-  flex-direction: row;
-  overflow-y: auto; // 내용이 많아지면 스크롤바 생성
-
+  height: 100%;
+  border: 2px solid black;
+  overflow: hidden;
+  object-fit: contain;
   flex-direction: row;
 `;
 const RecoreContentContainer2 = styled.div`
   display: flex;
-  flex-direction: column; // 자식 요소들을 세로로 배치
+  flex-direction: column;
   width: 100%;
-  height: 100%; // 혹은 필요한 높이 지정
+  height: 100%;
   border: 5px solid black;
-  overflow: hidden; // 이 컨테이너에서는 스크롤 발생하지 않도록
+  overflow: hidden;
+  object-fit: contain;
+  margin: 5px;
+  box-sizing: border-box;
 `;
 
 const RecoreScrollArea = styled.div`
-  overflow-y: auto; // 이 영역에서 스크롤 발생
-  flex: 1; // 나머지 공간을 모두 차지
-  border: 14px solid #fff299;
-  border-radius: 7%;
+  overflow-y: auto;
+  flex: 0 0 90%;
+  width: 100%;
+  height: 100%;
+  border-radius: 60px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 14px solid #fff299;
+  object-fit: contain;
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #fff299;
+    border-radius: 5px;
+  }
 `;
 
 const RecoreScrollArea2 = styled.div`
-  overflow-y: auto; // 이 영역에서 스크롤 발생
-  flex: 1; // 나머지 공간을 모두 차지
-  border: 14px solid #e0bfe6;
-  border-radius: 7%;
+  overflow-y: auto;
+  flex: 0 0 90%;
+  width: 100%;
+  height: 100%;
+  border-radius: 60px;
   background-color: white;
+  object-fit: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 14px solid #e0bfe6;
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #e0bfe6;
+    border-radius: 5px;
+  }
 `;
 const RecoreButtonContainer = styled.div`
-  position: sticky; /* 스크롤 시 상단에 고정 */
-  top: 0; /* 컨테이너 상단에 붙임 */
-  z-index: 10; /* 다른 콘텐츠 위에 오도록 z-index 설정 */
-  /* background-color: white; 스크롤 시 내용이 겹치지 않도록 배경색 설정 */
-  border: 2px solid blue;
+  width: auto;
+  height: 100%;
   flex: 0 0 10%;
-  overflow: hidden;
-  object-fit: contain;
   position: relative;
 `;
 const RecoreButton = styled.img`
+  width: auto;
+  height: 100%;
   display: flex;
   position: absolute;
   left: 5%;
+  top: 5%;
 `;
 const RecoreBox = styled.div`
   display: flex;
-  height: 40%;
-  width: 100%;
-  max-height: 100%; // 컨테이너의 최대 높이를 100%로 설정하여 내부 내용이 넘치면 스크롤바 생성
+  justify-content: center;
+  height: auto;
+  width: 90%;
   border: 2px solid yellow;
-  flex-direction: row;
   flex: 0 0 40%;
-  overflow: hidden;
   object-fit: contain;
-`;
-const RecoreBoxTitle = styled.div`
-  height: 10%;
-  width: 100%;
-
-  border: 2px solid pink;
 `;
 
 const RecoreBoxImage = styled.img`
-  width: 60%; // 이미지 너비를 컨테이너에 맞춥니다.
-  height: 100%; // 이미지 높이를 자동으로 조정하여 비율을 유지합니다.
-  max-height: 100%; // 컨테이너 높이의 최대 60%까지 허용합니다.
+  width: 100%;
+  height: auto;
   object-fit: contain;
+  overflow: hidden;
   border: 2px solid green;
   flex: 0 0 60%;
   left: 5%;
@@ -114,39 +134,46 @@ const RecoreBoxImage = styled.img`
 
 const RecoreBoxAnswer = styled.div`
   width: 100%;
+  height: auto;
   display: flex;
+  justify-content: center;
+  text-align: center;
   flex-direction: column;
   border: 2px solid green;
   flex: 0 0 40%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 const RecoreBoxAnswerText = styled.div`
-  height: 50%;
-
+  width: 100%;
+  height: auto;
+  flex: 0 0 25%;
+  font-size: 4rem;
   border: 2px solid green;
 `;
 const RecoreBoxAnswerCheck = styled.div`
-  height: 50%;
-
-  border: 2px solid green;
-`;
-const RecoreBoxRescore = styled.div`
   width: 100%;
-  max-height: 100%; // 컨테이너의 최대 높이를 100%로 설정하여 내부 내용이 넘치면 스크롤바 생성
+  height: auto;
+  flex: 0 0 25%;
+  font-size: 4rem;
   border: 2px solid green;
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 20%;
 `;
+
 const RecoreBoxRescoreDate = styled.div`
-  height: 50%;
+  width: 100%;
+  height: auto;
+  flex: 0 0 25%;
+  font-size: 2rem;
   border: 2px solid green;
 `;
 const RecoreBoxRescoreButton = styled.div`
-  height: 50%;
-  border: 2px solid pink;
+  width: 100%;
+  height: auto;
+  flex: 0 0 25%;
+  border: 2px solid green;
   display: flex;
-  justify-content: left; // 가로 중앙 정렬
-  align-items: center; // 세로 중앙 정렬
+  justify-content: center;
+  align-items: center;
 `;
 const translateAnswer = (answer) => {
   const translations = {
@@ -168,84 +195,6 @@ const formatScore = (score) => {
 
   return scoreTranslations[score.toString()] || score; // 번역이 없으면 원본 점수를 반환
 };
-// const RecoreBoxContent = styled.div`
-//   /* flex-direction: column; */
-//   height: 40%;
-//   width: 100%;
-//   max-height: 100%; // 컨테이너의 최대 높이를 100%로 설정하여 내부 내용이 넘치면 스크롤바 생성
-//   border: 2px solid yellow;
-// `;
-// const ListItem = styled.div`
-//   padding: 9%;
-//   margin: 1% 0;
-//   border: 1px solid gray;
-// `;
-
-const dummyData: QuizItem[] = [
-  {
-    correctAnswer: "사자",
-    imageUrl: "https://example.com/image1.jpg",
-    createTime: "20200482T33832912",
-    score: 89.2,
-    memberQuizId: 1,
-  },
-  {
-    correctAnswer: "호랑이",
-    imageUrl: "https://example.com/image2.jpg",
-    createTime: "20200482T33832912",
-    score: 85,
-    memberQuizId: 2,
-  },
-  {
-    correctAnswer: "호랑이",
-    imageUrl: "https://example.com/image2.jpg",
-    createTime: "20200482T33832912",
-    score: 85,
-    memberQuizId: 3,
-  },
-  {
-    correctAnswer: "호랑이",
-    imageUrl: "https://example.com/image2.jpg",
-    createTime: "20200482T33832912",
-    memberQuizId: 4,
-    score: 90,
-  },
-  {
-    correctAnswer: "호랑이",
-    imageUrl: "https://example.com/image2.jpg",
-    createTime: "20200482T33832912",
-    score: 85,
-    memberQuizId: 5,
-  },
-  {
-    correctAnswer: "호랑이",
-    imageUrl: "https://example.com/image2.jpg",
-    createTime: "20200482T33832912",
-    score: 85,
-    memberQuizId: 5,
-  },
-  {
-    correctAnswer: "호랑이",
-    imageUrl: "https://example.com/image2.jpg",
-    createTime: "20200482T33832912",
-    score: 85,
-    memberQuizId: 7,
-  },
-  {
-    correctAnswer: "호랑이",
-    imageUrl: "https://example.com/image2.jpg",
-    createTime: "20200482T33832912",
-    score: 85,
-    memberQuizId: 8,
-  },
-  {
-    correctAnswer: "호랑이",
-    imageUrl: "https://example.com/image2.jpg",
-    createTime: "20200482T33832912",
-    score: 85,
-    memberQuizId: 9,
-  },
-];
 
 const RecoreContent = () => {
   const [emotionQuizList, setEmotionQuizList] = useState([]);

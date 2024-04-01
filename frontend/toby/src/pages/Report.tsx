@@ -37,17 +37,16 @@ const ReportCategory = styled.div`
 `;
 
 const StyledButton = styled.div`
-  /* padding: 8px 16px; */
-  margin: 1% 1% 1% 1%; // Adds a little space between the buttons
-
+  margin: 1% 1% 1% 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   display: flex;
   position: absolute;
-  /* width: 80%; // 버튼의 폭 고정
-  height: 60%; // 버튼의 높이 고정 */
 `;
 
 const Image = styled.img`
-  width: 70%; // 이미지 크기 조정
+  width: 70%;
   height: 70%;
   margin-right: 2%;
 `;
@@ -55,9 +54,8 @@ const Image = styled.img`
 const Category1 = styled.div`
   grid-area: category1;
   display: flex;
-  /* justify-content: center; // Centers the buttons horizontally */
-  align-items: left; // Centers the buttons vertically
-  gap: 10px; // Adds space between the buttons
+  justify-content: center;
+  gap: 10px;
   border: 2px solid black;
   flex-direction: column;
   position: relative;
@@ -66,9 +64,9 @@ const Category1 = styled.div`
 const Category2 = styled.div`
   grid-area: category2;
   display: flex;
-  /* justify-content: center; // Centers the buttons horizontally */
-  align-items: left; // Centers the buttons vertically
-  gap: 10px; // Adds space between the buttons
+  justify-content: center;
+  align-items: left;
+  gap: 10px;
   border: 2px solid black;
   flex-direction: column;
   position: relative;
@@ -77,9 +75,9 @@ const Category2 = styled.div`
 const Category3 = styled.div`
   grid-area: category3;
   display: flex;
-  /* justify-content: center; // Centers the buttons horizontally */
-  align-items: left; // Centers the buttons vertically
-  gap: 10px; // Adds space between the buttons
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   border: 2px solid black;
   flex-direction: column;
   position: relative;
@@ -114,11 +112,13 @@ const Content = styled.div`
   object-fit: contain;
   overflow: hidden;
 `;
+
 const ContentExpressBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  margin-left: 1%;
   object-fit: contain;
   overflow: hidden;
 `;
@@ -129,6 +129,7 @@ const ContentExpressButton = styled.img`
   height: 100%;
   left: 5%;
 `;
+
 const ContentExpressButtonContiner = styled.div`
   flex: 0 0 10%;
   border: 2px solid black;
@@ -143,19 +144,24 @@ const ContentExpressButtonContiner = styled.div`
   justify-content: left;
   position: relative;
 `;
+
 const ContentExpress = styled.div`
   flex: 0 0 90%;
   box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
   border: 14px solid #e4f0d5;
   background-color: white;
-  border-radius: 7%;
-  height: 85%;
-  max-height: 89%;
+  border-radius: 50px;
+  height: 90%;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 `;
+
 const ContentElseContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-right: 1%;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -175,6 +181,7 @@ const ContentElse = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const ContentGraphContainer = styled.div`
   flex: 0 0 10%;
   border: 2px solid black;
@@ -183,19 +190,6 @@ const ContentGraphContainer = styled.div`
   align-items: left;
   width: 100%;
   height: 100%;
-
-  justify-items: left;
-  align-content: left;
-  justify-content: left;
-  position: relative;
-`;
-const ContentGraphButtonContainer = styled.div`
-  flex: 0 0 10%;
-  border: 1px solid yellow;
-  overflow: hidden;
-  object-fit: contain;
-  align-items: left;
-
   justify-items: left;
   align-content: left;
   justify-content: left;
@@ -210,18 +204,27 @@ const ContentGraph = styled.div`
   flex-direction: column;
   flex: 0 0 60%;
 `;
+
 const ReportGraphContentStyled = styled.div`
   width: 100%;
   height: 100%;
   object-fit: contain;
-  flex: 0 0 70%;
+  flex: 0 0 80%;
 `;
+
 const ContentGraphExplain = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
-  flex: 0 0 30%;
+  flex: 0 0 20%;
   border: 2px solid pink;
+  object-fit: contain;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
+
 const ContentExplain = styled.div`
   width: 100%;
   height: 100%;
@@ -234,28 +237,38 @@ const ContentExplain = styled.div`
   object-fit: contain;
   overflow: hidden;
 `;
+
 const GraphIndex = styled.img`
   display: flex;
   position: absolute;
+  width: 100%;
+  height: auto;
 `;
+
 const ExplainImage = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  overflow: hidden;
 `;
+
 const Taehun = styled.h1`
   line-height: 60%;
   font-size: 3rem;
 `;
+
 const Taehun2 = styled.h2`
   line-height: 60%;
   font-size: 2rem;
 `;
+
 const Report = () => {
   const navigate = useNavigate();
   const [contentText, setContentText] = useState<React.ReactNode>("");
   const [showBoxes, setShowBoxes] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [activeButton, setActiveButton] = useState("");
+
   // 버튼 클릭 핸들러
 
   useEffect(() => {
@@ -367,7 +380,7 @@ const Report = () => {
                     <ContentExpressButton src="/Image/button/ExpressButtonOn.png" />
                   </ContentExpressButtonContiner>
                   <ContentExpress>
-                    <ReportDrawings></ReportDrawings>
+                    <ReportDrawings />
                   </ContentExpress>
                 </ContentExpressBox>
               </>
