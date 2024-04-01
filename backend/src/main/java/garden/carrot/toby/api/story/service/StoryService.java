@@ -87,8 +87,10 @@ public class StoryService {
 		double score = -1;
 		if (redis != null) {
 			score = Double.parseDouble(redis);
-			quizData.setScore(score);
-			memberQuizRepository.save(quizData);
+			if (score != -1) {
+				quizData.setScore(score);
+				memberQuizRepository.save(quizData);
+			}
 		} else {
 			score = quizData.getScore();
 		}
