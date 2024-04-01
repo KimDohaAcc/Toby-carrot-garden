@@ -66,6 +66,7 @@ const StoryQuizHospitial = ({ index }: StoryQuizProps) => {
             imageUrl={imageUrl}
             quizId={quizId}
             content={content}
+            index={index}
           />
         );
       case "OBJECTS":
@@ -74,6 +75,7 @@ const StoryQuizHospitial = ({ index }: StoryQuizProps) => {
             imageUrl={imageUrl}
             content={content}
             quizId={quizId}
+            index={index}
           />
         );
       case "FEELINGS":
@@ -82,10 +84,11 @@ const StoryQuizHospitial = ({ index }: StoryQuizProps) => {
             imageUrl={imageUrl}
             content={content}
             quizId={quizId}
+            index={index}
           />
         );
       case "EMERGENCY":
-        return <StoryEmergency />;
+        return <StoryEmergency index={index} />;
       default:
         return <div>Quiz Type Error!!!</div>;
     }

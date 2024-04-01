@@ -34,6 +34,17 @@ const ClearWebcamArea = styled.div`
   overflow: hidden;
 `;
 
+const AudioPlayer = styled.audio`
+  position: absolute;
+`;
+
+const AudioBtn = styled.button`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+`;
+
 type StoryClearProps = {
   index: number;
 };
@@ -53,6 +64,13 @@ const StoryClear = ({ index }: StoryClearProps) => {
   const sceneList = useSelector<RootState, Scene[]>(
     (state: RootState) => state.hospital.sceneList
   );
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+
+  const handlePlay = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
 
   useEffect(() => {
     setQuizId(sceneList[index].sceneId);
@@ -61,6 +79,10 @@ const StoryClear = ({ index }: StoryClearProps) => {
 
   return (
     <ClearContainer>
+      <AudioPlayer ref={audioRef} controls preload="metadata" hidden>
+        <source src={sceneList[index].voice} type="audio/mpeg" />
+      </AudioPlayer>
+      <AudioBtn onClick={handlePlay}>재생</AudioBtn>
       <StoryClearContent>{sceneList[index].content}</StoryClearContent>
       <ClearWebcamArea>
         <ClearWebcam placeId={placeId} />

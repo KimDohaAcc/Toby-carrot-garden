@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 // import SignatureCanvas from "react-signature-canvas";
 
 import StoryDrawingModal from "../modals/StoryDrawingModal";
@@ -35,6 +37,7 @@ const QuizImageArea = styled.div`
   border: 1px solid black;
   object-fit: contain;
   overflow: hidden;
+  position: relative;
 `;
 
 const ImageArea = styled.div`
@@ -87,8 +90,53 @@ const ClickText = styled.div`
   cursor: pointer;
 `;
 
-const StoryQuizDrawings = ({ imageUrl, quizId, content }) => {
+const AudioPlayer = styled.audio`
+  position: absolute;
+`;
+
+const AudioBtn = styled.button`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+`;
+
+interface Scene {
+  sceneId: number;
+  quizType: string;
+  sceneImageUrl: string;
+  content: string;
+  voice: string;
+}
+
+const StoryQuizDrawings = ({ imageUrl, quizId, content, index }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [voiceUrl, setVoiceUrl] = React.useState<string>("");
+
+  const HospitalSceneList = useSelector<RootState, Scene[]>(
+    (state: RootState) => state.hospital.sceneList
+  );
+  const SchoolSceneList = useSelector<RootState, Scene[]>(
+    (state: RootState) => state.school.sceneList
+  );
+  useEffect(() => {
+    if (HospitalSceneList.length > 0) {
+      const voice = HospitalSceneList[index].voice;
+      setVoiceUrl(voice);
+    } else {
+      const voice = SchoolSceneList[index].voice;
+      setVoiceUrl(voice);
+    }
+  }, [index, HospitalSceneList, SchoolSceneList]);
+
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+
+  const handlePlay = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -109,6 +157,10 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content }) => {
         <ImageArea>
           <QuizImage src={imageUrl} alt="image" />
         </ImageArea>
+        <AudioPlayer ref={audioRef} controls preload="metadata" hidden>
+          <source src={voiceUrl} type="audio/mpeg" />
+        </AudioPlayer>
+        <AudioBtn onClick={handlePlay}>재생</AudioBtn>
         <ConteentArea>{content}</ConteentArea>
       </QuizImageArea>
       <QuizCanvasArea>
@@ -123,9 +175,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content }) => {
         isOpen={isModalOpen}
         onClose={closeModal}
         quizId={quizId}
-        // Make sure this prop is used correctly in the modal
-      />{" "}
-      {/* quizId prop 추가 */}
+      />
     </QuizContainer>
   );
 };

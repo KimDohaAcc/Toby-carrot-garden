@@ -265,6 +265,10 @@ const TobyImage = styled.img`
   cursor: pointer;
 `;
 
+const AudioPlayer = styled.audio`
+  position: absolute;
+`;
+
 const MainPage = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);

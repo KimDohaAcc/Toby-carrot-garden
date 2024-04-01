@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 import { getEmergencyQuiz } from "../../apis/quizApi";
 
@@ -139,7 +141,26 @@ const GetCarrotModal = styled.img`
   animation: ${carrotModalani} 2s linear none;
 `;
 
-const StoryEmergency = () => {
+const AudioPlayer = styled.audio`
+  position: absolute;
+`;
+
+const AudioBtn = styled.button`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+`;
+
+interface Scene {
+  sceneId: number;
+  quizType: string;
+  sceneImageUrl: string;
+  content: string;
+  voice: string;
+}
+
+const StoryEmergency = ({ index }: { index: number }) => {
   const [numList, setNumList] = useState(() => {
     const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, "*", 0, "#"];
     return list;
@@ -148,7 +169,20 @@ const StoryEmergency = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCarrotModalOpen, setIsCarrotModalOpen] = useState(false);
 
+  const sceneList = useSelector<RootState, Scene[]>(
+    (state: RootState) => state.hospital.sceneList
+  );
+  console.log(index);
+
   const [number, setNumber] = useState("");
+
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+
+  const handlePlay = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
 
   const handleBtnClick = (e) => {
     const newNumber = number + e;
@@ -214,6 +248,10 @@ const StoryEmergency = () => {
             );
           })}
         </PhoneButtonContainer>
+        <AudioPlayer ref={audioRef} controls preload="metadata" hidden>
+          <source src={sceneList[index].voice} type="audio/mpeg" />
+        </AudioPlayer>
+        <AudioBtn onClick={handlePlay}>재생</AudioBtn>
       </EmergencyContent>
       <SubmitArea>
         <RetryBtn

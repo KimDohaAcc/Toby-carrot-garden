@@ -20,6 +20,12 @@ import UserInfoForm from "./pages/UserInfoForm";
 import styled from "styled-components";
 import Example from "./pages/Example";
 
+function applyFixedTheme() {
+  document.body.style.backgroundColor = "#ffffff";
+  document.body.style.color = "#000000";
+  document.body.style.backgroundColor = "#ffffff";
+}
+
 const BackgroundContainer = styled.div`
   height: 100vh;
   width: 100vw;
@@ -30,6 +36,7 @@ const BackgroundContainer = styled.div`
 `;
 
 function App() {
+  applyFixedTheme();
   return (
     <BackgroundContainer>
       <Routes>

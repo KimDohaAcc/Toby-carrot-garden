@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from "react";
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 // import Logo from "../components/Logo";
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +44,9 @@ const LoginButton = styled.img`
   top: 69%;
   /* top: 1%; */
 `;
-const Logo = lazy(() => import("../components/Logo"));
+
+const Logo = lazy(() => import("../components/Logo3"));
+
 const StartPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -71,13 +73,16 @@ const StartPage = () => {
   const handleSignupClick = () => {
     navigate("/privacyConsentForm");
   };
+
   const handleLoginClick = () => {
     navigate("/kakaoLogin");
   };
+
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
         <StartPageContainer>
+          <Logo />
           <HelloRabbitText src="Image/toby/HelloRabbitTextImage.png" />
           <HelloRabbit src="Image/toby/HelloRabbitImage.png" />
           <SignupButton
@@ -89,7 +94,6 @@ const StartPage = () => {
             onClick={handleLoginClick}
           />
         </StartPageContainer>
-        <Logo />
       </Suspense>
     </>
   );

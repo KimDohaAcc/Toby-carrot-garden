@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import QuizWebCam from "../QuizWebCam";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { set } from "date-fns";
 
 const StoryQuizDetectionsContainer = styled.div`
   display: grid;
@@ -70,10 +73,54 @@ const QuizImage = styled.img`
   margin: 0 auto;
 `;
 
-const StoryQuizDetections = ({ imageUrl, quizId, content }) => {
+const AudioPlayer = styled.audio`
+  position: absolute;
+`;
+
+const AudioBtn = styled.button`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+`;
+
+interface Scene {
+  sceneId: number;
+  quizType: string;
+  sceneImageUrl: string;
+  content: string;
+  voice: string;
+}
+
+const StoryQuizDetections = ({ imageUrl, quizId, content, index }) => {
   // const handleTakePicture = () => {
   //   console.log("Take a picture");
   // };
+  const [voiceUrl, setVoiceUrl] = React.useState<string>("");
+
+  const HospitalSceneList = useSelector<RootState, Scene[]>(
+    (state: RootState) => state.hospital.sceneList
+  );
+  const SchoolSceneList = useSelector<RootState, Scene[]>(
+    (state: RootState) => state.school.sceneList
+  );
+  useEffect(() => {
+    if (HospitalSceneList.length > 0) {
+      const voice = HospitalSceneList[index].voice;
+      setVoiceUrl(voice);
+    } else {
+      const voice = SchoolSceneList[index].voice;
+      setVoiceUrl(voice);
+    }
+  }, [index, HospitalSceneList, SchoolSceneList]);
+
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+
+  const handlePlay = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
   return (
     <StoryQuizDetectionsContainer>
       <StoryQuizDetectionsTitleArea>
@@ -83,6 +130,10 @@ const StoryQuizDetections = ({ imageUrl, quizId, content }) => {
         <ImageArea>
           <QuizImage src={imageUrl} alt="image" />
         </ImageArea>
+        <AudioPlayer ref={audioRef} controls preload="metadata" hidden>
+          <source src={voiceUrl} type="audio/mpeg" />
+        </AudioPlayer>
+        <AudioBtn onClick={handlePlay}>재생</AudioBtn>
         <ConteentArea>{content}</ConteentArea>
       </StoryQuizDetectionsImageArea>
       <StoryQuizDetectionCanmeraArea>

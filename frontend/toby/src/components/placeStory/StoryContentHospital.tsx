@@ -10,6 +10,7 @@ const StoryContentContainer = styled.div`
   width: 100%;
   height: 100%;
   border: 1px solid black;
+  position: relative;
 `;
 
 const StoryContentImageArea = styled.div`
@@ -34,6 +35,18 @@ const StoryContentText = styled.div`
   align-items: center;
   font-size: 3rem;
   border: 1px solid black;
+  white-space: pre-wrap;
+`;
+
+const AudioPlayer = styled.audio`
+  position: absolute;
+`;
+
+const AudioBtn = styled.button`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
 `;
 
 type StoryContentProps = {
@@ -59,6 +72,14 @@ const StoryContent = ({ index }: StoryContentProps) => {
   const sceneList = useSelector<RootState, Scene[]>(
     (state: RootState) => state.hospital.sceneList
   );
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+
+  const handlePlay = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
+
   //sceneList[index].sceneImageUrl
   console.log("index", index);
   return (
@@ -69,6 +90,10 @@ const StoryContent = ({ index }: StoryContentProps) => {
           alt="imageUrl"
         />
       </StoryContentImageArea>
+      <AudioPlayer ref={audioRef} controls preload="metadata" hidden>
+        <source src={sceneList[index].voice} type="audio/mpeg" />
+      </AudioPlayer>
+      <AudioBtn onClick={handlePlay}>재생</AudioBtn>
       <StoryContentText>{sceneList[index].content}</StoryContentText>
     </StoryContentContainer>
   );
