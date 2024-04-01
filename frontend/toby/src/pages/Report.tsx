@@ -132,7 +132,6 @@ const ContentExpressButton = styled.img`
 
 const ContentExpressButtonContiner = styled.div`
   flex: 0 0 10%;
-  border: 2px solid black;
   overflow: hidden;
   object-fit: contain;
   align-items: left;
@@ -148,9 +147,9 @@ const ContentExpressButtonContiner = styled.div`
 const ContentExpress = styled.div`
   flex: 0 0 90%;
   box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
-  border: 14px solid #e4f0d5;
+  border: 14px solid #FFDCDC;
   background-color: white;
-  border-radius: 50px;
+  border-radius: 5%;
   height: 90%;
   width: 100%;
   display: flex;
@@ -171,9 +170,9 @@ const ContentElseContainer = styled.div`
 const ContentElse = styled.div`
   flex: 0 0 90%;
   box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
-  border: 14px solid #ccd2f0;
+  border: 14px solid #FFDCDC;
   background-color: white;
-  border-radius: 7%;
+  border-radius: 5%;
   height: 100%;
   width: 100%;
   object-fit: contain;
@@ -184,7 +183,6 @@ const ContentElse = styled.div`
 
 const ContentGraphContainer = styled.div`
   flex: 0 0 10%;
-  border: 2px solid black;
   overflow: hidden;
   object-fit: contain;
   align-items: left;
@@ -199,7 +197,6 @@ const ContentGraphContainer = styled.div`
 const ContentGraph = styled.div`
   height: 100%;
   width: auto;
-  border: 2px solid green;
   display: flex;
   flex-direction: column;
   flex: 0 0 60%;
@@ -217,7 +214,6 @@ const ContentGraphExplain = styled.div`
   width: 100%;
   height: 100%;
   flex: 0 0 20%;
-  border: 2px solid pink;
   object-fit: contain;
   overflow: hidden;
   display: flex;
@@ -229,7 +225,6 @@ const ContentExplain = styled.div`
   width: 100%;
   height: 100%;
   flex: 0 0 40%;
-  border: 5px solid yellow;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -241,11 +236,12 @@ const ContentExplain = styled.div`
 const GraphIndex = styled.img`
   display: flex;
   position: absolute;
-  width: 100%;
+  width: 70%;
   height: auto;
 `;
 
 const ExplainImage = styled.img`
+  padding: 1%;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -266,10 +262,7 @@ const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
   width: 3vw;
   height: 3vw;
-  background-image: url(${(props) =>
-    props.isPlaying
-      ? "/Image/button/no-sound.png"
-      : "/Image/button/sound.png"});
+  background-image: url(${(props) => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
   background-size: 100% 100%;
   background-color: transparent;
   border: none;

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { getCorrectAnswer } from "../../apis/analysisApi";
+import { getUserStorage } from "../../apis/userStorageApi";
 import styled from "styled-components";
+const userStorage = getUserStorage();
+const accessToken = userStorage.accessToken;
 
 // 더미 데이터 정의
 const initialData = [
@@ -26,6 +29,25 @@ const Graph = styled.div`
 
 const MyResponsiveBar = () => {
   const [data, setData] = useState(initialData);
+  const [fontSize, setFontSize] = useState(18); // 초기 폰트 크기 설정
+
+  // 뷰포트 크기에 따라 폰트 크기 변경
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      // 뷰포트 너비가 768px 미만이면 폰트 크기를 20으로 설정
+      if (width < 768) {
+        setFontSize(10);
+      } else {
+        setFontSize(18); // 기본 폰트 크기
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,12 +85,12 @@ const MyResponsiveBar = () => {
         padding={0.1}
         groupMode="grouped"
         layout="horizontal"
-        colors={{ scheme: "nivo" }}
+        colors={['#FFDCDC', '#FF8F8F', '#BCB4B4']}
         borderColor={{ from: "color", modifiers: [["darker", 1.8]] }}
         axisTop={null}
         axisRight={null}
         axisBottom={{
-          tickSize: 5,
+          tickSize: 10,
           tickPadding: 2,
           tickRotation: 0,
           legend: "평균",
@@ -114,7 +136,7 @@ const MyResponsiveBar = () => {
           axis: {
             ticks: {
               text: {
-                fontSize: 30, // 축 틱 레이블의 글자 크기 조정
+                fontSize: fontSize, // 축 틱 레이블의 글자 크기 조정
               },
             },
             legend: {
@@ -130,7 +152,7 @@ const MyResponsiveBar = () => {
           },
           labels: {
             text: {
-              fontSize: 25, // 막대 내부 레이블의 글자 크기 조정
+              fontSize: fontSize-3, // 막대 내부 레이블의 글자 크기 조정
             },
           },
         }}
