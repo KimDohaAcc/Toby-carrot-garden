@@ -84,23 +84,40 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       formData.append("quizId", quizId.toString());
 
       try {
-        await submitQuiz(formData);
-        setModalState("wait"); // 폴링 동안 WaitToby 모달 표시
+        // submitQuiz 함수 호출 시 반환된 데이터를 response 변수에 할당
+        const submitResponse = await submitQuiz(formData);
+        const { status, result } = submitResponse;
 
-        const endTime = Date.now() + 10000; // 10초 후 폴링 종료
-        const intervalId = setInterval(async () => {
-          if (Date.now() > endTime) {
-            clearInterval(intervalId);
-            setModalState("fail"); // 10초 동안 분석 결과를 받지 못하면 FailToby 모달 표시
-            return;
-          }
+        if (status === 200) {
+          // 제출에 성공한 경우 memberQuizId 추출
+          const { memberQuizId } = result;
 
-          const { status, result } = await getQuizAnswer(quizId);
-          if (status === 200 && result.score !== -1) {
-            clearInterval(intervalId);
-            setModalState(result.score === 100 ? "success" : "fail"); // 점수에 따라 SuccessToby 또는 FailToby 모달 표시
-          }
-        }, 1000);
+          setModalState("wait"); // 폴링 동안 WaitToby 모달 표시
+
+          const endTime = Date.now() + 10000; // 10초 후 폴링 종료
+          const intervalId = setInterval(async () => {
+            if (Date.now() > endTime) {
+              clearInterval(intervalId);
+              setModalState("fail"); // 10초 동안 분석 결과를 받지 못하면 FailToby 모달 표시
+              return;
+            }
+
+            // getQuizAnswer 호출 시 submitQuiz에서 받은 memberQuizId를 사용
+            const answerResponse = await getQuizAnswer(memberQuizId);
+            if (
+              answerResponse.status === 200 &&
+              answerResponse.result.score !== -1
+            ) {
+              clearInterval(intervalId);
+              setModalState(
+                answerResponse.result.score === 100 ? "success" : "fail"
+              ); // 점수에 따라 SuccessToby 또는 FailToby 모달 표시
+            }
+          }, 1000);
+        } else {
+          console.error("Quiz submission failed", submitResponse.message);
+          setModalState("fail"); // 제출 실패 시 FailToby 모달 표시
+        }
       } catch (error) {
         console.error("이미지 전송 실패", error);
         setModalState("fail"); // 전송 실패 시 FailToby 모달 표시

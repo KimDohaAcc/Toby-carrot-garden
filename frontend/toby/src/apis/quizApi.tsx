@@ -27,9 +27,9 @@ import { tempToken } from "../config/apiConfig";
 //   }
 // };
 export const submitQuiz = async (formData) => {
-  for (let [key, value] of formData.entries()) {
-    console.log(`${key}: ${value}`);
-  }
+  // for (let [key, value] of formData.entries()) {
+  //   console.log(`${key}: ${value}`);
+  // }
   return new Promise((resolve, reject) => {
     api
       .request({
@@ -48,9 +48,9 @@ export const submitQuiz = async (formData) => {
       .catch((err) => {
         reject(err);
         console.log(err);
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}: ${value}`);
-        }
+        // for (let [key, value] of formData.entries()) {
+        //   console.log(`${key}: ${value}`);
+        // }
       });
   });
 };
@@ -73,15 +73,20 @@ export const submitQuiz2 = async (formData) => {
 };
 
 //아이가 풀었던 퀴즈 정답
-export const getQuizAnswer = async ({ quizId }) => {
+export const getQuizAnswer = async ({ member_quiz_id }) => {
+  console.log("여기가ㅓ지 옴");
+  console.log(member_quiz_id);
+  console.log(`quiz/${member_quiz_id}/result`);
+
   try {
     // `headers`를 포함하는 옵션 객체를 `get` 메소드의 두 번째 인자로 전달합니다.
     // const response = await api.get(`quiz/${quizId}/result`, {
-    const response = await api.get(`quiz/${quizId}/result`, {
+    const response = await api.get(`quiz/${member_quiz_id}/result`, {
       headers: {
         Authorization: `Bearer ${tempToken}`, // `tempToken`은 유효한 토큰 문자열이어야 합니다.
       },
     });
+    console.log(member_quiz_id);
     // const response = await api.get(`quiz/${quizId}/result`);
     return response.data;
   } catch (error) {
