@@ -4,34 +4,6 @@ import styled from "styled-components";
 import { getCarrotList } from "../../apis/mypageApi";
 import { useNavigate } from "react-router-dom";
 
-// getCarrotList 함수 대신 사용할 더미 데이터
-// const dummyCarrotList = [
-//   {
-//     placeId: 1,
-//     carrotCount: 3,
-//     gradeMax: 20,
-//     carrotGrade: 1,
-//   },
-//   {
-//     placeId: 2,
-//     carrotCount: 23,
-//     gradeMax: 60,
-//     carrotGrade: 2,
-//   },
-//   {
-//     placeId: 3,
-//     carrotCount: 33,
-//     gradeMax: 60,
-//     carrotGrade: 7,
-//   },
-//   {
-//     placeId: 4,
-//     carrotCount: 31,
-//     gradeMax: 60,
-//     carrotGrade: 4,
-//   },
-// ];
-
 const NoCarrot = styled.div`
   display: flex;
   justify-content: center;
@@ -303,7 +275,7 @@ const CarrotField = () => {
 
   return (
     <>
-      {carrotList.length == 0 ||
+      {carrotList.length === 0 ||
       (carrotList[0].carrotCount == 0 &&
         carrotList[1].carrotCount == 0 &&
         carrotList[2].carrotCount == 0 &&

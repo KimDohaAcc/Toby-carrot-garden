@@ -1,7 +1,5 @@
 import { api } from "../config/apiConfig";
 
-import { tempToken } from "../config/apiConfig";
-
 // 클라이언트에서 사진과 퀴즈 아이디 전달
 // s3에 사진을 저장
 // 퀴즈 아이디로 정답과 타입 조회
@@ -38,7 +36,7 @@ export const submitQuiz = async (formData) => {
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${tempToken}`,
+          // Authorization: `Bearer ${tempToken}`,
         },
       })
       .then((res) => {
@@ -61,9 +59,9 @@ export const submitQuiz2 = async (formData) => {
   try {
     // const response = await api.post("quiz/submit", formData);
     const response = await api.post("quiz/submit", formData, {
-      headers: {
-        Authorization: `Bearer ${tempToken}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${tempToken}`,
+      // },
     });
 
     return response.data;
@@ -73,18 +71,16 @@ export const submitQuiz2 = async (formData) => {
 };
 
 //아이가 풀었던 퀴즈 정답
-export const getQuizAnswer = async ({ member_quiz_id }) => {
+export const getQuizAnswer = async ({ quizId }) => {
   console.log("여기가ㅓ지 옴");
-  console.log(member_quiz_id);
-  console.log(`quiz/${member_quiz_id}/result`);
 
   try {
     // `headers`를 포함하는 옵션 객체를 `get` 메소드의 두 번째 인자로 전달합니다.
     // const response = await api.get(`quiz/${quizId}/result`, {
     const response = await api.get(`quiz/${member_quiz_id}/result`, {
-      headers: {
-        Authorization: `Bearer ${tempToken}`, // `tempToken`은 유효한 토큰 문자열이어야 합니다.
-      },
+      // headers: {
+      //   Authorization: `Bearer ${tempToken}`, // `tempToken`은 유효한 토큰 문자열이어야 합니다.
+      // },
     });
     console.log(member_quiz_id);
     // const response = await api.get(`quiz/${quizId}/result`);
@@ -99,9 +95,9 @@ export const getQuizAnswer = async ({ member_quiz_id }) => {
 export const getEmergencyQuiz = async ({ place_id }) => {
   try {
     const response = await api.patch(`place/${place_id}/carrot`, {
-      headers: {
-        Authorization: `Bearer ${tempToken}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${tempToken}`,
+      // },
     });
     return response.data;
   } catch (error) {

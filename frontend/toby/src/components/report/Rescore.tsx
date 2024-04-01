@@ -101,6 +101,7 @@ const RecoreBoxTitle = styled.div`
 
   border: 2px solid pink;
 `;
+
 const RecoreBoxImage = styled.img`
   width: 60%; // 이미지 너비를 컨테이너에 맞춥니다.
   height: 100%; // 이미지 높이를 자동으로 조정하여 비율을 유지합니다.
@@ -110,6 +111,7 @@ const RecoreBoxImage = styled.img`
   flex: 0 0 60%;
   left: 5%;
 `;
+
 const RecoreBoxAnswer = styled.div`
   width: 100%;
   display: flex;
