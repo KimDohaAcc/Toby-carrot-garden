@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import Webcam, { WebcamRef } from "react-webcam";
+import styled from "styled-components";
 
 import { postClearImage } from "../apis/clearApi";
 
@@ -25,6 +26,43 @@ const videoConstraints = {
   height: 600,
   facingMode: "user",
 };
+
+const WebcamContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  overflow: hidden;
+`;
+
+const CameraArea = styled.div`
+  display: flex;
+  flex: 0 0 80%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
+
+const Image = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  overflow: hidden;
+`;
+
+const ButtonArea = styled.div`
+  display: flex;
+  flex: 0 0 20%;
+  justify-content: space-around;
+  width: 100%;
+  height: auto;
+`;
 
 const QuizWebCam = ({ placeId }) => {
   const webcamRef = useRef<WebcamRef>(null);
@@ -72,23 +110,45 @@ const QuizWebCam = ({ placeId }) => {
   return (
     <>
       {imageSrc ? (
-        <>
-          <img src={imageSrc} alt="captured" />
-          <button onClick={retake}>Retake</button>
-          <button onClick={submit}>Sumbit</button>
-        </>
+        <WebcamContainer>
+          <CameraArea>
+            <Image src={imageSrc} alt="captured" />
+          </CameraArea>
+          <ButtonArea>
+            <button
+              style={{
+                width: "100%",
+                height: "50%",
+                backgroundColor: "lightgray",
+              }}
+              onClick={retake}
+            >
+              다시찍기
+            </button>
+            <button style={{ width: "100%", height: "50%" }} onClick={submit}>
+              제출하기
+            </button>
+          </ButtonArea>
+        </WebcamContainer>
       ) : (
-        <>
-          <Webcam
-            audio={false}
-            height={600}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            width={600}
-            videoConstraints={videoConstraints}
-          />
-          <button onClick={capture}>Capture photo</button>
-        </>
+        <WebcamContainer>
+          <CameraArea>
+            <Webcam
+              audio={false}
+              height={600}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              style={{ width: "100%", height: "100%" }}
+              width={600}
+              videoConstraints={videoConstraints}
+            />
+          </CameraArea>
+          <ButtonArea>
+            <button style={{ width: "100%", height: "50%" }} onClick={capture}>
+              사진찍기
+            </button>
+          </ButtonArea>
+        </WebcamContainer>
       )}
     </>
   );

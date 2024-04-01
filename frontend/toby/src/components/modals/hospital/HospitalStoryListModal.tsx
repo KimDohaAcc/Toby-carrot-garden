@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { getStoryList } from "../../../apis/storyApi";
 import { setStoryList } from "../../../store/slices/hospitalSlice";
+import { getPlaceId } from "../../../store/slices/placeSlice";
 
 const fadeInAnimation = keyframes`
   from {
@@ -24,10 +25,10 @@ const ModalContainer = styled.div`
   transform: translate(-50%, -50%);
   border-radius: 20px;
   padding: 50px;
-  background-image: url("/Image/storyList/hospitalBackground.png");  
+  background-image: url("/Image/storyList/hospitalBackground.png");
   background-position: center;
-  background-repeat : no-repeat;
-  background-size : 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -141,6 +142,7 @@ const HospitalStoryListModal = ({ onClose }) => {
         const response = await getStoryList(placeId);
         setStorysList(response);
         dispatch(setStoryList(response));
+        dispatch(getPlaceId(placeId));
         console.log(response);
       } catch (error) {
         console.error(error);

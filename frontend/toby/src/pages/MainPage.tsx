@@ -206,6 +206,7 @@ const PoliceImage = styled.img`
   }
   cursor: pointer;
 `;
+
 const UserArea = styled.div`
   display: flex;
   justify-content: center;
@@ -215,13 +216,13 @@ const UserArea = styled.div`
   border: 1px solid black;
   position: relative;
 `;
+
 const UserButton = styled.img`
   position: absolute;
   width: 150%;
   left: -100%;
   top: 5%;
 `;
-
 
 const Area4 = styled.div`
   display: grid;
@@ -251,7 +252,7 @@ const UserName = styled.div`
   position: absolute;
   width: calc(130%);
   top: calc(5%);
-  right: calc(5%); 
+  right: calc(5%);
   transform: translateX(-50%);
   padding: calc(3%) calc(10%);
   color: #ffffff;
@@ -261,12 +262,11 @@ const UserName = styled.div`
   background-size: 100% 100%;
 `;
 
-
 const SoundButton = styled.img`
   position: absolute;
   width: calc(30%);
   top: calc(5%);
-  right: calc(45%); 
+  right: calc(45%);
   cursor: pointer;
 `;
 
@@ -274,7 +274,7 @@ const LogoutButton = styled.img`
   position: absolute;
   width: calc(30%);
   top: calc(5%);
-  right: calc(8%); 
+  right: calc(8%);
   cursor: pointer;
 `;
 
@@ -394,16 +394,16 @@ const MainPage = () => {
         <Area4>
           {/* <div> {userName && <h1>{userName}</h1>}</div> */}
           <UserArea>
-          <UserName>{userName} 어린이</UserName>
-          <audio ref={audioRef} controls autoPlay loop hidden>
-            <source src="/Sound/메인_BGM.mp3" type="audio/mpeg" />
-          </audio>
-          <SoundButton src={muteImage} onClick={handleMute} />
-          <LogoutButton
-            src="\Image\button\logoutButton.png"
-            onClick={handleLogout}
-          />
-        </UserArea>
+            <UserName>{userName} 어린이</UserName>
+            <audio ref={audioRef} controls autoPlay loop hidden>
+              <source src="/Sound/메인_BGM.mp3" type="audio/mpeg" />
+            </audio>
+            <SoundButton src={muteImage} onClick={handleMute} />
+            <LogoutButton
+              src="\Image\button\logoutButton.png"
+              onClick={handleLogout}
+            />
+          </UserArea>
           <TobyArea>
             <TobyImage
               src="\Image\toby\maintoby.png"
