@@ -72,21 +72,36 @@ const QuizWebCam = ({ quizId }) => {
   };
 
   const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
-    try {
-      const answerResponse = await getQuizAnswer({
-        member_quiz_id: memberQuizId,
-      });
+    let attempts = 0;
+    const maxAttempts = 10;
 
-      if (answerResponse.status === 200 && answerResponse.result.score !== -1) {
-        setModalState(answerResponse.result.score === 100 ? "success" : "fail");
-      } else {
-        console.error("Failed to get quiz answer");
-        setModalState("fail");
+    const interval = setInterval(async () => {
+      try {
+        const answerResponse = await getQuizAnswer({
+          member_quiz_id: memberQuizId,
+        });
+
+        if (answerResponse.status === 200) {
+          clearInterval(interval); // Stop polling on success
+          setModalState(
+            answerResponse.result.score === 100 ? "success" : "fail"
+          );
+        } else {
+          console.error("Failed to get quiz answer");
+          setModalState("fail");
+        }
+      } catch (error) {
+        console.error("Error fetching quiz answer", error);
+        // Optionally, handle retry logic or stop on certain errors
       }
-    } catch (error) {
-      console.error("Error fetching quiz answer", error);
-      setModalState("fail");
-    }
+
+      attempts++;
+      if (attempts >= maxAttempts) {
+        clearInterval(interval); // Stop polling after max attempts
+        console.error("Max polling attempts reached, stopping.");
+        setModalState("fail"); // Considered fail after max attempts without success
+      }
+    }, 1000); // Poll every second
   }, []);
 
   useEffect(() => {

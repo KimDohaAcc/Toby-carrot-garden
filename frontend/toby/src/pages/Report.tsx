@@ -262,6 +262,30 @@ const Taehun2 = styled.h2`
   font-size: 2rem;
 `;
 
+const AudioBtn = styled.button<{ isPlaying: boolean }>`
+  z-index: 1000;
+  width: 3vw;
+  height: 3vw;
+  background-image: url(${(props) =>
+    props.isPlaying
+      ? "/Image/button/no-sound.png"
+      : "/Image/button/sound.png"});
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent;
+  }
+`;
+const AudioArea = styled.div`
+  position: absolute;
+  top: calc(1%);
+  right: calc(1%);
+  margin: calc(2%);
+`;
+
 const Report = () => {
   const navigate = useNavigate();
   const [contentText, setContentText] = useState<React.ReactNode>("");
@@ -269,12 +293,27 @@ const Report = () => {
   const [showHistory, setShowHistory] = useState(false);
   const [activeButton, setActiveButton] = useState("");
 
-  // 버튼 클릭 핸들러
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+
+  const handleTogglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    } else {
+      console.log("audioRef is null");
+    }
+  };
 
   useEffect(() => {
     // 초기 분석 탭 설정
     handleButtonClick("analysis");
   }, []);
+
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName); // 클릭된 버튼 이름으로 상태 업데이트
     switch (buttonName) {
@@ -330,6 +369,13 @@ const Report = () => {
   return (
     <>
       <ReportContainer>
+        <AudioArea>
+          <audio ref={audioRef} controls autoPlay loop hidden>
+            <source src="/Sound/toby_analysis.mp3" type="audio/mpeg" />
+          </audio>
+          <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay} />
+        </AudioArea>
+
         <ReportCategory>
           <Logo3 />
           <Category1>

@@ -3,7 +3,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import { postSignInfo } from "../apis/signupAPI";
 import { useNavigate } from "react-router-dom";
+
 const Container = styled.div`
+  font-weight: bold;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,6 +16,7 @@ const Container = styled.div`
   background-size: cover;
   background-image: url("Image/common/startImage.png");
 `;
+
 const ConsentBorder = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,11 +27,29 @@ const ConsentBorder = styled.div`
   border-radius: 3%;
   background-color: white;
 `;
+
 const InputInline = styled.input`
-  padding: 20px 15px;
+  padding: 15px 15px;
+  vertical-align: top;
+  width: calc(20%);
+  font-size: 3vh;
   border-radius: 5px;
   border: 2px solid #ccc;
-  font-size: 20px;
+  &:focus {
+    outline: none;
+    border-color: #ec903b;
+  }
+`;
+
+const PasswordInputInline = styled.input`
+  padding: 2%;
+  vertical-align: top;
+  width: calc(50%);
+  margin-bottom: 10px;
+  align-self: center;
+  font-size: 2.5vh;
+  border-radius: 5px;
+  border: 2px solid #ccc;
   &:focus {
     outline: none;
     border-color: #ec903b;
@@ -37,27 +58,48 @@ const InputInline = styled.input`
 const PasswordContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; // 세로 중앙 정렬
-  margin-top: 20px; // 상단 여백
+  margin-left: 7%;
+  margin-right: 150px;
+  margin-top: 20px; 
 `;
+
 const TextContainer = styled.div`
-  display: flex;
+  display: inline;
   flex-flow: wrap column;
-  margin-left: 5rem;
+  margin-left: 5%;
+  line-height: 7vh;
+`;
+
+const Text = styled.span`
+  font-size: 6vh;
   text-align: left;
-  font-size: 40pt;
-  line-height: 5rem;
-  padding: 0;
 `;
+
+const SubText = styled.span`
+  font-size: 3vh;
+  text-align: left;
+`;
+
 const Button = styled.button`
-  dislplay: flex;
-  flex-flow: wrap row;
-  align-items: flex-end;
-  background-color: transparent; // 버튼 배경 투명하게
-  border: none; // 버튼 테두리 제거
-  padding: 0; // 패딩 제거
-  align-self: flex-end;
+  position: absolute;
+  bottom: 20%;
+  right: 25%;
+
+  background-color: transparent; 
+  border: none;
+
+  background-image: url("Image/button/checkButton.png");
+  background-size: 100% 100%;
+  width: calc(10%);
+  height: calc(10%);
+
+  cursor: pointer;
+  transition: transform 0.1s ease; 
+  &:active {
+    transform: translateY(1px); 
+  }
 `;
+
 const RabbitImage1 = styled.img`
   height: 50%;
   position: absolute;
@@ -65,13 +107,22 @@ const RabbitImage1 = styled.img`
   right: 7%;
 `;
 
-const CheckButton = styled.img`
-  width: 30%;
-  margin-left: 50%;
-  margin-top: 5%;
-  margin-bottom: 0;
+const SignupClearButton = styled.img`
+  position: absolute;
+  bottom: 20%;
+  right: 25%;
+  background-image: url("Image/button/signupClearButton.png");
+  background-size: 100% 100%;
+  width: calc(10%);
+  height: calc(10%);
+  border: none;
+  cursor: pointer;
+
+  transition: transform 0.1s ease; 
+  &:active {
+    transform: translateY(1px); 
+  }
 `;
-const VillageButton = styled.img``;
 
 function UserInfoForm() {
   const [step, setStep] = useState(1);
@@ -127,18 +178,14 @@ function UserInfoForm() {
         <RabbitImage1 src="Image/toby/cuteRabbit_text2.png" alt="Rabbit" />
         {step === 1 && (
           <TextContainer>
-            <p>
-              내 이름은 <br />
+            <Text>내 이름은</Text> <br/>
               <InputInline
                 type="text"
                 placeholder="이름"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              이고,
-            </p>
-            <span>
-              내 생일은{" "}
+                onChange={(e) => setName(e.target.value)}/>
+              <Text> 이고,</Text><br/> <br/>
+              <Text> 내 생일은 &nbsp;</Text>
               <InputInline
                 type="date"
                 value={birthday}
@@ -146,42 +193,30 @@ function UserInfoForm() {
                 min={minDate} // 최소 날짜 설정
                 max={maxDate} // 최대 날짜 설정
               />
-              이야.
-            </span>
-            <Button>
-              <CheckButton
-                onClick={handleNextStep}
-                src="Image/button/checkButton.png"
-                alt="Check"
-              ></CheckButton>
-            </Button>
+              <Text> 이야.</Text>
+              <Button onClick={handleNextStep} />
           </TextContainer>
         )}
         {step === 2 && (
-          <div>
-            <h1>분석페이지에서 이용할 부모용 비밀번호를 입력해주세요.</h1>
-            <h2>*추후 퀴즈 재채점에 사용됩니다.</h2>
-            <PasswordContainer>
-              <input
-                type="password"
-                placeholder="비밀번호"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <InputInline
-                type="password"
-                placeholder="비밀번호 확인"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              <Button onClick={handleSubmit}>
-                <VillageButton
-                  src="Image/button/signupClearButton.png"
-                  alt="Go to Village"
-                />
-              </Button>
-            </PasswordContainer>
-          </div>
+          <PasswordContainer>
+            <Text>분석페이지에서 이용할</Text>
+            <Text>부모용 비밀번호를 입력해주세요.</Text>
+            <SubText>*추후 퀴즈 재채점에 사용됩니다.</SubText>
+            <br/><br/>
+            <PasswordInputInline
+              type="password"
+              placeholder="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <PasswordInputInline
+              type="password"
+              placeholder="비밀번호 확인"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <SignupClearButton onClick={handleSubmit} />
+          </PasswordContainer>
         )}
       </ConsentBorder>
     </Container>

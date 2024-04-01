@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { postKakaoToken, getKakaoPage } from "../apis/signupAPI";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,6 +14,7 @@ const Container = styled.div`
   background-size: cover;
   background-image: url("/Image/common/startImage.png");
 `;
+
 const ConsentBorder = styled.div`
   display: flex;
   flex-direction: column;

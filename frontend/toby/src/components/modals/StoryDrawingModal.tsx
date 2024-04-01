@@ -90,7 +90,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
 
         if (status === 200) {
           // 제출에 성공한 경우 memberQuizId 추출
-          const { memberQuizId } = result;
+          const memberQuizId = submitResponse.data.result.memberQuizId;
 
           setModalState("wait"); // 폴링 동안 WaitToby 모달 표시
 
