@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import SignatureCanvas from "react-signature-canvas";
-import { submitQuiz } from "../../apis/quizApi";
-
+import { submitQuiz, getQuizAnswer } from "../../apis/quizApi";
+import WaitToby from "./WaitToby";
+import FailToby from "./FailToby";
+import SuccessToby from "./SuccessToby";
 const StoryDrawingModalContainer = styled.div`
   display: flex;
   position: absolute;
@@ -36,6 +38,9 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const signaturePadRef = useRef(null);
   const modalRef = useRef(null);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
+  const [modalState, setModalState] = useState<
+    "none" | "wait" | "success" | "fail"
+  >("none");
 
   useEffect(() => {
     function updateCanvasSize() {
@@ -53,6 +58,15 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, [isOpen]);
 
+  useEffect(() => {
+    if (modalState === "success" || modalState === "fail") {
+      const timer = setTimeout(() => {
+        setModalState("none");
+        onClose(); // Automatically close modal after 2 seconds
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [modalState, onClose]);
   const handleSaveDrawing = async () => {
     if (signaturePadRef.current && isOpen) {
       const canvas = signaturePadRef.current.getCanvas();
@@ -70,24 +84,41 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       formData.append("quizId", quizId.toString());
 
       try {
-        const response = await submitQuiz(formData);
-        console.log("이미지 전송 성공", response);
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}:`, value);
+        await submitQuiz(formData);
+        setModalState("wait"); // 폴링 동안 WaitToby 모달 표시
 
-          // 파일 객체의 경우, 추가적인 정보를 로그로 출력
-          if (value instanceof File) {
-            console.log(
-              `File details - Name: ${value.name}, Type: ${value.type}, Size: ${value.size} bytes`
-            );
+        const endTime = Date.now() + 10000; // 10초 후 폴링 종료
+        const intervalId = setInterval(async () => {
+          if (Date.now() > endTime) {
+            clearInterval(intervalId);
+            setModalState("fail"); // 10초 동안 분석 결과를 받지 못하면 FailToby 모달 표시
+            return;
           }
-        }
-        onClose();
+
+          const { status, result } = await getQuizAnswer(quizId);
+          if (status === 200 && result.score !== -1) {
+            clearInterval(intervalId);
+            setModalState(result.score === 100 ? "success" : "fail"); // 점수에 따라 SuccessToby 또는 FailToby 모달 표시
+          }
+        }, 1000);
       } catch (error) {
         console.error("이미지 전송 실패", error);
+        setModalState("fail"); // 전송 실패 시 FailToby 모달 표시
       }
     }
   };
+
+  // 모달 상태가 변경될 때마다 실행되는 useEffect
+  useEffect(() => {
+    let timer;
+    if (["success", "fail"].includes(modalState)) {
+      timer = setTimeout(() => {
+        setModalState("none"); // SuccessToby 또는 FailToby 모달을 2초 후 자동으로 닫음
+        onClose(); // 모달 닫기 콜백 함수 호출
+      }, 2000);
+    }
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 제거
+  }, [modalState, onClose]);
 
   if (!isOpen) return null;
 
@@ -108,6 +139,13 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
         />
       </ModalArea>
       <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
+      {modalState === "wait" && <WaitToby />}
+      {modalState === "success" && (
+        <SuccessToby onClose={() => setModalState("none")} />
+      )}
+      {modalState === "fail" && (
+        <FailToby onClose={() => setModalState("none")} />
+      )}
     </StoryDrawingModalContainer>
   );
 };
