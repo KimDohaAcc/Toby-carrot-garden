@@ -4,6 +4,7 @@ import { submitQuiz, getQuizAnswer } from "../apis/quizApi";
 import WaitToby from "./modals/WaitToby";
 import FailToby from "./modals/FailToby";
 import SuccessToby from "./modals/SuccessToby";
+import styled from "styled-components";
 
 const base64ToMultipartFile = (base64String, fileName) => {
   const byteString = atob(base64String.split(",")[1]);
@@ -22,6 +23,43 @@ const videoConstraints = {
   height: 600,
   facingMode: "user",
 };
+
+const WebcamContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  overflow: hidden;
+`;
+
+const CameraArea = styled.div`
+  display: flex;
+  flex: 0 0 80%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
+
+const Image = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  overflow: hidden;
+`;
+
+const ButtonArea = styled.div`
+  display: flex;
+  flex: 0 0 20%;
+  justify-content: space-around;
+  width: 100%;
+  height: auto;
+`;
 
 const QuizWebCam = ({ quizId }) => {
   const webcamRef = useRef(null);
@@ -123,22 +161,43 @@ const QuizWebCam = ({ quizId }) => {
         <FailToby onClose={() => setModalState("none")} />
       )}
       {imageSrc ? (
-        <>
-          <img src={imageSrc} alt="Captured" />
-          <button onClick={retake}>Retake</button>
-          <button onClick={submit}>Submit</button>
-        </>
+        <WebcamContainer>
+          <CameraArea>
+            <Image src={imageSrc} alt="Captured" />
+          </CameraArea>
+          <ButtonArea>
+            <button
+              style={{
+                width: "100%",
+                height: "50%",
+                backgroundColor: "lightgray",
+              }}
+              onClick={retake}
+            >
+              다시찍기
+            </button>
+            <button style={{ width: "100%", height: "50%" }} onClick={submit}>
+              제출하기
+            </button>
+          </ButtonArea>
+        </WebcamContainer>
       ) : (
-        <>
-          <Webcam
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            videoConstraints={videoConstraints}
-            style={{ width: "100%", height: "80%" }}
-            audio={false}
-          />
-          <button onClick={capture}>Capture Photo</button>
-        </>
+        <WebcamContainer>
+          <CameraArea>
+            <Webcam
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              videoConstraints={videoConstraints}
+              style={{ width: "100%", height: "100%" }}
+              audio={false}
+            />
+          </CameraArea>
+          <ButtonArea>
+            <button style={{ width: "100%", height: "50%" }} onClick={capture}>
+              사진 찍기
+            </button>
+          </ButtonArea>
+        </WebcamContainer>
       )}
     </>
   );
