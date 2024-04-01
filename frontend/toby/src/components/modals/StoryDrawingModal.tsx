@@ -40,15 +40,19 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const [modalState, setModalState] = useState("none");
 
   useEffect(() => {
-    if (isOpen) {
-      const updateCanvasSize = () => {
-        if (signaturePadRef.current) {
-          const { offsetWidth, offsetHeight } =
-            signaturePadRef.current.canvas.parentElement;
-          setCanvasSize({ width: offsetWidth, height: offsetHeight });
-        }
-      };
+    const updateCanvasSize = () => {
+      if (
+        signaturePadRef.current &&
+        signaturePadRef.current.canvas &&
+        signaturePadRef.current.canvas.parentElement
+      ) {
+        const { offsetWidth, offsetHeight } =
+          signaturePadRef.current.canvas.parentElement;
+        setCanvasSize({ width: offsetWidth, height: offsetHeight });
+      }
+    };
 
+    if (isOpen) {
       window.addEventListener("resize", updateCanvasSize);
       updateCanvasSize();
       return () => window.removeEventListener("resize", updateCanvasSize);
