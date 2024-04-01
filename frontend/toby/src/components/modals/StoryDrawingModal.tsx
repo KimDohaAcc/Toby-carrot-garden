@@ -88,9 +88,12 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
         const submitResponse = await submitQuiz(formData);
         const { status, result } = submitResponse;
 
-        if (status === 200) {
-          // 제출에 성공한 경우 memberQuizId 추출
-          const { memberQuizId } = result;
+        if (status === 200 && response.data.result.memberQuizId) {
+          console.log("Quiz submitted successfully"); // 제출에 성공한 경우 memberQuizId 추출
+          const memberQuizId = submitResponse.data.result.memberQuizId;
+          console.log(memberQuizId);
+
+          console.log(response.data.result.memberQuizId);
 
           setModalState("wait"); // 폴링 동안 WaitToby 모달 표시
 
@@ -103,7 +106,10 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
             }
 
             // getQuizAnswer 호출 시 submitQuiz에서 받은 memberQuizId를 사용
-            const answerResponse = await getQuizAnswer(memberQuizId);
+            const answerResponse = await getQuizAnswer({
+              member_quiz_id: memberQuizId,
+            });
+            console.log(memberQuizId);
             if (
               answerResponse.status === 200 &&
               answerResponse.result.score !== -1
