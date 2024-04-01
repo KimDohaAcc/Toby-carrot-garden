@@ -21,7 +21,6 @@ const Area1 = styled.div`
   display: grid;
   grid-template-rows: 2fr 3fr 3fr;
   flex: 0 0 33%;
-  border: 1px solid black;
 `;
 
 const ReportArea = styled.div`
@@ -30,12 +29,9 @@ const ReportArea = styled.div`
   align-items: center;
   box-sizing: border-box;
   position: relative;
-  border: 1px solid black;
 `;
 
 const ReportImage = styled.img`
-  /* max-width: 100%;
-  max-height: 100%; */
   max-width: 100%;
   width: 90%;
   height: 100%;
@@ -57,13 +53,10 @@ const MartArea = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  border: 1px solid black;
   position: relative;
 `;
 
 const MartImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
   width: 85%;
   height: 100%;
 
@@ -85,7 +78,6 @@ const Area2 = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   flex: 0 0 29.5%;
-  border: 1px solid black;
 `;
 
 const SchoolArea = styled.div`
@@ -93,13 +85,10 @@ const SchoolArea = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  border: 1px solid black;
   position: relative;
 `;
 
 const SchoolImage = styled.img`
-  max-width: 150%;
-  max-height: 150%;
   width: 150%;
   height: 80%;
   position: absolute;
@@ -121,7 +110,6 @@ const MypageArea = styled.div`
   align-items: center;
   flex: 1 0 auto;
   box-sizing: border-box;
-  border: 1px solid black;
   position: relative;
 `;
 
@@ -147,7 +135,6 @@ const Area3 = styled.div`
   display: grid;
   grid-template-rows: 3fr 2fr;
   flex: 0 0 25%;
-  border: 1px solid black;
 `;
 
 const HospitalArea = styled.div`
@@ -156,7 +143,6 @@ const HospitalArea = styled.div`
   align-items: center;
   flex: 1 0 auto;
   box-sizing: border-box;
-  border: 1px solid black;
   position: relative;
 `;
 
@@ -185,7 +171,6 @@ const PoliceArea = styled.div`
   align-items: center;
   flex: 1 0 auto;
   box-sizing: border-box;
-  border: 1px solid black;
   position: relative;
 `;
 
@@ -211,23 +196,13 @@ const UserArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   box-sizing: border-box;
-  border: 1px solid black;
   position: relative;
-`;
-
-const UserButton = styled.img`
-  position: absolute;
-  width: 150%;
-  left: -100%;
-  top: 5%;
 `;
 
 const Area4 = styled.div`
   display: grid;
   grid-template-rows: 5fr 2fr;
-  border: 1px solid black;
   flex: 0 0 12.5%;
 `;
 
@@ -237,7 +212,6 @@ const TobyArea = styled.div`
   align-items: center;
   flex: 1 0 auto;
   box-sizing: border-box;
-  border: 1px solid black;
 `;
 
 const TobyImage = styled.img`

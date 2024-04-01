@@ -60,7 +60,7 @@ const PasswordContainer = styled.div`
   flex-direction: column;
   margin-left: 7%;
   margin-right: 150px;
-  margin-top: 20px; 
+  margin-top: 20px;
 `;
 
 const TextContainer = styled.div`
@@ -84,19 +84,16 @@ const Button = styled.button`
   position: absolute;
   bottom: 20%;
   right: 25%;
-
-  background-color: transparent; 
+  background-color: transparent;
   border: none;
-
   background-image: url("Image/button/checkButton.png");
   background-size: 100% 100%;
   width: calc(10%);
   height: calc(10%);
-
   cursor: pointer;
-  transition: transform 0.1s ease; 
+  transition: transform 0.1s ease;
   &:active {
-    transform: translateY(1px); 
+    transform: translateY(1px);
   }
 `;
 
@@ -113,14 +110,14 @@ const SignupClearButton = styled.img`
   right: 25%;
   background-image: url("Image/button/signupClearButton.png");
   background-size: 100% 100%;
+  background-color: transparent;
   width: calc(10%);
   height: calc(10%);
   border: none;
   cursor: pointer;
-
-  transition: transform 0.1s ease; 
+  transition: transform 0.1s ease;
   &:active {
-    transform: translateY(1px); 
+    transform: translateY(2px);
   }
 `;
 
@@ -178,23 +175,25 @@ function UserInfoForm() {
         <RabbitImage1 src="Image/toby/cuteRabbit_text2.png" alt="Rabbit" />
         {step === 1 && (
           <TextContainer>
-            <Text>내 이름은</Text> <br/>
-              <InputInline
-                type="text"
-                placeholder="이름"
-                value={name}
-                onChange={(e) => setName(e.target.value)}/>
-              <Text> 이고,</Text><br/> <br/>
-              <Text> 내 생일은 &nbsp;</Text>
-              <InputInline
-                type="date"
-                value={birthday}
-                onChange={(e) => setBirthday(e.target.value)}
-                min={minDate} // 최소 날짜 설정
-                max={maxDate} // 최대 날짜 설정
-              />
-              <Text> 이야.</Text>
-              <Button onClick={handleNextStep} />
+            <Text>내 이름은</Text> <br />
+            <InputInline
+              type="text"
+              placeholder="이름"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Text> 이고,</Text>
+            <br /> <br />
+            <Text> 내 생일은 &nbsp;</Text>
+            <InputInline
+              type="date"
+              value={birthday}
+              onChange={(e) => setBirthday(e.target.value)}
+              min={minDate} // 최소 날짜 설정
+              max={maxDate} // 최대 날짜 설정
+            />
+            <Text> 이야.</Text>
+            <Button onClick={handleNextStep} />
           </TextContainer>
         )}
         {step === 2 && (
@@ -202,7 +201,8 @@ function UserInfoForm() {
             <Text>분석페이지에서 이용할</Text>
             <Text>부모용 비밀번호를 입력해주세요.</Text>
             <SubText>*추후 퀴즈 재채점에 사용됩니다.</SubText>
-            <br/><br/>
+            <br />
+            <br />
             <PasswordInputInline
               type="password"
               placeholder="비밀번호"

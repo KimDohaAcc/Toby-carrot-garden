@@ -23,10 +23,10 @@ const ModalContainer = styled.div`
   height: 80%;
   transform: translate(-50%, -50%);
   padding: 3%;
-  background-image: url("/Image/storyList/schoolBackground.png");  
+  background-image: url("/Image/storyList/schoolBackground.png");
   background-position: center;
-  background-repeat : no-repeat;
-  background-size : 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -80,7 +80,6 @@ const CloseBtn = styled.button`
   position: absolute;
   top: 10%;
   right: 10%;
-  border: 1px solid black;
   border-radius: 5px;
   padding: 10px;
   font-size: calc(1.5em);
