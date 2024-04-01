@@ -1,5 +1,4 @@
 import { api } from "../config/apiConfig";
-import { tempToken } from "../config/apiConfig";
 
 export const postClearImage = async (formData) => {
   for (let [key, value] of formData.entries()) {
@@ -13,7 +12,6 @@ export const postClearImage = async (formData) => {
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${tempToken}`,
         },
       })
       .then((res) => {

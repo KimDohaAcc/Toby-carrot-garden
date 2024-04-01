@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { getCorrectAnswer } from "../../apis/analysisApi";
 import { getUserStorage } from "../../apis/userStorageApi";
+import styled from "styled-components";
 const userStorage = getUserStorage();
 const accessToken = userStorage.accessToken;
 
@@ -20,6 +21,11 @@ const initialData = [
     총평균: 40,
   },
 ];
+
+const Graph = styled.div`
+  height: 90%;
+  width: 100%;
+`;
 
 const MyResponsiveBar = () => {
   const [data, setData] = useState(initialData);
@@ -51,7 +57,7 @@ const MyResponsiveBar = () => {
   }, []);
 
   return (
-    <div style={{ height: "90%" }}>
+    <Graph>
       <ResponsiveBar
         data={data}
         keys={["우리애평균", "나이평균", "총평균"]}
@@ -135,7 +141,7 @@ const MyResponsiveBar = () => {
         ariaLabel="Nivo bar chart demo"
         barAriaLabel={(e) => `${e.id}: ${e.value} in 항목: ${e.indexValue}`}
       />
-    </div>
+    </Graph>
   );
 };
 

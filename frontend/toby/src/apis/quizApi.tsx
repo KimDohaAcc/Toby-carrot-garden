@@ -1,7 +1,5 @@
 import { api } from "../config/apiConfig";
 
-import { tempToken } from "../config/apiConfig";
-
 // 클라이언트에서 사진과 퀴즈 아이디 전달
 // s3에 사진을 저장
 // 퀴즈 아이디로 정답과 타입 조회
@@ -73,10 +71,8 @@ export const submitQuiz2 = async (formData) => {
 };
 
 //아이가 풀었던 퀴즈 정답
-export const getQuizAnswer = async ({ member_quiz_id }) => {
+export const getQuizAnswer = async ({ quizId }) => {
   console.log("여기가ㅓ지 옴");
-  console.log(member_quiz_id);
-  console.log(`quiz/${member_quiz_id}/result`);
 
   try {
     // `headers`를 포함하는 옵션 객체를 `get` 메소드의 두 번째 인자로 전달합니다.

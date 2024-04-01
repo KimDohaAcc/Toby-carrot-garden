@@ -67,6 +67,7 @@ const StoryQuizSchool = ({ index }: StoryQuizProps) => {
             quizId={quizId}
             content={content}
             index={index}
+            place="school"
           />
         );
       case "OBJECTS":
@@ -76,6 +77,7 @@ const StoryQuizSchool = ({ index }: StoryQuizProps) => {
             content={content}
             quizId={quizId}
             index={index}
+            place="school"
           />
         );
       case "FEELINGS":
@@ -85,6 +87,7 @@ const StoryQuizSchool = ({ index }: StoryQuizProps) => {
             content={content}
             quizId={quizId}
             index={index}
+            place="school"
           />
         );
       case "EMERGENCY":
