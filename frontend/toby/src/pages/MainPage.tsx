@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import ConstructionModal from "../components/modals/constructionModal";
 import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 입력 모달
 import Logo from "../components/Logo";
 import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryListModal";
@@ -223,23 +222,6 @@ const UserButton = styled.img`
   top: 5%;
 `;
 
-const LogoutButton = styled.img`
-  position: absolute;
-  width: 30%;
-  left: 55%;
-  top: 5%;
-  cursor: pointer;
-`;
-const UserName = styled.div`
-  position: absolute;
-  top: 6%;
-  left: 3%;
-  width: 150%;
-  transform: translateX(-50%);
-  color: #ffffff;
-  font-size: calc(2vw); /* 기본 텍스트 크기를 반응형으로 설정 */
-  z-index: 1;
-`;
 
 const Area4 = styled.div`
   display: grid;
@@ -265,16 +247,34 @@ const TobyImage = styled.img`
   cursor: pointer;
 `;
 
-const AudioPlayer = styled.audio`
+const UserName = styled.div`
   position: absolute;
+  width: calc(130%);
+  top: calc(5%);
+  right: calc(5%); 
+  transform: translateX(-50%);
+  padding: calc(3%) calc(10%);
+  color: #ffffff;
+  font-size: calc(2vw); /* 기본 텍스트 크기를 반응형으로 설정 */
+  z-index: 1;
+  background-image: url("/Image/button/nameBackground.png");
+  background-size: 100% 100%;
 `;
+
 
 const SoundButton = styled.img`
   position: absolute;
-  width: 5%;
-  height: 5%;
-  top: 1%;
-  right: 1%;
+  width: calc(30%);
+  top: calc(5%);
+  right: calc(45%); 
+  cursor: pointer;
+`;
+
+const LogoutButton = styled.img`
+  position: absolute;
+  width: calc(30%);
+  top: calc(5%);
+  right: calc(8%); 
   cursor: pointer;
 `;
 
@@ -394,14 +394,16 @@ const MainPage = () => {
         <Area4>
           {/* <div> {userName && <h1>{userName}</h1>}</div> */}
           <UserArea>
-            <UserName>{userName} 어린이</UserName>
-            <UserButton src="\Image\button\nameBackground.png" />
-
-            <LogoutButton
-              src="\Image\button\logoutButton.png"
-              onClick={handleLogout} // 로그아웃 버튼 클릭 이벤트 핸들러 추가
-            />
-          </UserArea>
+          <UserName>{userName} 어린이</UserName>
+          <audio ref={audioRef} controls autoPlay loop hidden>
+            <source src="/Sound/메인_BGM.mp3" type="audio/mpeg" />
+          </audio>
+          <SoundButton src={muteImage} onClick={handleMute} />
+          <LogoutButton
+            src="\Image\button\logoutButton.png"
+            onClick={handleLogout}
+          />
+        </UserArea>
           <TobyArea>
             <TobyImage
               src="\Image\toby\maintoby.png"
@@ -410,10 +412,6 @@ const MainPage = () => {
             />
           </TobyArea>
         </Area4>
-        <AudioPlayer ref={audioRef} controls autoPlay loop hidden>
-          <source src="/Sound/메인_BGM.mp3" type="audio/mpeg" />
-        </AudioPlayer>
-        <SoundButton src={muteImage} onClick={handleMute} />
       </MainpageContainer>
       {showMartModal && modalType === "mart" && (
         <MartStoryListModal onClose={() => setShowMartModal(false)} />
