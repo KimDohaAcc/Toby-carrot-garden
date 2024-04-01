@@ -1,7 +1,5 @@
 import { api } from "../config/apiConfig";
 
-import { tempToken } from "../config/apiConfig";
-
 // 클라이언트에서 사진과 퀴즈 아이디 전달
 // s3에 사진을 저장
 // 퀴즈 아이디로 정답과 타입 조회
@@ -38,7 +36,6 @@ export const submitQuiz = async (formData) => {
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${tempToken}`,
         },
       })
       .then((res) => {
@@ -60,11 +57,7 @@ export const submitQuiz2 = async (formData) => {
   console.log(localStorage.getItem("accessToken"));
   try {
     // const response = await api.post("quiz/submit", formData);
-    const response = await api.post("quiz/submit", formData, {
-      headers: {
-        Authorization: `Bearer ${tempToken}`,
-      },
-    });
+    const response = await api.post("quiz/submit", formData);
 
     return response.data;
   } catch (error) {
@@ -77,11 +70,7 @@ export const getQuizAnswer = async ({ quizId }) => {
   try {
     // `headers`를 포함하는 옵션 객체를 `get` 메소드의 두 번째 인자로 전달합니다.
     // const response = await api.get(`quiz/${quizId}/result`, {
-    const response = await api.get(`quiz/48/result`, {
-      headers: {
-        Authorization: `Bearer ${tempToken}`, // `tempToken`은 유효한 토큰 문자열이어야 합니다.
-      },
-    });
+    const response = await api.get(`quiz/${quizId}/result`);
     // const response = await api.get(`quiz/${quizId}/result`);
     return response.data;
   } catch (error) {
@@ -93,11 +82,7 @@ export const getQuizAnswer = async ({ quizId }) => {
 //119문제 당근 부여
 export const getEmergencyQuiz = async ({ place_id }) => {
   try {
-    const response = await api.patch(`place/${place_id}/carrot`, {
-      headers: {
-        Authorization: `Bearer ${tempToken}`,
-      },
-    });
+    const response = await api.patch(`place/${place_id}/carrot`);
     return response.data;
   } catch (error) {
     console.error("119문제를 가져오지 못했습니다.", error);

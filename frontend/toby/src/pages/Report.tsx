@@ -15,24 +15,25 @@ const ReportContainer = styled.div`
   position: relative;
   background-size: cover;
   z-index: 1;
+  object-fit: contain;
 `;
 
 //  카테고리와 내용을 나누기 위한 컨테이너
 const ReportCategory = styled.div`
-  width: 20%;
+  width: 100%;
   height: 100%;
   display: grid;
   position: relative;
   grid-template-rows: 3fr 2fr 2fr 2fr 2fr;
   /* grid-row-gap: 10px; */
   grid-template-areas:
-    "Logo"
+    "."
     "category1"
     "category2"
     "category3"
     "category4";
   border: 2px solid black;
-  flex: 0 0 20%;
+  flex: 0 0 15%;
 `;
 
 const StyledButton = styled.div`
@@ -44,11 +45,13 @@ const StyledButton = styled.div`
   /* width: 80%; // 버튼의 폭 고정
   height: 60%; // 버튼의 높이 고정 */
 `;
+
 const Image = styled.img`
   width: 70%; // 이미지 크기 조정
   height: 70%;
   margin-right: 2%;
 `;
+
 const Category1 = styled.div`
   grid-area: category1;
   display: flex;
@@ -88,44 +91,52 @@ const ReportContent = styled.div`
   flex-direction: column;
   flex-grow: 1;
   border: 2px solid black;
+  width: 100%;
   height: 100%;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
 const ContentCategory = styled.div`
-  flex: 0 0 18%;
-
-  min-height: 18%;
-  max-height: 18%;
+  flex: 0 0 10%;
+  height: 100%;
+  width: 100%;
   border: 2px solid black;
 `;
 
 // Content 컴포넌트에 대한 스타일 정의
 const Content = styled.div`
-  flex: 82%;
-  /* flex-grow: 5; */
+  flex: 1;
   border: 2px solid black;
   display: flex;
-  flex-direction: row;
-  overflow: hidden;
   height: 100%;
-  // 이 부분을 추가하여 스크롤바를 숨깁니다.
+  width: 100%;
+  object-fit: contain;
+  overflow: hidden;
 `;
 const ContentExpressBox = styled.div`
-  flex: 0 0 45%;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  overflow: hidden;
 `;
+
 const ContentExpressButton = styled.img`
   position: absolute;
+  width: 25%;
+  height: 100%;
   left: 5%;
 `;
 const ContentExpressButtonContiner = styled.div`
   flex: 0 0 10%;
-  border: 5px solid black;
+  border: 2px solid black;
   overflow: hidden;
   object-fit: contain;
   align-items: left;
+  width: 100%;
+  height: 100%;
 
   justify-items: left;
   align-content: left;
@@ -136,42 +147,42 @@ const ContentExpress = styled.div`
   flex: 0 0 90%;
   box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
   border: 14px solid #e4f0d5;
-  /* border: 15px solid #f3a2b1; */
   background-color: white;
   border-radius: 7%;
   height: 85%;
   max-height: 89%;
   width: 100%;
-  /* width: calc(100% - 10px); // 마진을 고려하여 너비 조정 */
 `;
 const ContentElseContainer = styled.div`
-  flex: 0 0 45%;
-  flex-grow: 1;
-  box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
-  border: 14px solid black;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  overflow: hidden;
 `;
 
 const ContentElse = styled.div`
   flex: 0 0 90%;
   box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
   border: 14px solid #ccd2f0;
-  /* border: 15px solid pink; */
-  display: flex;
   background-color: white;
   border-radius: 7%;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  overflow: hidden;
+  display: flex;
   flex-direction: column;
-  /* width: calc(70% - 10px); // 마진을 고려하여 너비 조정 */
-
-  /* margin-right: 20px; // 오른쪽에 마진 추가 */
 `;
 const ContentGraphContainer = styled.div`
   flex: 0 0 10%;
-  border: 1px solid yellow;
+  border: 2px solid black;
   overflow: hidden;
   object-fit: contain;
   align-items: left;
+  width: 100%;
+  height: 100%;
 
   justify-items: left;
   align-content: left;
@@ -192,45 +203,52 @@ const ContentGraphButtonContainer = styled.div`
 `;
 
 const ContentGraph = styled.div`
-  flex: 0 0 70%;
-  /* flex-grow: 3; */
+  height: 100%;
+  width: auto;
   border: 2px solid green;
   display: flex;
   flex-direction: column;
+  flex: 0 0 60%;
 `;
 const ReportGraphContentStyled = styled.div`
-  flex-grow: 1; // 가능한 모든 공간을 차지
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  flex: 0 0 70%;
 `;
 const ContentGraphExplain = styled.div`
-  flex: 0 0 15%;
-  border: 5px solid pink;
+  width: 100%;
+  height: 100%;
+  flex: 0 0 30%;
+  border: 2px solid pink;
 `;
 const ContentExplain = styled.div`
-  flex: 0 0 30%;
-  flex-grow: 3;
+  width: 100%;
+  height: 100%;
+  flex: 0 0 40%;
   border: 5px solid yellow;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  object-fit: contain;
+  overflow: hidden;
 `;
 const GraphIndex = styled.img`
   display: flex;
   position: absolute;
 `;
 const ExplainImage = styled.img`
-  display: flex;
-  position: absolute;
-  max-width: 31%; // 이미지의 최대 너비를 50%로 설정
-  max-height: 31%; // 이미지의 최대 높이를 50%로 설정
+  width: 100%;
+  height: 100%;
 `;
 const Taehun = styled.h1`
   line-height: 60%;
-  font-size: 70px;
+  font-size: 3rem;
 `;
 const Taehun2 = styled.h2`
   line-height: 60%;
-  font-size: 40px;
+  font-size: 2rem;
 `;
 const Report = () => {
   const navigate = useNavigate();
@@ -331,14 +349,12 @@ const Report = () => {
                   </ContentGraphContainer>
                   <ContentElse>
                     <ContentGraph>
-                      <ContentExpressBox>
-                        <ReportGraphContentStyled>
-                          <ReportGraphContent />
-                        </ReportGraphContentStyled>
-                        <ContentGraphExplain>
-                          <GraphIndex src="/Image/report/graphIndex.png" />
-                        </ContentGraphExplain>
-                      </ContentExpressBox>
+                      <ReportGraphContentStyled>
+                        <ReportGraphContent />
+                      </ReportGraphContentStyled>
+                      <ContentGraphExplain>
+                        <GraphIndex src="/Image/report/graphIndex.png" />
+                      </ContentGraphExplain>
                     </ContentGraph>
                     <ContentExplain>
                       <ExplainImage src="/Image/report/wordExplain.png" />
@@ -356,7 +372,7 @@ const Report = () => {
                 </ContentExpressBox>
               </>
             )}
-            {showHistory && <Rescore />}{" "}
+            {showHistory && <Rescore />}
           </Content>
         </ReportContent>
       </ReportContainer>

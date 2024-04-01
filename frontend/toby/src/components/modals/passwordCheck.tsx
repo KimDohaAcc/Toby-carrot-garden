@@ -23,25 +23,28 @@ const fadeInAnimation = keyframes`
     opacity: 1;
   }
 `;
+
 const ModalContainer = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
   width: 30%;
-  height: 30%;
+  height: 40%;
   transform: translate(-50%, -50%);
-  padding: 5%;
+  padding: 1.5% 3% 1.5% 3%;
   background-image: url("/Image/modal/passwordModal.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 100;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-rows: 1.5fr 1fr 0.5fr;
   animation: ${fadeInAnimation} 0.5s ease;
-  box-sizing: border-box;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  object-fit: cover;
+  overflow: hidden;
 `;
 
 const ButtonGroup = styled.div`
@@ -49,11 +52,15 @@ const ButtonGroup = styled.div`
   display: flex;
   justify-content: center;
   align-content: center;
-
+  align-items: center;
+  text-align: center;
   gap: 10%;
   width: 100%;
   height: auto;
+  flex-grow: 1;
   /* height: 40%; */
+
+  box-sizing: border-box;
 `;
 
 const CloseButton = styled.button`
@@ -63,6 +70,9 @@ const CloseButton = styled.button`
   border: none;
   border-radius: 15%;
   cursor: pointer;
+
+  height: 100%;
+  width: auto;
 
   /* &:hover {
     background-color: #0056b3;
@@ -76,6 +86,9 @@ const ConfirmButton = styled.button`
   border: none;
   border-radius: 15%;
   cursor: pointer;
+  height: 100%;
+  width: auto;
+  box-sizing: border-box;
 
   /* &:hover {
     background-color: #218838;
@@ -88,12 +101,19 @@ const PasswordInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 80%;
+  height: auto;
+  box-sizing: border-box;
+  justify-content: center;
 `;
 
 const ConstructionText = styled.h2`
+  width: 100%;
+  height: auto;
   object-fit: contain;
   text-align: center;
+  overflow-wrap: break-word;
   font-size: calc(1.5em + 1vw);
+  box-sizing: border-box;
 `;
 
 const ConstructionModal = ({ onClose }) => {
@@ -114,9 +134,7 @@ const ConstructionModal = ({ onClose }) => {
   return (
     <ModalBackdrop onClick={onClose}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
-        <ConstructionText>
-          비밀번호를 <br /> 입력해주세요
-        </ConstructionText>
+        <ConstructionText>비밀번호를 입력해주세요</ConstructionText>
         <PasswordInput
           type="password"
           value={password}
@@ -124,8 +142,6 @@ const ConstructionModal = ({ onClose }) => {
           placeholder="비밀번호"
         />
         <ButtonGroup>
-          {" "}
-          {/* 버튼 그룹으로 감싸기 */}
           <ConfirmButton onClick={handleConfirm}>확인</ConfirmButton>
           <CloseButton onClick={onClose}>닫기</CloseButton>
         </ButtonGroup>
