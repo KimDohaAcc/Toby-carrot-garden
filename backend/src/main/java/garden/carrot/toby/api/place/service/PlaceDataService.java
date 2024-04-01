@@ -24,7 +24,7 @@ public class PlaceDataService {
 	private final StoryDataRepository storyDataRepository;
 	private final StoryDataMapper storyDataMapper;
 
-	@Cacheable(value = "placeDataCache", key = "#placeId")
+	@Cacheable(value = "placeDataCache", key = "#placeDataId")
 	public ListDto<StoryDataDto.StoryResponse> getStoryListByPlaceDataId(Integer placeDataId) {
 		return Optional.ofNullable(storyDataRepository.findAllByPlaceData_Id(placeDataId))
 			.filter(dataList -> !dataList.isEmpty())
