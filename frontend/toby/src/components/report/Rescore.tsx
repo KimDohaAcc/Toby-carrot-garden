@@ -46,33 +46,47 @@ const RecoreContentContainer = styled.div`
 `;
 const RecoreContentContainer2 = styled.div`
   display: flex;
+  flex-direction: column; // 자식 요소들을 세로로 배치
   width: 100%;
-
-  max-height: 100%; // 컨테이너의 최대 높이를 100%로 설정하여 내부 내용이 넘치면 스크롤바 생성
+  height: 100%; // 혹은 필요한 높이 지정
   border: 5px solid black;
-  flex-direction: column;
-  overflow-y: auto; // 내용이 많아지면 스크롤바 생성
+  overflow: hidden; // 이 컨테이너에서는 스크롤 발생하지 않도록
+`;
 
-  flex: 0 0 50%;
-  position: relative; /* 이 부분 추가 */
+const RecoreScrollArea = styled.div`
+  overflow-y: auto; // 이 영역에서 스크롤 발생
+  flex: 1; // 나머지 공간을 모두 차지
+  border: 14px solid #fff299;
+  border-radius: 7%;
+  background-color: white;
+`;
+
+const RecoreScrollArea2 = styled.div`
+  overflow-y: auto; // 이 영역에서 스크롤 발생
+  flex: 1; // 나머지 공간을 모두 차지
+  border: 14px solid #e0bfe6;
+  border-radius: 7%;
+  background-color: white;
 `;
 const RecoreButtonContainer = styled.div`
   position: sticky; /* 스크롤 시 상단에 고정 */
   top: 0; /* 컨테이너 상단에 붙임 */
   z-index: 10; /* 다른 콘텐츠 위에 오도록 z-index 설정 */
-  background-color: white; /* 스크롤 시 내용이 겹치지 않도록 배경색 설정 */
+  /* background-color: white; 스크롤 시 내용이 겹치지 않도록 배경색 설정 */
   border: 2px solid blue;
   flex: 0 0 10%;
   overflow: hidden;
   object-fit: contain;
+  position: relative;
 `;
 const RecoreButton = styled.img`
   display: flex;
   position: absolute;
+  left: 5%;
 `;
 const RecoreBox = styled.div`
   display: flex;
-  height: 3%;
+  height: 40%;
   width: 100%;
   max-height: 100%; // 컨테이너의 최대 높이를 100%로 설정하여 내부 내용이 넘치면 스크롤바 생성
   border: 2px solid yellow;
@@ -93,14 +107,15 @@ const RecoreBoxImage = styled.img`
   max-height: 100%; // 컨테이너 높이의 최대 60%까지 허용합니다.
   object-fit: contain;
   border: 2px solid green;
-  flex: 0 0 70%;
+  flex: 0 0 60%;
+  left: 5%;
 `;
 const RecoreBoxAnswer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   border: 2px solid green;
-  flex: 0 0 30%;
+  flex: 0 0 40%;
 `;
 const RecoreBoxAnswerText = styled.div`
   height: 50%;
@@ -314,75 +329,79 @@ const RecoreContent = () => {
           <RecoreButtonContainer>
             <RecoreButton src="/Image/button/EmotionButtonOn.png" />
           </RecoreButtonContainer>
-          {/* <RecoreBoxTitle>감정</RecoreBoxTitle> */}
-          {emotionQuizList.map((quiz, index) => (
-            <RecoreBox key={quiz.memberQuizId}>
-              <RecoreBoxImage
-                src={quiz.imageUrl}
-                alt={`Quiz ${quiz.memberQuizId}`}
-              />
-              <RecoreBoxAnswer>
-                <RecoreBoxAnswerText>
-                  <div style={{ fontSize: "70px" }}>
-                    <strong>{quiz.correctAnswer}</strong>
-                  </div>
-                </RecoreBoxAnswerText>
-                <RecoreBoxAnswerCheck>
-                  <div style={{ fontSize: "70px" }}>
-                    <strong>{quiz.score}</strong>
-                  </div>
-                </RecoreBoxAnswerCheck>
-                <RecoreBoxRescoreDate>
-                  {" "}
-                  <div style={{ fontSize: "30px" }}>
-                    <strong>{quiz.createTime}</strong>
-                  </div>
-                </RecoreBoxRescoreDate>
-                <RecoreBoxRescoreButton>
-                  <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
-                    재채점
-                  </Button>
-                </RecoreBoxRescoreButton>
-              </RecoreBoxAnswer>
-            </RecoreBox>
-          ))}
+          <RecoreScrollArea>
+            {/* <RecoreBoxTitle>감정</RecoreBoxTitle> */}
+            {emotionQuizList.map((quiz, index) => (
+              <RecoreBox key={quiz.memberQuizId}>
+                <RecoreBoxImage
+                  src={quiz.imageUrl}
+                  alt={`Quiz ${quiz.memberQuizId}`}
+                />
+                <RecoreBoxAnswer>
+                  <RecoreBoxAnswerText>
+                    <div style={{ fontSize: "70px" }}>
+                      <strong>{quiz.correctAnswer}</strong>
+                    </div>
+                  </RecoreBoxAnswerText>
+                  <RecoreBoxAnswerCheck>
+                    <div style={{ fontSize: "70px" }}>
+                      <strong>{quiz.score}</strong>
+                    </div>
+                  </RecoreBoxAnswerCheck>
+                  <RecoreBoxRescoreDate>
+                    {" "}
+                    <div style={{ fontSize: "30px" }}>
+                      <strong>{quiz.createTime}</strong>
+                    </div>
+                  </RecoreBoxRescoreDate>
+                  <RecoreBoxRescoreButton>
+                    <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
+                      재채점
+                    </Button>
+                  </RecoreBoxRescoreButton>
+                </RecoreBoxAnswer>
+              </RecoreBox>
+            ))}
+          </RecoreScrollArea>
         </RecoreContentContainer2>
 
         <RecoreContentContainer2>
           <RecoreButtonContainer>
             <RecoreButton src="/Image/button/ObjectButtonOn.png" />
           </RecoreButtonContainer>
-          {objectQuizList.map((quiz, index) => (
-            <RecoreBox key={quiz.memberQuizId}>
-              <RecoreBoxImage
-                src={quiz.imageUrl}
-                alt={`Quiz ${quiz.memberQuizId}`}
-              />
-              <RecoreBoxAnswer>
-                <RecoreBoxAnswerText>
-                  <div style={{ fontSize: "70px" }}>
-                    <strong>{quiz.correctAnswer}</strong>
-                  </div>
-                </RecoreBoxAnswerText>
-                <RecoreBoxAnswerCheck>
-                  <div style={{ fontSize: "70px" }}>
-                    <strong>{quiz.score}</strong>
-                  </div>
-                </RecoreBoxAnswerCheck>
-                <RecoreBoxRescoreDate>
-                  {" "}
-                  <div style={{ fontSize: "30px" }}>
-                    <strong>{quiz.createTime}</strong>
-                  </div>
-                </RecoreBoxRescoreDate>
-                <RecoreBoxRescoreButton>
-                  <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
-                    재채점
-                  </Button>
-                </RecoreBoxRescoreButton>
-              </RecoreBoxAnswer>
-            </RecoreBox>
-          ))}
+          <RecoreScrollArea2>
+            {objectQuizList.map((quiz, index) => (
+              <RecoreBox key={quiz.memberQuizId}>
+                <RecoreBoxImage
+                  src={quiz.imageUrl}
+                  alt={`Quiz ${quiz.memberQuizId}`}
+                />
+                <RecoreBoxAnswer>
+                  <RecoreBoxAnswerText>
+                    <div style={{ fontSize: "70px" }}>
+                      <strong>{quiz.correctAnswer}</strong>
+                    </div>
+                  </RecoreBoxAnswerText>
+                  <RecoreBoxAnswerCheck>
+                    <div style={{ fontSize: "70px" }}>
+                      <strong>{quiz.score}</strong>
+                    </div>
+                  </RecoreBoxAnswerCheck>
+                  <RecoreBoxRescoreDate>
+                    {" "}
+                    <div style={{ fontSize: "30px" }}>
+                      <strong>{quiz.createTime}</strong>
+                    </div>
+                  </RecoreBoxRescoreDate>
+                  <RecoreBoxRescoreButton>
+                    <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
+                      재채점
+                    </Button>
+                  </RecoreBoxRescoreButton>
+                </RecoreBoxAnswer>
+              </RecoreBox>
+            ))}
+          </RecoreScrollArea2>
         </RecoreContentContainer2>
       </RecoreContentContainer>
 

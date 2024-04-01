@@ -95,6 +95,7 @@ const DrawingItem = styled.div`
   padding: 2%; // 패딩 추가
   width: 90%;
   height: 50vh;
+  border: 4px solid #afd485;
 `;
 
 const Image = styled.img`

@@ -110,19 +110,87 @@ const Content = styled.div`
   height: 100%;
   // 이 부분을 추가하여 스크롤바를 숨깁니다.
 `;
-const ContentExpress = styled.div`
-  flex: 0 0 50%;
+const ContentExpressBox = styled.div`
+  flex: 0 0 45%;
   flex-grow: 1;
-  border: 2px solid blue;
-  height: 100%;
-`;
-const ContentElse = styled.div`
-  flex: 0 0 50%;
-  flex-grow: 1;
-  border: 2px solid pink;
   display: flex;
   flex-direction: column;
 `;
+const ContentExpressButton = styled.img`
+  position: absolute;
+  left: 5%;
+`;
+const ContentExpressButtonContiner = styled.div`
+  flex: 0 0 10%;
+  border: 5px solid black;
+  overflow: hidden;
+  object-fit: contain;
+  align-items: left;
+
+  justify-items: left;
+  align-content: left;
+  justify-content: left;
+  position: relative;
+`;
+const ContentExpress = styled.div`
+  flex: 0 0 90%;
+  box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
+  border: 14px solid #e4f0d5;
+  /* border: 15px solid #f3a2b1; */
+  background-color: white;
+  border-radius: 7%;
+  height: 85%;
+  max-height: 89%;
+  width: 100%;
+  /* width: calc(100% - 10px); // 마진을 고려하여 너비 조정 */
+`;
+const ContentElseContainer = styled.div`
+  flex: 0 0 45%;
+  flex-grow: 1;
+  box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
+  border: 14px solid black;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ContentElse = styled.div`
+  flex: 0 0 90%;
+  box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
+  border: 14px solid #ccd2f0;
+  /* border: 15px solid pink; */
+  display: flex;
+  background-color: white;
+  border-radius: 7%;
+  flex-direction: column;
+  /* width: calc(70% - 10px); // 마진을 고려하여 너비 조정 */
+
+  /* margin-right: 20px; // 오른쪽에 마진 추가 */
+`;
+const ContentGraphContainer = styled.div`
+  flex: 0 0 10%;
+  border: 1px solid yellow;
+  overflow: hidden;
+  object-fit: contain;
+  align-items: left;
+
+  justify-items: left;
+  align-content: left;
+  justify-content: left;
+  position: relative;
+`;
+const ContentGraphButtonContainer = styled.div`
+  flex: 0 0 10%;
+  border: 1px solid yellow;
+  overflow: hidden;
+  object-fit: contain;
+  align-items: left;
+
+  justify-items: left;
+  align-content: left;
+  justify-content: left;
+  position: relative;
+`;
+
 const ContentGraph = styled.div`
   flex: 0 0 70%;
   /* flex-grow: 3; */
@@ -135,12 +203,12 @@ const ReportGraphContentStyled = styled.div`
 `;
 const ContentGraphExplain = styled.div`
   flex: 0 0 15%;
-  border: 3px solid pink;
+  border: 5px solid pink;
 `;
 const ContentExplain = styled.div`
   flex: 0 0 30%;
   flex-grow: 3;
-  border: 2px solid yellow;
+  border: 5px solid yellow;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -153,6 +221,8 @@ const GraphIndex = styled.img`
 const ExplainImage = styled.img`
   display: flex;
   position: absolute;
+  max-width: 31%; // 이미지의 최대 너비를 50%로 설정
+  max-height: 31%; // 이미지의 최대 높이를 50%로 설정
 `;
 const Taehun = styled.h1`
   line-height: 60%;
@@ -182,7 +252,7 @@ const Report = () => {
           <>
             <Taehun>분석</Taehun>
             <Taehun2>
-              우리 아이가 풀었던 문제에 대한 통계 자료를 볼 수 있어요!
+              우리 아이가 풀었던 문제에 대한 통계와 표현을 볼 수 있어요!
             </Taehun2>
           </>
         );
@@ -255,22 +325,35 @@ const Report = () => {
           <Content>
             {showBoxes && (
               <>
-                <ContentElse>
-                  <ContentGraph>
-                    <ReportGraphContentStyled>
-                      <ReportGraphContent />
-                    </ReportGraphContentStyled>
-                    <ContentGraphExplain>
-                      <GraphIndex src="/Image/report/graphIndex.png" />
-                    </ContentGraphExplain>
-                  </ContentGraph>
-                  <ContentExplain>
-                    <ExplainImage src="/Image/report/wordExplain.png" />
-                  </ContentExplain>
-                </ContentElse>
-                <ContentExpress>
-                  <ReportDrawings></ReportDrawings>
-                </ContentExpress>
+                <ContentElseContainer>
+                  <ContentGraphContainer>
+                    <ContentExpressButton src="/Image/button/graphButtonOn.png" />
+                  </ContentGraphContainer>
+                  <ContentElse>
+                    <ContentGraph>
+                      <ContentExpressBox>
+                        <ReportGraphContentStyled>
+                          <ReportGraphContent />
+                        </ReportGraphContentStyled>
+                        <ContentGraphExplain>
+                          <GraphIndex src="/Image/report/graphIndex.png" />
+                        </ContentGraphExplain>
+                      </ContentExpressBox>
+                    </ContentGraph>
+                    <ContentExplain>
+                      <ExplainImage src="/Image/report/wordExplain.png" />
+                    </ContentExplain>
+                  </ContentElse>
+                </ContentElseContainer>
+
+                <ContentExpressBox>
+                  <ContentExpressButtonContiner>
+                    <ContentExpressButton src="/Image/button/ExpressButtonOn.png" />
+                  </ContentExpressButtonContiner>
+                  <ContentExpress>
+                    <ReportDrawings></ReportDrawings>
+                  </ContentExpress>
+                </ContentExpressBox>
               </>
             )}
             {showHistory && <Rescore />}{" "}
