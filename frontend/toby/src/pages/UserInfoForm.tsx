@@ -104,7 +104,7 @@ const RabbitImage1 = styled.img`
   right: 7%;
 `;
 
-const SignupClearButton = styled.img`
+const SignupClearButton = styled.div`
   position: absolute;
   bottom: 20%;
   right: 25%;
@@ -113,7 +113,6 @@ const SignupClearButton = styled.img`
   background-color: transparent;
   width: calc(10%);
   height: calc(10%);
-  border: none;
   cursor: pointer;
   transition: transform 0.1s ease;
   &:active {
