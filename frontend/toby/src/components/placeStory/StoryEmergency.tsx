@@ -145,12 +145,27 @@ const AudioPlayer = styled.audio`
   position: absolute;
 `;
 
-const AudioBtn = styled.button`
-  position: absolute;
-  bottom: 0;
-  left: 0;
+const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
+  width: 3vw;
+  height: 3vw;
+  background-image: url(${props => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;  
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent; 
+  }
 `;
+
+const AudioArea = styled.div`
+  position: absolute;
+  top: calc(1%);
+  margin: calc(2%);
+`;
+
 
 interface Scene {
   sceneId: number;
@@ -177,11 +192,23 @@ const StoryEmergency = ({ index }: { index: number }) => {
   const [number, setNumber] = useState("");
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
-  const handlePlay = () => {
+  const handleTogglePlay = () => {
     if (audioRef.current) {
-      audioRef.current.play();
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    } else {
+      console.log("audioRef is null");
     }
+  };
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
   };
 
   const handleBtnClick = (e) => {
@@ -212,6 +239,13 @@ const StoryEmergency = ({ index }: { index: number }) => {
 
   return (
     <EmergencyContainer>
+      <AudioArea>
+        <AudioPlayer ref={audioRef} controls autoPlay preload="metadata" hidden
+                     onEnded={handleAudioEnded}>
+          <source src={sceneList[index].voice} type="audio/mpeg" />
+        </AudioPlayer>
+        <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
+      </AudioArea>
       <EmergencyTitle>번호를 눌러주세요 이미지</EmergencyTitle>
       <EmergencyContent>
         <PhoneBackground src="/Image/modal/phone.png" alt="phone" />
@@ -248,10 +282,6 @@ const StoryEmergency = ({ index }: { index: number }) => {
             );
           })}
         </PhoneButtonContainer>
-        <AudioPlayer ref={audioRef} controls preload="metadata" hidden>
-          <source src={sceneList[index].voice} type="audio/mpeg" />
-        </AudioPlayer>
-        <AudioBtn onClick={handlePlay}>재생</AudioBtn>
       </EmergencyContent>
       <SubmitArea>
         <RetryBtn

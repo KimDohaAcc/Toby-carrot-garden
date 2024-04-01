@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import QuizWebCam from "../QuizWebCam";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { set } from "date-fns";
 
 const StoryQuizDetectionsContainer = styled.div`
   display: grid;
@@ -77,12 +76,26 @@ const AudioPlayer = styled.audio`
   position: absolute;
 `;
 
-const AudioBtn = styled.button`
-  position: absolute;
-  bottom: 0;
-  left: 0;
+const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
+  width: 3vw;
+  height: 3vw;
+  background-image: url(${props => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;  
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent; 
+  }
 `;
+
+const AudioArea = styled.div`
+  position: absolute;
+  margin: calc(2%);
+`;
+
 
 interface Scene {
   sceneId: number;
@@ -92,7 +105,7 @@ interface Scene {
   voice: string;
 }
 
-const StoryQuizDetections = ({ imageUrl, quizId, content, index }) => {
+const StoryQuizDetections = ({ imageUrl, quizId, content, index, place }) => {
   // const handleTakePicture = () => {
   //   console.log("Take a picture");
   // };
@@ -105,24 +118,44 @@ const StoryQuizDetections = ({ imageUrl, quizId, content, index }) => {
     (state: RootState) => state.school.sceneList
   );
   useEffect(() => {
-    if (HospitalSceneList.length > 0) {
+    if (place == "hospital") {
       const voice = HospitalSceneList[index].voice;
       setVoiceUrl(voice);
-    } else {
+    } else if(place == "school") {
       const voice = SchoolSceneList[index].voice;
       setVoiceUrl(voice);
     }
-  }, [index, HospitalSceneList, SchoolSceneList]);
+  }, [index, place, HospitalSceneList, SchoolSceneList]);
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
-  const handlePlay = () => {
+  const handleTogglePlay = () => {
     if (audioRef.current) {
-      audioRef.current.play();
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    } else {
+      console.log("audioRef is null");
     }
   };
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+  };
+  
   return (
     <StoryQuizDetectionsContainer>
+      <AudioArea>
+        <AudioPlayer ref={audioRef} controls autoPlay preload="metadata" hidden
+                     onEnded={handleAudioEnded}>
+          <source src={voiceUrl} type="audio/mpeg" />
+        </AudioPlayer>
+        <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
+      </AudioArea>
       <StoryQuizDetectionsTitleArea>
         <h1>StoryQuizDetections</h1>
       </StoryQuizDetectionsTitleArea>
@@ -130,10 +163,6 @@ const StoryQuizDetections = ({ imageUrl, quizId, content, index }) => {
         <ImageArea>
           <QuizImage src={imageUrl} alt="image" />
         </ImageArea>
-        <AudioPlayer ref={audioRef} controls preload="metadata" hidden>
-          <source src={voiceUrl} type="audio/mpeg" />
-        </AudioPlayer>
-        <AudioBtn onClick={handlePlay}>재생</AudioBtn>
         <ConteentArea>{content}</ConteentArea>
       </StoryQuizDetectionsImageArea>
       <StoryQuizDetectionCanmeraArea>

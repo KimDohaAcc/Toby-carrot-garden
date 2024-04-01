@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useSelector } from "react-redux";
@@ -38,12 +38,28 @@ const AudioPlayer = styled.audio`
   position: absolute;
 `;
 
-const AudioBtn = styled.button`
-  position: absolute;
-  bottom: 0;
-  left: 0;
+const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
+  width: 3vw;
+  height: 3vw;
+  background-image: url(${props => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;  
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent; 
+  }
 `;
+
+const AudioArea = styled.div`
+  position: absolute;
+  top: calc(1%);
+  left: calc(1%);
+  margin: calc(2%);
+`;
+
 
 type StoryClearProps = {
   index: number;
@@ -59,20 +75,31 @@ interface Scene {
 
 const StoryClear = ({ index }: StoryClearProps) => {
   console.log("index", index);
-  const [quizId, setQuizId] = React.useState<number>(0);
+  const [quizId, setQuizId] = useState<number>(0);
   const placeId = 2;
   const sceneList = useSelector<RootState, Scene[]>(
     (state: RootState) => state.hospital.sceneList
   );
   const audioRef = React.useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
-  const handlePlay = () => {
+  const handleTogglePlay = () => {
     if (audioRef.current) {
-      audioRef.current.play();
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
     } else {
       console.log("audioRef is null");
     }
   };
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+  };
+  
 
   useEffect(() => {
     setQuizId(sceneList[index].sceneId);
@@ -81,10 +108,13 @@ const StoryClear = ({ index }: StoryClearProps) => {
 
   return (
     <ClearContainer>
-      <AudioPlayer ref={audioRef} controls preload="metadata" hidden>
-        <source src={sceneList[index].voice} type="audio/mpeg" />
-      </AudioPlayer>
-      <AudioBtn onClick={handlePlay}>재생</AudioBtn>
+      <AudioArea>
+        <AudioPlayer ref={audioRef} controls autoPlay preload="metadata" hidden
+                     onEnded={handleAudioEnded}>
+          <source src={sceneList[index].voice} type="audio/mpeg" />
+        </AudioPlayer>
+        <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
+      </AudioArea>
       <StoryClearContent>{sceneList[index].content}</StoryClearContent>
       <ClearWebcamArea>
         <ClearWebcam placeId={placeId} />
