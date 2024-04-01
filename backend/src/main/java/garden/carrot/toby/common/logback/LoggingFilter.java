@@ -55,7 +55,8 @@ public class LoggingFilter extends OncePerRequestFilter {
 			} else if (request.getContentType() != null && request.getContentType().contains("multipart/form-data")) {
 				doFilterWrapped(request, new ResponseWrapper(response), filterChain);
 			} else {
-				doFilterWrapped(new RequestWrapper(request), new ResponseWrapper(response), filterChain);
+				doFilterWrapped(request, new ResponseWrapper(response), filterChain);
+				// doFilterWrapped(new RequestWrapper(request), new ResponseWrapper(response), filterChain);
 			}
 		} catch (Exception ex) {
 			handleException(ex, response);

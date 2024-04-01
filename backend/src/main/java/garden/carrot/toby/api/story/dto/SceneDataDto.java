@@ -1,5 +1,7 @@
 package garden.carrot.toby.api.story.dto;
 
+import java.io.Serializable;
+
 import garden.carrot.toby.domain.scenedata.entity.SceneType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +11,7 @@ public class SceneDataDto {
 
 	@Getter
 	@AllArgsConstructor
-	public static class SceneDataResponse {
+	public static class SceneDataResponse implements Serializable {
 
 		@Setter
 		private Integer sceneId;
