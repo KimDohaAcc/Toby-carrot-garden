@@ -269,6 +269,15 @@ const AudioPlayer = styled.audio`
   position: absolute;
 `;
 
+const SoundButton = styled.img`
+  position: absolute;
+  width: 5%;
+  height: 5%;
+  top: 1%;
+  right: 1%;
+  cursor: pointer;
+`;
+
 const MainPage = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -278,6 +287,10 @@ const MainPage = () => {
   const [showPoliceModal, setShowPoliceModal] = useState(false);
   const [modalType, setModalType] = useState(""); // 모달 종류를 결정하는 상태
   const [userName, setUserName] = useState("");
+
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+  const [muteImage, setMuteImage] = useState("/Image/button/sound.png");
+
   useEffect(() => {
     // 컴포넌트 마운트 시 getUserStorage를 호출하여 사용자 이름 가져오기
     const userInfo = getUserStorage();
@@ -308,6 +321,19 @@ const MainPage = () => {
       setModalType("school");
     } else {
       navigate(path);
+    }
+  };
+
+  const handleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !audioRef.current.muted;
+      if (audioRef.current.muted) {
+        setMuteImage("/Image/button/no-sound.png");
+      } else {
+        setMuteImage("/Image/button/sound.png");
+      }
+    } else {
+      console.error("audioRef is null");
     }
   };
 
@@ -384,6 +410,10 @@ const MainPage = () => {
             />
           </TobyArea>
         </Area4>
+        <AudioPlayer ref={audioRef} controls autoPlay loop hidden>
+          <source src="/Sound/메인_BGM.mp3" type="audio/mpeg" />
+        </AudioPlayer>
+        <SoundButton src={muteImage} onClick={handleMute} />
       </MainpageContainer>
       {showMartModal && modalType === "mart" && (
         <MartStoryListModal onClose={() => setShowMartModal(false)} />

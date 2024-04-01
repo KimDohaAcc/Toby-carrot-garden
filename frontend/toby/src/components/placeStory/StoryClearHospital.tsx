@@ -69,6 +69,8 @@ const StoryClear = ({ index }: StoryClearProps) => {
   const handlePlay = () => {
     if (audioRef.current) {
       audioRef.current.play();
+    } else {
+      console.log("audioRef is null");
     }
   };
 

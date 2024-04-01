@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Logo from "../components/Logo";
+import Logo3 from "../components/Logo3";
 import Rescore from "../components/report/Rescore.tsx";
 import ReportGraphContent from "../components/report/ReportGraphContent.tsx";
 import ReportDrawings from "../components/report/ReportDrawings.tsx";
@@ -298,9 +298,9 @@ const Report = () => {
   };
   return (
     <>
-      <Logo />
       <ReportContainer>
         <ReportCategory>
+          <Logo3 />
           <Category1>
             <StyledButton onClick={() => handleButtonClick("analysis")}>
               <Image src={getButtonImageSrc("analysis")} alt="분석 아이콘" />

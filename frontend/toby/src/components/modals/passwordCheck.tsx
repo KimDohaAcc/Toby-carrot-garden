@@ -27,10 +27,10 @@ const ModalContainer = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 20%;
-  height: 20%;
+  width: 30%;
+  height: 30%;
   transform: translate(-50%, -50%);
-  padding: 3%;
+  padding: 5%;
   background-image: url("/Image/modal/passwordModal.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -41,6 +41,7 @@ const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   animation: ${fadeInAnimation} 0.5s ease;
+  box-sizing: border-box;
 `;
 
 const ButtonGroup = styled.div`
@@ -90,6 +91,7 @@ const PasswordInput = styled.input`
 `;
 
 const ConstructionText = styled.h2`
+  object-fit: contain;
   text-align: center;
   font-size: calc(1.5em + 1vw);
 `;
@@ -112,7 +114,9 @@ const ConstructionModal = ({ onClose }) => {
   return (
     <ModalBackdrop onClick={onClose}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
-        <ConstructionText>비밀번호 입력해주세요</ConstructionText>
+        <ConstructionText>
+          비밀번호를 <br /> 입력해주세요
+        </ConstructionText>
         <PasswordInput
           type="password"
           value={password}
