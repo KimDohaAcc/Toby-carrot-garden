@@ -19,7 +19,7 @@ const ListContainer = styled.div`
     width: 10px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #afd485;
+    background-color: #fda7a7;
     border-radius: 5px;
   }
 `;
@@ -28,9 +28,10 @@ const DrawingItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 90%;
+  width: 100%;
   height: auto;
-  border: 4px solid #afd485;
+  /* margin: 5px; */
+  border-bottom: 3px solid #FFDCDC;
 `;
 
 const ImageContainer = styled.div`
@@ -42,12 +43,15 @@ const ImageContainer = styled.div`
   flex: 0 0 60%;
   object-fit: contain;
   overflow: hidden;
+  
 `;
 
 const Image = styled.img`
   object-fit: contain;
-  height: 100%;
-  width: 100%;
+  height: 80%;
+  width: 80%;
+  margin: 5%;
+  border: 3px solid #fda7a7;
 `;
 
 const InfoContainer = styled.div`
@@ -62,30 +66,27 @@ const InfoContainer = styled.div`
 const Answer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex: 0 0 50%;
+  margin-left: 10px;
   width: 100%;
   height: auto;
-  font-size: 3rem;
-  border: 2px solid #afd485;
+  font-size: 3vw;
 `;
 
 const Score = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-left: 10px;
   flex: 0 0 25%;
-  font-size: 2rem;
-  border: 2px solid #afd485;
+  font-size: 2vw;
+
 `;
 
 const CreateTime = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-left: 10px;
   flex: 0 0 25%;
-  font-size: 2rem;
-  border: 2px solid #afd485;
+  font-size: 1.5vw;
 `;
 
 const translateAnswer = (answer) => {
