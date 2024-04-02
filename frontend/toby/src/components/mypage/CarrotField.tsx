@@ -48,6 +48,8 @@ const MiddleTextContainer = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 23px;
+  overflow: hidden;
+  object-fit: contain;
 `;
 const BottomContainer = styled.div`
   display: flex;
@@ -56,6 +58,8 @@ const BottomContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const CarrotToby = styled.img`
@@ -85,13 +89,20 @@ const CarrotFieldContent = styled.div`
   border-radius: 30px;
   display: grid;
   grid-template-areas:
+    /* ". . . . ."
+    ". school . hospital ."
+    /* ". . . . ." */
+    /* ". mart . police ." */
+    /* ". . . . ."; */
     ". . . . ."
     ". school . hospital ."
-    ". . . . ."
+    /* ". . . . ." */
     ". mart . police ."
     ". . . . .";
   border-radius: 30px;
-  height: 90%;
+  height: 100%;
+  overflow: hidden;
+  object-fit: contain;
   /* flex: 0 0 90%; */
 `;
 
@@ -103,7 +114,9 @@ const SchoolCarrot = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  height: 90%;
+  height: 110%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const HospitalCarrot = styled.div`
@@ -114,7 +127,9 @@ const HospitalCarrot = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  height: 90%;
+  height: 110%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const MartCarrot = styled.div`
@@ -125,7 +140,9 @@ const MartCarrot = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  height: 90%;
+  height: 110%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const PoliceCarrot = styled.div`
@@ -136,7 +153,9 @@ const PoliceCarrot = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  height: 90%;
+  height: 110%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const ShovelImage = styled.img`
@@ -144,6 +163,8 @@ const ShovelImage = styled.img`
   bottom: 0;
   right: 0;
   width: 20%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 // const CarrotToby = styled.img`
@@ -153,15 +174,27 @@ const ShovelImage = styled.img`
 //   right: 0;
 // `;
 
-const CarrotCount = styled.span`
+const CarrotCount = styled.div`
   color: white;
   font-size: 30px;
+  /* overflow: hidden;
+  object-fit: contain; */
+  /* font-size: clamp(40px, 2vw, 20px); */
+  font-size: calc(150%);
+  flex: 0 0 15%;
+  top: -12%;
+  position: relative;
+  height: 100%;
 `;
 
 const CarrotSign = styled.img`
   position: relative;
   width: 30%;
   height: auto;
+  overflow: hidden;
+  object-fit: contain;
+  flex: 0 0 20%;
+  top: -9%;
 `;
 
 //데이터 형식 예시
@@ -216,6 +249,7 @@ interface CarrotList {
 const CarrotGradeImage = ({ carrotGrade }) => {
   let ImageURL: string = "";
   let ImageAlt: string = "carrot";
+
   switch (carrotGrade) {
     case 1:
       ImageURL = "Image/carrot/씨앗.png";

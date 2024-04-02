@@ -123,7 +123,7 @@ const QuizWebCam = ({ quizId, place }) => {
       console.error("Quiz submission error", error);
       setModalState("fail");
     }
-  };
+  }; //여기까지 submit
 
   const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
     let attempts = 0;
@@ -132,7 +132,7 @@ const QuizWebCam = ({ quizId, place }) => {
     const interval = setInterval(async () => {
       try {
         const answerResponse = await getQuizAnswer({
-          member_quiz_id: memberQuizId,
+          memberQuizId,
         });
 
         if (answerResponse.status === 200) {

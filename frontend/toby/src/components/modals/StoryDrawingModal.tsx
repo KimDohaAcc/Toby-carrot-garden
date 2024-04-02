@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import SignatureCanvas from "react-signature-canvas";
 import { submitQuiz, getQuizAnswer } from "../../apis/quizApi";
@@ -50,6 +50,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
 
   const dispatch = useDispatch();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     function updateCanvasSize() {
       if (modalRef.current) {
@@ -65,64 +66,59 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
 
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, [isOpen]);
+  const startPolling = useCallback((memberQuizId) => {
+    const maxAttempts = 10;
+    let attempts = 0;
 
-  useEffect(() => {
-    if (modalState === "success" || modalState === "fail") {
-      const timer = setTimeout(() => {
-        setModalState("none");
-        onClose(); // Automatically close modal after 2 seconds
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [modalState, onClose]);
-  const handleSaveDrawing = async () => {
-    if (signaturePadRef.current && isOpen) {
+    const intervalId = setInterval(async () => {
+      if (attempts >= maxAttempts) {
+        clearInterval(intervalId);
+        setModalState("fail");
+        return;
+      }
+
+      try {
+        const response = await getQuizAnswer({ memberQuizId });
+        if (response.status === 200 && response.result.score !== -1) {
+          clearInterval(intervalId);
+          setModalState(response.result.score === 100 ? "success" : "fail");
+        }
+      } catch (error) {
+        console.error("Error polling for quiz answer:", error);
+      }
+
+      attempts++;
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const handleSaveDrawing = useCallback(async () => {
+    if (!isSubmitting && signaturePadRef.current && isOpen) {
+      setIsSubmitting(true); // Prevent multiple submissions
       const canvas = signaturePadRef.current.getCanvas();
       const dataUrl = canvas.toDataURL("image/png");
-
-      // dataURL을 Blob으로 변환
       const response = await fetch(dataUrl);
       const blob = await response.blob();
-
-      // Blob을 File 객체로 변환
       const file = new File([blob], "drawing.png", { type: "image/png" });
 
       const formData = new FormData();
       formData.append("analysisImage", file);
-      formData.append("quizId", quizId.toString());
+      formData.append("quizId", quizId);
 
-      try {
-        // submitQuiz 함수 호출 시 반환된 데이터를 response 변수에 할당
-        const submitResponse = await submitQuiz(formData);
-        const { status, result } = submitResponse;
-
-        if (status === 200) {
-          // 제출에 성공한 경우 memberQuizId 추출
-          const memberQuizId = submitResponse.data.result.memberQuizId;
-
-          setModalState("wait"); // 폴링 동안 WaitToby 모달 표시
-
-          const endTime = Date.now() + 10000; // 10초 후 폴링 종료
-          const intervalId = setInterval(async () => {
-            if (Date.now() > endTime) {
-              clearInterval(intervalId);
-              setModalState("fail"); // 10초 동안 분석 결과를 받지 못하면 FailToby 모달 표시
-              return;
-            }
-
-            // getQuizAnswer 호출 시 submitQuiz에서 받은 memberQuizId를 사용
-            const answerResponse = await getQuizAnswer(memberQuizId);
-            if (
-              answerResponse.status === 200 &&
-              answerResponse.result.score !== -1
-            ) {
-              clearInterval(intervalId);
-              setModalState(
-                answerResponse.result.score === 100 ? "success" : "fail"
-              ); // 점수에 따라 SuccessToby 또는 FailToby 모달 표시
-            }
-          }, 1000);
-
+      submitQuiz(formData)
+        .then((response) => {
+          if (
+            response.status === 200 &&
+            response.data &&
+            response.data.result &&
+            response.data.result.memberQuizId
+          ) {
+            setModalState("wait");
+            startPolling(response.data.result.memberQuizId);
+          } else {
+            setModalState("fail");
+          }
           if (place === "school") {
             dispatch(setSchoolQuizClear(true));
           } else if (place === "hospital") {
@@ -132,27 +128,25 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
           } else if (quizId === 4) {
             console.log("placeId 4");
           }
-        } else {
-          console.error("Quiz submission failed", submitResponse.message);
-          setModalState("fail"); // 제출 실패 시 FailToby 모달 표시
-        }
-      } catch (error) {
-        console.error("이미지 전송 실패", error);
-        setModalState("fail"); // 전송 실패 시 FailToby 모달 표시
-      }
+        })
+        .catch((error) => {
+          console.error("Submission error:", error);
+          setModalState("fail");
+        })
+        .finally(() => {
+          setIsSubmitting(false); // Reset submission status
+        });
     }
-  };
+  }, [isOpen, isSubmitting, quizId, startPolling, place, dispatch]);
 
-  // 모달 상태가 변경될 때마다 실행되는 useEffect
   useEffect(() => {
-    let timer;
-    if (["success", "fail"].includes(modalState)) {
-      timer = setTimeout(() => {
-        setModalState("none"); // SuccessToby 또는 FailToby 모달을 2초 후 자동으로 닫음
-        onClose(); // 모달 닫기 콜백 함수 호출
+    if (modalState !== "none" && modalState !== "wait") {
+      const timeoutId = setTimeout(() => {
+        setModalState("none");
+        onClose();
       }, 2000);
+      return () => clearTimeout(timeoutId);
     }
-    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 제거
   }, [modalState, onClose]);
 
   if (!isOpen) return null;
