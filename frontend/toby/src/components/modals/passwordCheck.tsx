@@ -101,8 +101,8 @@ const PasswordInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-
   height: auto;
+  margin-top: -10%;
   box-sizing: border-box;
   justify-content: center;
   ::placeholder {
@@ -117,9 +117,9 @@ const ConstructionText = styled.h2`
   object-fit: contain;
   text-align: center;
   overflow-wrap: break-word;
-  font-size: calc(1.5em + 1vw);
+  font-size: calc(1em + 1.5vw);
   box-sizing: border-box;
-  margin-top: 30%;
+  margin-top: calc(15%);
 `;
 
 const ConstructionModal = ({ onClose }) => {
