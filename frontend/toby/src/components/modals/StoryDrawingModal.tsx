@@ -116,12 +116,14 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       }
 
       try {
-        const answerResponse = await getQuizAnswer({ memberQuizId });
+        const answerResponse = await getQuizAnswer({
+          memberQuizId,
+        });
         if (answerResponse.status === 200) {
-          if (answerResponse.data.result.score === 100) {
+          if (answerResponse.result.score === 100) {
             clearInterval(poll);
             setModalState("success");
-          } else if (answerResponse.data.result.score !== -1) {
+          } else if (answerResponse.result.score !== -1) {
             clearInterval(poll);
             setModalState("fail");
           }
