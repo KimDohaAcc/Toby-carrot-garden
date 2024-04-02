@@ -50,6 +50,7 @@ const RecoreContentContainer2 = styled.div`
 
 const RecoreScrollArea = styled.div`
   overflow-y: auto;
+  overflow-x: hidden; 
   flex: 0 0 90%;
   width: 100%;
   height: 100%;
@@ -74,6 +75,7 @@ const RecoreScrollArea = styled.div`
 
 const RecoreScrollArea2 = styled.div`
   overflow-y: auto;
+  overflow-x: hidden;
   flex: 0 0 90%;
   width: 100%;
   height: 100%;
@@ -163,7 +165,7 @@ const RecoreBoxRescoreDate = styled.div`
   margin: 5% 0px;
 `;
 const RecoreBoxRescoreButton = styled.div`
-  width: 100%;
+  width: 108%;
   height: auto;
   flex: 0 0 25%;
   display: flex;
