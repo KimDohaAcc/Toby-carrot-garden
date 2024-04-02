@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,21 +70,21 @@ public class LoggingFilter extends OncePerRequestFilter {
 		try {
 			logRequest(request);
 			if (!isSwagger) {
-
-				discordNotifier.notify(stringBuilder.append("----------------").toString());
-				stringBuilder.setLength(0);
+				stringBuilder.append("----------------\n");
+				// discordNotifier.notify(stringBuilder.toString());
+				// stringBuilder.setLength(0);
 			}
 			filterChain.doFilter(request, response);
 		} catch (Exception ex) {
 			handleException(ex, response);
 			throw ex; // Re-throw the exception to propagate it to the outer catch block
 		} finally {
-			stringBuilder.append("time: ").append(LocalDateTime.now()).append("\n");
-			stringBuilder.append("traceId: ").append(MDC.get("traceId")).append("\n");
+			// stringBuilder.append("time: ").append(LocalDateTime.now()).append("\n");
+			// stringBuilder.append("traceId: ").append(MDC.get("traceId")).append("\n");
 			logResponse(response);
 			if (!isSwagger) {
 
-				discordNotifier.notify(stringBuilder.append("========================").toString());
+				discordNotifier.notify(stringBuilder.append("✨========================\n").toString());
 			}
 			response.copyBodyToResponse();
 		}
@@ -124,9 +125,18 @@ public class LoggingFilter extends OncePerRequestFilter {
 		log.info("Request : {} uri=[{}] content-type=[{}]", request.getMethod(),
 			queryString == null ? request.getRequestURI() : request.getRequestURI() + queryString,
 			request.getContentType());
-		String logMessage = String.format("Request : %s uri=[%s] content-type=[%s]", request.getMethod(),
+
+		Enumeration<String> headerNames = request.getHeaderNames();
+		StringBuilder headersInfo = new StringBuilder();
+		while (headerNames.hasMoreElements()) {
+			String headerName = headerNames.nextElement();
+			String headerValue = request.getHeader(headerName);
+			headersInfo.append(headerName).append(": ").append(headerValue).append("\n");
+		}
+		String logMessage = String.format("Request : %s uri=[%s] content-type=[%s], headers = [%s]",
+			request.getMethod(),
 			queryString == null ? request.getRequestURI() : request.getRequestURI() + queryString,
-			request.getContentType());
+			request.getContentType(), headersInfo);
 
 		isSwagger = false;
 		String[] swaggerUris = {"swagger", "api-docs"};
@@ -160,14 +170,29 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 	private void logPayload(String prefix, String contentType, InputStream inputStream) throws IOException {
 		boolean visible = isVisible(MediaType.valueOf(contentType == null ? "application/json" : contentType));
+		int maxLength = 1900; // 스트링빌더 최대 길이
+
 		if (visible) {
 			byte[] content = StreamUtils.copyToByteArray(inputStream);
+			stringBuilder.append(prefix).append(" Payload:");
 			if (content.length > 0) {
 				String contentString = new String(content);
 				log.info("{} Payload: {}", prefix, contentString);
-				stringBuilder.append(prefix).append(" Payload:").append(contentString).append("\n");
+				// 현재 스트링빌더에 있는 텍스트의 길이 확인
+				int currentLength = stringBuilder.length();
+				if (currentLength < maxLength) {
+					int remainingLength = maxLength - currentLength; // 남은 길이 계산
 
+					if (contentString.length() <= remainingLength) {
+						// contentString이 남은 길이보다 작거나 같으면 전체 추가
+						stringBuilder.append(contentString).append("\n");
+					} else {
+						// contentString이 남은 길이보다 크면 잘라서 추가
+						stringBuilder.append(contentString, 0, remainingLength).append("\n");
+					}
+				}
 			}
+
 		} else {
 			log.info("{} Payload: Binary Content", prefix);
 			stringBuilder.append(prefix).append(" Payload: Binary Content").append("\n");
