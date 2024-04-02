@@ -71,6 +71,8 @@ const ButtonArea = styled.div`
 const QuizWebCam = ({ placeId }) => {
   const webcamRef = useRef<WebcamRef>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [submitQuizState, setSubmitQuizState] = useState(false);
+
 
   const dispatch = useDispatch();
 
@@ -86,9 +88,11 @@ const QuizWebCam = ({ placeId }) => {
 
   const retake = () => {
     setImageSrc(null);
+    setSubmitQuizState(false);
   };
 
   const submit = () => {
+    setSubmitQuizState(true);
     if (!imageSrc) {
       console.error("No image to submit");
       return;
@@ -140,7 +144,7 @@ const QuizWebCam = ({ placeId }) => {
             >
               다시찍기
             </button>
-            <button style={{ width: "100%", height: "50%" }} onClick={submit}>
+            <button style={{ width: "100%", height: "50%" }} onClick={submit} disabled={submitQuizState}>
               제출하기
             </button>
           </ButtonArea>

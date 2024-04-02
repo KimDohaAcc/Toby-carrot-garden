@@ -70,6 +70,7 @@ const QuizWebCam = ({ quizId, place }) => {
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState("");
   const [modalState, setModalState] = useState("none");
+  const [submitQuizState, setSubmitQuizState] = useState(false);
   const [memberQuizId, setMemberQuizId] = useState("");
 
   const dispatch = useDispatch();
@@ -81,9 +82,12 @@ const QuizWebCam = ({ quizId, place }) => {
 
   const retake = () => {
     setImageSrc(null);
+    setSubmitQuizState(false);
   };
 
   const submit = async () => {
+    setSubmitQuizState(true)
+
     if (!imageSrc) {
       console.error("No image to submit");
       return;
@@ -192,7 +196,7 @@ const QuizWebCam = ({ quizId, place }) => {
             >
               다시찍기
             </button>
-            <button style={{ width: "100%", height: "50%" }} onClick={submit}>
+            <button style={{ width: "100%", height: "50%" }} onClick={submit} disabled={submitQuizState}>
               제출하기
             </button>
           </ButtonArea>
