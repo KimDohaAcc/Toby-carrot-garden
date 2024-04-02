@@ -6,6 +6,11 @@ import FailToby from "./modals/FailToby";
 import SuccessToby from "./modals/SuccessToby";
 import styled from "styled-components";
 
+import { useDispatch } from "react-redux";
+
+import { setSchoolQuizClear } from "../store/slices/schoolSlice";
+import { setHospitalQuizClear } from "../store/slices/hospitalSlice";
+
 const base64ToMultipartFile = (base64String, fileName) => {
   const byteString = atob(base64String.split(",")[1]);
   const mimeString = base64String.split(",")[0].split(":")[1].split(";")[0];
@@ -61,11 +66,13 @@ const ButtonArea = styled.div`
   height: auto;
 `;
 
-const QuizWebCam = ({ quizId }) => {
+const QuizWebCam = ({ quizId, place }) => {
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState("");
   const [modalState, setModalState] = useState("none");
   const [memberQuizId, setMemberQuizId] = useState("");
+
+  const dispatch = useDispatch();
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -102,6 +109,15 @@ const QuizWebCam = ({ quizId }) => {
         console.error("Quiz submission failed");
         // memberQuizId 관련된 로그 라인은 이곳에 있으면 안 됩니다.
         setModalState("fail");
+      }
+      if (place === "school") {
+        dispatch(setSchoolQuizClear(true));
+      } else if (place === "hospital") {
+        dispatch(setHospitalQuizClear(true));
+      } else if (place === "mart") {
+        console.log("placeId 3");
+      } else if (place === "police") {
+        console.log("placeId 4");
       }
     } catch (error) {
       console.error("Quiz submission error", error);

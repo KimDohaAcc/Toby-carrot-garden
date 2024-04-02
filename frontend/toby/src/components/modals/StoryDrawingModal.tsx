@@ -5,6 +5,12 @@ import { submitQuiz, getQuizAnswer } from "../../apis/quizApi";
 import WaitToby from "./WaitToby";
 import FailToby from "./FailToby";
 import SuccessToby from "./SuccessToby";
+
+import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
+import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
+
+import { useDispatch } from "react-redux";
+
 const StoryDrawingModalContainer = styled.div`
   display: flex;
   position: absolute;
@@ -34,13 +40,15 @@ const CloseBtn = styled.button`
   border: none;
 `;
 
-const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
+const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   const signaturePadRef = useRef(null);
   const modalRef = useRef(null);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [modalState, setModalState] = useState<
     "none" | "wait" | "success" | "fail"
   >("none");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     function updateCanvasSize() {
@@ -114,6 +122,16 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
               ); // 점수에 따라 SuccessToby 또는 FailToby 모달 표시
             }
           }, 1000);
+
+          if (place === "school") {
+            dispatch(setSchoolQuizClear(true));
+          } else if (place === "hospital") {
+            dispatch(setHospitalQuizClear(true));
+          } else if (quizId === 3) {
+            console.log("placeId 3");
+          } else if (quizId === 4) {
+            console.log("placeId 4");
+          }
         } else {
           console.error("Quiz submission failed", submitResponse.message);
           setModalState("fail"); // 제출 실패 시 FailToby 모달 표시
