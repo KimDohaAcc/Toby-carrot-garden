@@ -34,13 +34,6 @@ const CloseBtn = styled.button`
   border: none;
 `;
 
-// const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
-//   const signaturePadRef = useRef(null);
-//   const modalRef = useRef(null);
-//   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
-//   const [modalState, setModalState] = useState("none");
-//   const [memberQuizId, setMemberQuizId] = useState(null);
-
 const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const signaturePadRef = useRef(null);
   const modalRef = useRef(null);
@@ -48,9 +41,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const [modalState, setModalState] = useState<
     "none" | "wait" | "success" | "fail"
   >("none");
-
   const [memberQuizId, setMemberQuizId] = useState(null);
-
   useEffect(() => {
     function updateCanvasSize() {
       if (modalRef.current) {
@@ -67,37 +58,36 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, [isOpen]);
 
-  //   window.addEventListener("resize", updateCanvasSize);
-  //   return () => window.removeEventListener("resize", updateCanvasSize);
-  // }, [isOpen]);
-
-  const handleSaveDrawing = useCallback(async () => {
+  useEffect(() => {
+    if (modalState === "success" || modalState === "fail") {
+      const timer = setTimeout(() => {
+        setModalState("none");
+        onClose(); // Automatically close modal after 2 seconds
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [modalState, onClose]);
+  const handleSaveDrawing = async () => {
     if (signaturePadRef.current && isOpen) {
       const canvas = signaturePadRef.current.getCanvas();
       const dataUrl = canvas.toDataURL("image/png");
-
       const response = await fetch(dataUrl);
       const blob = await response.blob();
       const file = new File([blob], "drawing.png", { type: "image/png" });
-
       const formData = new FormData();
       formData.append("analysisImage", file);
-      formData.append("quizId", quizId);
+      formData.append("quizId", quizId.toString());
 
       try {
-        const response = await submitQuiz(formData);
+        const submitResponse = await submitQuiz(formData);
         if (
-          response.status === 200 &&
-          response.data.result &&
-          response.data.result.memberQuizId
+          submitResponse.status === 201 &&
+          submitResponse.result.memberQuizId
         ) {
-          console.log(
-            "Received memberQuizId:",
-            response.data.result.memberQuizId
-          );
-          setMemberQuizId(response.data.result.memberQuizId);
+          setMemberQuizId(submitResponse.result.memberQuizId);
+
           setModalState("wait");
-          checkQuizAnswer(response.data.result.memberQuizId);
+          startPolling(submitResponse.result.memberQuizId);
         } else {
           setModalState("fail");
         }
@@ -106,58 +96,49 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
         setModalState("fail");
       }
     }
-  }, [quizId]);
+  };
 
-  const checkQuizAnswer = useCallback(async (memberQuizId) => {
-    let attempts = 0;
-    const maxAttempts = 10;
+  const startPolling = useCallback((memberQuizId) => {
+    const endTime = Date.now() + 10000; // 10초 후 종료
+    const poll = async () => {
+      if (Date.now() > endTime) {
+        setModalState("fail");
+        return;
+      }
 
-    const interval = setInterval(async () => {
-      try {
-        const answerResponse = await getQuizAnswer({ memberQuizId });
-        console.log("Polling for memberQuizId:", memberQuizId);
-        console.log("Polling response:", answerResponse);
-
-        if (
-          answerResponse.status === 200 &&
-          answerResponse.data.result.score !== -1
-        ) {
-          clearInterval(interval);
-          setModalState(
-            answerResponse.data.result.score === 100 ? "success" : "fail"
-          );
+      const response = await getQuizAnswer(memberQuizId);
+      if (response.status === 200) {
+        if (response.result.score === 100) {
+          setModalState("success");
+        } else if (response.result.score === -1) {
+          setTimeout(poll, 1000); // 1초 후 다시 폴링
         } else {
-          attempts++;
-          if (attempts >= maxAttempts) {
-            clearInterval(interval);
-            setModalState("fail");
-          }
+          setModalState("fail");
         }
-      } catch (error) {
-        console.error("Error fetching quiz answer", error);
-        clearInterval(interval);
+      } else {
         setModalState("fail");
       }
-    }, 1000);
+    };
 
-    return () => clearInterval(interval);
+    poll();
   }, []);
 
   useEffect(() => {
+    let timer;
     if (modalState === "success" || modalState === "fail") {
-      const timeout = setTimeout(() => {
+      timer = setTimeout(() => {
         setModalState("none");
         onClose();
       }, 2000);
-      return () => clearTimeout(timeout);
     }
+    return () => clearTimeout(timer);
   }, [modalState, onClose]);
 
   if (!isOpen) return null;
 
   return (
     <StoryDrawingModalContainer>
-      <ModalArea>
+      <ModalArea ref={modalRef}>
         <SignatureCanvas
           ref={signaturePadRef}
           penColor="black"
@@ -173,8 +154,12 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       </ModalArea>
       <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
       {modalState === "wait" && <WaitToby />}
-      {modalState === "success" && <SuccessToby />}
-      {modalState === "fail" && <FailToby />}
+      {modalState === "success" && (
+        <SuccessToby onClose={() => setModalState("none")} />
+      )}
+      {modalState === "fail" && (
+        <FailToby onClose={() => setModalState("none")} />
+      )}
     </StoryDrawingModalContainer>
   );
 };
