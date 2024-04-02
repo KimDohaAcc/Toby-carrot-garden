@@ -67,6 +67,36 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       return () => clearTimeout(timer);
     }
   }, [modalState, onClose]);
+  const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
+    let attempts = 0;
+    const maxAttempts = 10;
+
+    const interval = setInterval(async () => {
+      try {
+        const answerResponse = await getQuizAnswer({ memberQuizId });
+
+        if (answerResponse.status === 200) {
+          clearInterval(interval); // Stop polling on success
+          setModalState(
+            answerResponse.result.score === 100 ? "success" : "fail"
+          );
+        } else {
+          console.error("Failed to get quiz answer");
+          setModalState("fail");
+        }
+      } catch (error) {
+        console.error("Error fetching quiz answer", error);
+        // Optionally, handle retry logic or stop on certain errors
+      }
+
+      attempts++;
+      if (attempts >= maxAttempts) {
+        clearInterval(interval); // Stop polling after max attempts
+        console.error("Max polling attempts reached, stopping.");
+        setModalState("fail"); // Considered fail after max attempts without success
+      }
+    }, 1000); // Poll every second
+  }, []);
   const handleSaveDrawing = async () => {
     if (signaturePadRef.current && isOpen) {
       const canvas = signaturePadRef.current.getCanvas();
@@ -104,36 +134,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       }
     }
   };
-  const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
-    let attempts = 0;
-    const maxAttempts = 10;
 
-    const interval = setInterval(async () => {
-      try {
-        const answerResponse = await getQuizAnswer({ memberQuizId });
-
-        if (answerResponse.status === 200) {
-          clearInterval(interval); // Stop polling on success
-          setModalState(
-            answerResponse.result.score === 100 ? "success" : "fail"
-          );
-        } else {
-          console.error("Failed to get quiz answer");
-          setModalState("fail");
-        }
-      } catch (error) {
-        console.error("Error fetching quiz answer", error);
-        // Optionally, handle retry logic or stop on certain errors
-      }
-
-      attempts++;
-      if (attempts >= maxAttempts) {
-        clearInterval(interval); // Stop polling after max attempts
-        console.error("Max polling attempts reached, stopping.");
-        setModalState("fail"); // Considered fail after max attempts without success
-      }
-    }, 1000); // Poll every second
-  }, []);
   useEffect(() => {
     if (modalState !== "wait" && modalState !== "none") {
       const timeout = setTimeout(() => setModalState("none"), 2000);
