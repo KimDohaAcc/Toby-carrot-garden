@@ -71,12 +71,8 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
     if (signaturePadRef.current && isOpen) {
       const canvas = signaturePadRef.current.getCanvas();
       const dataUrl = canvas.toDataURL("image/png");
-
-      // dataURL을 Blob으로 변환
       const response = await fetch(dataUrl);
       const blob = await response.blob();
-
-      // Blob을 File 객체로 변환
       const file = new File([blob], "drawing.png", { type: "image/png" });
 
       const formData = new FormData();
@@ -84,47 +80,58 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       formData.append("quizId", quizId.toString());
 
       try {
-        // submitQuiz 함수 호출 시 반환된 데이터를 response 변수에 할당
         const submitResponse = await submitQuiz(formData);
-        const { status, result } = submitResponse;
-
-        if (status === 200) {
-          // 제출에 성공한 경우 memberQuizId 추출
+        if (
+          submitResponse.status === 200 &&
+          submitResponse.data.result.memberQuizId
+        ) {
+          // 성공적으로 제출되었을 때 폴링을 시작합니다.
           const memberQuizId = submitResponse.data.result.memberQuizId;
-          console.log(memberQuizId);
-          setModalState("wait"); // 폴링 동안 WaitToby 모달 표시
-
-          const endTime = Date.now() + 10000; // 10초 후 폴링 종료
-          const intervalId = setInterval(async () => {
-            if (Date.now() > endTime) {
-              clearInterval(intervalId);
-              setModalState("fail"); // 10초 동안 분석 결과를 받지 못하면 FailToby 모달 표시
-              return;
-            }
-
-            // getQuizAnswer 호출 시 submitQuiz에서 받은 memberQuizId를 사용
-            const answerResponse = await getQuizAnswer({
-              memberQuizId: submitResponse.data.result.memberQuizId,
-            });
-            if (
-              answerResponse.status === 200 &&
-              answerResponse.result.score !== -1
-            ) {
-              clearInterval(intervalId);
-              setModalState(
-                answerResponse.result.score === 100 ? "success" : "fail"
-              ); // 점수에 따라 SuccessToby 또는 FailToby 모달 표시
-            }
-          }, 1000);
+          console.log(
+            "Quiz submitted, starting polling with memberQuizId:",
+            memberQuizId
+          );
+          setModalState("wait");
+          startPolling(memberQuizId); // 여기에서 폴링을 시작합니다.
         } else {
           console.error("Quiz submission failed", submitResponse.message);
-          setModalState("fail"); // 제출 실패 시 FailToby 모달 표시
+          setModalState("fail");
         }
       } catch (error) {
-        console.error("이미지 전송 실패", error);
-        setModalState("fail"); // 전송 실패 시 FailToby 모달 표시
+        console.error("Quiz submission error", error);
+        setModalState("fail");
       }
     }
+  };
+  const startPolling = async (memberQuizId) => {
+    let attempts = 0;
+    const maxAttempts = 10;
+    const pollInterval = 1000; // 1초 간격
+
+    const poll = setInterval(async () => {
+      if (attempts >= maxAttempts) {
+        clearInterval(poll);
+        setModalState("fail");
+        return;
+      }
+
+      try {
+        const answerResponse = await getQuizAnswer({ memberQuizId });
+        if (answerResponse.status === 200) {
+          if (answerResponse.data.result.score === 100) {
+            clearInterval(poll);
+            setModalState("success");
+          } else if (answerResponse.data.result.score !== -1) {
+            clearInterval(poll);
+            setModalState("fail");
+          }
+        }
+      } catch (error) {
+        console.error("Polling error:", error);
+      }
+
+      attempts++;
+    }, pollInterval);
   };
 
   // 모달 상태가 변경될 때마다 실행되는 useEffect
