@@ -107,7 +107,7 @@ const QuizWebCam = ({ quizId }) => {
       console.error("Quiz submission error", error);
       setModalState("fail");
     }
-  };
+  }; //여기까지 submit
 
   const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
     let attempts = 0;
