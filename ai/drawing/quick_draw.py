@@ -50,7 +50,7 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
         max_x = np.max(xs)
         image = image[min_y:max_y, min_x: max_x]
 
-        image = cv2.resize((28, 28))
+        image = cv2.resize(image, (28, 28))
         image = np.array(image, dtype=np.float32)[None, None, :, :]
         image = torch.from_numpy(image)
 
