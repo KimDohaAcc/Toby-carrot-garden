@@ -115,9 +115,7 @@ const QuizWebCam = ({ quizId }) => {
 
     const interval = setInterval(async () => {
       try {
-        const answerResponse = await getQuizAnswer({
-          member_quiz_id: memberQuizId,
-        });
+        const answerResponse = await getQuizAnswer({ memberQuizId });
 
         if (answerResponse.status === 200) {
           clearInterval(interval); // Stop polling on success
