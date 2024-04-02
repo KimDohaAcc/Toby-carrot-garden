@@ -52,7 +52,7 @@ const PasswordInputInline = styled.input`
   vertical-align: top;
   width: calc(50%);
   margin-bottom: 10px;
-  align-self: center;
+  align-self: left;
   font-size: 2.5vh;
   overflow: hidden;
   object-fit: contain;
@@ -90,7 +90,7 @@ const SubText = styled.span`
 const Text = styled.span`
   overflow: hidden;
   object-fit: contain;
-  font-size: 6vh;
+  font-size: 5vh;
   text-align: left;
 `;
 
