@@ -29,6 +29,8 @@ REDIS_PORT = os.getenv("REDIS_PORT")
 
 def analyze_object(image_data, member_id, quiz_id, correct_answer):
     try:
+
+
         # Load model
         model = torch.load("trained_models/whole_model_quickdraw", map_location=lambda storage, loc: storage)
         model.eval()
@@ -36,10 +38,13 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
         image = Image.open(BytesIO(image_data)).convert('L')
         image = image.convert('RGB')
 
+        white_background = np.ones((640, 480, 3), dtype=np.uint8) * 255  # 흰색 배경 생성
+
         # 이미지 반전시키기
-        image = Image.eval(image, lambda x: 255 - x)
+        image = Image.eval(image, lambda x: x)
         image = image.resize((640, 480), Image.LANCZOS)
         image = np.array(image)
+
 
         # Preprocess the image
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
