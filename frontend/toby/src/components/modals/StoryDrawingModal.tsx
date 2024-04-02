@@ -43,9 +43,9 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   useEffect(() => {
     const updateCanvasSize = () => {
       if (signaturePadRef.current && signaturePadRef.current.canvas) {
-        const { offsetWidth, offsetHeight } =
-          signaturePadRef.current.canvas.parentElement;
-        setCanvasSize({ width: offsetWidth, height: offsetHeight });
+        const { width, height } =
+          signaturePadRef.current.getBoundingClientRect();
+        setCanvasSize({ width: width, height: height });
       }
     };
 
