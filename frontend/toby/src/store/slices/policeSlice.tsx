@@ -18,12 +18,12 @@ const policeSlice = createSlice({
     selectStoryId: (state, action) => {
       state.storyId = action.payload;
     },
-    setSchoolQuizClear: (state, action) => {
+    setPoliceQuizClear: (state, action) => {
       state.quizClear = action.payload;
     },
   },
 });
 
-export const { selectStoryId, setSceneList, setSchoolQuizClear, setStoryList } =
+export const { selectStoryId, setSceneList, setPoliceQuizClear, setStoryList } =
   policeSlice.actions;
 export default policeSlice.reducer;

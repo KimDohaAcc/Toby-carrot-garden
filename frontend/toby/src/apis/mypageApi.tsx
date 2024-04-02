@@ -1,5 +1,4 @@
 import { api } from "../config/apiConfig.tsx";
-import { tempToken } from "../config/apiConfig";
 
 // URI : /member/clear-image
 // 클리어사진 목록 열람

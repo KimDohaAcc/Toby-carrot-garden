@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
-import StoryQuizDrawings from "./StoryQuizDrawings";
-import StoryQuizDetections from "./StoryQuizDetections";
-import StoryQuizEmotions from "./StoryQuizEmotions";
-import StoryEmergency from "./StoryEmergency";
+import StoryQuizDrawings from "../placeStory/StoryQuizDrawings";
+import StoryQuizDetections from "../placeStory/StoryQuizDetections";
+import StoryQuizEmotions from "../placeStory/StoryQuizEmotions";
+import StoryEmergency from "../placeStory/StoryEmergency";
 
 const StoryQuizContainer = styled.div`
   display: flex;

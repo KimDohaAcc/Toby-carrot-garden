@@ -18,12 +18,12 @@ const martSlice = createSlice({
     selectStoryId: (state, action) => {
       state.storyId = action.payload;
     },
-    setSchoolQuizClear: (state, action) => {
+    setMartQuizClear: (state, action) => {
       state.quizClear = action.payload;
     },
   },
 });
 
-export const { selectStoryId, setSceneList, setSchoolQuizClear, setStoryList } =
+export const { selectStoryId, setSceneList, setMartQuizClear, setStoryList } =
   martSlice.actions;
 export default martSlice.reducer;
