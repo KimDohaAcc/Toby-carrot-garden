@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
@@ -124,9 +125,18 @@ public class LoggingFilter extends OncePerRequestFilter {
 		log.info("Request : {} uri=[{}] content-type=[{}]", request.getMethod(),
 			queryString == null ? request.getRequestURI() : request.getRequestURI() + queryString,
 			request.getContentType());
-		String logMessage = String.format("Request : %s uri=[%s] content-type=[%s]", request.getMethod(),
+
+		Enumeration<String> headerNames = request.getHeaderNames();
+		StringBuilder headersInfo = new StringBuilder();
+		while (headerNames.hasMoreElements()) {
+			String headerName = headerNames.nextElement();
+			String headerValue = request.getHeader(headerName);
+			headersInfo.append(headerName).append(": ").append(headerValue).append(", ");
+		}
+		String logMessage = String.format("Request : %s uri=[%s] content-type=[%s], headers = [%s]",
+			request.getMethod(),
 			queryString == null ? request.getRequestURI() : request.getRequestURI() + queryString,
-			request.getContentType());
+			request.getContentType(), headersInfo);
 
 		isSwagger = false;
 		String[] swaggerUris = {"swagger", "api-docs"};
@@ -155,7 +165,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 		}
 		String logMessage = String.format("Response : %s", response.getStatus());
 		stringBuilder.append(logMessage).append("\n");
-		logPayload("Response", response.getContentType(), response.getContentInputStream());
+		// logPayload("Response", response.getContentType(), response.getContentInputStream());
 	}
 
 	private void logPayload(String prefix, String contentType, InputStream inputStream) throws IOException {
