@@ -67,9 +67,16 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   }, [isOpen]);
 
   const handleSaveDrawing = useCallback(async () => {
+    // const canvas = signaturePadRef.current.getCanvas();
+    // console.log(canvas);
+    // const context = canvas.getContext("2d");
+    // console.log(context);
+    // context.fillStyle = "white";
+    // context.fillRect(0, 0, canvas.width, canvas.height);
     if (isSubmitting || isPolling || !isOpen) return; // 제출 중, 폴링 중, 모달 닫힘 상태 체크
     setIsSubmitting(true); // 제출 시작// To prevent multiple submissions
     const canvas = signaturePadRef.current.getCanvas();
+
     const dataUrl = canvas.toDataURL("image/png");
     const response = await fetch(dataUrl);
     const blob = await response.blob();
@@ -120,7 +127,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
           if (score === 0) {
             setModalState("fail");
           } else {
-            setModalState(score === 100 ? "success" : "fail");
+            setModalState(score > 50 ? "success" : "fail");
           }
         } else {
           // score가 -1이면 아직 폴링 계속
@@ -153,12 +160,13 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
       <ModalArea ref={modalRef}>
         <SignatureCanvas
           ref={signaturePadRef}
-          penColor="black"
+          penColor="white"
+          backgroundColor="black"
           canvasProps={{
             width: canvasSize.width,
             height: canvasSize.height,
             className: "signature-canvas",
-            style: { backgroundColor: "white" }, // 배경을 흰색으로 설정
+            style: { backgroundColor: "black" }, // 배경을 흰색으로 설정
           }}
           minWidth={5} // 펜 굵기 최소값
           maxWidth={5} // 펜 굵기 최대값

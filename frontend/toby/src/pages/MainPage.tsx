@@ -308,7 +308,7 @@ const MainPage = () => {
         dispatch(setIsPlaceClear(false));
       }
     }
-  }, [location.state]);
+  }, [location.state, isPlaceClear, dispatch]);
   const handleLogout = () => {
     clearUserStorage();
     navigate("/");

@@ -1,6 +1,9 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store";
+
 const fadeInAnimation = keyframes`
   from {
     opacity: 0;
@@ -18,10 +21,10 @@ const ModalContainer = styled.div`
   height: 80%;
   transform: translate(-50%, -50%);
   padding: 3%;
-  background-image: url("/Image/storyList/policeBackground.png");  
+  background-image: url("/Image/storyList/policeBackground.png");
   background-position: center;
-  background-repeat : no-repeat;
-  background-size : 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -64,9 +67,12 @@ const Image = styled.img`
   margin: calc(5%);
   height: auto;
   align-self: center;
-`
+`;
 
 const PoliceStoryListModal = ({ onClose }) => {
+  const placeId = 4;
+  const dispatch = useDispatch();
+  const storyList = useSelector<Rootstate>((state) => state.story.storyList);
 
   return (
     <>
@@ -74,7 +80,13 @@ const PoliceStoryListModal = ({ onClose }) => {
       <ModalContainer>
         <CloseBtn onClick={onClose}>❌</CloseBtn>
         <List>경찰서 스토리 목록</List>
-        <Image src="/Image/modal/constructionImage.png"/>
+        <ModalContent>
+          <StoryContent>
+            <StoryImageArea></StoryImageArea>
+            <StoryTitle></StoryTitle>
+            <AgeRecommend></AgeRecommend>
+          </StoryContent>
+        </ModalContent>
       </ModalContainer>
     </>
   );
