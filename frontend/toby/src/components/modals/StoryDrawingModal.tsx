@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import SignatureCanvas from "react-signature-canvas";
 import { submitQuiz, getQuizAnswer } from "../../apis/quizApi";
@@ -78,23 +78,20 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       const formData = new FormData();
       formData.append("analysisImage", file);
       formData.append("quizId", quizId.toString());
-
       try {
-        const submitResponse = await submitQuiz(formData);
-        if (
-          submitResponse.status === 200 &&
-          submitResponse.data.result.memberQuizId
-        ) {
-          // 성공적으로 제출되었을 때 폴링을 시작합니다.
-          const memberQuizId = submitResponse.data.result.memberQuizId;
-          console.log(
-            "Quiz submitted, starting polling with memberQuizId:",
-            memberQuizId
-          );
+        const response = await submitQuiz(formData);
+        if (response.status === 200 && response.data.result.memberQuizId) {
+          console.log("Quiz submitted successfully");
+          console.log(response.data.result.memberQuizId);
           setModalState("wait");
-          startPolling(memberQuizId); // 여기에서 폴링을 시작합니다.
+          console.log(response);
+          // 여기서 memberQuizId가 성공적으로 정의되었습니다.
+          // const memberQuizId2 = response.data.result.memberQuizId;
+
+          checkQuizAnswer({ memberQuizId: response.data.result.memberQuizId });
         } else {
-          console.error("Quiz submission failed", submitResponse.message);
+          console.error("Quiz submission failed");
+          // memberQuizId 관련된 로그 라인은 이곳에 있으면 안 됩니다.
           setModalState("fail");
         }
       } catch (error) {
@@ -135,6 +132,46 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       attempts++;
     }, pollInterval);
   };
+
+  const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
+    let attempts = 0;
+    const maxAttempts = 10;
+
+    const interval = setInterval(async () => {
+      try {
+        const answerResponse = await getQuizAnswer({
+          memberQuizId,
+        });
+
+        if (answerResponse.status === 200) {
+          clearInterval(interval); // Stop polling on success
+          setModalState(
+            answerResponse.result.score === 100 ? "success" : "fail"
+          );
+        } else {
+          console.error("Failed to get quiz answer");
+          setModalState("fail");
+        }
+      } catch (error) {
+        console.error("Error fetching quiz answer", error);
+        // Optionally, handle retry logic or stop on certain errors
+      }
+
+      attempts++;
+      if (attempts >= maxAttempts) {
+        clearInterval(interval); // Stop polling after max attempts
+        console.error("Max polling attempts reached, stopping.");
+        setModalState("fail"); // Considered fail after max attempts without success
+      }
+    }, 1000); // Poll every second
+  }, []);
+
+  useEffect(() => {
+    if (modalState !== "wait" && modalState !== "none") {
+      const timeout = setTimeout(() => setModalState("none"), 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [modalState, onClose]);
 
   // 모달 상태가 변경될 때마다 실행되는 useEffect
   useEffect(() => {
