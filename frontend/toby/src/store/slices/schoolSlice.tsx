@@ -6,6 +6,7 @@ const schoolSlice = createSlice({
     sceneList: [],
     storyList: [],
     storyId: 1,
+    quizClear: false,
   },
   reducers: {
     setSceneList: (state, action) => {
@@ -17,9 +18,12 @@ const schoolSlice = createSlice({
     selectStoryId: (state, action) => {
       state.storyId = action.payload;
     },
+    setSchoolQuizClear: (state, action) => {
+      state.quizClear = action.payload;
+    },
   },
 });
 
-export const { setSceneList, setStoryList, selectStoryId } =
+export const { setSceneList, setStoryList, selectStoryId, setSchoolQuizClear } =
   schoolSlice.actions;
 export default schoolSlice.reducer;

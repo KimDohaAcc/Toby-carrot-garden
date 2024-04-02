@@ -6,6 +6,7 @@ const hospitalSlice = createSlice({
     sceneList: [],
     storyList: [],
     storyId: 2,
+    quizClear: false,
   },
   reducers: {
     setSceneList: (state, action) => {
@@ -17,9 +18,16 @@ const hospitalSlice = createSlice({
     selectStoryId: (state, action) => {
       state.storyId = action.payload;
     },
+    setHospitalQuizClear: (state, action) => {
+      state.quizClear = action.payload;
+    },
   },
 });
 
-export const { setSceneList, setStoryList, selectStoryId } =
-  hospitalSlice.actions;
+export const {
+  setSceneList,
+  setStoryList,
+  selectStoryId,
+  setHospitalQuizClear,
+} = hospitalSlice.actions;
 export default hospitalSlice.reducer;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 
 import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 입력 모달
 import Logo from "../components/Logo";
@@ -262,16 +263,37 @@ const MainPage = () => {
   const [modalType, setModalType] = useState(""); // 모달 종류를 결정하는 상태
   const [userName, setUserName] = useState("");
 
+  const location = useLocation();
+
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [muteImage, setMuteImage] = useState("/Image/button/no-sound.png");
 
+  console.log(location.state);
   useEffect(() => {
     // 컴포넌트 마운트 시 getUserStorage를 호출하여 사용자 이름 가져오기
     const userInfo = getUserStorage();
     if (userInfo && userInfo.name) {
       setUserName(`${userInfo.name}` + " ");
     }
-  }, []);
+    if (location.state) {
+      const { showStoryListModal, placeName } = location.state;
+      if (showStoryListModal) {
+        if (placeName === "hospital") {
+          setShowHospitalModal(true);
+          setModalType("hospital");
+        } else if (placeName === "school") {
+          setShowSchoolModal(true);
+          setModalType("school");
+        } else if (placeName === "mart") {
+          setShowMartModal(true);
+          setModalType("mart");
+        } else if (placeName === "police") {
+          setShowPoliceModal(true);
+          setModalType("police");
+        }
+      }
+    }
+  }, [location.state]);
   const handleLogout = () => {
     clearUserStorage();
     navigate("/");

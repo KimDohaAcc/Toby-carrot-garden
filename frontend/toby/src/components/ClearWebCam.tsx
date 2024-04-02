@@ -1,8 +1,12 @@
 import React, { useState, useRef, useCallback } from "react";
 import Webcam, { WebcamRef } from "react-webcam";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 import { postClearImage } from "../apis/clearApi";
+
+import { setHospitalQuizClear } from "../store/slices/hospitalSlice";
+import { setSchoolQuizClear } from "../store/slices/schoolSlice";
 
 const base64ToMultipartFile = (
   base64String: string,
@@ -68,6 +72,8 @@ const QuizWebCam = ({ placeId }) => {
   const webcamRef = useRef<WebcamRef>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
+  const dispatch = useDispatch();
+
   const capture = useCallback(() => {
     if (webcamRef.current) {
       const imageSrcs = webcamRef.current.getScreenshot();
@@ -101,6 +107,15 @@ const QuizWebCam = ({ placeId }) => {
     postClearImage(formData)
       .then((response) => {
         console.log(response);
+        if (placeId === 2) {
+          dispatch(setHospitalQuizClear(true));
+        } else if (placeId === 1) {
+          dispatch(setSchoolQuizClear(true));
+        } else if (placeId === 3) {
+          console.log("placeId 3");
+        } else if (placeId === 4) {
+          console.log("placeId 4");
+        }
       })
       .catch((error) => {
         console.error(error);

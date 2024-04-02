@@ -5,6 +5,9 @@ import { RootState } from "../../store/store";
 
 import { getEmergencyQuiz } from "../../apis/quizApi";
 
+import { useDispatch } from "react-redux";
+import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
+
 const EmergencyContainer = styled.div`
   display: grid;
   justify-content: center;
@@ -149,14 +152,17 @@ const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
   width: 3vw;
   height: 3vw;
-  background-image: url(${props => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-image: url(${(props) =>
+    props.isPlaying
+      ? "/Image/button/no-sound.png"
+      : "/Image/button/sound.png"});
   background-size: 100% 100%;
   background-color: transparent;
-  border: none;  
+  border: none;
   &:focus,
   &:hover {
     outline: none;
-    background-color: transparent; 
+    background-color: transparent;
   }
 `;
 
@@ -166,7 +172,6 @@ const AudioArea = styled.div`
   margin: calc(2%);
 `;
 
-
 interface Scene {
   sceneId: number;
   quizType: string;
@@ -175,7 +180,7 @@ interface Scene {
   voice: string;
 }
 
-const StoryEmergency = ({ index }: { index: number }) => {
+const StoryEmergency = ({ index, place }) => {
   const [numList, setNumList] = useState(() => {
     const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, "*", 0, "#"];
     return list;
@@ -193,6 +198,8 @@ const StoryEmergency = ({ index }: { index: number }) => {
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+
+  const dispatch = useDispatch();
 
   const handleTogglePlay = () => {
     if (audioRef.current) {
@@ -225,6 +232,12 @@ const StoryEmergency = ({ index }: { index: number }) => {
       const response = await getEmergencyQuiz({ place_id: 2 });
       console.log(response);
       openCarrotModal();
+      if (place === "hospital") {
+        dispatch(setHospitalQuizClear(true));
+      } else if (place === "police") {
+        // dispatch(setPoliceQuizClear(true));
+        console.log("police");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -240,8 +253,14 @@ const StoryEmergency = ({ index }: { index: number }) => {
   return (
     <EmergencyContainer>
       <AudioArea>
-        <AudioPlayer ref={audioRef} controls autoPlay preload="metadata" hidden
-                     onEnded={handleAudioEnded}>
+        <AudioPlayer
+          ref={audioRef}
+          controls
+          autoPlay
+          preload="metadata"
+          hidden
+          onEnded={handleAudioEnded}
+        >
           <source src={sceneList[index].voice} type="audio/mpeg" />
         </AudioPlayer>
         <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
