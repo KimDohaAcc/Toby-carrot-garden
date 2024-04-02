@@ -34,7 +34,11 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
         model.eval()
 
         image = Image.open(BytesIO(image_data)).convert('L')
+        image = image.convert('RGB')
 
+        # 이미지 반전시키기
+        image = Image.eval(image, lambda x: 255 - x)
+        image = image.resize((640, 480), Image.LANCZOS)
         image = np.array(image)
 
         # Preprocess the image
@@ -54,13 +58,7 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
         logits = model(image)
 
         top_values, top_indices = torch.topk(logits[0], k=10)
-
         result = 0
-
-        print("image_data(s3에서 읽은 객체) : ", image_data, flush=True)
-        print("image(모델 돌리기 전처리 후) : ", image, flush=True)
-        print("logits : ", logits, flush=True)
-
 
         for rank, (value, index) in enumerate(zip(top_values, top_indices), start=0):
             print(
