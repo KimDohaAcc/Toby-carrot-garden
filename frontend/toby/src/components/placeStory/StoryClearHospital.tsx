@@ -42,14 +42,17 @@ const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
   width: 3vw;
   height: 3vw;
-  background-image: url(${props => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-image: url(${(props) =>
+    props.isPlaying
+      ? "/Image/button/no-sound.png"
+      : "/Image/button/sound.png"});
   background-size: 100% 100%;
   background-color: transparent;
-  border: none;  
+  border: none;
   &:focus,
   &:hover {
     outline: none;
-    background-color: transparent; 
+    background-color: transparent;
   }
 `;
 
@@ -59,7 +62,6 @@ const AudioArea = styled.div`
   left: calc(1%);
   margin: calc(2%);
 `;
-
 
 type StoryClearProps = {
   index: number;
@@ -99,7 +101,6 @@ const StoryClear = ({ index }: StoryClearProps) => {
   const handleAudioEnded = () => {
     setIsPlaying(false);
   };
-  
 
   useEffect(() => {
     setQuizId(sceneList[index].sceneId);
@@ -109,8 +110,14 @@ const StoryClear = ({ index }: StoryClearProps) => {
   return (
     <ClearContainer>
       <AudioArea>
-        <AudioPlayer ref={audioRef} controls autoPlay preload="metadata" hidden
-                     onEnded={handleAudioEnded}>
+        <AudioPlayer
+          ref={audioRef}
+          controls
+          autoPlay
+          preload="metadata"
+          hidden
+          onEnded={handleAudioEnded}
+        >
           <source src={sceneList[index].voice} type="audio/mpeg" />
         </AudioPlayer>
         <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>

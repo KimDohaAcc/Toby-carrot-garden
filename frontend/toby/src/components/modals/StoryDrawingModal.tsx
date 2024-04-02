@@ -5,6 +5,12 @@ import { submitQuiz, getQuizAnswer } from "../../apis/quizApi";
 import WaitToby from "./WaitToby";
 import FailToby from "./FailToby";
 import SuccessToby from "./SuccessToby";
+
+import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
+import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
+
+import { useDispatch } from "react-redux";
+
 const StoryDrawingModalContainer = styled.div`
   display: flex;
   position: absolute;
@@ -34,7 +40,7 @@ const CloseBtn = styled.button`
   border: none;
 `;
 
-const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
+const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   const signaturePadRef = useRef(null);
   const modalRef = useRef(null);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
