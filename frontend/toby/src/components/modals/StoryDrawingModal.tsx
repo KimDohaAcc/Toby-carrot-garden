@@ -104,7 +104,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
 
             // getQuizAnswer 호출 시 submitQuiz에서 받은 memberQuizId를 사용
             const answerResponse = await getQuizAnswer({
-              memberQuizId,
+              memberQuizId: submitResponse.data.result.memberQuizId,
             });
             if (
               answerResponse.status === 200 &&
