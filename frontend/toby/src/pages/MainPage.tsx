@@ -41,9 +41,9 @@ const ReportImage = styled.img`
   box-shadow: none;
   transition: box-shadow 0.1s ease;
 
+  &:hover,
   &:active {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
+    transform: translateY(3px);
   }
   cursor: pointer;
 `;
@@ -66,9 +66,9 @@ const MartImage = styled.img`
   box-shadow: none;
   transition: box-shadow 0.1s ease;
 
+  &:hover,
   &:active {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
+    transform: translateY(3px);
   }
   cursor: pointer;
 `;
@@ -97,9 +97,9 @@ const SchoolImage = styled.img`
   box-shadow: none;
   transition: box-shadow 0.1s ease;
 
+  &:hover,
   &:active {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
+    transform: translateY(3px);
   }
   cursor: pointer;
 `;
@@ -116,17 +116,17 @@ const MypageArea = styled.div`
 const MyPageImage = styled.img`
   max-width: 150%;
   max-height: 150%;
-  width: 120%;
-  height: 105%;
+  width: 105%;
+  height: 95%;
   position: relative;
-  top: -42%;
+  top: -28%;
   position: absolute;
   box-shadow: none;
   transition: box-shadow 0.1s ease;
 
+  &:hover,
   &:active {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
+    transform: translateY(3px);
   }
   cursor: pointer;
 `;
@@ -158,9 +158,9 @@ const HospitalImage = styled.img`
   box-shadow: none;
   transition: box-shadow 0.1s ease;
 
+  &:hover,
   &:active {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
+    transform: translateY(3px);
   }
   cursor: pointer;
 `;
@@ -185,9 +185,9 @@ const PoliceImage = styled.img`
   box-shadow: none;
   transition: box-shadow 0.1s ease;
 
+  &:hover,
   &:active {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
+    transform: translateY(3px);
   }
   cursor: pointer;
 `;
@@ -263,7 +263,7 @@ const MainPage = () => {
   const [userName, setUserName] = useState("");
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
-  const [muteImage, setMuteImage] = useState("/Image/button/sound.png");
+  const [muteImage, setMuteImage] = useState("/Image/button/no-sound.png");
 
   useEffect(() => {
     // 컴포넌트 마운트 시 getUserStorage를 호출하여 사용자 이름 가져오기
@@ -302,13 +302,18 @@ const MainPage = () => {
     if (audioRef.current) {
       audioRef.current.muted = !audioRef.current.muted;
       if (audioRef.current.muted) {
-        setMuteImage("/Image/button/no-sound.png");
-      } else {
         setMuteImage("/Image/button/sound.png");
+      } else {
+        setMuteImage("/Image/button/no-sound.png");
       }
     } else {
       console.error("audioRef is null");
     }
+  };
+
+  const playAudio = (audioFilePath) => {
+    const audio = new Audio(audioFilePath);
+    audio.play();
   };
 
   return (
@@ -323,6 +328,7 @@ const MainPage = () => {
               src="\Image\village\reportImage.png"
               alt="report"
               onClick={() => handleAreaClick("/report")}
+              onMouseEnter={() => playAudio("/Sound/mainPage/report.mp3")}
             />
           </ReportArea>
           <MartArea>
@@ -330,6 +336,7 @@ const MainPage = () => {
               src="\Image\village\martImage.png"
               alt="mart"
               onClick={() => handleAreaClick("/mart")}
+              onMouseEnter={() => playAudio("/Sound/mainPage/mart.mp3")}
             />
           </MartArea>
         </Area1>
@@ -339,6 +346,7 @@ const MainPage = () => {
               src="\Image\village\schoolImage.png"
               alt="school"
               onClick={() => handleAreaClick("/school")}
+              onMouseEnter={() => playAudio("/Sound/mainPage/school.mp3")}
             />
           </SchoolArea>
           <MypageArea>
@@ -346,6 +354,7 @@ const MainPage = () => {
               src="\Image\village\mypageImage.png"
               alt="mypage"
               onClick={() => handleAreaClick("/mypage")}
+              onMouseEnter={() => playAudio("/Sound/mainPage/mypage.mp3")}
             />
           </MypageArea>
         </Area2>
@@ -355,6 +364,7 @@ const MainPage = () => {
               src="\Image\village\hospitalImage.png"
               alt="hospital"
               onClick={() => handleAreaClick("/hospital")}
+              onMouseEnter={() => playAudio("/Sound/mainPage/hospital.mp3")}
             />
           </HospitalArea>
           <PoliceArea>
@@ -362,6 +372,7 @@ const MainPage = () => {
               src="\Image\village\policeImage.png"
               alt="police"
               onClick={() => handleAreaClick("/police")}
+              onMouseEnter={() => playAudio("/Sound/mainPage/police.mp3")}
             />
           </PoliceArea>
         </Area3>
