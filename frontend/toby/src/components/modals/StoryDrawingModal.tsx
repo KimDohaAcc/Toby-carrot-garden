@@ -74,6 +74,10 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
           response.data.result &&
           response.data.result.memberQuizId
         ) {
+          console.log(
+            "Received memberQuizId:",
+            response.data.result.memberQuizId
+          );
           setMemberQuizId(response.data.result.memberQuizId);
           setModalState("wait");
           checkQuizAnswer(response.data.result.memberQuizId);
@@ -87,13 +91,16 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
     }
   }, [quizId]);
 
-  const checkQuizAnswer = useCallback(async (quizId) => {
+  const checkQuizAnswer = useCallback(async (memberQuizId) => {
     let attempts = 0;
     const maxAttempts = 10;
 
     const interval = setInterval(async () => {
       try {
-        const answerResponse = await getQuizAnswer({ member_quiz_id: quizId });
+        const answerResponse = await getQuizAnswer({ memberQuizId });
+        console.log("Polling for memberQuizId:", memberQuizId);
+        console.log("Polling response:", answerResponse);
+
         if (
           answerResponse.status === 200 &&
           answerResponse.data.result.score !== -1
