@@ -97,12 +97,18 @@ const CloseBtn = styled.button`
   }
 `;
 
+const ButtonArea = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: calc(10%);
+`;
+
 const NextBtn = styled.div`
   display: flex;
   justify-content: center;
   align-content: center;
   grid-area: nextBtn;
-  border: 1px solid black;
   img {
     width: 100%;
   }
@@ -121,7 +127,6 @@ const NextBtn2 = styled.div`
   justify-content: center;
   align-content: center;
   grid-area: nextBtn;
-  border: 1px solid black;
   img {
     width: 100%;
   }
@@ -158,6 +163,7 @@ const Hospital = () => {
   const [sceneIndex, setSceneIndex] = useState<number>(-1); // 장면 인덱스
 
   const [fadeIn, setFadeIn] = useState(false);
+  const [prevState, setPrevState] = useState(false);
 
   const location = useLocation();
   const { storyId, title, storyImageUrl } = location.state; // storyId, title, storyImageUrl navigate의 state로 받아오기
@@ -181,6 +187,11 @@ const Hospital = () => {
   useEffect(() => {
     const fetchSceneList = async () => {
       try {
+        if(sceneIndex === -1){
+          setPrevState(true)
+        }else{
+          setPrevState(false)
+        }
         const response = await getSceneList(storyId); // storyId에 해당하는 장면 목록 받아오기
         console.log(response);
         setScenesList(response); // 받아온 장면 목록 저장
@@ -241,6 +252,21 @@ const Hospital = () => {
     dispatch(setHospitalQuizClear(false));
   };
 
+  const handleOnclickPrevBtn = () => {
+    console.log("sceneIndex: ", sceneIndex);
+    setFadeIn(false);
+    if(sceneIndex > 0){
+      setSceneIndex((currenIndex) => {
+        const prevIndex = currenIndex - 1;
+        setSceneType(hospitalSceneList[prevIndex].sceneType);
+        return prevIndex;
+      });
+    }else{
+      setSceneIndex(-1)
+    }
+  };
+
+
   return (
     <>
       <StoryContainer>
@@ -255,28 +281,47 @@ const Hospital = () => {
             </CloseBtnArea>
 
             {sceneType === "QUIZ" && !isQuizClear ? (
-              <NextBtn2>
-                <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
-              </NextBtn2>
+              <ButtonArea>
+              <NextBtn
+                onClick={() => {
+                  handleOnclickPrevBtn();
+                }}
+              >
+                <img src="/Image/button/prevBtn.png" alt="이전 버튼" />
+              </NextBtn>
+                <NextBtn2>
+                  <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
+                </NextBtn2>
+              </ButtonArea>
             ) : sceneType === "CLEAR" ? (
-              <NextBtn
-                onClick={() => {
-                  handleOnclickFinishBtn();
-                }}
-              >
-                <img
-                  src="/Image/button/showStoryList.png"
-                  alt="스토리 보기 버튼"
-                />
-              </NextBtn>
+              <ButtonArea>
+                <NextBtn onClick={() => {handleOnclickPrevBtn();}}>
+                  <img src="/Image/button/prevBtn.png" alt="이전 버튼" hidden={prevState}/>
+                </NextBtn>
+                <NextBtn
+                  onClick={() => {
+                    handleOnclickFinishBtn();
+                  }}
+                >
+                  <img
+                    src="/Image/button/showStoryList.png"
+                    alt="스토리 보기 버튼"
+                  />
+                </NextBtn>
+              </ButtonArea>
             ) : (
-              <NextBtn
-                onClick={() => {
-                  handleOnclickNextBtn();
-                }}
-              >
-                <img src="/Image/button/nextBtn.png" alt="다음 버튼" />
-              </NextBtn>
+              <ButtonArea>
+                <NextBtn onClick={() => {handleOnclickPrevBtn();}}>
+                  <img src="/Image/button/prevBtn.png" alt="이전 버튼" hidden={prevState}/>
+                </NextBtn>
+                <NextBtn
+                  onClick={() => {
+                    handleOnclickNextBtn();
+                  }}
+                >
+                  <img src="/Image/button/nextBtn.png" alt="다음 버튼" />
+                </NextBtn>
+              </ButtonArea>
             )}
           </StoryContentArea2>
         </StoryContentArea1>

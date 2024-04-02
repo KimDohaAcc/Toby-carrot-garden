@@ -282,10 +282,14 @@ const StoryEmergency = ({ index, place }) => {
           </ErrorModal>
         )}
         {isCarrotModalOpen && (
+          <>
           <GetCarrotModal
             src="/Image/toby/carrotRabbit.png"
-            alt="carrotRabbit"
-          />
+            alt="carrotRabbit"/>
+            <audio ref={audioRef} controls autoPlay hidden>
+              <source src="/Sound/당근획득.mp3" type="audio/mpeg" />
+            </audio>
+          </>
         )}
         <PhoneButtonContainer>
           {numList.map((num) => {

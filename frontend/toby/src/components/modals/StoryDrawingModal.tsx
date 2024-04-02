@@ -11,30 +11,43 @@ import SuccessToby from "./SuccessToby";
 import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
 
-const StoryDrawingModalContainer = styled.div`
+const BlackBoard = styled.div`
   display: flex;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  height: 80%;
-  border: 2px solid black;
-  background-color: #aeaeae;
+  background-image: url("/Image/modal/칠판.png");
+  background-size: contain;
+  background-repeat: no-repeat; /* 이미지 반복 없이 설정 */
+  background-position: center; /* 이미지를 가운데 정렬 */
+  width: 90%;
+  height: 90%;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   z-index: 100;
+`
+
+const StoryDrawingModalContainer = styled.div`
+  display: flex;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 24vw;
+  background-color: rgb(15, 65, 0);
+
 `;
 
 const ModalArea = styled.div`
   display: flex;
   flex: 1;
-  border: 2px solid black;
 `;
 
 const CloseBtn = styled.button`
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  top: 5px;
+  right: 1px;
   /* background-image: url("경로/이미지.png"); */
   background-size: cover;
   border: none;
@@ -156,31 +169,33 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
 
   if (!isOpen) return null;
   return (
-    <StoryDrawingModalContainer>
-      <ModalArea ref={modalRef}>
-        <SignatureCanvas
-          ref={signaturePadRef}
-          penColor="white"
-          backgroundColor="darkgreen"
-          canvasProps={{
-            width: canvasSize.width,
-            height: canvasSize.height,
-            className: "signature-canvas",
-            style: { backgroundColor: "darkgreen" }, // 배경을 흰색으로 설정
-          }}
-          minWidth={5} // 펜 굵기 최소값
-          maxWidth={5} // 펜 굵기 최대값
-        />
-      </ModalArea>
-      <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
-      {modalState === "wait" && <WaitToby />}
-      {modalState === "success" && (
-        <SuccessToby onClose={() => setModalState("none")} />
-      )}
-      {modalState === "fail" && (
-        <FailToby onClose={() => setModalState("none")} />
-      )}
-    </StoryDrawingModalContainer>
+    <BlackBoard>
+      <StoryDrawingModalContainer>
+        <ModalArea ref={modalRef}>
+          <SignatureCanvas
+            ref={signaturePadRef}
+            penColor="white"
+            backgroundColor="black"
+            canvasProps={{
+              width: canvasSize.width,
+              height: canvasSize.height,
+              className: "signature-canvas",
+              style: { backgroundColor: "rgb(15, 65, 0)" }, // 배경을 흰색으로 설정
+            }}
+            minWidth={5} // 펜 굵기 최소값
+            maxWidth={5} // 펜 굵기 최대값
+          />
+        </ModalArea>
+        <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
+        {modalState === "wait" && <WaitToby />}
+        {modalState === "success" && (
+          <SuccessToby onClose={() => setModalState("none")} />
+        )}
+        {modalState === "fail" && (
+          <FailToby onClose={() => setModalState("none")} />
+        )}
+      </StoryDrawingModalContainer>
+    </BlackBoard>
   );
 };
 

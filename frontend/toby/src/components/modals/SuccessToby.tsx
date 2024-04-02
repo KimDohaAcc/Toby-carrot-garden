@@ -30,14 +30,22 @@ interface ModalProps {
   onClose: () => void; // onClose는 함수 타입을 가지며, 반환 값은 없습니다.
 }
 
+
 // FailToby 컴포넌트에 ModalProps 인터페이스를 props 타입으로 적용
 const SuccessToby: React.FC<ModalProps> = ({ onClose }) => {
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+
   return (
-    <ModalBackdrop onClick={onClose}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <img src="/Image/toby/carrotRabbit.png" alt="carrotRabbit" />
-      </ModalBox>
-    </ModalBackdrop>
+    <>
+      <audio ref={audioRef} controls autoPlay hidden>
+        <source src="/Sound/당근획득.mp3" type="audio/mpeg" />
+      </audio>
+      <ModalBackdrop onClick={onClose}>
+        <ModalBox onClick={(e) => e.stopPropagation()}>
+          <img src="/Image/toby/carrotRabbit.png" alt="carrotRabbit" />
+        </ModalBox>
+      </ModalBackdrop>
+    </>
   );
 };
 

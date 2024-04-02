@@ -32,12 +32,18 @@ interface ModalProps {
 
 // FailToby 컴포넌트에 ModalProps 인터페이스를 props 타입으로 적용
 const FailToby: React.FC<ModalProps> = ({ onClose }) => {
+  const audioRef = React.useRef<HTMLAudioElement>(null);
   return (
-    <ModalBackdrop onClick={onClose}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <img src="/Image/toby/failRabbit.png" alt="failRabbit" />
-      </ModalBox>
-    </ModalBackdrop>
+    <>
+      <audio ref={audioRef} controls autoPlay hidden>
+        <source src="/Sound/다시도전.mp3" type="audio/mpeg" />
+      </audio>
+      <ModalBackdrop onClick={onClose}>
+        <ModalBox onClick={(e) => e.stopPropagation()}>
+          <img src="/Image/toby/failRabbit.png" alt="failRabbit" />
+        </ModalBox>
+      </ModalBackdrop>
+    </>
   );
 };
 
