@@ -35,6 +35,14 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
         image = Image.open(BytesIO(image_data)).convert('L')
 
         # Preprocess the image
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        ys, xs = np.nonzero(image)
+        min_y = np.min(ys)
+        max_y = np.max(ys)
+        min_x = np.min(xs)
+        max_x = np.max(xs)
+        image = image[min_y:max_y, min_x: max_x]
+        
         image = image.resize((28, 28))
         image = np.array(image, dtype=np.float32)[None, None, :, :]
         image = torch.from_numpy(image)
@@ -47,7 +55,7 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
         result = 0
 
         print("image_data(s3에서 읽은 객체) : ", image_data, flush=True)
-        print("image(모델 돌리기 전 처리 후) : ", image, flush=True)
+        print("image(모델 돌리기 전처리 후) : ", image, flush=True)
         print("logits : ", logits, flush=True)
 
 
