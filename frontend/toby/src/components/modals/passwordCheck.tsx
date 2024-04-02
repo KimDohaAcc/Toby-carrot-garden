@@ -38,7 +38,7 @@ const ModalContainer = styled.div`
   background-size: 100% 100%;
   z-index: 100;
   display: grid;
-  grid-template-rows: 1.5fr 1fr 0.5fr;
+  grid-template-rows: 1fr 1fr 1fr;
   animation: ${fadeInAnimation} 0.5s ease;
   justify-content: center;
   justify-items: center;
@@ -48,7 +48,7 @@ const ModalContainer = styled.div`
 `;
 
 const ButtonGroup = styled.div`
-  margin-top: 5%;
+  margin-top: -14%;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -97,13 +97,18 @@ const ConfirmButton = styled.button`
 
 const PasswordInput = styled.input`
   /* margin-top: 20px; */
-  padding: 4%;
+  padding: 7%;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 80%;
+  width: 100%;
+
   height: auto;
   box-sizing: border-box;
   justify-content: center;
+  ::placeholder {
+    color: #888;
+    /* font-size: calc(1.5em + 1vw); */
+  }
 `;
 
 const ConstructionText = styled.h2`
@@ -114,6 +119,7 @@ const ConstructionText = styled.h2`
   overflow-wrap: break-word;
   font-size: calc(1.5em + 1vw);
   box-sizing: border-box;
+  margin-top: 30%;
 `;
 
 const ConstructionModal = ({ onClose }) => {

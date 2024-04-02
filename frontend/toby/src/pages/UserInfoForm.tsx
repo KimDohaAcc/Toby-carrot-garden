@@ -15,6 +15,8 @@ const Container = styled.div`
   position: relative;
   background-size: cover;
   background-image: url("Image/common/startImage.png");
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const ConsentBorder = styled.div`
@@ -26,14 +28,18 @@ const ConsentBorder = styled.div`
   height: 70%;
   border-radius: 3%;
   background-color: white;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const InputInline = styled.input`
   padding: 15px 15px;
   vertical-align: top;
-  width: calc(20%);
-  font-size: 3vh;
+  width: calc(30%);
+  font-size: 4vh;
   border-radius: 5px;
+  overflow: hidden;
+  object-fit: contain;
   border: 2px solid #ccc;
   &:focus {
     outline: none;
@@ -48,6 +54,8 @@ const PasswordInputInline = styled.input`
   margin-bottom: 10px;
   align-self: center;
   font-size: 2.5vh;
+  overflow: hidden;
+  object-fit: contain;
   border-radius: 5px;
   border: 2px solid #ccc;
   &:focus {
@@ -61,27 +69,35 @@ const PasswordContainer = styled.div`
   margin-left: 7%;
   margin-right: 150px;
   margin-top: 20px;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const TextContainer = styled.div`
   display: inline;
   flex-flow: wrap column;
   margin-left: 5%;
+  overflow: hidden;
+  object-fit: contain;
   line-height: 7vh;
+`;
+const SubText = styled.span`
+  font-size: 3vh;
+  text-align: left;
+  color: red;
 `;
 
 const Text = styled.span`
+  overflow: hidden;
+  object-fit: contain;
   font-size: 6vh;
-  text-align: left;
-`;
-
-const SubText = styled.span`
-  font-size: 3vh;
   text-align: left;
 `;
 
 const Button = styled.button`
   position: absolute;
+  overflow: hidden;
+  object-fit: contain;
   bottom: 20%;
   right: 25%;
   background-color: transparent;
@@ -98,15 +114,18 @@ const Button = styled.button`
 `;
 
 const RabbitImage1 = styled.img`
-  height: 50%;
+  height: auto;
   position: absolute;
-  top: 1%;
-  right: 7%;
+  top: 25%;
+  right: 20%;
+  width: 20%;
 `;
 
 const SignupClearButton = styled.div`
   position: absolute;
   bottom: 20%;
+  overflow: hidden;
+  object-fit: contain;
   right: 25%;
   background-image: url("Image/button/signupClearButton.png");
   background-size: 100% 100%;
@@ -126,6 +145,7 @@ function UserInfoForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [birthday, setBirthday] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
   const today = new Date().toISOString().split("T")[0];
 
@@ -138,24 +158,34 @@ function UserInfoForm() {
       return;
     }
 
-    if (step === 2 && password !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
+    if (step === 2 && (password.length !== 4 || isNaN(password))) {
+      setPasswordError("비밀번호는 숫자 4자리여야 합니다.");
       return;
+    } else {
+      setPasswordError("");
+      if (password !== confirmPassword) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+      }
     }
-
-    // 비밀번호 일치 검사 통과 후 다음 단계로
     if (step === 2) {
       handleSubmit();
     } else {
       setStep(step + 1);
     }
   };
+
   const handleSubmit = async () => {
+    if (password.length !== 4 || isNaN(password)) {
+      setPasswordError("비밀번호는 숫자 4자리여야 합니다.");
+      return;
+    } else {
+      setPasswordError("");
+    }
     try {
-      // 요청 전송 전 데이터를 콘솔에 출력
       const requestData = {
         name,
-        birthDate: birthday, // birthday를 birthDate로 변경
+        birthDate: birthday,
         parentPassword: password,
       };
       console.log("보내기 전 요청 데이터:", requestData);
@@ -188,8 +218,8 @@ function UserInfoForm() {
               type="date"
               value={birthday}
               onChange={(e) => setBirthday(e.target.value)}
-              min={minDate} // 최소 날짜 설정
-              max={maxDate} // 최대 날짜 설정
+              min={minDate}
+              max={maxDate}
             />
             <Text> 이야.</Text>
             <Button onClick={handleNextStep} />
@@ -204,15 +234,27 @@ function UserInfoForm() {
             <br />
             <PasswordInputInline
               type="password"
-              placeholder="비밀번호"
+              placeholder="비밀번호 (숫자 4자리)"
+              maxLength="4"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (!isNaN(val)) {
+                  setPassword(val);
+                }
+              }}
             />
             <PasswordInputInline
               type="password"
-              placeholder="비밀번호 확인"
+              placeholder="비밀번호 확인 (숫자 4자리)"
+              maxLength="4"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (!isNaN(val)) {
+                  setConfirmPassword(val);
+                }
+              }}
             />
             <SignupClearButton onClick={handleSubmit} />
           </PasswordContainer>
