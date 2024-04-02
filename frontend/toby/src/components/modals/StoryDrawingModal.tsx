@@ -1,16 +1,21 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+
 import SignatureCanvas from "react-signature-canvas";
 import { submitQuiz, getQuizAnswer } from "../../apis/quizApi";
 import WaitToby from "./WaitToby";
 import FailToby from "./FailToby";
 import SuccessToby from "./SuccessToby";
 
+<<<<<<< HEAD
+=======
 import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
 
 import { useDispatch } from "react-redux";
 
+>>>>>>> develop-fe
 const StoryDrawingModalContainer = styled.div`
   display: flex;
   position: absolute;
@@ -39,15 +44,22 @@ const CloseBtn = styled.button`
   background-size: cover;
   border: none;
 `;
+<<<<<<< HEAD
+const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
+  const dispatch = useDispatch();
+=======
 
 const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
+>>>>>>> develop-fe
   const signaturePadRef = useRef(null);
   const modalRef = useRef(null);
+  const [isPolling, setIsPolling] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [modalState, setModalState] = useState<
     "none" | "wait" | "success" | "fail"
   >("none");
-  const [isPolling, setIsPolling] = useState(false);
+
   useEffect(() => {
     function updateCanvasSize() {
       if (modalRef.current) {
@@ -65,65 +77,78 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   }, [isOpen]);
 
   const handleSaveDrawing = useCallback(async () => {
-    if (!isPolling && signaturePadRef.current && isOpen) {
-      setIsPolling(true); // To prevent multiple submissions
-      const canvas = signaturePadRef.current.getCanvas();
-      const dataUrl = canvas.toDataURL("image/png");
-      const response = await fetch(dataUrl);
-      const blob = await response.blob();
-      const file = new File([blob], "drawing.png", { type: "image/png" });
+    if (isSubmitting || isPolling || !isOpen) return; // 제출 중, 폴링 중, 모달 닫힘 상태 체크
+    setIsSubmitting(true); // 제출 시작// To prevent multiple submissions
+    const canvas = signaturePadRef.current.getCanvas();
+    const dataUrl = canvas.toDataURL("image/png");
+    const response = await fetch(dataUrl);
+    const blob = await response.blob();
+    const file = new File([blob], "drawing.png", { type: "image/png" });
 
-      const formData = new FormData();
-      formData.append("analysisImage", file);
-      formData.append("quizId", quizId.toString());
+    const formData = new FormData();
+    formData.append("analysisImage", file);
+    formData.append("quizId", quizId.toString());
 
-      try {
-        const response = await submitQuiz(formData);
-        if (
-          response.status === 200 &&
-          response.data &&
-          response.data.result &&
-          response.data.result.memberQuizId
-        ) {
-          setModalState("wait");
-          pollQuizAnswer(response.data.result.memberQuizId, 0);
-        } else {
-          setModalState("fail");
-        }
-      } catch (error) {
-        console.error("Error submitting quiz:", error);
+    try {
+      const response = await submitQuiz(formData);
+      if (response.status === 200 && response.data.result.memberQuizId) {
+        setModalState("wait");
+        pollQuizAnswer(response.data.result.memberQuizId, 0);
+        // if (place === "school") {
+        //   dispatch(setSchoolQuizClear(true));
+        // } else if (place === "hospital") {
+        //   dispatch(setHospitalQuizClear(true));
+        // } else if (quizId === 3) {
+        //   console.log("placeId 3");
+        // } else if (quizId === 4) {
+        //   console.log("placeId 4");
+        // }
+      } else {
         setModalState("fail");
-      } finally {
-        setIsPolling(false); // Reset the flag after submission and polling are done
       }
-    }
-  }, [isOpen, isPolling, quizId]);
-
-  const pollQuizAnswer = useCallback(async (memberQuizId, attempts) => {
-    if (attempts >= 10) {
+    } catch (error) {
       setModalState("fail");
+    }
+    setIsSubmitting(false); // 제출 완료
+  }, [isSubmitting, isPolling, isOpen, quizId]);
+
+  const pollQuizAnswer = useCallback(async (memberQuizId, attempts = 0) => {
+    setIsPolling(true); // 폴링 시작
+    if (attempts >= 10) {
+      setIsPolling(false); // 폴링 종료
+      setModalState("fail"); // 최대 시도 회수 도달로 실패 처리
       return;
     }
 
     try {
       const response = await getQuizAnswer({ memberQuizId });
-      if (
-        response.status === 200 &&
-        response.data &&
-        response.data.result.score !== -1
-      ) {
-        setModalState(response.data.result.score === 100 ? "success" : "fail");
+      if (response.status === 200) {
+        const score = response.result.score;
+        if (score !== -1) {
+          setIsPolling(false); // 폴링 종료
+          // score가 0이면 폴링 중지하고 실패 상태 설정
+          if (score === 0) {
+            setModalState("fail");
+          } else {
+            setModalState(score === 100 ? "success" : "fail");
+          }
+        } else {
+          // score가 -1이면 아직 폴링 계속
+          setTimeout(() => pollQuizAnswer(memberQuizId, attempts + 1), 1000); // 재귀적으로 다음 폴링 시도
+        }
       } else {
-        setTimeout(() => pollQuizAnswer(memberQuizId, attempts + 1), 1000);
+        // 응답 상태가 200이 아니면 에러 처리
+        setIsPolling(false); // 폴링 종료
+        setModalState("fail");
       }
     } catch (error) {
       console.error("Error polling quiz answer:", error);
+      // 에러 발생 시 다음 시도를 위해 재귀적 호출
       setTimeout(() => pollQuizAnswer(memberQuizId, attempts + 1), 1000);
     }
   }, []);
-
   useEffect(() => {
-    if (modalState !== "none" && modalState !== "wait") {
+    if (modalState === "success" || modalState === "fail") {
       const timeout = setTimeout(() => {
         setModalState("none");
         onClose();
