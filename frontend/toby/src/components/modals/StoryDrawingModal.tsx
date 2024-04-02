@@ -34,40 +34,49 @@ const CloseBtn = styled.button`
   border: none;
 `;
 
+// const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
+//   const signaturePadRef = useRef(null);
+//   const modalRef = useRef(null);
+//   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
+//   const [modalState, setModalState] = useState("none");
+//   const [memberQuizId, setMemberQuizId] = useState(null);
+
 const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const signaturePadRef = useRef(null);
   const modalRef = useRef(null);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
-  const [modalState, setModalState] = useState("none");
+  const [modalState, setModalState] = useState<
+    "none" | "wait" | "success" | "fail"
+  >("none");
+
   const [memberQuizId, setMemberQuizId] = useState(null);
 
   useEffect(() => {
     function updateCanvasSize() {
       if (modalRef.current) {
         const { width, height } = modalRef.current.getBoundingClientRect();
+        // Border의 두께를 고려하지 않는 경우, 아래와 같이 설정할 수 있습니다.
+        // 즉, ModalArea 자체의 크기를 직접 사용합니다.
         setCanvasSize({ width, height });
-        // 캔버스 크기 재설정
-        if (signaturePadRef.current) {
-          signaturePadRef.current.clear(); // 캔버스를 클리어하고
-          signaturePadRef.current.resizeCanvas(); // 새 크기로 캔버스를 조절합니다.
-        }
       }
     }
 
-    if (isOpen) {
-      updateCanvasSize();
-    }
-
+    updateCanvasSize();
     window.addEventListener("resize", updateCanvasSize);
+
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, [isOpen]);
 
+  //   window.addEventListener("resize", updateCanvasSize);
+  //   return () => window.removeEventListener("resize", updateCanvasSize);
+  // }, [isOpen]);
+
   const handleSaveDrawing = useCallback(async () => {
-    if (signaturePadRef.current) {
-      const imageSrc = signaturePadRef.current
-        .getTrimmedCanvas()
-        .toDataURL("image/png");
-      const response = await fetch(imageSrc);
+    if (signaturePadRef.current && isOpen) {
+      const canvas = signaturePadRef.current.getCanvas();
+      const dataUrl = canvas.toDataURL("image/png");
+
+      const response = await fetch(dataUrl);
       const blob = await response.blob();
       const file = new File([blob], "drawing.png", { type: "image/png" });
 
