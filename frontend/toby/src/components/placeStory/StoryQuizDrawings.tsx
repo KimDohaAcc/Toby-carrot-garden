@@ -213,6 +213,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
         isOpen={isModalOpen}
         onClose={closeModal}
         quizId={quizId}
+        place={place}
       />
     </QuizContainer>
   );

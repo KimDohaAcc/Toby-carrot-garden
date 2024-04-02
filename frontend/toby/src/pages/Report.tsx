@@ -6,6 +6,7 @@ import Logo3 from "../components/Logo3";
 import Rescore from "../components/report/Rescore.tsx";
 import ReportGraphContent from "../components/report/ReportGraphContent.tsx";
 import ReportDrawings from "../components/report/ReportDrawings.tsx";
+
 // 전체 컨테이너
 const ReportContainer = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const ReportCategory = styled.div`
   height: 100%;
   display: grid;
   position: relative;
-  grid-template-rows: 3fr 2fr 2fr 2fr 2fr;
+  grid-template-rows: 4fr 2fr 2fr 2fr 4fr;
   /* grid-row-gap: 10px; */
   grid-template-areas:
     "."
@@ -32,12 +33,10 @@ const ReportCategory = styled.div`
     "category2"
     "category3"
     "category4";
-  border: 2px solid black;
   flex: 0 0 15%;
 `;
 
 const StyledButton = styled.div`
-  margin: 1% 1% 1% 1%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,9 +45,15 @@ const StyledButton = styled.div`
 `;
 
 const Image = styled.img`
-  width: 70%;
-  height: 70%;
+  width: 85%;
+  height: 85%;
   margin-right: 2%;
+
+  &:hover,
+  &:active {
+    transform: translateY(3px);
+  }
+  cursor: pointer;
 `;
 
 const Category1 = styled.div`
@@ -56,7 +61,6 @@ const Category1 = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px;
-  border: 2px solid black;
   flex-direction: column;
   position: relative;
 `;
@@ -67,7 +71,6 @@ const Category2 = styled.div`
   justify-content: center;
   align-items: left;
   gap: 10px;
-  border: 2px solid black;
   flex-direction: column;
   position: relative;
 `;
@@ -78,7 +81,6 @@ const Category3 = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  border: 2px solid black;
   flex-direction: column;
   position: relative;
 `;
@@ -88,7 +90,6 @@ const ReportContent = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  border: 2px solid black;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -99,13 +100,11 @@ const ContentCategory = styled.div`
   flex: 0 0 10%;
   height: 100%;
   width: 100%;
-  border: 2px solid black;
 `;
 
 // Content 컴포넌트에 대한 스타일 정의
 const Content = styled.div`
   flex: 1;
-  border: 2px solid black;
   display: flex;
   height: 100%;
   width: 100%;
@@ -250,18 +249,18 @@ const ExplainImage = styled.img`
 
 const Taehun = styled.h1`
   line-height: 60%;
-  font-size: 3rem;
+  font-size: calc(2.5vw);
 `;
 
 const Taehun2 = styled.h2`
   line-height: 60%;
-  font-size: 2rem;
+  font-size: calc(1.8vw);
 `;
 
 const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
-  width: 3vw;
-  height: 3vw;
+  width: 4vw;
+  height: 4vw;
   background-image: url(${(props) => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
   background-size: 100% 100%;
   background-color: transparent;
@@ -326,8 +325,7 @@ const Report = () => {
         setContentText(
           <>
             <Taehun> 히스토리</Taehun>
-            <Taehun2>우리 아이가 풀었던 문제를 확인할 수 있어요!</Taehun2>
-            <Taehun2>채점이 잘못되었다면 부모님이 다시 채점해주세요!</Taehun2>
+            <Taehun2>우리 아이가 풀었던 문제를 확인할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점해주세요!</Taehun2>
           </>
         );
         setShowBoxes(false);

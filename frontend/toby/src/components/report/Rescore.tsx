@@ -26,15 +26,13 @@ const Button = styled.button`
   color: white;
   border: none;
   border-radius: 15px;
-  height: 60%;
-  font-size: 24px;
+  font-size: 1.5vw;
 `;
 
 const RecoreContentContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  border: 2px solid black;
   overflow: hidden;
   object-fit: contain;
   flex-direction: row;
@@ -44,7 +42,6 @@ const RecoreContentContainer2 = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  border: 5px solid black;
   overflow: hidden;
   object-fit: contain;
   margin: 5px;
@@ -56,7 +53,7 @@ const RecoreScrollArea = styled.div`
   flex: 0 0 90%;
   width: 100%;
   height: 100%;
-  border-radius: 60px;
+  border-radius: 5%;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -70,7 +67,7 @@ const RecoreScrollArea = styled.div`
     width: 10px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #fff299;
+    background-color: #e7d55c;
     border-radius: 5px;
   }
 `;
@@ -80,21 +77,21 @@ const RecoreScrollArea2 = styled.div`
   flex: 0 0 90%;
   width: 100%;
   height: 100%;
-  border-radius: 60px;
+  border-radius: 5%;
   background-color: white;
   object-fit: contain;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  border: 14px solid #e0bfe6;
+  border: 14px solid #fff299;
   box-sizing: border-box;
 
   &::-webkit-scrollbar {
     width: 10px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #e0bfe6;
+    background-color: #e7d55c;
     border-radius: 5px;
   }
 `;
@@ -103,6 +100,7 @@ const RecoreButtonContainer = styled.div`
   height: 100%;
   flex: 0 0 10%;
   position: relative;
+  
 `;
 const RecoreButton = styled.img`
   width: auto;
@@ -116,18 +114,19 @@ const RecoreBox = styled.div`
   display: flex;
   justify-content: center;
   height: auto;
-  width: 90%;
-  border: 2px solid yellow;
+  width: 100%;
   flex: 0 0 40%;
   object-fit: contain;
+  padding: 5%;
+  border-bottom: 2px solid #e7d55c;
+
 `;
 
 const RecoreBoxImage = styled.img`
-  width: 100%;
+  width: 80%;
   height: auto;
   object-fit: contain;
   overflow: hidden;
-  border: 2px solid green;
   flex: 0 0 60%;
   left: 5%;
 `;
@@ -135,42 +134,38 @@ const RecoreBoxImage = styled.img`
 const RecoreBoxAnswer = styled.div`
   width: 100%;
   height: auto;
-  display: flex;
   justify-content: center;
   text-align: center;
   flex-direction: column;
-  border: 2px solid green;
-  flex: 0 0 40%;
   overflow: hidden;
   object-fit: contain;
+  font-size: 2vw;
 `;
 const RecoreBoxAnswerText = styled.div`
   width: 100%;
   height: auto;
   flex: 0 0 25%;
-  font-size: 4rem;
-  border: 2px solid green;
+  font-size: 3vw;
+  margin: 5%;
 `;
 const RecoreBoxAnswerCheck = styled.div`
   width: 100%;
   height: auto;
   flex: 0 0 25%;
-  font-size: 4rem;
-  border: 2px solid green;
+  margin: 5%;
 `;
 
 const RecoreBoxRescoreDate = styled.div`
   width: 100%;
   height: auto;
   flex: 0 0 25%;
-  font-size: 2rem;
-  border: 2px solid green;
+  font-size: 1.5vw;
+  margin: 5% 0px;
 `;
 const RecoreBoxRescoreButton = styled.div`
   width: 100%;
   height: auto;
   flex: 0 0 25%;
-  border: 2px solid green;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -290,18 +285,18 @@ const RecoreContent = () => {
                 />
                 <RecoreBoxAnswer>
                   <RecoreBoxAnswerText>
-                    <div style={{ fontSize: "70px" }}>
-                      <strong>{quiz.correctAnswer}</strong>
+                    <div>
+                      <strong>정답 : {quiz.correctAnswer}</strong>
                     </div>
                   </RecoreBoxAnswerText>
                   <RecoreBoxAnswerCheck>
-                    <div style={{ fontSize: "70px" }}>
+                    <div>
                       <strong>{quiz.score}</strong>
                     </div>
                   </RecoreBoxAnswerCheck>
                   <RecoreBoxRescoreDate>
                     {" "}
-                    <div style={{ fontSize: "30px" }}>
+                    <div>
                       <strong>{quiz.createTime}</strong>
                     </div>
                   </RecoreBoxRescoreDate>
@@ -329,18 +324,18 @@ const RecoreContent = () => {
                 />
                 <RecoreBoxAnswer>
                   <RecoreBoxAnswerText>
-                    <div style={{ fontSize: "70px" }}>
+                    <div>
                       <strong>{quiz.correctAnswer}</strong>
                     </div>
                   </RecoreBoxAnswerText>
                   <RecoreBoxAnswerCheck>
-                    <div style={{ fontSize: "70px" }}>
+                    <div>
                       <strong>{quiz.score}</strong>
                     </div>
                   </RecoreBoxAnswerCheck>
                   <RecoreBoxRescoreDate>
                     {" "}
-                    <div style={{ fontSize: "30px" }}>
+                    <div>
                       <strong>{quiz.createTime}</strong>
                     </div>
                   </RecoreBoxRescoreDate>

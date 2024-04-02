@@ -8,6 +8,14 @@ import WaitToby from "./WaitToby";
 import FailToby from "./FailToby";
 import SuccessToby from "./SuccessToby";
 
+<<<<<<< HEAD
+=======
+import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
+import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
+
+import { useDispatch } from "react-redux";
+
+>>>>>>> develop-fe
 const StoryDrawingModalContainer = styled.div`
   display: flex;
   position: absolute;
@@ -36,8 +44,13 @@ const CloseBtn = styled.button`
   background-size: cover;
   border: none;
 `;
+<<<<<<< HEAD
 const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const dispatch = useDispatch();
+=======
+
+const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
+>>>>>>> develop-fe
   const signaturePadRef = useRef(null);
   const modalRef = useRef(null);
   const [isPolling, setIsPolling] = useState(false);

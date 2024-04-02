@@ -5,6 +5,8 @@ import { RootState } from "../store/store.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { setSceneList } from "../store/slices/hospitalSlice.tsx";
+import { setSchoolQuizClear } from "../store/slices/schoolSlice.tsx";
+import { setHospitalQuizClear } from "../store/slices/hospitalSlice.tsx";
 
 import { getSceneList } from "../apis/storyApi.tsx";
 
@@ -14,118 +16,7 @@ import StoryTitle from "../components/placeStory/StoryTitle.tsx";
 import StoryContent from "../components/placeStory/StoryContentHospital.tsx";
 import StoryQuiz from "../components/placeStory/StoryQuizHospitial.tsx";
 import StoryClear from "../components/placeStory/StoryClearHospital.tsx";
-
-//더미 데이터
-// {
-//   “status” : 200,
-//   “message” : “장면 목록을 보냈습니다”,
-//    “result” :
-//     {
-//       “list” :
-//           [
-//               {
-//                  “sceneId” : 1,
-//                   “quizType” : “normal”,
-//                   “quiz” : null,
-//                   “sceneImageUrl” : “s3 url”,
-//                   “content” : “토끼가 일어났어요”,
-//                   “voice” : “s3에 저장된 mp3 파일”
-//               } ,
-//              {
-//                  “sceneId” : 2,
-//                   “quizType” : “clear”,
-//                   “quiz” : null,
-//                   “sceneImageUrl” : “s3 url”,
-//                   “content” : “사진 촬영하세요”,
-//                   “voice” : “s3에 저장된 mp3 파일”
-//               },
-//               {
-//                  “sceneId” : 3,
-//                   “quizType” : “quiz”,
-//                    “quiz” : {
-//                                 “quizId” : 1,
-//                                 “correctAnswer” : “딸기”,
-//                                 “quizType” : “drawings”
-//                                 }
-//                   “sceneImageUrl” : “s3 url”,
-//                   “content” : “토끼는 뭘 먹었을까요?”,
-//                   “voice” : “s3에 저장된 mp3 파일”
-//               }
-//           ]
-//      }
-// }
-
-// const dummyData = [
-//   {
-//     sceneId: 1,
-//     sceneType: "normal",
-//     sceneImageUrl: "https://via.placeholder.com/150",
-//     content:
-//       "코코가 케이크를 너무 많이 먹은 나머지 배가 아파서 쓰러졌어요. 토비가 너무 놀랐네요. 어떤 표정을 하고있을지 표정을 지어볼까요?",
-//     voice: "s3에 저장된 mp3 파일",
-//   },
-
-//   {
-//     sceneId: 2,
-//     sceneType: "quiz",
-//     quiz: {
-//       quizId: 1,
-//       correctAnswer: "딸기",
-//       quizType: "objects",
-//     },
-
-//     sceneImageUrl: "https://via.placeholder.com/150",
-//     content: "토끼는 뭘 먹었을까요?",
-//     voice: "s3에 저장된 mp3 파일",
-//   },
-//   {
-//     sceneId: 3,
-//     sceneType: "quiz",
-//     quiz: {
-//       quizId: 1,
-//       correctAnswer: "딸기",
-//       quizType: "drawings",
-//     },
-
-//     sceneImageUrl: "https://via.placeholder.com/150",
-//     content: "토끼는 뭘 먹었을까요?",
-//     voice: "s3에 저장된 mp3 파일",
-//   },
-//   {
-//     sceneId: 4,
-//     sceneType: "quiz",
-//     quiz: {
-//       quizId: 1,
-//       correctAnswer: "딸기",
-//       quizType: "feelings",
-//     },
-
-//     sceneImageUrl: "https://via.placeholder.com/150",
-//     content:
-//       "코코가 케이크를 너무 많이 먹은 나머지 배가 아파서 쓰러졌어요. 토비가 너무 놀랐네요. 어떤 표정을 하고있을지 표정을 지어볼까요?",
-//     voice: "s3에 저장된 mp3 파일",
-//   },
-//   {
-//     sceneId: 5,
-//     sceneType: "quiz",
-//     quiz: {
-//       quizId: 1,
-//       correctAnswer: "딸기",
-//       quizType: "emergency",
-//     },
-
-//     sceneImageUrl: "https://via.placeholder.com/150",
-//     content: "토끼는 뭘 먹었을까요?",
-//     voice: "s3에 저장된 mp3 파일",
-//   },
-//   {
-//     sceneId: 6,
-//     sceneType: "clear",
-//     sceneImageUrl: "https://via.placeholder.com/150",
-//     content: "사진 촬영하세요",
-//     voice: "s3에 저장된 mp3 파일",
-//   },
-// ];
+import { set } from "date-fns";
 
 // 전체 컨테이너
 const StoryContainer = styled.div`
@@ -183,19 +74,19 @@ const CloseBtnArea = styled.div`
 `;
 
 const CloseBtn = styled.button`
-  position: absolute; 
-  top: calc(35%); 
-  right: calc(20%); 
+  position: absolute;
+  top: calc(35%);
+  right: calc(20%);
   grid-area: closeBtn;
   border-radius: 5px;
   cursor: pointer;
   width: 3vw;
   height: 3vw;
-  box-sizing: border-box;  
+  box-sizing: border-box;
   background-image: url("/Image/button/close.png");
   background-size: 100% 100%;
   background-color: transparent;
-  border: none;  
+  border: none;
 
   &:focus,
   &:hover {
@@ -270,9 +161,7 @@ const Hospital = () => {
   const [fadeIn, setFadeIn] = useState(false);
 
   const location = useLocation();
-  console.log(location.state);
   const { storyId, title, storyImageUrl } = location.state; // storyId, title, storyImageUrl navigate의 state로 받아오기
-  console.log(storyId, title, storyImageUrl);
   const dispatch = useDispatch(); // 리덕스 디스패치
   const navigate = useNavigate(); // 페이지 이동
 
@@ -280,6 +169,13 @@ const Hospital = () => {
     (state: RootState) => state.hospital.sceneList // hospital 슬라이스의 sceneList 가져오기
   );
   console.log(hospitalSceneList);
+
+  const isQuizClear = useSelector<RootState, boolean>(
+    (state: RootState) => state.hospital.quizClear
+  ); // 리덕스 스토어에서 퀴즈 클리어 여부 가져오기
+
+  const [showStoryListModal, setShowStoryListModal] = useState(true); // 스토리 리스트 모달 보이기 여부
+  const placeName = "hospital";
 
   useEffect(() => {
     setFadeIn(true);
@@ -333,7 +229,14 @@ const Hospital = () => {
       setSceneType(hospitalSceneList[nextIndex].sceneType);
       return nextIndex;
     });
+    dispatch(setHospitalQuizClear(false));
     console.log("sceneIndex2: ", sceneIndex);
+  };
+
+  const handleOnclickFinishBtn = () => {
+    navigate("/main", { state: { showStoryListModal, placeName } });
+    setShowStoryListModal(false);
+    dispatch(setHospitalQuizClear(false));
   };
 
   return (
@@ -346,13 +249,28 @@ const Hospital = () => {
           <StoryContentArea2>
             <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
             <CloseBtnArea>
-              <CloseBtn onClick={() => { navigate("/main"); }} />
+              <CloseBtn
+                onClick={() => {
+                  navigate("/main");
+                }}
+              />
             </CloseBtnArea>
 
-            {sceneType === "CLEAR" ? (
+            {sceneType === "QUIZ" && !isQuizClear ? (
               <NextBtn2>
                 <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
               </NextBtn2>
+            ) : sceneType === "CLEAR" ? (
+              <NextBtn
+                onClick={() => {
+                  handleOnclickFinishBtn();
+                }}
+              >
+                <img
+                  src="/Image/button/showStoryList.png"
+                  alt="스토리 보기 버튼"
+                />
+              </NextBtn>
             ) : (
               <NextBtn
                 onClick={() => {
