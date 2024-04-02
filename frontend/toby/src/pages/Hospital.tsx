@@ -5,7 +5,6 @@ import { RootState } from "../store/store.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { setSceneList } from "../store/slices/hospitalSlice.tsx";
-import { setSchoolQuizClear } from "../store/slices/schoolSlice.tsx";
 import { setHospitalQuizClear } from "../store/slices/hospitalSlice.tsx";
 import { setIsPlaceClear } from "../store/slices/placeSlice.tsx";
 
@@ -17,7 +16,6 @@ import StoryTitle from "../components/placeStory/StoryTitle.tsx";
 import StoryContent from "../components/placeStory/StoryContentHospital.tsx";
 import StoryQuiz from "../components/placeStory/StoryQuizHospitial.tsx";
 import StoryClear from "../components/placeStory/StoryClearHospital.tsx";
-import { set } from "date-fns";
 
 // 전체 컨테이너
 const StoryContainer = styled.div`
@@ -169,7 +167,6 @@ const Hospital = () => {
   const hospitalSceneList = useSelector<RootState, HospitalSceneList[]>( // 리덕스 스토어에서 장면 목록 가져오기
     (state: RootState) => state.hospital.sceneList // hospital 슬라이스의 sceneList 가져오기
   );
-  console.log(hospitalSceneList);
 
   const isQuizClear = useSelector<RootState, boolean>(
     (state: RootState) => state.hospital.quizClear
@@ -196,12 +193,6 @@ const Hospital = () => {
     fetchSceneList();
   }, [dispatch, storyId, sceneIndex]); // storyId, sceneIndex가 바뀔 때마다 실행
   console.log(scenesList);
-
-  // useEffect(() => {
-  //   // Dummy data를 Redux 스토어에 저장
-  //   dispatch(setSceneList(dummyData));
-  //   setSceneType("title");
-  // }, [dispatch]);
 
   const renderSceneContent = () => {
     console.log("sceneType: ", sceneType);
@@ -233,6 +224,11 @@ const Hospital = () => {
     console.log("sceneIndex2: ", sceneIndex);
   };
 
+  const handleOnclickCloseBtn = () => {
+    navigate("/main");
+    dispatch(setHospitalQuizClear(false));
+  };
+
   const handleOnclickFinishBtn = () => {
     navigate("/main", { state: { placeName } });
     dispatch(setIsPlaceClear(true));
@@ -249,11 +245,7 @@ const Hospital = () => {
           <StoryContentArea2>
             <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
             <CloseBtnArea>
-              <CloseBtn
-                onClick={() => {
-                  navigate("/main");
-                }}
-              />
+              <CloseBtn onClick={handleOnclickCloseBtn} />
             </CloseBtnArea>
 
             {sceneType === "QUIZ" && !isQuizClear ? (

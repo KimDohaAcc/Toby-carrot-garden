@@ -2,7 +2,11 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store";
+import { useNavigate } from "react-router-dom";
+
+import { getStoryList } from "../../../apis/storyApi";
+import { setStoryList } from "../../../store/slices/policeSlice";
+import { getPlaceId } from "../../../store/slices/placeSlice";
 
 const fadeInAnimation = keyframes`
   from {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { useSelector } from "react-redux";
@@ -46,14 +46,17 @@ const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
   width: 3vw;
   height: 3vw;
-  background-image: url(${props => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-image: url(${(props) =>
+    props.isPlaying
+      ? "/Image/button/no-sound.png"
+      : "/Image/button/sound.png"});
   background-size: 100% 100%;
   background-color: transparent;
-  border: none;  
+  border: none;
   &:focus,
   &:hover {
     outline: none;
-    background-color: transparent; 
+    background-color: transparent;
   }
 `;
 
@@ -101,16 +104,29 @@ const StoryContent = ({ index }: StoryContentProps) => {
     }
   };
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+    }
+    setIsPlaying(true);
+  }, [index]);
+
   const handleAudioEnded = () => {
     setIsPlaying(false);
   };
-  
+
   console.log("index", index);
   return (
     <StoryContentContainer>
       <AudioArea>
-        <AudioPlayer ref={audioRef} controls autoPlay preload="metadata" hidden
-                     onEnded={handleAudioEnded}>
+        <AudioPlayer
+          ref={audioRef}
+          controls
+          autoPlay
+          preload="metadata"
+          hidden
+          onEnded={handleAudioEnded}
+        >
           <source src={sceneList[index].voice} type="audio/mpeg" />
         </AudioPlayer>
         <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
