@@ -67,13 +67,54 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       return () => clearTimeout(timer);
     }
   }, [modalState, onClose]);
+  const handleSaveDrawing = async () => {
+    if (signaturePadRef.current && isOpen) {
+      const canvas = signaturePadRef.current.getCanvas();
+      const dataUrl = canvas.toDataURL("image/png");
+
+      // dataURL을 Blob으로 변환
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+
+      // Blob을 File 객체로 변환
+      const file = new File([blob], "drawing.png", { type: "image/png" });
+
+      const formData = new FormData();
+      formData.append("analysisImage", file);
+      formData.append("quizId", quizId.toString());
+
+      try {
+        const response = await submitQuiz(formData);
+        if (response.status === 200 && response.data.result.memberQuizId) {
+          console.log("Quiz submitted successfully");
+          console.log(response.data.result.memberQuizId);
+          setModalState("wait");
+          console.log(response);
+          // 여기서 memberQuizId가 성공적으로 정의되었습니다.
+          // const memberQuizId2 = response.data.result.memberQuizId;
+
+          checkQuizAnswer({ memberQuizId: response.data.result.memberQuizId });
+        } else {
+          console.error("Quiz submission failed");
+          // memberQuizId 관련된 로그 라인은 이곳에 있으면 안 됩니다.
+          setModalState("fail");
+        }
+      } catch (error) {
+        console.error("Quiz submission error", error);
+        setModalState("fail");
+      }
+    } //여기가 함수까지
+  };
+
   const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
     let attempts = 0;
     const maxAttempts = 10;
 
     const interval = setInterval(async () => {
       try {
-        const answerResponse = await getQuizAnswer({ memberQuizId });
+        const answerResponse = await getQuizAnswer({
+          memberQuizId,
+        });
 
         if (answerResponse.status === 200) {
           clearInterval(interval); // Stop polling on success
@@ -97,43 +138,6 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       }
     }, 1000); // Poll every second
   }, []);
-  const handleSaveDrawing = async () => {
-    if (signaturePadRef.current && isOpen) {
-      const canvas = signaturePadRef.current.getCanvas();
-      const dataUrl = canvas.toDataURL("image/png");
-
-      // dataURL을 Blob으로 변환
-      const response = await fetch(dataUrl);
-      const blob = await response.blob();
-
-      // Blob을 File 객체로 변환
-      const file = new File([blob], "drawing.png", { type: "image/png" });
-
-      const formData = new FormData();
-      formData.append("analysisImage", file);
-      formData.append("quizId", quizId.toString());
-      try {
-        const response = await submitQuiz(formData);
-        if (response.status === 200 && response.data.result.memberQuizId) {
-          console.log("Quiz submitted successfully");
-          console.log(response.data.result.memberQuizId);
-          setModalState("wait");
-          console.log(response);
-          // 여기서 memberQuizId가 성공적으로 정의되었습니다.
-          // const memberQuizId2 = response.data.result.memberQuizId;
-
-          checkQuizAnswer({ memberQuizId: response.data.result.memberQuizId });
-        } else {
-          console.error("Quiz submission failed");
-          // memberQuizId 관련된 로그 라인은 이곳에 있으면 안 됩니다.
-          setModalState("fail");
-        }
-      } catch (error) {
-        console.error("Quiz submission error", error);
-        setModalState("fail");
-      }
-    }
-  };
 
   useEffect(() => {
     if (modalState !== "wait" && modalState !== "none") {
@@ -143,32 +147,34 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   }, [modalState]);
 
   return (
-    <StoryDrawingModalContainer>
-      <ModalArea ref={modalRef}>
-        <SignatureCanvas
-          ref={signaturePadRef}
-          penColor="black"
-          canvasProps={{
-            width: canvasSize.width,
-            height: canvasSize.height,
-            className: "signature-canvas",
-            style: { backgroundColor: "white" }, // 배경을 흰색으로 설정
-          }}
-          minWidth={5} // 펜 굵기 최소값
-          maxWidth={5} // 펜 굵기 최대값
-        />
-      </ModalArea>
-      <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
-      {modalState === "wait" && (
-        <WaitToby onClose={() => setModalState("none")} />
-      )}
-      {modalState === "success" && (
-        <SuccessToby onClose={() => setModalState("none")} />
-      )}
-      {modalState === "fail" && (
-        <FailToby onClose={() => setModalState("none")} />
-      )}
-    </StoryDrawingModalContainer>
+    <>
+      <StoryDrawingModalContainer>
+        <ModalArea ref={modalRef}>
+          <SignatureCanvas
+            ref={signaturePadRef}
+            penColor="black"
+            canvasProps={{
+              width: canvasSize.width,
+              height: canvasSize.height,
+              className: "signature-canvas",
+              style: { backgroundColor: "white" }, // 배경을 흰색으로 설정
+            }}
+            minWidth={5} // 펜 굵기 최소값
+            maxWidth={5} // 펜 굵기 최대값
+          />
+        </ModalArea>
+        <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
+        {modalState === "wait" && (
+          <WaitToby onClose={() => setModalState("none")} />
+        )}
+        {modalState === "success" && (
+          <SuccessToby onClose={() => setModalState("none")} />
+        )}
+        {modalState === "fail" && (
+          <FailToby onClose={() => setModalState("none")} />
+        )}
+      </StoryDrawingModalContainer>
+    </>
   );
 };
 
