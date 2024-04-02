@@ -129,7 +129,7 @@ interface StoryList {
 }
 
 const PoliceStoryListModal = ({ onClose }) => {
-  const placeId = 3;
+  const placeId = 4;
   const dispatch = useDispatch();
   const [storysList, setStorysList] = useState<StoryList[]>([]);
 

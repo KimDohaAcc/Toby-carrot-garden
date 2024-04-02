@@ -7,6 +7,9 @@ import { getEmergencyQuiz } from "../../apis/quizApi";
 
 import { useDispatch } from "react-redux";
 import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
+import { setPoliceQuizClear } from "../../store/slices/policeSlice";
+import { setMartQuizClear } from "../../store/slices/martSlice";
+import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
 
 const EmergencyContainer = styled.div`
   display: grid;
@@ -148,14 +151,26 @@ const AudioPlayer = styled.audio`
   position: absolute;
 `;
 
-const AudioBtn = styled.button<{ isPlaying: boolean }>`
+const AudioBtnNS = styled.button`
   z-index: 1000;
   width: 3vw;
   height: 3vw;
-  background-image: url(${(props) =>
-    props.isPlaying
-      ? "/Image/button/no-sound.png"
-      : "/Image/button/sound.png"});
+  background-image: url("/Image/button/no-sound.png");
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent;
+  }
+`;
+
+const AudioBtnS = styled.button`
+  z-index: 1000;
+  width: 3vw;
+  height: 3vw;
+  background-image: url("/Image/button/sound.png");
   background-size: 100% 100%;
   background-color: transparent;
   border: none;
@@ -181,7 +196,7 @@ interface Scene {
 }
 
 const StoryEmergency = ({ index, place }) => {
-  const [numList, setNumList] = useState(() => {
+  const [numList] = useState(() => {
     const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, "*", 0, "#"];
     return list;
   });
@@ -189,10 +204,23 @@ const StoryEmergency = ({ index, place }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCarrotModalOpen, setIsCarrotModalOpen] = useState(false);
 
-  const sceneList = useSelector<RootState, Scene[]>(
-    (state: RootState) => state.hospital.sceneList
+  const sceneList = useSelector<RootState, Scene[]>((state: RootState) => {
+    if (place === "hospital") {
+      return state.hospital.sceneList;
+    } else if (place === "school") {
+      return state.school.sceneList;
+    } else if (place === "mart") {
+      return state.mart.sceneList;
+    } else if (place === "police") {
+      return state.police.sceneList;
+    } else {
+      return [];
+    }
+  });
+  const place_id = useSelector<RootState, number>(
+    (state: RootState) => state.place.placeId
   );
-  console.log(index);
+  console.log(place_id);
 
   const [number, setNumber] = useState("");
 
@@ -229,14 +257,18 @@ const StoryEmergency = ({ index, place }) => {
 
   const submit = async () => {
     try {
-      const response = await getEmergencyQuiz({ place_id: 2 });
+      const response = await getEmergencyQuiz({ place_id });
       console.log(response);
       openCarrotModal();
       if (place === "hospital") {
         dispatch(setHospitalQuizClear(true));
       } else if (place === "police") {
-        // dispatch(setPoliceQuizClear(true));
+        dispatch(setPoliceQuizClear(true));
         console.log("police");
+      } else if (place === "mart") {
+        dispatch(setMartQuizClear(true));
+      } else if (place === "school") {
+        dispatch(setSchoolQuizClear(true));
       }
     } catch (error) {
       console.error(error);
@@ -263,7 +295,11 @@ const StoryEmergency = ({ index, place }) => {
         >
           <source src={sceneList[index].voice} type="audio/mpeg" />
         </AudioPlayer>
-        <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
+        {isPlaying ? (
+          <AudioBtnS onClick={handleTogglePlay}></AudioBtnS>
+        ) : (
+          <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
+        )}
       </AudioArea>
       <EmergencyTitle>번호를 눌러주세요 이미지</EmergencyTitle>
       <EmergencyContent>
@@ -283,9 +319,10 @@ const StoryEmergency = ({ index, place }) => {
         )}
         {isCarrotModalOpen && (
           <>
-          <GetCarrotModal
-            src="/Image/toby/carrotRabbit.png"
-            alt="carrotRabbit"/>
+            <GetCarrotModal
+              src="/Image/toby/carrotRabbit.png"
+              alt="carrotRabbit"
+            />
             <audio ref={audioRef} controls autoPlay hidden>
               <source src="/Sound/당근획득.mp3" type="audio/mpeg" />
             </audio>
