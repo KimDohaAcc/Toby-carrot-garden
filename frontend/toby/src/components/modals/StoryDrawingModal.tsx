@@ -36,21 +36,29 @@ const CloseBtn = styled.button`
 
 const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const signaturePadRef = useRef(null);
+  const modalRef = useRef(null);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [modalState, setModalState] = useState("none");
   const [memberQuizId, setMemberQuizId] = useState(null);
 
   useEffect(() => {
-    const updateCanvasSize = () => {
-      if (signaturePadRef.current && signaturePadRef.current.canvas) {
-        const { width, height } =
-          signaturePadRef.current.getBoundingClientRect();
-        setCanvasSize({ width: width, height: height });
+    function updateCanvasSize() {
+      if (modalRef.current) {
+        const { width, height } = modalRef.current.getBoundingClientRect();
+        setCanvasSize({ width, height });
+        // 캔버스 크기 재설정
+        if (signaturePadRef.current) {
+          signaturePadRef.current.clear(); // 캔버스를 클리어하고
+          signaturePadRef.current.resizeCanvas(); // 새 크기로 캔버스를 조절합니다.
+        }
       }
-    };
+    }
+
+    if (isOpen) {
+      updateCanvasSize();
+    }
 
     window.addEventListener("resize", updateCanvasSize);
-    updateCanvasSize();
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, [isOpen]);
 
