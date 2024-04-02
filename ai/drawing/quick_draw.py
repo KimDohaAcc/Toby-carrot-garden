@@ -35,6 +35,8 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
 
         image = Image.open(BytesIO(image_data)).convert('L')
 
+        image = np.array(image)
+
         # Preprocess the image
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         ys, xs = np.nonzero(image)
