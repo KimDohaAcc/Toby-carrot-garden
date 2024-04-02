@@ -13,9 +13,9 @@ import { getSceneList } from "../apis/storyApi.tsx";
 import Logo2 from "../components/Logo2";
 
 import StoryTitle from "../components/placeStory/StoryTitle";
-import StoryContent from "../components/placeStory/StoryContentSchool.tsx";
-import StoryQuiz from "../components/placeStory/StoryQuizSchool.tsx";
-import StoryClear from "../components/placeStory/StoryClearSchool.tsx";
+import StoryContent from "../components/placeStory/StoryContent.tsx";
+import StoryQuiz from "../components/placeStory/StoryQuiz.tsx";
+import StoryClear from "../components/placeStory/StoryClear.tsx";
 
 const StoryContainer = styled.div`
   display: flex;
@@ -193,15 +193,21 @@ const School = () => {
   const renderSceneContent = () => {
     console.log("sceneType: ", sceneType);
     if (sceneIndex === -1) {
-      return <StoryTitle title={title} storyImageUrl={storyImageUrl} />;
+      return (
+        <StoryTitle
+          title={title}
+          storyImageUrl={storyImageUrl}
+          placeName={placeName}
+        />
+      );
     } else {
       switch (sceneType) {
         case "NORMAL":
-          return <StoryContent index={sceneIndex} />;
+          return <StoryContent index={sceneIndex} placeName={placeName} />;
         case "CLEAR":
-          return <StoryClear index={sceneIndex} />;
+          return <StoryClear index={sceneIndex} placeName={placeName} />;
         case "QUIZ":
-          return <StoryQuiz index={sceneIndex} />;
+          return <StoryQuiz index={sceneIndex} placeName={placeName} />;
         default:
           return <div>Scene Type Error!!!</div>;
       }

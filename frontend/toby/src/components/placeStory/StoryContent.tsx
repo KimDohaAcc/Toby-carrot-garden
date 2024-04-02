@@ -42,18 +42,33 @@ const AudioPlayer = styled.audio`
   position: absolute;
 `;
 
-const AudioBtn = styled.button<{ isPlaying: boolean }>`
+const AudioBtnNS = styled.button`
   z-index: 1000;
   width: 3vw;
   height: 3vw;
-  background-image: url(${props => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-image: url("/Image/button/no-sound.png");
   background-size: 100% 100%;
   background-color: transparent;
-  border: none;  
+  border: none;
   &:focus,
   &:hover {
     outline: none;
-    background-color: transparent; 
+    background-color: transparent;
+  }
+`;
+
+const AudioBtnS = styled.button`
+  z-index: 1000;
+  width: 3vw;
+  height: 3vw;
+  background-image: url("/Image/button/sound.png");
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent;
   }
 `;
 
@@ -61,9 +76,6 @@ const AudioArea = styled.div`
   position: absolute;
   margin: calc(2%);
 `;
-type StoryContentProps = {
-  index: number;
-};
 
 interface Quiz {
   quizId: number;
@@ -80,10 +92,23 @@ interface Scene {
   quiz?: Quiz | null;
 }
 
-const StoryContent = ({ index }: StoryContentProps) => {
-  const sceneList = useSelector<RootState, Scene[]>(
-    (state: RootState) => state.hospital.sceneList
-  );
+const StoryContent = ({ index, placeName }) => {
+  // const sceneList = useSelector<RootState, Scene[]>(
+  //   (state: RootState) => state.hospital.sceneList
+  // );
+  const sceneList = useSelector<RootState, Scene[]>((state: RootState) => {
+    if (placeName === "hospital") {
+      return state.hospital.sceneList;
+    } else if (placeName === "school") {
+      return state.school.sceneList;
+    } else if (placeName === "mart") {
+      return state.mart.sceneList;
+    } else if (placeName === "police") {
+      return state.police.sceneList;
+    } else {
+      return [];
+    }
+  });
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -111,15 +136,25 @@ const StoryContent = ({ index }: StoryContentProps) => {
   const handleAudioEnded = () => {
     setIsPlaying(false);
   };
-  
+
   return (
     <StoryContentContainer>
       <AudioArea>
-        <AudioPlayer ref={audioRef} controls autoPlay preload="metadata" hidden
-                     onEnded={handleAudioEnded}>
+        <AudioPlayer
+          ref={audioRef}
+          controls
+          autoPlay
+          preload="metadata"
+          hidden
+          onEnded={handleAudioEnded}
+        >
           <source src={sceneList[index].voice} type="audio/mpeg" />
         </AudioPlayer>
-        <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
+        {isPlaying ? (
+          <AudioBtnS onClick={handleTogglePlay}></AudioBtnS>
+        ) : (
+          <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
+        )}
       </AudioArea>
       <StoryContentImageArea>
         <StoryContentImage

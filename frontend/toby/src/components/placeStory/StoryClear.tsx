@@ -38,14 +38,26 @@ const AudioPlayer = styled.audio`
   position: absolute;
 `;
 
-const AudioBtn = styled.button<{ isPlaying: boolean }>`
+const AudioBtnNS = styled.button`
   z-index: 1000;
   width: 3vw;
   height: 3vw;
-  background-image: url(${(props) =>
-    props.isPlaying
-      ? "/Image/button/no-sound.png"
-      : "/Image/button/sound.png"});
+  background-image: url("/Image/button/no-sound.png");
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent;
+  }
+`;
+
+const AudioBtnS = styled.button`
+  z-index: 1000;
+  width: 3vw;
+  height: 3vw;
+  background-image: url("/Image/button/sound.png");
   background-size: 100% 100%;
   background-color: transparent;
   border: none;
@@ -63,10 +75,6 @@ const AudioArea = styled.div`
   margin: calc(2%);
 `;
 
-type StoryClearProps = {
-  index: number;
-};
-
 interface Scene {
   sceneId: number;
   quizType: string;
@@ -75,13 +83,22 @@ interface Scene {
   voice: string;
 }
 
-const StoryClear = ({ index }: StoryClearProps) => {
-  console.log("index", index);
-  const [quizId, setQuizId] = useState<number>(0);
-  const placeId = 2;
-  const sceneList = useSelector<RootState, Scene[]>(
-    (state: RootState) => state.hospital.sceneList
-  );
+const StoryClear = ({ index, placeName }) => {
+  const sceneList = useSelector<RootState, Scene[]>((state: RootState) => {
+    if (placeName === "hospital") {
+      return state.hospital.sceneList;
+    } else if (placeName === "school") {
+      return state.school.sceneList;
+    } else if (placeName === "mart") {
+      return state.mart.sceneList;
+    } else if (placeName === "police") {
+      return state.police.sceneList;
+    } else {
+      return [];
+    }
+  });
+  const [placeId, setPlaceId] = useState<number>(0);
+
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
@@ -103,9 +120,16 @@ const StoryClear = ({ index }: StoryClearProps) => {
   };
 
   useEffect(() => {
-    setQuizId(sceneList[index].sceneId);
-    console.log("sceneList", sceneList);
-  }, [sceneList, index]);
+    if (placeName === "hospital") {
+      setPlaceId(1);
+    } else if (placeName === "school") {
+      setPlaceId(2);
+    } else if (placeName === "mart") {
+      setPlaceId(3);
+    } else if (placeName === "police") {
+      setPlaceId(4);
+    }
+  }, [placeName]);
 
   return (
     <ClearContainer>
@@ -120,7 +144,11 @@ const StoryClear = ({ index }: StoryClearProps) => {
         >
           <source src={sceneList[index].voice} type="audio/mpeg" />
         </AudioPlayer>
-        <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
+        {isPlaying ? (
+          <AudioBtnS onClick={handleTogglePlay}></AudioBtnS>
+        ) : (
+          <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
+        )}
       </AudioArea>
       <StoryClearContent>{sceneList[index].content}</StoryClearContent>
       <ClearWebcamArea>

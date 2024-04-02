@@ -3,18 +3,27 @@ import { createSlice } from "@reduxjs/toolkit";
 const martSlice = createSlice({
   name: "mart",
   initialState: {
-    martId: 0,
-    isMartClear: false,
+    sceneList: [],
+    storyList: [],
+    storyId: 3,
+    quizClear: false,
   },
   reducers: {
-    getMartId: (state, action) => {
-      state.martId = action.payload;
+    setSceneList: (state, action) => {
+      state.sceneList = action.payload;
     },
-    setIsMartClear: (state, action) => {
-      state.isMartClear = action.payload;
+    setStoryList: (state, action) => {
+      state.storyList = action.payload;
+    },
+    selectStoryId: (state, action) => {
+      state.storyId = action.payload;
+    },
+    setSchoolQuizClear: (state, action) => {
+      state.quizClear = action.payload;
     },
   },
 });
 
-export const { getMartId, setIsMartClear } = martSlice.actions;
+export const { selectStoryId, setSceneList, setSchoolQuizClear, setStoryList } =
+  martSlice.actions;
 export default martSlice.reducer;

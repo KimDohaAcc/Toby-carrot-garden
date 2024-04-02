@@ -3,18 +3,27 @@ import { createSlice } from "@reduxjs/toolkit";
 const policeSlice = createSlice({
   name: "police",
   initialState: {
-    policeId: 0,
-    isPoliceClear: false,
+    sceneList: [],
+    storyList: [],
+    storyId: 4,
+    quizClear: false,
   },
   reducers: {
-    getPoliceId: (state, action) => {
-      state.policeId = action.payload;
+    setSceneList: (state, action) => {
+      state.sceneList = action.payload;
     },
-    setIsPoliceClear: (state, action) => {
-      state.isPoliceClear = action.payload;
+    setStoryList: (state, action) => {
+      state.storyList = action.payload;
+    },
+    selectStoryId: (state, action) => {
+      state.storyId = action.payload;
+    },
+    setSchoolQuizClear: (state, action) => {
+      state.quizClear = action.payload;
     },
   },
 });
 
-export const { getPoliceId, setIsPoliceClear } = policeSlice.actions;
+export const { selectStoryId, setSceneList, setSchoolQuizClear, setStoryList } =
+  policeSlice.actions;
 export default policeSlice.reducer;

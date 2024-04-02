@@ -18,10 +18,6 @@ const StoryQuizContainer = styled.div`
   border: 1px solid black;
 `;
 
-type StoryQuizProps = {
-  index: number;
-};
-
 interface Scene {
   sceneId: number;
   sceneType: string;
@@ -37,11 +33,20 @@ interface Quiz {
   quizType: string;
 }
 
-const StoryQuizHospitial = ({ index }: StoryQuizProps) => {
-  const sceneList = useSelector<RootState, Scene[]>(
-    // (state: RootState) => state.school.sceneList
-    (state: RootState) => state.hospital.sceneList
-  );
+const StoryQuizHospitial = ({ index, placeName }) => {
+  const sceneList = useSelector<RootState, Scene[]>((state: RootState) => {
+    if (placeName === "hospital") {
+      return state.hospital.sceneList;
+    } else if (placeName === "school") {
+      return state.school.sceneList;
+    } else if (placeName === "mart") {
+      return state.mart.sceneList;
+    } else if (placeName === "police") {
+      return state.police.sceneList;
+    } else {
+      return [];
+    }
+  });
   const [imageUrl, setImageUrl] = useState<string>("");
   const [quizId, setQuizId] = useState<number>(0);
   const [content, setContent] = useState<string>("");
@@ -67,7 +72,7 @@ const StoryQuizHospitial = ({ index }: StoryQuizProps) => {
             quizId={quizId}
             content={content}
             index={index}
-            place="hospital"
+            place={placeName}
           />
         );
       case "OBJECTS":
@@ -77,7 +82,7 @@ const StoryQuizHospitial = ({ index }: StoryQuizProps) => {
             content={content}
             quizId={quizId}
             index={index}
-            place="hospital"
+            place={placeName}
           />
         );
       case "FEELINGS":
@@ -87,11 +92,11 @@ const StoryQuizHospitial = ({ index }: StoryQuizProps) => {
             content={content}
             quizId={quizId}
             index={index}
-            place="hospital"
+            place={placeName}
           />
         );
       case "EMERGENCY":
-        return <StoryEmergency index={index} place="hospital" />;
+        return <StoryEmergency index={index} place={placeName} />;
       default:
         return <div>Quiz Type Error!!!</div>;
     }

@@ -13,9 +13,9 @@ import { getSceneList } from "../apis/storyApi.tsx";
 import Logo2 from "../components/Logo2";
 
 import StoryTitle from "../components/placeStory/StoryTitle.tsx";
-import StoryContent from "../components/placeStory/StoryContentHospital.tsx";
-import StoryQuiz from "../components/placeStory/StoryQuizHospitial.tsx";
-import StoryClear from "../components/placeStory/StoryClearHospital.tsx";
+import StoryContent from "../components/placeStory/StoryContent.tsx";
+import StoryQuiz from "../components/placeStory/StoryQuiz.tsx";
+import StoryClear from "../components/placeStory/StoryClear.tsx";
 
 // 전체 컨테이너
 const StoryContainer = styled.div`
@@ -197,15 +197,21 @@ const Hospital = () => {
   const renderSceneContent = () => {
     console.log("sceneType: ", sceneType);
     if (sceneIndex === -1) {
-      return <StoryTitle title={title} storyImageUrl={storyImageUrl} />;
+      return (
+        <StoryTitle
+          title={title}
+          storyImageUrl={storyImageUrl}
+          placeName={placeName}
+        />
+      );
     } else {
       switch (sceneType) {
         case "NORMAL":
-          return <StoryContent index={sceneIndex} />;
+          return <StoryContent index={sceneIndex} placeName={placeName} />;
         case "CLEAR":
-          return <StoryClear index={sceneIndex} />;
+          return <StoryClear index={sceneIndex} placeName={placeName} />;
         case "QUIZ":
-          return <StoryQuiz index={sceneIndex} />;
+          return <StoryQuiz index={sceneIndex} placeName={placeName} />;
         default:
           return <div>Scene Type Error!!!</div>;
       }

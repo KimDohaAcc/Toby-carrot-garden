@@ -38,8 +38,9 @@ const StoryTitleImage = styled.img`
   border: 1px solid black;
 `;
 
-const StoryTitle = ({ title, storyImageUrl }) => {
+const StoryTitle = ({ title, storyImageUrl, placeName }) => {
   console.log("StoryTitle: ", title, "storyImageUrl:", storyImageUrl);
+  console.log("plcdName: ", placeName);
   return (
     <StoryTitleContainer>
       <StoryTitleImageArea>
