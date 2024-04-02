@@ -37,18 +37,20 @@ import lombok.RequiredArgsConstructor;
 public class LoggingFilter extends OncePerRequestFilter {
 	protected static final Logger log = LoggerFactory.getLogger(LoggingFilter.class);
 	private final DiscordNotifier discordNotifier;
-	private StringBuilder stringBuilder = new StringBuilder();
+	private StringBuffer stringBuffer = new StringBuffer();
+	;
 	private boolean isSwagger = false;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
-		stringBuilder.setLength(0);
+		// stringBuilder = new StringBuilder();
+		stringBuffer.setLength(0);
 
-		stringBuilder.append("time: ").append(LocalDateTime.now()).append("\n");
+		stringBuffer.append("time: ").append(LocalDateTime.now()).append("\n");
 
 		MDC.put("traceId", UUID.randomUUID().toString());
-		stringBuilder.append("traceId: ").append(MDC.get("traceId")).append("\n");
+		stringBuffer.append("traceId: ").append(MDC.get("traceId")).append("\n");
 
 		try {
 			if (isAsyncDispatch(request)) {
@@ -70,7 +72,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 		try {
 			logRequest(request);
 			if (!isSwagger) {
-				stringBuilder.append("----------------\n");
+				stringBuffer.append("----------------\n");
 				// discordNotifier.notify(stringBuilder.toString());
 				// stringBuilder.setLength(0);
 			}
@@ -84,7 +86,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 			logResponse(response);
 			if (!isSwagger) {
 
-				discordNotifier.notify(stringBuilder.append("✨========================\n").toString());
+				discordNotifier.notify(stringBuffer.append("✨========================\n").toString());
 			}
 			response.copyBodyToResponse();
 		}
@@ -114,7 +116,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 		log.info("{} Payload: {}", "Multipart Request", multipartPayload.toString());
 
-		stringBuilder.append("Multipart Request")
+		stringBuffer.append("Multipart Request")
 			.append(" Payload: ****\n")
 			.append(multipartPayload.toString())
 			.append("****\n");
@@ -147,8 +149,8 @@ public class LoggingFilter extends OncePerRequestFilter {
 			}
 		}
 
-		stringBuilder.append("Origin: ").append(request.getHeader("Origin")).append("\n");
-		stringBuilder.append(logMessage).append("\n");
+		stringBuffer.append("Origin: ").append(request.getHeader("Origin")).append("\n");
+		stringBuffer.append(logMessage).append("\n");
 
 		if (request.getContentType() != null && request.getContentType().contains("multipart/form-data")) {
 			logMultipartRequest(request);
@@ -164,7 +166,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 			return;
 		}
 		String logMessage = String.format("Response : %s", response.getStatus());
-		stringBuilder.append(logMessage).append("\n");
+		stringBuffer.append(logMessage).append("\n");
 		logPayload("Response", response.getContentType(), response.getContentInputStream());
 	}
 
@@ -174,28 +176,28 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 		if (visible) {
 			byte[] content = StreamUtils.copyToByteArray(inputStream);
-			stringBuilder.append(prefix).append(" Payload:");
+			stringBuffer.append(prefix).append(" Payload:");
 			if (content.length > 0) {
 				String contentString = new String(content);
 				log.info("{} Payload: {}", prefix, contentString);
 				// 현재 스트링빌더에 있는 텍스트의 길이 확인
-				int currentLength = stringBuilder.length();
+				int currentLength = stringBuffer.length();
 				if (currentLength < maxLength) {
 					int remainingLength = maxLength - currentLength; // 남은 길이 계산
 
 					if (contentString.length() <= remainingLength) {
 						// contentString이 남은 길이보다 작거나 같으면 전체 추가
-						stringBuilder.append(contentString).append("\n");
+						stringBuffer.append(contentString).append("\n");
 					} else {
 						// contentString이 남은 길이보다 크면 잘라서 추가
-						stringBuilder.append(contentString, 0, remainingLength).append("\n");
+						stringBuffer.append(contentString, 0, remainingLength).append("\n");
 					}
 				}
 			}
 
 		} else {
 			log.info("{} Payload: Binary Content", prefix);
-			stringBuilder.append(prefix).append(" Payload: Binary Content").append("\n");
+			stringBuffer.append(prefix).append(" Payload: Binary Content").append("\n");
 		}
 	}
 
@@ -210,7 +212,7 @@ public class LoggingFilter extends OncePerRequestFilter {
 		log.error("Exception during request processing", ex);
 		ex.printStackTrace();
 		String logMessage = String.format("[ERROR] : %s", ex.getMessage() + "\n\n" + ex.getStackTrace());
-		stringBuilder.append(logMessage).append("\n");
+		stringBuffer.append(logMessage).append("\n");
 		ApiResponse<?> errorResponse = ApiResponse.globalError(HttpStatus.BAD_REQUEST, ex.getMessage());
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonResponse = objectMapper.writeValueAsString(errorResponse);
