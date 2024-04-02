@@ -10,6 +10,8 @@ const MypageContainer = styled.div`
   width: 100%;
   height: 100%;
   border: 2px solid black;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const LogoArea = styled.div`
@@ -24,6 +26,8 @@ const MypageContentContainer = styled.div`
   flex-direction: column;
   border: 2px solid black;
   display: flex;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const LogoutArea = styled.div`
@@ -40,10 +44,13 @@ const MypageContentArea = styled.div`
   align-items: center;
   flex-grow: 1;
   border: 2px solid black;
+  overflow: hidden;
+  object-fit: contain;
 `;
 const Text1 = styled.h1`
   line-height: 60%;
-  font-size: 70px;
+
+  font-size: clamp(50px, 2vw, 70px);
 `;
 const Text2 = styled.h2`
   line-height: 60%;
