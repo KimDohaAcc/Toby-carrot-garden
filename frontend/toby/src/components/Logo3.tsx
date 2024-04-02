@@ -32,16 +32,9 @@ const LogoImg = styled.img`
 
 const Logo = () => {
   const navigate = useNavigate();
-  const handleLogoClick = () => {
-    if (getUserStorage.accessToken) {
-      navigate("/main");
-    } else {
-      console.log("Access Denied. No accessToken found.");
-    }
-  };
 
   return (
-    <LogoWrapper onClick={handleLogoClick}>
+    <LogoWrapper onClick={() => navigate("/main")}>
       <LogoImg src="/Image/common/logoImage.png" alt="logo" />
     </LogoWrapper>
   );
