@@ -174,7 +174,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
   const closeModal = () => {
     setIsModalOpen(false);
     console.log("이미지 판독");
-    submitQuiz(quizId);
+    // submitQuiz(quizId);
   };
 
   return (
