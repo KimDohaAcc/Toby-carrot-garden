@@ -47,10 +47,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   const [modalState, setModalState] = useState<
     "none" | "wait" | "success" | "fail"
   >("none");
-
-  const dispatch = useDispatch();
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPolling, setIsPolling] = useState(false);
   useEffect(() => {
     function updateCanvasSize() {
       if (modalRef.current) {
@@ -66,36 +63,10 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
 
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, [isOpen]);
-  const startPolling = useCallback((memberQuizId) => {
-    const maxAttempts = 10;
-    let attempts = 0;
-
-    const intervalId = setInterval(async () => {
-      if (attempts >= maxAttempts) {
-        clearInterval(intervalId);
-        setModalState("fail");
-        return;
-      }
-
-      try {
-        const response = await getQuizAnswer({ memberQuizId });
-        if (response.status === 200 && response.result.score !== -1) {
-          clearInterval(intervalId);
-          setModalState(response.result.score === 100 ? "success" : "fail");
-        }
-      } catch (error) {
-        console.error("Error polling for quiz answer:", error);
-      }
-
-      attempts++;
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
 
   const handleSaveDrawing = useCallback(async () => {
-    if (!isSubmitting && signaturePadRef.current && isOpen) {
-      setIsSubmitting(true); // Prevent multiple submissions
+    if (!isPolling && signaturePadRef.current && isOpen) {
+      setIsPolling(true); // To prevent multiple submissions
       const canvas = signaturePadRef.current.getCanvas();
       const dataUrl = canvas.toDataURL("image/png");
       const response = await fetch(dataUrl);
@@ -104,53 +75,64 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
 
       const formData = new FormData();
       formData.append("analysisImage", file);
-      formData.append("quizId", quizId);
+      formData.append("quizId", quizId.toString());
 
-      submitQuiz(formData)
-        .then((response) => {
-          if (
-            response.status === 200 &&
-            response.data &&
-            response.data.result &&
-            response.data.result.memberQuizId
-          ) {
-            setModalState("wait");
-            startPolling(response.data.result.memberQuizId);
-          } else {
-            setModalState("fail");
-          }
-          if (place === "school") {
-            dispatch(setSchoolQuizClear(true));
-          } else if (place === "hospital") {
-            dispatch(setHospitalQuizClear(true));
-          } else if (quizId === 3) {
-            console.log("placeId 3");
-          } else if (quizId === 4) {
-            console.log("placeId 4");
-          }
-        })
-        .catch((error) => {
-          console.error("Submission error:", error);
+      try {
+        const response = await submitQuiz(formData);
+        if (
+          response.status === 200 &&
+          response.data &&
+          response.data.result &&
+          response.data.result.memberQuizId
+        ) {
+          setModalState("wait");
+          pollQuizAnswer(response.data.result.memberQuizId, 0);
+        } else {
           setModalState("fail");
-        })
-        .finally(() => {
-          setIsSubmitting(false); // Reset submission status
-        });
+        }
+      } catch (error) {
+        console.error("Error submitting quiz:", error);
+        setModalState("fail");
+      } finally {
+        setIsPolling(false); // Reset the flag after submission and polling are done
+      }
     }
-  }, [isOpen, isSubmitting, quizId, startPolling, place, dispatch]);
+  }, [isOpen, isPolling, quizId]);
+
+  const pollQuizAnswer = useCallback(async (memberQuizId, attempts) => {
+    if (attempts >= 10) {
+      setModalState("fail");
+      return;
+    }
+
+    try {
+      const response = await getQuizAnswer({ memberQuizId });
+      if (
+        response.status === 200 &&
+        response.data &&
+        response.data.result.score !== -1
+      ) {
+        setModalState(response.data.result.score === 100 ? "success" : "fail");
+      } else {
+        setTimeout(() => pollQuizAnswer(memberQuizId, attempts + 1), 1000);
+      }
+    } catch (error) {
+      console.error("Error polling quiz answer:", error);
+      setTimeout(() => pollQuizAnswer(memberQuizId, attempts + 1), 1000);
+    }
+  }, []);
 
   useEffect(() => {
     if (modalState !== "none" && modalState !== "wait") {
-      const timeoutId = setTimeout(() => {
+      const timeout = setTimeout(() => {
         setModalState("none");
         onClose();
       }, 2000);
-      return () => clearTimeout(timeoutId);
+      return () => clearTimeout(timeout);
     }
   }, [modalState, onClose]);
 
   if (!isOpen) return null;
-
   return (
     <StoryDrawingModalContainer>
       <ModalArea ref={modalRef}>

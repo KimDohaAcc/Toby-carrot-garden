@@ -86,6 +86,7 @@ export const getQuizAnswer = async ({ memberQuizId }) => {
     //   Authorization: `Bearer ${tempToken}`, // `tempToken`은 유효한 토큰 문자열이어야 합니다.
 
     console.log(memberQuizId);
+    console.log("여기까지 왔다");
 
     return response.data;
   } catch (error) {
