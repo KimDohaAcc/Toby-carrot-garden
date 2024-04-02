@@ -46,6 +46,11 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
 
         result = 0
 
+        print("image_data(s3에서 읽은 객체) : ", image_data, flush=True)
+        print("image(모델 돌리기 전 처리 후) : ", image, flush=True)
+        print("logits : ", logits, flush=True)
+
+
         for rank, (value, index) in enumerate(zip(top_values, top_indices), start=0):
             print(
                 f"순위: {rank}  인덱스: {index}  값: {CLASSES[index]} 유사도: {value}",
