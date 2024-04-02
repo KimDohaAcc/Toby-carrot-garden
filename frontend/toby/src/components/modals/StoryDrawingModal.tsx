@@ -41,7 +41,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
   const [modalState, setModalState] = useState<
     "none" | "wait" | "success" | "fail"
   >("none");
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     function updateCanvasSize() {
       if (modalRef.current) {
@@ -57,18 +57,36 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
 
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, [isOpen]);
+  const startPolling = useCallback((memberQuizId) => {
+    const maxAttempts = 10;
+    let attempts = 0;
 
-  useEffect(() => {
-    if (modalState === "success" || modalState === "fail") {
-      const timer = setTimeout(() => {
-        setModalState("none");
-        onClose(); // Automatically close modal after 2 seconds
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [modalState, onClose]);
-  const handleSaveDrawing = async () => {
-    if (signaturePadRef.current && isOpen) {
+    const intervalId = setInterval(async () => {
+      if (attempts >= maxAttempts) {
+        clearInterval(intervalId);
+        setModalState("fail");
+        return;
+      }
+
+      try {
+        const response = await getQuizAnswer({ memberQuizId });
+        if (response.status === 200 && response.result.score !== -1) {
+          clearInterval(intervalId);
+          setModalState(response.result.score === 100 ? "success" : "fail");
+        }
+      } catch (error) {
+        console.error("Error polling for quiz answer:", error);
+      }
+
+      attempts++;
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const handleSaveDrawing = useCallback(async () => {
+    if (!isSubmitting && signaturePadRef.current && isOpen) {
+      setIsSubmitting(true); // Prevent multiple submissions
       const canvas = signaturePadRef.current.getCanvas();
       const dataUrl = canvas.toDataURL("image/png");
       const response = await fetch(dataUrl);
@@ -77,112 +95,40 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
 
       const formData = new FormData();
       formData.append("analysisImage", file);
-      formData.append("quizId", quizId.toString());
-      try {
-        const response = await submitQuiz(formData);
-        if (response.status === 200 && response.data.result.memberQuizId) {
-          console.log("Quiz submitted successfully");
-          console.log(response.data.result.memberQuizId);
-          setModalState("wait");
-          console.log(response);
-          // 여기서 memberQuizId가 성공적으로 정의되었습니다.
-          // const memberQuizId2 = response.data.result.memberQuizId;
+      formData.append("quizId", quizId);
 
-          checkQuizAnswer({ memberQuizId: response.data.result.memberQuizId });
-        } else {
-          console.error("Quiz submission failed");
-          // memberQuizId 관련된 로그 라인은 이곳에 있으면 안 됩니다.
-          setModalState("fail");
-        }
-      } catch (error) {
-        console.error("Quiz submission error", error);
-        setModalState("fail");
-      }
-    }
-  };
-  const startPolling = async (memberQuizId) => {
-    let attempts = 0;
-    const maxAttempts = 10;
-    const pollInterval = 1000; // 1초 간격
-
-    const poll = setInterval(async () => {
-      if (attempts >= maxAttempts) {
-        clearInterval(poll);
-        setModalState("fail");
-        return;
-      }
-
-      try {
-        const answerResponse = await getQuizAnswer({
-          memberQuizId,
-        });
-        if (answerResponse.status === 200) {
-          if (answerResponse.result.score === 100) {
-            clearInterval(poll);
-            setModalState("success");
-          } else if (answerResponse.result.score !== -1) {
-            clearInterval(poll);
+      submitQuiz(formData)
+        .then((response) => {
+          if (
+            response.status === 200 &&
+            response.data &&
+            response.data.result &&
+            response.data.result.memberQuizId
+          ) {
+            setModalState("wait");
+            startPolling(response.data.result.memberQuizId);
+          } else {
             setModalState("fail");
           }
-        }
-      } catch (error) {
-        console.error("Polling error:", error);
-      }
-
-      attempts++;
-    }, pollInterval);
-  };
-
-  const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
-    let attempts = 0;
-    const maxAttempts = 10;
-
-    const interval = setInterval(async () => {
-      try {
-        const answerResponse = await getQuizAnswer({
-          memberQuizId,
-        });
-
-        if (answerResponse.status === 200) {
-          clearInterval(interval); // Stop polling on success
-          setModalState(
-            answerResponse.result.score === 100 ? "success" : "fail"
-          );
-        } else {
-          console.error("Failed to get quiz answer");
+        })
+        .catch((error) => {
+          console.error("Submission error:", error);
           setModalState("fail");
-        }
-      } catch (error) {
-        console.error("Error fetching quiz answer", error);
-        // Optionally, handle retry logic or stop on certain errors
-      }
-
-      attempts++;
-      if (attempts >= maxAttempts) {
-        clearInterval(interval); // Stop polling after max attempts
-        console.error("Max polling attempts reached, stopping.");
-        setModalState("fail"); // Considered fail after max attempts without success
-      }
-    }, 1000); // Poll every second
-  }, []);
-
-  useEffect(() => {
-    if (modalState !== "wait" && modalState !== "none") {
-      const timeout = setTimeout(() => setModalState("none"), 2000);
-      return () => clearTimeout(timeout);
+        })
+        .finally(() => {
+          setIsSubmitting(false); // Reset submission status
+        });
     }
-  }, [modalState, onClose]);
+  }, [isOpen, isSubmitting, quizId, startPolling]);
 
-  // 모달 상태가 변경될 때마다 실행되는 useEffect
   useEffect(() => {
-    let timer;
-    if (["success", "fail"].includes(modalState)) {
-      timer = setTimeout(() => {
-        setModalState("none"); // SuccessToby 또는 FailToby 모달을 2초 후 자동으로 닫음
-        onClose(); // 모달 닫기 콜백 함수 호출
+    if (modalState !== "none" && modalState !== "wait") {
+      const timeoutId = setTimeout(() => {
+        setModalState("none");
+        onClose();
       }, 2000);
+      return () => clearTimeout(timeoutId);
     }
-    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 제거
   }, [modalState, onClose]);
 
   if (!isOpen) return null;
