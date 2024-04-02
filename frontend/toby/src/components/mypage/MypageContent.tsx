@@ -14,6 +14,8 @@ const MypageContentContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   background-color: #ffffff;
   border-radius: 40px;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const Area = styled.div`
@@ -25,6 +27,8 @@ const Area = styled.div`
   border-radius: 30px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const TitleArea = styled.div`
@@ -35,6 +39,8 @@ const TitleArea = styled.div`
   font-weight: bold;
   position: relative;
   flex: 0 0 10%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const ImageArea = styled.img`
@@ -42,13 +48,15 @@ const ImageArea = styled.img`
   left: 10px;
   height: 100%;
   max-width: 100%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const Text = styled.div`
   position: absolute;
   left: 15%;
   flex: 1;
-  font-size: 170%;
+  font-size: clamp(27px, 2vw, 43px);
 `;
 
 const MypageContent = () => {

@@ -44,22 +44,27 @@ const AlbumContainer = styled.div`
 
 const AlbumArea = styled.div`
   display: grid;
-  grid-template-rows: 4fr 1fr;
-  background-color: #f5f5f5d9;
+  grid-template-rows: 5fr 1fr;
+  /* background-color: #f5f5f5d9; */
   background-size: cover;
   border-radius: 30px;
   justify-items: center;
   align-items: center;
+  overflow: hidden;
+  object-fit: contain;
+  width: 100%;
+  height: 95%;
 `;
 
 const ImageArea = styled.div`
   width: 80%;
-  height: 80%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   object-fit: contain;
+  flex: 0 0 70%;
 `;
 
 const NoImageArea = styled.div`
@@ -71,6 +76,8 @@ const NoImageArea = styled.div`
   background-color: #f5f5f5d9;
   border-radius: 30px;
   position: relative;
+  overflow: hidden;
+  object-fit: contain;
   height: 100%;
   width: 100%; /* 너비를 100%로 설정하여 부모 컨테이너를 꽉 채움 */
 `;
@@ -90,6 +97,8 @@ const MiddleTextContainer = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 23px;
+  overflow: hidden;
+  object-fit: contain;
 `;
 const BottomContainer = styled.div`
   display: flex;
@@ -98,12 +107,16 @@ const BottomContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 
 const AlbumToby = styled.img`
   width: 25%; // Adjust size as needed
   margin-left: 3%; // Space between text and image
   right: 60%;
+  overflow: hidden;
+  object-fit: contain;
 `;
 const NoImage = styled.div`
   display: flex;
@@ -123,32 +136,50 @@ const NoImage = styled.div`
 // `;
 
 const BtnArea = styled.div`
-  height: 100%;
-  width: 60%;
+  height: 900%;
+  width: 70%;
+  top: 0%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  overflow: hidden;
+  object-fit: contain;
+  position: relative;
+  flex: 0 0 30%;
 `;
 
 const PrevBtn = styled.img`
   width: 20%;
   height: auto;
   cursor: pointer;
+  position: absolute;
+  left: calc(7%);
+  overflow: hidden;
+  object-fit: contain;
+  flex: 0 0 33%;
 `;
 
 const OrderArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 4rem;
+  font-size: clamp(30px, 2vw, 43px);
   flex: 1;
+  position: absolute;
+  left: calc(37%);
+  overflow: hidden;
+  object-fit: contain;
+  flex: 0 0 33%;
 `;
 
 const NextBtn = styled.img`
   width: 20%;
   height: auto;
   cursor: pointer;
+  position: absolute;
+  left: calc(72%);
+  flex: 0 0 33%;
 `;
 
 // const AlbumToby = styled.img`
@@ -306,7 +337,7 @@ const Album = () => {
             <img
               src={presentImage}
               alt="image"
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "80%", height: "auto" }}
             />
           </ImageArea>
           <BtnArea>
