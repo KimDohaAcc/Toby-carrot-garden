@@ -371,6 +371,11 @@ const MainPage = () => {
       setIsPlaying(false);
     }
   };
+  
+  const tobyClick = () => {
+    const audio = new Audio("/Sound/toby.mp3");
+    audio.play();
+  }
 
   return (
     <>
@@ -473,7 +478,7 @@ const MainPage = () => {
             <TobyImage
               src="\Image\toby\maintoby.png"
               alt="toby"
-              onClick={() => handleAreaClick("/toby")}
+              onClick={() => tobyClick()}
             />
           </TobyArea>
         </Area4>
