@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from io import BytesIO
 import traceback
 import warnings
+import cv2
 
 # 파이토치 버전 관련한 에러 메세지
 # 이 경고는 일반적으로 정보 제공용이며 코드에 문제가 있음을 나타내는 것은 아니므로 필터링
@@ -42,7 +43,7 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
         min_x = np.min(xs)
         max_x = np.max(xs)
         image = image[min_y:max_y, min_x: max_x]
-        
+
         image = image.resize((28, 28))
         image = np.array(image, dtype=np.float32)[None, None, :, :]
         image = torch.from_numpy(image)
