@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 
+import { RootState } from "../store/store";
+
+import { useDispatch } from "react-redux";
+
 import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 입력 모달
 import Logo from "../components/Logo";
 import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryListModal";
@@ -10,6 +14,9 @@ import SchoolStoryListModal from "../components/modals/school/SchoolStoryListMod
 import MartStoryListModal from "../components/modals/mart/MartStoryListModal";
 import PoliceStoryListModal from "../components/modals/police/PoliceStoryListModal";
 import { getUserStorage, clearUserStorage } from "../apis/userStorageApi";
+import { useSelector } from "react-redux";
+
+import { setIsPlaceClear } from "../store/slices/placeSlice";
 
 const MainpageContainer = styled.div`
   height: 100%;
@@ -263,34 +270,42 @@ const MainPage = () => {
   const [modalType, setModalType] = useState(""); // 모달 종류를 결정하는 상태
   const [userName, setUserName] = useState("");
 
+  const dispatch = useDispatch();
+
+  const isPlaceClear = useSelector<RootState, boolean>(
+    (state: RootState) => state.place.isplaceClear
+  );
+
   const location = useLocation();
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [muteImage, setMuteImage] = useState("/Image/button/no-sound.png");
 
-  console.log(location.state);
   useEffect(() => {
     // 컴포넌트 마운트 시 getUserStorage를 호출하여 사용자 이름 가져오기
     const userInfo = getUserStorage();
     if (userInfo && userInfo.name) {
       setUserName(`${userInfo.name}` + " ");
     }
-    if (location.state) {
-      const { showStoryListModal, placeName } = location.state;
-      if (showStoryListModal) {
-        if (placeName === "hospital") {
-          setShowHospitalModal(true);
-          setModalType("hospital");
-        } else if (placeName === "school") {
-          setShowSchoolModal(true);
-          setModalType("school");
-        } else if (placeName === "mart") {
-          setShowMartModal(true);
-          setModalType("mart");
-        } else if (placeName === "police") {
-          setShowPoliceModal(true);
-          setModalType("police");
-        }
+    if (isPlaceClear) {
+      const { placeName } = location.state;
+
+      if (placeName === "hospital") {
+        setShowHospitalModal(true);
+        setModalType("hospital");
+        dispatch(setIsPlaceClear(false));
+      } else if (placeName === "school") {
+        setShowSchoolModal(true);
+        setModalType("school");
+        dispatch(setIsPlaceClear(false));
+      } else if (placeName === "mart") {
+        setShowMartModal(true);
+        setModalType("mart");
+        dispatch(setIsPlaceClear(false));
+      } else if (placeName === "police") {
+        setShowPoliceModal(true);
+        setModalType("police");
+        dispatch(setIsPlaceClear(false));
       }
     }
   }, [location.state]);

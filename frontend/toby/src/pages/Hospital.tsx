@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { setSceneList } from "../store/slices/hospitalSlice.tsx";
 import { setSchoolQuizClear } from "../store/slices/schoolSlice.tsx";
 import { setHospitalQuizClear } from "../store/slices/hospitalSlice.tsx";
+import { setIsPlaceClear } from "../store/slices/placeSlice.tsx";
 
 import { getSceneList } from "../apis/storyApi.tsx";
 
@@ -174,7 +175,6 @@ const Hospital = () => {
     (state: RootState) => state.hospital.quizClear
   ); // 리덕스 스토어에서 퀴즈 클리어 여부 가져오기
 
-  const [showStoryListModal, setShowStoryListModal] = useState(true); // 스토리 리스트 모달 보이기 여부
   const placeName = "hospital";
 
   useEffect(() => {
@@ -234,8 +234,8 @@ const Hospital = () => {
   };
 
   const handleOnclickFinishBtn = () => {
-    navigate("/main", { state: { showStoryListModal, placeName } });
-    setShowStoryListModal(false);
+    navigate("/main", { state: { placeName } });
+    dispatch(setIsPlaceClear(true));
     dispatch(setHospitalQuizClear(false));
   };
 
