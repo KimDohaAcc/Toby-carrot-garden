@@ -91,7 +91,7 @@ const StoryQuizSchool = ({ index }: StoryQuizProps) => {
           />
         );
       case "EMERGENCY":
-        return <StoryEmergency index={index} />;
+        return <StoryEmergency index={index} place="school" />;
       default:
         return <div>Quiz Type Error!!!</div>;
     }

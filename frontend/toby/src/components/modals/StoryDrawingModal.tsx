@@ -161,12 +161,12 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
         <SignatureCanvas
           ref={signaturePadRef}
           penColor="white"
-          backgroundColor="black"
+          backgroundColor="darkgreen"
           canvasProps={{
             width: canvasSize.width,
             height: canvasSize.height,
             className: "signature-canvas",
-            style: { backgroundColor: "black" }, // 배경을 흰색으로 설정
+            style: { backgroundColor: "darkgreen" }, // 배경을 흰색으로 설정
           }}
           minWidth={5} // 펜 굵기 최소값
           maxWidth={5} // 펜 굵기 최대값

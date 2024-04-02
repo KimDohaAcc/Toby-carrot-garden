@@ -5,6 +5,9 @@ import { RootState } from "../store/store.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { setSceneList } from "../store/slices/schoolSlice.tsx";
+import { setSchoolQuizClear } from "../store/slices/schoolSlice.tsx";
+import { setIsPlaceClear } from "../store/slices/placeSlice.tsx";
+
 import { getSceneList } from "../apis/storyApi.tsx";
 
 import Logo2 from "../components/Logo2";
@@ -13,6 +16,7 @@ import StoryTitle from "../components/placeStory/StoryTitle";
 import StoryContent from "../components/placeStory/StoryContentSchool.tsx";
 import StoryQuiz from "../components/placeStory/StoryQuizSchool.tsx";
 import StoryClear from "../components/placeStory/StoryClearSchool.tsx";
+
 const StoryContainer = styled.div`
   display: flex;
   width: 100%;
@@ -21,7 +25,6 @@ const StoryContainer = styled.div`
   max-height: 100%;
   border: 2px solid black;
 `;
-
 // 로고와 병원 내용을 나누기 위한 컨테이너
 const LogoArea = styled.div`
   position: relative;
@@ -59,20 +62,28 @@ const StoryContentArea2 = styled.div`
   top: 7%;
 `;
 
+const CloseBtnArea = styled.div`
+  grid-area: closeBtn;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border: 1px solid black;
+`;
+
 const CloseBtn = styled.button`
-  position: absolute; 
-  top: calc(35%); 
-  right: calc(20%); 
+  position: absolute;
+  top: calc(35%);
+  right: calc(20%);
   grid-area: closeBtn;
   border-radius: 5px;
   cursor: pointer;
   width: 3vw;
   height: 3vw;
-  box-sizing: border-box;  
+  box-sizing: border-box;
   background-image: url("/Image/button/close.png");
   background-size: 100% 100%;
   background-color: transparent;
-  border: none;  
+  border: none;
 
   &:focus,
   &:hover {
@@ -121,6 +132,7 @@ const Content = styled.div<{ fadeIn: boolean }>`
   opacity: ${({ fadeIn }) => (fadeIn ? 1 : 0)};
   transition: ${({ fadeIn }) => (fadeIn ? "opacity 0.5s ease-in" : "none")};
 `;
+
 interface Quiz {
   quizId: number;
   correctAnswer: string;
@@ -135,10 +147,6 @@ interface SchoolSceneList {
   voice: string;
   quiz?: Quiz;
 }
-// const Image = styled.img`
-//   object-fit: cover;
-//   height: 100%; /* 이미지의 높이를 100%로 설정하여 부모 요소에 맞게 확장 */
-// `;
 
 const School = () => {
   const [scenesList, setScenesList] = useState<SchoolSceneList[]>([]); // 받아온 장면 목록 저장해주는 곳
@@ -149,16 +157,18 @@ const School = () => {
   const [fadeIn, setFadeIn] = useState(false);
 
   const location = useLocation();
-  console.log(location.state);
   const { storyId, title, storyImageUrl } = location.state; // storyId, title, storyImageUrl navigate의 state로 받아오기
-  console.log(storyId, title, storyImageUrl);
   const dispatch = useDispatch(); // 리덕스 디스패치
   const navigate = useNavigate(); // 페이지 이동
 
   const SchoolSceneList = useSelector<RootState, SchoolSceneList[]>( // 리덕스 스토어에서 장면 목록 가져오기
     (state: RootState) => state.school.sceneList // hospital 슬라이스의 sceneList 가져오기
   );
-  console.log(SchoolSceneList);
+  const isQuizClear = useSelector<RootState, boolean>(
+    (state: RootState) => state.school.quizClear
+  ); // 퀴즈 클리어 여부 가져오기
+
+  const placeName = "school"; // 장소 이름
 
   useEffect(() => {
     setFadeIn(true);
@@ -180,12 +190,6 @@ const School = () => {
   }, [dispatch, storyId, sceneIndex]); // storyId, sceneIndex가 바뀔 때마다 실행
   console.log(scenesList);
 
-  // useEffect(() => {
-  //   // Dummy data를 Redux 스토어에 저장
-  //   dispatch(setSceneList(dummyData));
-  //   setSceneType("title");
-  // }, [dispatch]);
-
   const renderSceneContent = () => {
     console.log("sceneType: ", sceneType);
     if (sceneIndex === -1) {
@@ -205,13 +209,24 @@ const School = () => {
   };
 
   const handleOnclickNextBtn = () => {
-    console.log("sceneIndex: ", sceneIndex);
     setFadeIn(false);
     setSceneIndex((prevIndex) => {
       const nextIndex = prevIndex + 1;
       setSceneType(SchoolSceneList[nextIndex].sceneType);
       return nextIndex;
     });
+    dispatch(setSchoolQuizClear(false));
+  };
+
+  const handleOnclickCloseBtn = () => {
+    navigate("/main");
+    dispatch(setSchoolQuizClear(false));
+  };
+
+  const handleOnclickFinishBtn = () => {
+    navigate("/main", { state: { placeName } });
+    dispatch(setIsPlaceClear(true));
+    dispatch(setSchoolQuizClear(false));
   };
 
   return (
@@ -223,11 +238,25 @@ const School = () => {
         <StoryContentArea1>
           <StoryContentArea2>
             <Content fadeIn={fadeIn}>{renderSceneContent()}</Content>
-            <CloseBtn onClick={() => { navigate("/main"); }} />
-            {sceneType === "CLEAR" ? (
+            <CloseBtnArea>
+              <CloseBtn onClick={handleOnclickCloseBtn} />
+            </CloseBtnArea>
+
+            {sceneType === "QUIZ" && !isQuizClear ? (
               <NextBtn2>
                 <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
               </NextBtn2>
+            ) : sceneType === "CLEAR" ? (
+              <NextBtn
+                onClick={() => {
+                  handleOnclickFinishBtn();
+                }}
+              >
+                <img
+                  src="/Image/button/showStoryList.png"
+                  alt="스토리 보기 버튼"
+                />
+              </NextBtn>
             ) : (
               <NextBtn
                 onClick={() => {

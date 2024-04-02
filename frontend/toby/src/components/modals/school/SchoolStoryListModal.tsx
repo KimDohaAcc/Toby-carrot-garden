@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { getStoryList } from "../../../apis/storyApi";
 import { setStoryList } from "../../../store/slices/schoolSlice";
+import { getPlaceId } from "../../../store/slices/placeSlice";
 
 const fadeInAnimation = keyframes`
   from {
@@ -131,6 +132,7 @@ const SchoolStoryListModal = ({ onClose }) => {
         const response = await getStoryList(placeId);
         setStorysList(response);
         dispatch(setStoryList(response));
+        dispatch(getPlaceId(placeId));
         console.log(response);
       } catch (error) {
         console.error(error);
@@ -170,7 +172,7 @@ const SchoolStoryListModal = ({ onClose }) => {
               <StoryImage src={story.storyImageUrl} alt={story.title} />
               <StoryTitle>
                 {story.title.length > 8
-                  ? story.title.slice(0, 5) + "..."
+                  ? story.title.slice(0, 6) + "..."
                   : story.title}
               </StoryTitle>
               <AgeRecommendation>
