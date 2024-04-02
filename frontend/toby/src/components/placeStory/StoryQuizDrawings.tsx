@@ -98,14 +98,17 @@ const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
   width: 3vw;
   height: 3vw;
-  background-image: url(${props => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-image: url(${(props) =>
+    props.isPlaying
+      ? "/Image/button/no-sound.png"
+      : "/Image/button/sound.png"});
   background-size: 100% 100%;
   background-color: transparent;
-  border: none;  
+  border: none;
   &:focus,
   &:hover {
     outline: none;
-    background-color: transparent; 
+    background-color: transparent;
   }
 `;
 
@@ -113,7 +116,6 @@ const AudioArea = styled.div`
   position: absolute;
   margin: calc(2%);
 `;
-
 
 interface Scene {
   sceneId: number;
@@ -139,7 +141,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
     if (place == "hospital") {
       const voice = HospitalSceneList[index].voice;
       setVoiceUrl(voice);
-    } else if(place == "school") {
+    } else if (place == "school") {
       const voice = SchoolSceneList[index].voice;
       setVoiceUrl(voice);
     }
@@ -164,7 +166,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
   const handleAudioEnded = () => {
     setIsPlaying(false);
   };
-  
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -172,14 +174,20 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
   const closeModal = () => {
     setIsModalOpen(false);
     console.log("이미지 판독");
-    submitQuiz(quizId);
+    // submitQuiz(quizId);
   };
 
   return (
     <QuizContainer>
       <AudioArea>
-        <AudioPlayer ref={audioRef} controls autoPlay preload="metadata" hidden
-                     onEnded={handleAudioEnded}>
+        <AudioPlayer
+          ref={audioRef}
+          controls
+          autoPlay
+          preload="metadata"
+          hidden
+          onEnded={handleAudioEnded}
+        >
           <source src={voiceUrl} type="audio/mpeg" />
         </AudioPlayer>
         <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
