@@ -37,62 +37,59 @@ import lombok.RequiredArgsConstructor;
 public class LoggingFilter extends OncePerRequestFilter {
 	protected static final Logger log = LoggerFactory.getLogger(LoggingFilter.class);
 	private final DiscordNotifier discordNotifier;
-	private StringBuffer stringBuffer = new StringBuffer();
-	;
 	private boolean isSwagger = false;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
-		// stringBuilder = new StringBuilder();
-		stringBuffer.setLength(0);
+		StringBuilder stringBuilder = new StringBuilder();
 
-		stringBuffer.append("time: ").append(LocalDateTime.now()).append("\n");
+		stringBuilder.append("time: ").append(LocalDateTime.now()).append("\n");
 
 		MDC.put("traceId", UUID.randomUUID().toString());
-		stringBuffer.append("traceId: ").append(MDC.get("traceId")).append("\n");
+		stringBuilder.append("traceId: ").append(MDC.get("traceId")).append("\n");
 
 		try {
 			if (isAsyncDispatch(request)) {
 				filterChain.doFilter(request, response);
 			} else if (request.getContentType() != null && request.getContentType().contains("multipart/form-data")) {
-				doFilterWrapped(request, new ResponseWrapper(response), filterChain);
+				doFilterWrapped(request, new ResponseWrapper(response), filterChain, stringBuilder);
 			} else {
-				doFilterWrapped(new RequestWrapper(request), new ResponseWrapper(response), filterChain);
+				doFilterWrapped(new RequestWrapper(request), new ResponseWrapper(response), filterChain, stringBuilder);
 			}
 		} catch (Exception ex) {
-			handleException(ex, response);
+			handleException(ex, response, stringBuilder);
 		} finally {
 			MDC.clear();
 		}
 	}
 
 	protected void doFilterWrapped(HttpServletRequest request, ContentCachingResponseWrapper response,
-		FilterChain filterChain) throws ServletException, IOException {
+		FilterChain filterChain, StringBuilder stringBuilder) throws ServletException, IOException {
 		try {
-			logRequest(request);
+			logRequest(request, stringBuilder);
 			if (!isSwagger) {
-				stringBuffer.append("----------------\n");
+				stringBuilder.append("----------------\n");
 				// discordNotifier.notify(stringBuilder.toString());
 				// stringBuilder.setLength(0);
 			}
 			filterChain.doFilter(request, response);
 		} catch (Exception ex) {
-			handleException(ex, response);
+			handleException(ex, response, stringBuilder);
 			throw ex; // Re-throw the exception to propagate it to the outer catch block
 		} finally {
 			// stringBuilder.append("time: ").append(LocalDateTime.now()).append("\n");
 			// stringBuilder.append("traceId: ").append(MDC.get("traceId")).append("\n");
-			logResponse(response);
+			logResponse(response, stringBuilder);
 			if (!isSwagger) {
 
-				discordNotifier.notify(stringBuffer.append("✨========================\n").toString());
+				discordNotifier.notify(stringBuilder.append("✨========================\n").toString());
 			}
 			response.copyBodyToResponse();
 		}
 	}
 
-	private void logMultipartRequest(HttpServletRequest request) throws ServletException, IOException {
+	private void logMultipartRequest(HttpServletRequest request, StringBuilder stringBuilder) throws ServletException, IOException {
 		Collection<Part> parts = request.getParts();
 		StringBuilder multipartPayload = new StringBuilder();
 
@@ -116,13 +113,13 @@ public class LoggingFilter extends OncePerRequestFilter {
 
 		log.info("{} Payload: {}", "Multipart Request", multipartPayload.toString());
 
-		stringBuffer.append("Multipart Request")
+		stringBuilder.append("Multipart Request")
 			.append(" Payload: ****\n")
 			.append(multipartPayload.toString())
 			.append("****\n");
 	}
 
-	private void logRequest(HttpServletRequest request) throws IOException, ServletException {
+	private void logRequest(HttpServletRequest request, StringBuilder stringBuilder) throws IOException, ServletException {
 		String queryString = request.getQueryString();
 		log.info("Request : {} uri=[{}] content-type=[{}]", request.getMethod(),
 			queryString == null ? request.getRequestURI() : request.getRequestURI() + queryString,
@@ -149,55 +146,55 @@ public class LoggingFilter extends OncePerRequestFilter {
 			}
 		}
 
-		stringBuffer.append("Origin: ").append(request.getHeader("Origin")).append("\n");
-		stringBuffer.append(logMessage).append("\n");
+		stringBuilder.append("Origin: ").append(request.getHeader("Origin")).append("\n");
+		stringBuilder.append(logMessage).append("\n");
 
 		if (request.getContentType() != null && request.getContentType().contains("multipart/form-data")) {
-			logMultipartRequest(request);
+			logMultipartRequest(request, stringBuilder);
 		} else {
 
-			logPayload("Request", request.getContentType(), request.getInputStream());
+			logPayload("Request", request.getContentType(), request.getInputStream(), stringBuilder);
 		}
 
 	}
 
-	private void logResponse(ContentCachingResponseWrapper response) throws IOException {
+	private void logResponse(ContentCachingResponseWrapper response, StringBuilder stringBuilder) throws IOException {
 		if (isSwagger) {
 			return;
 		}
 		String logMessage = String.format("Response : %s", response.getStatus());
-		stringBuffer.append(logMessage).append("\n");
-		logPayload("Response", response.getContentType(), response.getContentInputStream());
+		stringBuilder.append(logMessage).append("\n");
+		logPayload("Response", response.getContentType(), response.getContentInputStream(), stringBuilder);
 	}
 
-	private void logPayload(String prefix, String contentType, InputStream inputStream) throws IOException {
+	private void logPayload(String prefix, String contentType, InputStream inputStream, StringBuilder stringBuilder) throws IOException {
 		boolean visible = isVisible(MediaType.valueOf(contentType == null ? "application/json" : contentType));
 		int maxLength = 1900; // 스트링빌더 최대 길이
 
 		if (visible) {
 			byte[] content = StreamUtils.copyToByteArray(inputStream);
-			stringBuffer.append(prefix).append(" Payload:");
+			stringBuilder.append(prefix).append(" Payload:");
 			if (content.length > 0) {
 				String contentString = new String(content);
 				log.info("{} Payload: {}", prefix, contentString);
 				// 현재 스트링빌더에 있는 텍스트의 길이 확인
-				int currentLength = stringBuffer.length();
+				int currentLength = stringBuilder.length();
 				if (currentLength < maxLength) {
 					int remainingLength = maxLength - currentLength; // 남은 길이 계산
 
 					if (contentString.length() <= remainingLength) {
 						// contentString이 남은 길이보다 작거나 같으면 전체 추가
-						stringBuffer.append(contentString).append("\n");
+						stringBuilder.append(contentString).append("\n");
 					} else {
 						// contentString이 남은 길이보다 크면 잘라서 추가
-						stringBuffer.append(contentString, 0, remainingLength).append("\n");
+						stringBuilder.append(contentString, 0, remainingLength).append("\n");
 					}
 				}
 			}
 
 		} else {
 			log.info("{} Payload: Binary Content", prefix);
-			stringBuffer.append(prefix).append(" Payload: Binary Content").append("\n");
+			stringBuilder.append(prefix).append(" Payload: Binary Content").append("\n");
 		}
 	}
 
@@ -208,11 +205,11 @@ public class LoggingFilter extends OncePerRequestFilter {
 		return VISIBLE_TYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
 	}
 
-	private void handleException(Exception ex, HttpServletResponse response) throws IOException {
+	private void handleException(Exception ex, HttpServletResponse response, StringBuilder stringBuilder) throws IOException {
 		log.error("Exception during request processing", ex);
 		ex.printStackTrace();
 		String logMessage = String.format("[ERROR] : %s", ex.getMessage() + "\n\n" + ex.getStackTrace());
-		stringBuffer.append(logMessage).append("\n");
+		stringBuilder.append(logMessage).append("\n");
 		ApiResponse<?> errorResponse = ApiResponse.globalError(HttpStatus.BAD_REQUEST, ex.getMessage());
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonResponse = objectMapper.writeValueAsString(errorResponse);
