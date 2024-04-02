@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import SignatureCanvas from "react-signature-canvas";
 import { submitQuiz, getQuizAnswer } from "../../apis/quizApi";
@@ -84,97 +84,92 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
       formData.append("quizId", quizId.toString());
 
       try {
-        const response = await submitQuiz(formData);
-        if (response.status === 200 && response.data.result.memberQuizId) {
+        // submitQuiz 함수 호출 시 반환된 데이터를 response 변수에 할당
+        const submitResponse = await submitQuiz(formData);
+        // const { status, result } = submitResponse;
+
+        if (
+          submitResponse.status === 200 &&
+          submitResponse.data.result.memberQuizId
+        ) {
           console.log("Quiz submitted successfully");
           console.log(response.data.result.memberQuizId);
-          setModalState("wait");
-          console.log(response);
-          // 여기서 memberQuizId가 성공적으로 정의되었습니다.
-          // const memberQuizId2 = response.data.result.memberQuizId;
+          const memberQuizId = submitResponse.data.result.memberQuizId;
+          console.log(memberQuizId);
+          setModalState("wait"); // 폴링 동안 WaitToby 모달 표시
 
-          checkQuizAnswer({ memberQuizId: response.data.result.memberQuizId });
+          const endTime = Date.now() + 10000; // 10초 후 폴링 종료
+          const intervalId = setInterval(async () => {
+            if (Date.now() > endTime) {
+              clearInterval(intervalId);
+              setModalState("fail"); // 10초 동안 분석 결과를 받지 못하면 FailToby 모달 표시
+              return;
+            }
+
+            // getQuizAnswer 호출 시 submitQuiz에서 받은 memberQuizId를 사용
+            const answerResponse = await getQuizAnswer(memberQuizId);
+            if (
+              answerResponse.status === 200 &&
+              answerResponse.result.score !== -1
+            ) {
+              clearInterval(intervalId);
+              setModalState(
+                answerResponse.result.score === 100 ? "success" : "fail"
+              ); // 점수에 따라 SuccessToby 또는 FailToby 모달 표시
+            }
+          }, 1000);
         } else {
-          console.error("Quiz submission failed");
-          // memberQuizId 관련된 로그 라인은 이곳에 있으면 안 됩니다.
-          setModalState("fail");
+          console.error("Quiz submission failed", submitResponse.message);
+          setModalState("fail"); // 제출 실패 시 FailToby 모달 표시
         }
       } catch (error) {
-        console.error("Quiz submission error", error);
-        setModalState("fail");
+        console.error("이미지 전송 실패", error);
+        setModalState("fail"); // 전송 실패 시 FailToby 모달 표시
       }
-    } //여기가 함수까지
+    }
   };
 
-  const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
-    let attempts = 0;
-    const maxAttempts = 10;
-
-    const interval = setInterval(async () => {
-      try {
-        const answerResponse = await getQuizAnswer({
-          memberQuizId,
-        });
-
-        if (answerResponse.status === 200) {
-          clearInterval(interval); // Stop polling on success
-          setModalState(
-            answerResponse.result.score === 100 ? "success" : "fail"
-          );
-        } else {
-          console.error("Failed to get quiz answer");
-          setModalState("fail");
-        }
-      } catch (error) {
-        console.error("Error fetching quiz answer", error);
-        // Optionally, handle retry logic or stop on certain errors
-      }
-
-      attempts++;
-      if (attempts >= maxAttempts) {
-        clearInterval(interval); // Stop polling after max attempts
-        console.error("Max polling attempts reached, stopping.");
-        setModalState("fail"); // Considered fail after max attempts without success
-      }
-    }, 1000); // Poll every second
-  }, []);
-
+  // 모달 상태가 변경될 때마다 실행되는 useEffect
   useEffect(() => {
-    if (modalState !== "wait" && modalState !== "none") {
-      const timeout = setTimeout(() => setModalState("none"), 2000);
-      return () => clearTimeout(timeout);
+    let timer;
+    if (["success", "fail"].includes(modalState)) {
+      timer = setTimeout(() => {
+        setModalState("none"); // SuccessToby 또는 FailToby 모달을 2초 후 자동으로 닫음
+        onClose(); // 모달 닫기 콜백 함수 호출
+      }, 2000);
     }
-  }, [modalState]);
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 제거
+  }, [modalState, onClose]);
+
+  if (!isOpen) return null;
 
   return (
-    <>
-      <StoryDrawingModalContainer>
-        <ModalArea ref={modalRef}>
-          <SignatureCanvas
-            ref={signaturePadRef}
-            penColor="black"
-            canvasProps={{
-              width: canvasSize.width,
-              height: canvasSize.height,
-              className: "signature-canvas",
-              style: { backgroundColor: "white" }, // 배경을 흰색으로 설정
-            }}
-            minWidth={5} // 펜 굵기 최소값
-            maxWidth={5} // 펜 굵기 최대값
-          />
-        </ModalArea>
-        <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
-        {modalState === "wait" && (
-          <WaitToby onClose={() => setModalState("none")} />
-        )}
-        {modalState === "success" && (
-          <SuccessToby onClose={() => setModalState("none")} />
-        )}
-        {modalState === "fail" && (
-          <FailToby onClose={() => setModalState("none")} />
-        )}
-      </StoryDrawingModalContainer>
-    </>
+    <StoryDrawingModalContainer>
+      <ModalArea ref={modalRef}>
+        <SignatureCanvas
+          ref={signaturePadRef}
+          penColor="black"
+          canvasProps={{
+            width: canvasSize.width,
+            height: canvasSize.height,
+            className: "signature-canvas",
+            style: { backgroundColor: "white" }, // 배경을 흰색으로 설정
+          }}
+          minWidth={5} // 펜 굵기 최소값
+          maxWidth={5} // 펜 굵기 최대값
+        />
+      </ModalArea>
+      <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
+      {modalState === "wait" && (
+        <WaitToby onClose={() => setModalState("none")} />
+      )}
+      {modalState === "success" && (
+        <SuccessToby onClose={() => setModalState("none")} />
+      )}
+      {modalState === "fail" && (
+        <FailToby onClose={() => setModalState("none")} />
+      )}
+    </StoryDrawingModalContainer>
   );
 };
 
