@@ -8,14 +8,9 @@ import WaitToby from "./WaitToby";
 import FailToby from "./FailToby";
 import SuccessToby from "./SuccessToby";
 
-<<<<<<< HEAD
-=======
 import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
 
-import { useDispatch } from "react-redux";
-
->>>>>>> develop-fe
 const StoryDrawingModalContainer = styled.div`
   display: flex;
   position: absolute;
@@ -44,13 +39,8 @@ const CloseBtn = styled.button`
   background-size: cover;
   border: none;
 `;
-<<<<<<< HEAD
-const StoryDrawingModal = ({ isOpen, onClose, quizId }) => {
-  const dispatch = useDispatch();
-=======
-
 const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
->>>>>>> develop-fe
+  const dispatch = useDispatch();
   const signaturePadRef = useRef(null);
   const modalRef = useRef(null);
   const [isPolling, setIsPolling] = useState(false);
@@ -94,15 +84,15 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
       if (response.status === 200 && response.data.result.memberQuizId) {
         setModalState("wait");
         pollQuizAnswer(response.data.result.memberQuizId, 0);
-        // if (place === "school") {
-        //   dispatch(setSchoolQuizClear(true));
-        // } else if (place === "hospital") {
-        //   dispatch(setHospitalQuizClear(true));
-        // } else if (quizId === 3) {
-        //   console.log("placeId 3");
-        // } else if (quizId === 4) {
-        //   console.log("placeId 4");
-        // }
+        if (place === "school") {
+          dispatch(setSchoolQuizClear(true));
+        } else if (place === "hospital") {
+          dispatch(setHospitalQuizClear(true));
+        } else if (quizId === 3) {
+          console.log("placeId 3");
+        } else if (quizId === 4) {
+          console.log("placeId 4");
+        }
       } else {
         setModalState("fail");
       }
