@@ -280,7 +280,7 @@ const MainPage = () => {
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [muteImage, setMuteImage] = useState("/Image/button/no-sound.png");
-
+  
   useEffect(() => {
     // 컴포넌트 마운트 시 getUserStorage를 호출하여 사용자 이름 가져오기
     const userInfo = getUserStorage();
@@ -348,9 +348,28 @@ const MainPage = () => {
     }
   };
 
-  const playAudio = (audioFilePath) => {
-    const audio = new Audio(audioFilePath);
-    audio.play();
+  // const playAudio = (audioFilePath) => {
+  //   const audio = new Audio(audioFilePath);
+  //   audio.play();
+  // };
+
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const playAudio = (audioId) => {
+    const audio = document.getElementById(audioId);
+    if (audio) {
+      audio.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const stopAudio = (audioId) => {
+    const audio = document.getElementById(audioId);
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      setIsPlaying(false);
+    }
   };
 
   return (
@@ -365,16 +384,24 @@ const MainPage = () => {
               src="\Image\village\reportImage.png"
               alt="report"
               onClick={() => handleAreaClick("/report")}
-              onMouseEnter={() => playAudio("/Sound/mainPage/report.mp3")}
+              onMouseEnter={() => playAudio("report")}
+              onMouseLeave={() => stopAudio("report")}
             />
+            <audio id="report" controls hidden>
+              <source src="/Sound/mainPage/report.mp3" type="audio/mpeg" />
+            </audio>
           </ReportArea>
           <MartArea>
             <MartImage
               src="\Image\village\martImage.png"
               alt="mart"
               onClick={() => handleAreaClick("/mart")}
-              onMouseEnter={() => playAudio("/Sound/mainPage/mart.mp3")}
+              onMouseEnter={() => playAudio("mart")}
+              onMouseLeave={() => stopAudio("mart")}
             />
+            <audio id="mart" controls hidden>
+              <source src="/Sound/mainPage/mart.mp3" type="audio/mpeg" />
+            </audio>
           </MartArea>
         </Area1>
         <Area2>
@@ -383,16 +410,24 @@ const MainPage = () => {
               src="\Image\village\schoolImage.png"
               alt="school"
               onClick={() => handleAreaClick("/school")}
-              onMouseEnter={() => playAudio("/Sound/mainPage/school.mp3")}
+              onMouseEnter={() => playAudio("school")}
+              onMouseLeave={() => stopAudio("school")}
             />
+            <audio id="school" controls hidden>
+              <source src="/Sound/mainPage/school.mp3" type="audio/mpeg" />
+            </audio>
           </SchoolArea>
           <MypageArea>
             <MyPageImage
               src="\Image\village\mypageImage.png"
               alt="mypage"
               onClick={() => handleAreaClick("/mypage")}
-              onMouseEnter={() => playAudio("/Sound/mainPage/mypage.mp3")}
+              onMouseEnter={() => playAudio("mypage")}
+              onMouseLeave={() => stopAudio("mypage")}
             />
+            <audio id="mypage" controls hidden>
+              <source src="/Sound/mainPage/mypage.mp3" type="audio/mpeg" />
+            </audio>
           </MypageArea>
         </Area2>
         <Area3>
@@ -401,16 +436,24 @@ const MainPage = () => {
               src="\Image\village\hospitalImage.png"
               alt="hospital"
               onClick={() => handleAreaClick("/hospital")}
-              onMouseEnter={() => playAudio("/Sound/mainPage/hospital.mp3")}
+              onMouseEnter={() => playAudio("hospital")}
+              onMouseLeave={() => stopAudio("hospital")}
             />
+            <audio id="hospital" controls hidden>
+              <source src="/Sound/mainPage/hospital.mp3" type="audio/mpeg" />
+            </audio>
           </HospitalArea>
           <PoliceArea>
             <PoliceImage
               src="\Image\village\policeImage.png"
               alt="police"
               onClick={() => handleAreaClick("/police")}
-              onMouseEnter={() => playAudio("/Sound/mainPage/police.mp3")}
+              onMouseEnter={() => playAudio("police")}
+              onMouseLeave={() => stopAudio("police")}
             />
+            <audio id="police" controls hidden>
+              <source src="/Sound/mainPage/police.mp3" type="audio/mpeg" />
+            </audio>
           </PoliceArea>
         </Area3>
         <Area4>
