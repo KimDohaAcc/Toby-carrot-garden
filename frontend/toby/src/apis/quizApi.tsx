@@ -1,5 +1,7 @@
 import { api } from "../config/apiConfig";
 
+import { tempToken } from "../config/apiConfig";
+
 // 클라이언트에서 사진과 퀴즈 아이디 전달
 // s3에 사진을 저장
 // 퀴즈 아이디로 정답과 타입 조회
@@ -71,18 +73,20 @@ export const submitQuiz2 = async (formData) => {
 };
 
 //아이가 풀었던 퀴즈 정답
-export const getQuizAnswer = async ({ quizId }) => {
+export const getQuizAnswer = async ({ memberQuizId }) => {
   console.log("여기가ㅓ지 옴");
+  console.log(memberQuizId);
+  console.log(`quiz/${memberQuizId}/result`);
 
   try {
     // `headers`를 포함하는 옵션 객체를 `get` 메소드의 두 번째 인자로 전달합니다.
     // const response = await api.get(`quiz/${quizId}/result`, {
-    const response = await api.get(`quiz/${member_quiz_id}/result`, {
+    const response = await api.get(`quiz/${memberQuizId}/result`, {
       // headers: {
       //   Authorization: `Bearer ${tempToken}`, // `tempToken`은 유효한 토큰 문자열이어야 합니다.
       // },
     });
-    console.log(member_quiz_id);
+    console.log(memberQuizId);
     // const response = await api.get(`quiz/${quizId}/result`);
     return response.data;
   } catch (error) {
