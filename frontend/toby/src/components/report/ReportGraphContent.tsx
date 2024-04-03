@@ -31,11 +31,10 @@ const MyResponsiveBar = () => {
   const [data, setData] = useState(initialData);
   const [fontSize, setFontSize] = useState(18); // 초기 폰트 크기 설정
 
-  // 뷰포트 크기에 따라 폰트 크기 변경
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      // 뷰포트 너비가 768px 미만이면 폰트 크기를 20으로 설정
+
       if (width < 768) {
         setFontSize(10);
       } else {
@@ -85,7 +84,7 @@ const MyResponsiveBar = () => {
         padding={0.1}
         groupMode="grouped"
         layout="horizontal"
-        colors={['#FFDCDC', '#FF8F8F', '#BCB4B4']}
+        colors={["#FFDCDC", "#FF8F8F", "#BCB4B4"]}
         borderColor={{ from: "color", modifiers: [["darker", 1.8]] }}
         axisTop={null}
         axisRight={null}
@@ -152,7 +151,7 @@ const MyResponsiveBar = () => {
           },
           labels: {
             text: {
-              fontSize: fontSize-3, // 막대 내부 레이블의 글자 크기 조정
+              fontSize: fontSize - 3, // 막대 내부 레이블의 글자 크기 조정
             },
           },
         }}
