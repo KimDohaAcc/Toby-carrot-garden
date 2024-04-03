@@ -14,19 +14,19 @@ import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
 import { setMartQuizClear } from "../../store/slices/martSlice";
 import { setPoliceQuizClear } from "../../store/slices/policeSlice";
+import { s } from "vite/dist/node/types.d-AKzkD8vd";
 
 const BlackBoard = styled.div`
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-image: url("/Image/modal/칠판.png");
-  background-size: contain;
-  background-repeat: no-repeat; /* 이미지 반복 없이 설정 */
-  background-position: center; /* 이미지를 가운데 정렬 */
-  width: 90%;
-  height: 90%;
+  justify-content: center;
+  align-items: center;
+
+  width: 70%;
+  height: 70%;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   z-index: 100;
 `;
@@ -34,27 +34,103 @@ const BlackBoard = styled.div`
 const StoryDrawingModalContainer = styled.div`
   display: flex;
   position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  height: 24vw;
-  background-color: rgb(15, 65, 0);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 0;
+  padding-top: calc(100% / (5 / 3)); /* 5:3의 비율을 유지하도록 높이 설정 */
+  max-width: 100vw; /* 최대 너비 설정 */
+  background-image: url("/Image/modal/칠판.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const ModalArea = styled.div`
   display: flex;
-  flex: 1;
+  position: absolute;
+  justify-content: center;
+  top: 5%;
+  width: 90%;
+  height: 90%;
+`;
+
+const ButtonArea = styled.div`
+  position: absolute;
+  display: flex;
+  width: auto;
+  height: 10%;
+  bottom: 3%;
+  left: 3%;
 `;
 
 const CloseBtn = styled.button`
-  position: absolute;
-  top: 5px;
-  right: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   /* background-image: url("경로/이미지.png"); */
-  background-size: cover;
   border: none;
+  border-radius: 20px;
+  font-size: 3em;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
+
+const RetryBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-image: url("경로/이미지.png"); */
+  border: none;
+  border-radius: 20px;
+  font-size: 3em;
+  margin-right: 10px;
+  cursor: url("/Image/cursor/hover.png"), pointer;
+`;
+
+const CloseBoardBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-image: url("경로/이미지.png"); */
+  border: none;
+  border-radius: 20px;
+  font-size: 3em;
+  cursor: url("/Image/cursor/hover.png"), pointer;
+`;
+
+const FinDrawModalContainer = styled.div`
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+`;
+
+const FinDrawModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 50%;
+  background: white;
+  border-radius: 20px;
+`;
+
+const ModalCloseBtn = styled.div`
+  width: 40%;
+  height: 10%;
+  font-size: 3em;
+  text-align: center;
+  cursor: url("/Image/cursor/hover.png"), pointer;
+`;
+
 const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   const dispatch = useDispatch();
   const signaturePadRef = useRef(null);
@@ -65,6 +141,12 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   const [modalState, setModalState] = useState<
     "none" | "wait" | "success" | "fail"
   >("none");
+
+  const [showFinDrawModal, setShowFinDrawModal] = useState(false);
+
+  const handleRetryDrawing = useCallback(() => {
+    signaturePadRef.current.clear();
+  }, []);
 
   useEffect(() => {
     function updateCanvasSize() {
@@ -83,13 +165,8 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   }, [isOpen]);
 
   const handleSaveDrawing = useCallback(async () => {
-    // const canvas = signaturePadRef.current.getCanvas();
-    // console.log(canvas);
-    // const context = canvas.getContext("2d");
-    // console.log(context);
-    // context.fillStyle = "white";
-    // context.fillRect(0, 0, canvas.width, canvas.height);
     if (isSubmitting || isPolling || !isOpen) return; // 제출 중, 폴링 중, 모달 닫힘 상태 체크
+
     setIsSubmitting(true); // 제출 시작// To prevent multiple submissions
     const canvas = signaturePadRef.current.getCanvas();
 
@@ -122,8 +199,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
     } catch (error) {
       setModalState("fail");
     }
-    setIsSubmitting(false); // 제출 완료
-  }, [isSubmitting, isPolling, isOpen, quizId]);
+  }, [isSubmitting, isPolling, isOpen, quizId, place, dispatch]);
   const place_id = useSelector<RootState, number>(
     (state: RootState) => state.place.placeId
   );
@@ -182,6 +258,19 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   }, [modalState, onClose]);
 
   if (!isOpen) return null;
+
+  const checkIsEmpty = () => {
+    if (signaturePadRef.current.isEmpty()) {
+      console.log("비어 있습니다.");
+      console.log(signaturePadRef.current.isEmpty());
+      setShowFinDrawModal(true);
+    } else {
+      console.log("비어 있지 않습니다.");
+      console.log(signaturePadRef.current.isEmpty());
+      handleSaveDrawing();
+    }
+  };
+
   return (
     <BlackBoard>
       <StoryDrawingModalContainer>
@@ -189,18 +278,32 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
           <SignatureCanvas
             ref={signaturePadRef}
             penColor="white"
-            backgroundColor="black"
+            backgroundColor="transparent"
             canvasProps={{
               width: canvasSize.width,
               height: canvasSize.height,
               className: "signature-canvas",
-              style: { backgroundColor: "rgb(15, 65, 0)" }, // 배경을 흰색으로 설정
             }}
             minWidth={5} // 펜 굵기 최소값
             maxWidth={5} // 펜 굵기 최대값
           />
         </ModalArea>
-        <CloseBtn onClick={handleSaveDrawing}>다 그렸어요</CloseBtn>
+        <ButtonArea>
+          <CloseBtn onClick={checkIsEmpty}>다 그렸어요</CloseBtn>
+          <RetryBtn onClick={handleRetryDrawing}>다시 그리기</RetryBtn>
+          <CloseBoardBtn onClick={onClose}>닫기</CloseBoardBtn>
+        </ButtonArea>
+        {showFinDrawModal && (
+          <FinDrawModalContainer>
+            <FinDrawModal>
+              <p style={{ fontSize: "5em" }}>그림을 그려주세요!</p>
+              <ModalCloseBtn onClick={() => setShowFinDrawModal(false)}>
+                확인
+              </ModalCloseBtn>
+            </FinDrawModal>
+          </FinDrawModalContainer>
+        )}
+
         {modalState === "wait" && <WaitToby />}
         {modalState === "success" && (
           <SuccessToby onClose={() => setModalState("none")} />
