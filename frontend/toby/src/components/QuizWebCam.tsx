@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 
 import { setSchoolQuizClear } from "../store/slices/schoolSlice";
 import { setHospitalQuizClear } from "../store/slices/hospitalSlice";
+import { setMartQuizClear } from "../store/slices/martSlice";
+import { setPoliceQuizClear } from "../store/slices/policeSlice";
 
 const base64ToMultipartFile = (base64String, fileName) => {
   const byteString = atob(base64String.split(",")[1]);
@@ -86,7 +88,7 @@ const QuizWebCam = ({ quizId, place }) => {
   };
 
   const submit = async () => {
-    setSubmitQuizState(true)
+    setSubmitQuizState(true);
 
     if (!imageSrc) {
       console.error("No image to submit");
@@ -105,13 +107,11 @@ const QuizWebCam = ({ quizId, place }) => {
         console.log(response.data.result.memberQuizId);
         setModalState("wait");
         console.log(response);
-        // 여기서 memberQuizId가 성공적으로 정의되었습니다.
-        // const memberQuizId2 = response.data.result.memberQuizId;
 
         checkQuizAnswer({ memberQuizId: response.data.result.memberQuizId });
       } else {
         console.error("Quiz submission failed");
-        // memberQuizId 관련된 로그 라인은 이곳에 있으면 안 됩니다.
+
         setModalState("fail");
       }
       if (place === "school") {
@@ -119,15 +119,15 @@ const QuizWebCam = ({ quizId, place }) => {
       } else if (place === "hospital") {
         dispatch(setHospitalQuizClear(true));
       } else if (place === "mart") {
-        console.log("placeId 3");
+        dispatch(setMartQuizClear(true));
       } else if (place === "police") {
-        console.log("placeId 4");
+        dispatch(setPoliceQuizClear(true));
       }
     } catch (error) {
       console.error("Quiz submission error", error);
       setModalState("fail");
     }
-  }; //여기까지 submit
+  };
 
   const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
     let attempts = 0;
@@ -140,7 +140,7 @@ const QuizWebCam = ({ quizId, place }) => {
         });
 
         if (answerResponse.status === 200) {
-          clearInterval(interval); // Stop polling on success
+          clearInterval(interval);
           setModalState(
             answerResponse.result.score === 100 ? "success" : "fail"
           );
@@ -150,16 +150,15 @@ const QuizWebCam = ({ quizId, place }) => {
         }
       } catch (error) {
         console.error("Error fetching quiz answer", error);
-        // Optionally, handle retry logic or stop on certain errors
       }
 
       attempts++;
       if (attempts >= maxAttempts) {
-        clearInterval(interval); // Stop polling after max attempts
+        clearInterval(interval);
         console.error("Max polling attempts reached, stopping.");
-        setModalState("fail"); // Considered fail after max attempts without success
+        setModalState("fail");
       }
-    }, 1000); // Poll every second
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -196,7 +195,11 @@ const QuizWebCam = ({ quizId, place }) => {
             >
               다시찍기
             </button>
-            <button style={{ width: "100%", height: "50%" }} onClick={submit} disabled={submitQuizState}>
+            <button
+              style={{ width: "100%", height: "50%" }}
+              onClick={submit}
+              disabled={submitQuizState}
+            >
               제출하기
             </button>
           </ButtonArea>

@@ -113,23 +113,24 @@ interface Scene {
 const StoryQuizEmotions = ({ imageUrl, quizId, content, index, place }) => {
   const [voiceUrl, setVoiceUrl] = React.useState<string>("");
 
-  const HospitalSceneList = useSelector<RootState, Scene[]>(
-    (state: RootState) => state.hospital.sceneList
-  );
-  const SchoolSceneList = useSelector<RootState, Scene[]>(
-    (state: RootState) => state.school.sceneList
-  );
-  useEffect(() => {
-    console.log(place);
-
-    if (place == "hospital") {
-      const voice = HospitalSceneList[index].voice;
-      setVoiceUrl(voice);
-    } else if (place == "school") {
-      const voice = SchoolSceneList[index].voice;
-      setVoiceUrl(voice);
+  const sceneList = useSelector<RootState, Scene[]>((state: RootState) => {
+    if (place === "hospital") {
+      return state.hospital.sceneList;
+    } else if (place === "school") {
+      return state.school.sceneList;
+    } else if (place === "mart") {
+      return state.mart.sceneList;
+    } else if (place === "police") {
+      return state.police.sceneList;
+    } else {
+      return [];
     }
-  }, [index, place, HospitalSceneList, SchoolSceneList]);
+  });
+
+  useEffect(() => {
+    const voice = sceneList[index].voice;
+    setVoiceUrl(voice);
+  }, [index, place, sceneList]);
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);

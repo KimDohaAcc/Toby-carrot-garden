@@ -7,6 +7,8 @@ import { postClearImage } from "../apis/clearApi";
 
 import { setHospitalQuizClear } from "../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../store/slices/schoolSlice";
+import { setMartQuizClear } from "../store/slices/martSlice";
+import { setPoliceQuizClear } from "../store/slices/policeSlice";
 
 const base64ToMultipartFile = (
   base64String: string,
@@ -73,7 +75,6 @@ const QuizWebCam = ({ placeId }) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [submitQuizState, setSubmitQuizState] = useState(false);
 
-
   const dispatch = useDispatch();
 
   const capture = useCallback(() => {
@@ -116,9 +117,9 @@ const QuizWebCam = ({ placeId }) => {
         } else if (placeId === 1) {
           dispatch(setSchoolQuizClear(true));
         } else if (placeId === 3) {
-          console.log("placeId 3");
+          dispatch(setMartQuizClear(true));
         } else if (placeId === 4) {
-          console.log("placeId 4");
+          dispatch(setPoliceQuizClear(true));
         }
       })
       .catch((error) => {
@@ -144,7 +145,11 @@ const QuizWebCam = ({ placeId }) => {
             >
               다시찍기
             </button>
-            <button style={{ width: "100%", height: "50%" }} onClick={submit} disabled={submitQuizState}>
+            <button
+              style={{ width: "100%", height: "50%" }}
+              onClick={submit}
+              disabled={submitQuizState}
+            >
               제출하기
             </button>
           </ButtonArea>

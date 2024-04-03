@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import ProtectedRoutes from "./config/ProtectedRoutes";
@@ -35,7 +35,24 @@ const BackgroundContainer = styled.div`
 `;
 
 function App() {
+  const windowRef = React.useRef(window);
+
   applyFixedTheme();
+
+  useEffect(() => {
+    const windowObj = windowRef.current;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+        e.preventDefault();
+        alert("개발자 도구 사용이 제한됩니다.");
+      }
+    };
+    windowObj.addEventListener("keydown", handleKeyDown);
+    return () => {
+      windowObj.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <BackgroundContainer>

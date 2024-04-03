@@ -127,25 +127,27 @@ interface Scene {
 
 const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [voiceUrl, setVoiceUrl] = React.useState<string>("");
 
-  const HospitalSceneList = useSelector<RootState, Scene[]>(
-    (state: RootState) => state.hospital.sceneList
-  );
-  const SchoolSceneList = useSelector<RootState, Scene[]>(
-    (state: RootState) => state.school.sceneList
-  );
-  useEffect(() => {
-    console.log(place);
-    if (place == "hospital") {
-      const voice = HospitalSceneList[index].voice;
-      setVoiceUrl(voice);
-    } else if (place == "school") {
-      const voice = SchoolSceneList[index].voice;
-      setVoiceUrl(voice);
+  const sceneList = useSelector<RootState, Scene[]>((state: RootState) => {
+    if (place === "hospital") {
+      return state.hospital.sceneList;
+    } else if (place === "school") {
+      return state.school.sceneList;
+    } else if (place === "mart") {
+      return state.mart.sceneList;
+    } else if (place === "police") {
+      return state.police.sceneList;
+    } else {
+      return [];
     }
-  }, [index, place, HospitalSceneList, SchoolSceneList]);
+  });
+
+  useEffect(() => {
+    const voice = sceneList[index].voice;
+    setVoiceUrl(voice);
+  }, [index, place, sceneList]);
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -166,7 +168,12 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
   const handleAudioEnded = () => {
     setIsPlaying(false);
   };
-
+  const handleCanvasClick = () => {
+    if (!isSubmitted) {
+      // 제출 상태가 아닐 때만 모달을 열 수 있도록 조건 추가
+      openModal();
+    }
+  };
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -174,7 +181,8 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
   const closeModal = () => {
     setIsModalOpen(false);
     console.log("이미지 판독");
-    // submitQuiz(quizId);
+
+    setIsSubmitted(true);
   };
 
   return (
@@ -205,9 +213,11 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
         <CanvasImg
           src="/Image/common/캔버스.png"
           alt="canvas"
-          onClick={openModal}
+          onClick={handleCanvasClick}
         />
-        <ClickText onClick={openModal}>클릭 하세요</ClickText>
+        {isSubmitted ? null : (
+          <ClickText onClick={handleCanvasClick}>클릭 하세요</ClickText>
+        )}
       </QuizCanvasArea>
       <StoryDrawingModal
         isOpen={isModalOpen}
