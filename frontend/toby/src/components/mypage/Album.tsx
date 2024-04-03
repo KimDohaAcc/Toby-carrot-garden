@@ -303,7 +303,20 @@ const Album = () => {
     };
     fetchData();
   }, []);
-
+  const getBackgroundImageUrl = (placeId) => {
+    switch (placeId) {
+      case 1:
+        return "/Image/album/schoolFrame.png";
+      case 2:
+        return "/Image/album/hospitalFrame.png";
+      case 3:
+        return "/Image/album/martFrame.png";
+      case 4:
+        return "/Image/album/policeFrame.png";
+      default:
+        return ""; // Default background image or empty string
+    }
+  };
   // useEffect(() => {
   //   // 이미지 리스트를 더미 데이터로 설정
   //   setImageList(dummyImageList);
@@ -371,7 +384,11 @@ const Album = () => {
         </NoImageArea>
       ) : (
         <AlbumArea
-          bgImage={backgroundImages[presentImagePlaceId] || backgroundImages[1]}
+          style={{
+            backgroundImage: `url(${getBackgroundImageUrl(
+              imageList[presentImageIndex]?.placeId
+            )})`,
+          }}
         >
           <ImageArea>
             <ImageWrapper>
