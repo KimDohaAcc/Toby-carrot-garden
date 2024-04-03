@@ -39,43 +39,45 @@ function App() {
 
   applyFixedTheme();
 
-  useEffect(() => {
-    const windowObj = windowRef.current;
+  // useEffect(() => {
+  //   const windowObj = windowRef.current;
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
-        e.preventDefault();
-        alert("개발자 도구 사용이 제한됩니다.");
-      }
-    };
-    windowObj.addEventListener("keydown", handleKeyDown);
-    return () => {
-      windowObj.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+  //   const handleKeyDown = (e: KeyboardEvent) => {
+  //     if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+  //       e.preventDefault();
+  //       alert("개발자 도구 사용이 제한됩니다.");
+  //     }
+  //   };
+  //   windowObj.addEventListener("keydown", handleKeyDown);
+  //   return () => {
+  //     windowObj.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
 
   return (
-    <BackgroundContainer>
-      <Routes>
-        <Route path="/" element={<StartPage />} />
-        <Route path="auth" element={<AuthPage />} />
-        <Route path="kakaoSignup" element={<KakaoSignup />} />
-        <Route path="kakaoLogin" element={<KakaoLogin />} />
-        <Route path="signplus" element={<UserInfoForm />} />
-        <Route path="privacyConsentForm" element={<PrivacyConsentForm />} />
-        <Route element={<ProtectedRoutes />}>
-          <Route path="main" element={<MainPage />} />
-          <Route path="school/*" element={<School />} />
-          <Route path="hospital/*" element={<Hospital />} />
-          <Route path="police/*" element={<PoliceOffice />} />
-          <Route path="mypage" element={<Mypage />} />
-          <Route path="mart/*" element={<Mart />} />
-          <Route path="report" element={<Report />} />
-          <Route path="example" element={<Example />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BackgroundContainer>
+    <>
+      <BackgroundContainer>
+        <Routes>
+          <Route path="/" element={<StartPage />} />
+          <Route path="auth" element={<AuthPage />} />
+          <Route path="kakaoSignup" element={<KakaoSignup />} />
+          <Route path="kakaoLogin" element={<KakaoLogin />} />
+          <Route path="signplus" element={<UserInfoForm />} />
+          <Route path="privacyConsentForm" element={<PrivacyConsentForm />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="main" element={<MainPage />} />
+            <Route path="school/*" element={<School />} />
+            <Route path="hospital/*" element={<Hospital />} />
+            <Route path="police/*" element={<PoliceOffice />} />
+            <Route path="mypage" element={<Mypage />} />
+            <Route path="mart/*" element={<Mart />} />
+            <Route path="report" element={<Report />} />
+            <Route path="example" element={<Example />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </BackgroundContainer>
+    </>
   );
 }
 
