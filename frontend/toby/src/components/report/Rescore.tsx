@@ -50,7 +50,7 @@ const RecoreContentContainer2 = styled.div`
 
 const RecoreScrollArea = styled.div`
   overflow-y: auto;
-  overflow-x: hidden; 
+  overflow-x: hidden;
   flex: 0 0 90%;
   width: 100%;
   height: 100%;
@@ -102,7 +102,6 @@ const RecoreButtonContainer = styled.div`
   height: 100%;
   flex: 0 0 10%;
   position: relative;
-  
 `;
 const RecoreButton = styled.img`
   width: auto;
@@ -115,13 +114,12 @@ const RecoreButton = styled.img`
 const RecoreBox = styled.div`
   display: flex;
   justify-content: center;
-  height: auto;
-  width: 100%;
-  flex: 0 0 40%;
+  height: 80%;
+  width: 80%;
+  flex: 0 0 30%;
   object-fit: contain;
   padding: 5%;
-  border-bottom: 2px solid #e7d55c;
-
+  border-bottom: 10px solid #e7d55c;
 `;
 
 const RecoreBoxImage = styled.img`
@@ -147,7 +145,7 @@ const RecoreBoxAnswerText = styled.div`
   width: 100%;
   height: auto;
   flex: 0 0 25%;
-  font-size: 3vw;
+  font-size: 2.5vw;
   margin: 5%;
 `;
 const RecoreBoxAnswerCheck = styled.div`
@@ -327,7 +325,7 @@ const RecoreContent = () => {
                 <RecoreBoxAnswer>
                   <RecoreBoxAnswerText>
                     <div>
-                      <strong>{quiz.correctAnswer}</strong>
+                      <strong>정답 : {quiz.correctAnswer}</strong>
                     </div>
                   </RecoreBoxAnswerText>
                   <RecoreBoxAnswerCheck>
