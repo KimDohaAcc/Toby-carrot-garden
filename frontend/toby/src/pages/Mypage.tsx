@@ -46,10 +46,7 @@ const Text1 = styled.h1`
   line-height: 60%;
   font-size: clamp(50px, 2vw, 70px);
 `;
-const Text2 = styled.h2`
-  line-height: 60%;
-  font-size: 40px;
-`;
+
 const Mypage = () => {
   return (
     <>
