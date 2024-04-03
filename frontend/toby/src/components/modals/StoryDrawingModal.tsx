@@ -57,7 +57,7 @@ const ModalArea = styled.div`
 const ButtonArea = styled.div`
   position: absolute;
   display: flex;
-  width: auto;
+  width: 40%;
   height: 10%;
   bottom: 3%;
   left: 3%;
@@ -68,10 +68,12 @@ const CloseBtn = styled.button`
   justify-content: center;
   align-items: center;
   background-image: url(/Image/button/다그렸어요.png);
-
-  width: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 90%;
   height: 100%;
   border: none;
+  margin-right: 10px;
   border-radius: 20px;
   cursor: url("/Image/cursor/hover.png"), pointer;
 `;
@@ -80,10 +82,13 @@ const RetryBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-image: url("경로/이미지.png"); */
+  background-image: url(/Image/button/다시그리기.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 90%;
+  height: 100%;
   border: none;
   border-radius: 20px;
-  font-size: 3em;
   margin-right: 10px;
   cursor: url("/Image/cursor/hover.png"), pointer;
 `;
@@ -92,10 +97,13 @@ const CloseBoardBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-image: url("경로/이미지.png"); */
+  background-image: url(/Image/button/닫기.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 80%;
+  height: 100%;
   border: none;
   border-radius: 20px;
-  font-size: 3em;
   cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
@@ -107,8 +115,8 @@ const FinDrawModalContainer = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   z-index: 100;
 `;
@@ -156,6 +164,9 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
 
   const handleRetryDrawing = useCallback(() => {
     signaturePadRef.current.clear();
+    setIsPolling(false);
+    setIsSubmitting(false);
+    setModalState("none");
   }, []);
 
   useEffect(() => {
@@ -300,8 +311,8 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
         </ModalArea>
         <ButtonArea>
           <CloseBtn onClick={checkIsEmpty}></CloseBtn>
-          <RetryBtn onClick={handleRetryDrawing}>다시 그리기</RetryBtn>
-          <CloseBoardBtn onClick={onClose}>닫기</CloseBoardBtn>
+          <RetryBtn onClick={handleRetryDrawing}></RetryBtn>
+          <CloseBoardBtn onClick={onClose}></CloseBoardBtn>
         </ButtonArea>
         {showFinDrawModal && (
           <FinDrawModalContainer>
