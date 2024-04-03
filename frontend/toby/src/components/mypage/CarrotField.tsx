@@ -337,7 +337,7 @@ const CarrotField = () => {
             <CarrotCount>
               {carrotList[0].carrotCount > 70
                 ? `${carrotList[0].carrotCount}`
-                : `${carrotList[0].carrotCount} / 70`}
+                : `${carrotList[0].carrotCount} / ${carrotList[0].gradeMax}`}
             </CarrotCount>
           </SchoolCarrot>
           <HospitalCarrot>
@@ -346,7 +346,7 @@ const CarrotField = () => {
             <CarrotCount>
               {carrotList[1].carrotCount > 70
                 ? `${carrotList[1].carrotCount}`
-                : `${carrotList[1].carrotCount} / 70`}
+                : `${carrotList[1].carrotCount} / ${carrotList[1].gradeMax}`}
             </CarrotCount>
           </HospitalCarrot>
           <MartCarrot>
@@ -355,7 +355,7 @@ const CarrotField = () => {
             <CarrotCount>
               {carrotList[2].carrotCount > 70
                 ? `${carrotList[2].carrotCount}`
-                : `${carrotList[2].carrotCount} / 70`}
+                : `${carrotList[2].carrotCount} ${carrotList[2].gradeMax}`}
             </CarrotCount>
           </MartCarrot>
           <PoliceCarrot>
@@ -364,7 +364,7 @@ const CarrotField = () => {
             <CarrotCount>
               {carrotList[3].carrotCount > 70
                 ? `${carrotList[3].carrotCount}`
-                : `${carrotList[3].carrotCount} / 70`}
+                : `${carrotList[3].carrotCount} / ${carrotList[3].gradeMax}`}
             </CarrotCount>
           </PoliceCarrot>
           <ShovelImage src="Image/common/shovel.png" alt="shovel" />
