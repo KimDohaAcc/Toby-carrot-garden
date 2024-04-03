@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
-import { getEmergencyQuiz } from "../../apis/quizApi";
+import { getAllQuiz } from "../../apis/quizApi";
 
 import { useDispatch } from "react-redux";
 import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
@@ -204,7 +204,7 @@ const StoryEmergency = ({ index, place }) => {
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isCarrotModalOpen, setIsCarrotModalOpen] = useState(false);
+  // const [isCarrotModalOpen, setIsCarrotModalOpen] = useState(false);
   const [IsFailModalOpen, setIsFailModalOpen] = useState(false);
   const [IsSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const sceneList = useSelector<RootState, Scene[]>((state: RootState) => {
@@ -260,10 +260,9 @@ const StoryEmergency = ({ index, place }) => {
   const submit = async () => {
     console.log("입력된 번호:", number);
     try {
-      // hospital에서 119를 정확히 입력했을 경우
       if (place === "hospital" && number === "119") {
         setIsSuccessModalOpen(true);
-        const response = await getEmergencyQuiz({ place_id });
+        const response = await getAllQuiz({ place_id });
         console.log(response);
         console.log(place);
         console.log("1");
@@ -275,7 +274,7 @@ const StoryEmergency = ({ index, place }) => {
       // police에서 112를 정확히 입력했을 경우
       else if (place === "police" && number === "112") {
         setIsSuccessModalOpen(true);
-        const response = await getEmergencyQuiz({ place_id });
+        const response = await getAllQuiz({ place_id });
         console.log(response);
         console.log(place);
         setTimeout(() => {
