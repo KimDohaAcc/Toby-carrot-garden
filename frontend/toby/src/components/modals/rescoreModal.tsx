@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { getRescore } from "../../apis/analysisApi";
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -54,13 +53,27 @@ const CloseButton = styled.button`
 `;
 
 const ConfirmationContent = styled.div`
-  margin-top: 20px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
   text-align: center;
+  overflow-wrap: break-word;
+  font-size: calc(1em + 1.5vw);
+  box-sizing: border-box;
+  margin-top: calc(15%);
 `;
 
 const ConfirmationButton = styled.button`
-  margin: 0 10px;
-  padding: 10px 20px;
+  margin-top: -14%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10%;
+  width: 100%;
+  height: auto;
+  flex-grow: 1;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -80,7 +93,7 @@ const RescoreModal = ({ isOpen, onClose, quizId, onRescore }) => {
     <ModalBackdrop onClick={onClose}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose}>&times;</CloseButton>
-        <h2>재채점 하시겠습니까?</h2>
+        <h1>재채점 하시겠습니까?</h1>
         <ConfirmationContent>
           <ConfirmationButton onClick={() => onRescore(quizId, 100)}>
             정답
