@@ -30,7 +30,6 @@ const StoryContainer = styled.div`
 const LogoArea = styled.div`
   position: relative;
   flex: 0 0 14%;
-  box-sizing: border-box;
 `;
 
 const StoryContentArea1 = styled.div`
@@ -53,11 +52,11 @@ const StoryContentArea2 = styled.div`
     "conten nextBtn";
   grid-template-columns: 11fr 1fr;
   grid-template-rows: 1fr 10fr 1fr;
-  width: 82%;
-  height: 80%;
+  width: 81%;
+  height: 77%;
   position: absolute;
   left: 5%;
-  top: 7%;
+  top: 9%;
 `;
 
 const CloseBtnArea = styled.div`
@@ -95,7 +94,7 @@ const CloseBtn = styled.button`
 const ButtonArea = styled.div`
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: calc(1%);
   width: calc(10%);
 `;
 
