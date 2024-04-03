@@ -127,7 +127,6 @@ const NextBtn2 = styled.div`
 
 const Content = styled.div<{ fadeIn: boolean }>`
   grid-area: conten;
-
   opacity: ${({ fadeIn }) => (fadeIn ? 1 : 0)};
   transition: ${({ fadeIn }) => (fadeIn ? "opacity 0.5s ease-in" : "none")};
 `;

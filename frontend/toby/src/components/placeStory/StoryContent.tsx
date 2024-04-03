@@ -32,6 +32,8 @@ const StoryContentText = styled.div`
   align-items: center;
   font-size: 3rem;
   white-space: pre-wrap;
+  width: 93%;
+  justify-self: center;
 `;
 
 const AudioPlayer = styled.audio`

@@ -13,6 +13,7 @@ const StoryQuizEmotionsContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 5fr;
   height: 100%;
+  width: 93%;
 `;
 
 const StoryQuizEmotionsTitleArea = styled.div`
