@@ -71,7 +71,7 @@ function KakaoSignup() {
           console.log("토큰 전송 완료", response.message);
 
           if (response.result.signupComplete) {
-            navigate("/main");
+            navigate("/");
           } else {
             navigate("/signplus");
           }
