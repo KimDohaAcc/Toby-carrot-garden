@@ -116,6 +116,14 @@ const ErrorModal = styled.div`
   z-index: 10;
 `;
 
+const TobyHeadImage = styled.img`
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 20%;
+  height: auto;
+`;
+
 const ModalCloseBtn = styled.div`
   position: absolute;
   bottom: 0;
@@ -319,6 +327,7 @@ const StoryEmergency = ({ index, place }) => {
         <PhoneNumber>{number}</PhoneNumber>
         {isModalOpen && (
           <ErrorModal>
+            <TobyHeadImage src="/Image/toby/토비머리.png" alt="토비머리" />
             <div>정답은 세글자 입니다</div>
             <ModalCloseBtn
               onClick={() => {

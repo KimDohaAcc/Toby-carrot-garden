@@ -14,7 +14,6 @@ import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
 import { setMartQuizClear } from "../../store/slices/martSlice";
 import { setPoliceQuizClear } from "../../store/slices/policeSlice";
-import { s } from "vite/dist/node/types.d-AKzkD8vd";
 
 const BlackBoard = styled.div`
   display: flex;
@@ -68,10 +67,12 @@ const CloseBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-image: url("경로/이미지.png"); */
+  background-image: url(/Image/button/다그렸어요.png);
+
+  width: 100%;
+  height: 100%;
   border: none;
   border-radius: 20px;
-  font-size: 3em;
   cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
@@ -112,7 +113,16 @@ const FinDrawModalContainer = styled.div`
   z-index: 100;
 `;
 
+const TobyHeadImage = styled.img`
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 20%;
+  height: auto;
+`;
+
 const FinDrawModal = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -289,13 +299,14 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
           />
         </ModalArea>
         <ButtonArea>
-          <CloseBtn onClick={checkIsEmpty}>다 그렸어요</CloseBtn>
+          <CloseBtn onClick={checkIsEmpty}></CloseBtn>
           <RetryBtn onClick={handleRetryDrawing}>다시 그리기</RetryBtn>
           <CloseBoardBtn onClick={onClose}>닫기</CloseBoardBtn>
         </ButtonArea>
         {showFinDrawModal && (
           <FinDrawModalContainer>
             <FinDrawModal>
+              <TobyHeadImage src="/Image/toby/토비머리.png" alt="토비머리" />
               <p style={{ fontSize: "5em" }}>그림을 그려주세요!</p>
               <ModalCloseBtn onClick={() => setShowFinDrawModal(false)}>
                 확인
