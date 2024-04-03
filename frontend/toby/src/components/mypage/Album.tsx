@@ -223,22 +223,23 @@ interface Image {
   placeId: number;
   createdTime: string;
 }
-
+const backgroundImages = {
+  1: "/Image/album/schoolFrame.png",
+  2: "/Image/album/hospitalFrame.png",
+};
 const Album = () => {
   const navigate = useNavigate();
   const [presentImage, setPresentImage] = useState("");
-  const [imageList, setImageList] = useState<Image[]>([]);
+  const [imageList, setImageList] = useState([]);
   const [presentImageIndex, setPresentImageIndex] = useState(1);
   const [presentImagePlaceId, setPresentImagePlaceId] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   // const showPrevImage = () => {
   //   setNextImage(presentImage);
   //   setPresentImage(prevImage);
   //   setPrevImage("");
   // };
-  const backgroundImages = {
-    1: "/Image/album/hospitalFrame.png",
-    2: "/Image/album/schoolFrame.png",
-  };
+
   useEffect(() => {
     // 현재 이미지의 placeId를 설정하는 로직 추가...
     const currentImage = imageList.find(
@@ -255,19 +256,16 @@ const Album = () => {
     navigate("/main"); // '/main'으로 이동하는 함수
   };
   useEffect(() => {
-    // 이미지 리스트를 불러옴
-    const fetchData = async () => {
+    const fetchImages = async () => {
       try {
-        const response = await getClearImageList();
-        setImageList(response);
-        if (response) {
-          setPresentImage(response[0].clearImageUrl);
-        }
+        const response = await getClearImageList(); // API 호출로 이미지 목록 가져오기
+        setImageList(response.result.list); // 응답에서 이미지 목록 설정
       } catch (error) {
-        console.error(error);
+        console.error("Failed to fetch images", error);
       }
     };
-    fetchData();
+
+    fetchImages();
   }, []);
 
   // useEffect(() => {
@@ -280,7 +278,8 @@ const Album = () => {
   // }, []);
 
   //findIndex -> 배열에서 조건을 만족하는 첫 번째 요소의 인덱스를 반환
-
+  const currentBgImage =
+    backgroundImages[imageList[currentIndex]?.placeId] || backgroundImages[1];
   const showPrevImage = () => {
     // 이미지 리스트의 첫 번째 이미지일 경우에는 마지막 이미지를 표시
     const index = imageList.findIndex(
