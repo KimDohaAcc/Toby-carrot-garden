@@ -44,12 +44,12 @@ const ModalContainer = styled.div`
   overflow: hidden;
 `;
 
-const CloseButton = styled.button`
-  float: right;
+const CloseButton = styled.div`
+  /* float: right; */
   border: none;
-  background: none;
+  width: 20%;
+  background-image: url("/Image/button/close.png");
   font-size: 1.5rem;
-  cursor: pointer;
 `;
 
 const ConfirmationContent = styled.div`
@@ -92,7 +92,7 @@ const RescoreModal = ({ isOpen, onClose, quizId, onRescore }) => {
   return isOpen ? (
     <ModalBackdrop onClick={onClose}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={onClose}>&times;</CloseButton>
+        <CloseButton onClick={onClose} />
         <h1>재채점 하시겠습니까?</h1>
         <ConfirmationContent>
           <ConfirmationButton onClick={() => onRescore(quizId, 100)}>
