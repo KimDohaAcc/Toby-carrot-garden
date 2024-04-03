@@ -269,10 +269,7 @@ const Album = () => {
   //   setPresentImage(prevImage);
   //   setPrevImage("");
   // };
-  const backgroundImages = {
-    1: "/Image/album/hospitalFrame.png",
-    2: "/Image/album/schoolFrame.png",
-  };
+
   useEffect(() => {
     // 현재 이미지의 placeId를 설정하는 로직 추가...
     const currentImage = imageList.find(
@@ -289,18 +286,16 @@ const Album = () => {
     navigate("/main"); // '/main'으로 이동하는 함수
   };
   useEffect(() => {
-    // 이미지 리스트를 불러옴
+    // 이미지 리스트를 불러옵니다.
     const fetchData = async () => {
       try {
-        const response = await getClearImageList();
-        setImageList(response);
-        if (response) {
-          setPresentImage(response[0].clearImageUrl);
-        }
+        const { result } = await getClearImageList(); // API 수정 필요
+        setImageList(result.list);
       } catch (error) {
         console.error(error);
       }
     };
+
     fetchData();
   }, []);
   const getBackgroundImageUrl = (placeId) => {
