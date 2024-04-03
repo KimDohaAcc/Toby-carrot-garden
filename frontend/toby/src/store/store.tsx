@@ -5,6 +5,7 @@ import schoolReducer from "./slices/schoolSlice";
 import placeReducer from "./slices/placeSlice";
 import martReducer from "./slices/martSlice";
 import policeReducer from "./slices/policeSlice";
+import authReducer from "./slices/authSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     mart: martReducer,
     police: policeReducer,
     place: placeReducer,
+    auth: authReducer,
   },
 });
 
