@@ -23,7 +23,7 @@ const fadeInAnimation = keyframes`
   }
 `;
 const ModalContainer = styled.div`
-  background-image: url("/Image/Modal/rescoreModal.png");
+  background-image: url("/Image/modal/rescoreModal.png");
   position: fixed;
   top: 50%;
   left: 50%;
