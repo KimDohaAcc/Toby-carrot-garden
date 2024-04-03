@@ -92,11 +92,24 @@ const CameraButtonArea = styled.button`
     outline: none;
   }
 
-  &:hover{
+  &:hover {
     border: none;
     background-color: rgba(0, 0, 0, 0.1);
     transform: translateY(1px);
   }
+`;
+const DisableButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  margin: 0 calc(1%);
+  height: 5vh;
+  padding: 5px;
+  border-radius: 15px;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
 `;
 
 const CamereButton = styled.image`
@@ -126,13 +139,12 @@ const CamereText = styled.div`
   align-self: center;
 `;
 
-
 const QuizWebCam = ({ quizId, place }) => {
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState("");
   const [modalState, setModalState] = useState("none");
   const [submitQuizState, setSubmitQuizState] = useState(false);
-  const [memberQuizId, setMemberQuizId] = useState("");
+  const [submitQuizResult, setSubmitQuizResult] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -201,26 +213,29 @@ const QuizWebCam = ({ quizId, place }) => {
           memberQuizId,
         });
 
-        if (answerResponse.status === 200) {
+        if (
+          answerResponse.status === 200 &&
+          answerResponse.result.score !== -1
+        ) {
           clearInterval(interval);
 
           setModalState(
             answerResponse.result.score === 100 ? "success" : "fail"
           );
-        } else {
-          console.error("Failed to get quiz answer");
+          setSubmitQuizResult(answerResponse.result.score === 100 ? true : false)
+        } else if (attempts >= maxAttempts) {
+          clearInterval(interval);
+          console.error("Max polling attempts reached, stopping.");
           setModalState("fail");
         }
       } catch (error) {
         console.error("Error fetching quiz answer", error);
+
+        clearInterval(interval);
+        setModalState("fail");
       }
 
       attempts++;
-      if (attempts >= maxAttempts) {
-        clearInterval(interval);
-        console.error("Max polling attempts reached, stopping.");
-        setModalState("fail");
-      }
     }, 1000);
   }, []);
 
@@ -263,16 +278,43 @@ const QuizWebCam = ({ quizId, place }) => {
             <Image src={imageSrc} alt="Captured" />
           </CameraArea>
           <ButtonArea style={{ margin: "5%" }}>
-            <CameraButtonArea onClick={retake} >
-              <CamereAgainButton />
-              <CamereText>다시찍기</CamereText>
-            </CameraButtonArea>
-            <CameraButtonArea onClick={submit} disabled={submitQuizState} style={{
-              backgroundColor: submitQuizState? "rgba(0, 0, 0, 0.1)": "",
-              transform: submitQuizState ? "translateY(1px)" : ""}}>
-              <CamereSubmitButton />
-              <CamereText>제출하기</CamereText>
-            </CameraButtonArea>
+            {submitQuizResult ? (
+              <>
+                <DisableButton onClick={retake} disabled>
+                  <CamereAgainButton />
+                  <CamereText>다시찍기</CamereText>
+                </DisableButton>
+                <CameraButtonArea
+                  onClick={submit}
+                  disabled={submitQuizState}
+                  style={{
+                    backgroundColor: submitQuizState ? "rgba(0, 0, 0, 0.1)" : "",
+                    transform: submitQuizState ? "translateY(1px)" : "",
+                  }}
+                >
+                  <CamereSubmitButton />
+                  <CamereText>제출하기</CamereText>
+                </CameraButtonArea>
+              </>
+            ) : (
+              <>
+                <CameraButtonArea onClick={retake}>
+                  <CamereAgainButton />
+                  <CamereText>다시찍기</CamereText>
+                </CameraButtonArea>
+                <CameraButtonArea
+                  onClick={submit}
+                  disabled={submitQuizState}
+                  style={{
+                    backgroundColor: submitQuizState ? "rgba(0, 0, 0, 0.1)" : "",
+                    transform: submitQuizState ? "translateY(1px)" : "",
+                  }}
+                >
+                  <CamereSubmitButton />
+                  <CamereText>제출하기</CamereText>
+                </CameraButtonArea>
+              </>
+            )}
           </ButtonArea>
         </WebcamContainer>
       ) : (

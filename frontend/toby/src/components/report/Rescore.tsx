@@ -176,6 +176,7 @@ const translateAnswer = (answer) => {
     Happy: "행복",
     cup: "컵",
     bag: "가방",
+    Sad: "슬픔",
   };
 
   return translations[answer] || answer; // 번역이 없으면 원본을 반환
