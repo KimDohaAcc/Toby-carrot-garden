@@ -21,7 +21,7 @@ const Text = styled.div`
   white-space: nowrap; /* 텍스트가 한 줄로만 유지되도록 설정 */
   text-overflow: ellipsis; /* 텍스트가 요소의 영역을 넘어갈 때 생략 부호(...)를 표시 */
   overflow: hidden;
-  font-size: 5rem;
+  font-size: 3rem;
 `;
 
 const LogoutBtn = () => {
