@@ -338,7 +338,7 @@ const Report = () => {
       case "analysis":
         setContentText(
           <>
-            <Taehun>분석</Taehun>
+            <Taehun>✨AI를 활용한 분석 대시보드</Taehun>
             <Taehun2>
               우리 아이가 풀었던 문제에 대한 통계와 표현을 볼 수 있어요!
             </Taehun2>
@@ -352,8 +352,8 @@ const Report = () => {
           <>
             <Taehun> 히스토리</Taehun>
             <Taehun2>
-              우리 아이가 풀었던 문제를 확인할 수 있어요! 채점이 잘못되었다면
-              부모님이 다시 채점해주세요!
+              우리 아이가 풀었던 문제를 확인할 수 있어요! 
+              채점이 잘못되었다면 다시 채점해주세요!
             </Taehun2>
           </>
         );
