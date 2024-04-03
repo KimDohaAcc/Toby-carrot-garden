@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -8,8 +8,6 @@ import { getAllQuiz } from "../../apis/quizApi";
 import { useDispatch } from "react-redux";
 import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setPoliceQuizClear } from "../../store/slices/policeSlice";
-import { setMartQuizClear } from "../../store/slices/martSlice";
-import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
 import SuccessToby from "../modals/SuccessToby";
 import FailToby from "../modals/FailToby";
 
@@ -131,10 +129,11 @@ const PhoneButton = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 25px 0 25px;
-  cursor: url("/Image/cursor/hover.png"), pointer;
+  cursor: pointer;
 `;
 
 const ErrorModal = styled.div`
+  border: 1px solid black;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -165,34 +164,6 @@ const ModalCloseBtn = styled.div`
   }
 `;
 
-
-const carrotModalani = keyframes`
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
-// const GetCarrotModal = styled.img`
-//   position: fixed;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   width: 50%;
-//   height: 80%;
-//   z-index: 10;
-//   animation: ${carrotModalani} 2s linear none;
-// `;
-
 const AudioPlayer = styled.audio`
   position: absolute;
 `;
@@ -210,7 +181,6 @@ const AudioBtnNS = styled.button`
     outline: none;
     background-color: transparent;
   }
-  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const AudioBtnS = styled.button`
@@ -226,7 +196,6 @@ const AudioBtnS = styled.button`
     outline: none;
     background-color: transparent;
   }
-  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const AudioArea = styled.div`
