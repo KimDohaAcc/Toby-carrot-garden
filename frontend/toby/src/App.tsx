@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import ProtectedRoutes from "./config/ProtectedRoutes";
@@ -37,8 +37,6 @@ const BackgroundContainer = styled.div`
 function App() {
   const windowRef = React.useRef(window);
 
-  applyFixedTheme();
-
   // useEffect(() => {
   //   const windowObj = windowRef.current;
 
@@ -69,8 +67,8 @@ function App() {
             <Route path="school/*" element={<School />} />
             <Route path="hospital/*" element={<Hospital />} />
             <Route path="police/*" element={<PoliceOffice />} />
-            <Route path="mypage" element={<Mypage />} />
             <Route path="mart/*" element={<Mart />} />
+            <Route path="mypage" element={<Mypage />} />
             <Route path="report" element={<Report />} />
             <Route path="example" element={<Example />} />
             <Route path="*" element={<NotFound />} />

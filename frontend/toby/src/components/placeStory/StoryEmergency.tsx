@@ -55,14 +55,14 @@ const RetryBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const SubmitBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const PhoneBackground = styled.img`
@@ -95,7 +95,7 @@ const PhoneButton = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 25px 0 25px;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const ErrorModal = styled.div`
@@ -117,7 +117,7 @@ const ErrorModal = styled.div`
 const ModalCloseBtn = styled.div`
   position: absolute;
   bottom: 0;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const carrotModalani = keyframes`
@@ -164,6 +164,7 @@ const AudioBtnNS = styled.button`
     outline: none;
     background-color: transparent;
   }
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const AudioBtnS = styled.button`
@@ -179,6 +180,7 @@ const AudioBtnS = styled.button`
     outline: none;
     background-color: transparent;
   }
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const AudioArea = styled.div`

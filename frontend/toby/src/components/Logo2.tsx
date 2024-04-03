@@ -6,19 +6,17 @@ const LogoWrapper = styled.div`
   position: absolute;
   height: auto;
   width: 100%;
-  border: 2px solid black;
   justify-content: center;
   align-items: center;
   object-fit: contain;
   overflow: hidden;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const LogoWrapper2 = styled.div`
   position: absolute;
   height: 100%;
   width: auto;
-  border: 2px solid black;
   justify-content: center;
   align-items: center;
   object-fit: contain;

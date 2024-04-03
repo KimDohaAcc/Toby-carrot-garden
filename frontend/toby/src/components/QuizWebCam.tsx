@@ -66,6 +66,7 @@ const ButtonArea = styled.div`
   justify-content: space-around;
   width: 100%;
   height: auto;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const QuizWebCam = ({ quizId, place }) => {

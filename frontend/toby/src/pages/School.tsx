@@ -76,7 +76,7 @@ const CloseBtn = styled.button`
   right: calc(20%);
   grid-area: closeBtn;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   width: 3vw;
   height: 3vw;
   box-sizing: border-box;
@@ -102,7 +102,6 @@ const ButtonArea = styled.div`
   width: calc(10%);
 `;
 
-
 const NextBtn = styled.div`
   display: flex;
   justify-content: center;
@@ -113,7 +112,7 @@ const NextBtn = styled.div`
     width: 100%;
   }
 
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   box-shadow: none;
   transition: box-shadow 0.1s ease;
   &:active {
@@ -186,10 +185,10 @@ const School = () => {
   useEffect(() => {
     const fetchSceneList = async () => {
       try {
-        if(sceneIndex === -1){
-          setPrevState(true)
-        }else{
-          setPrevState(false)
+        if (sceneIndex === -1) {
+          setPrevState(true);
+        } else {
+          setPrevState(false);
         }
         const response = await getSceneList(storyId); // storyId에 해당하는 장면 목록 받아오기
         console.log(response);
@@ -252,17 +251,16 @@ const School = () => {
   const handleOnclickPrevBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
     setFadeIn(false);
-    if(sceneIndex > 0){
+    if (sceneIndex > 0) {
       setSceneIndex((currenIndex) => {
         const prevIndex = currenIndex - 1;
         setSceneType(SchoolSceneList[prevIndex].sceneType);
         return prevIndex;
       });
-    }else{
-      setSceneIndex(-1)
+    } else {
+      setSceneIndex(-1);
     }
   };
-
 
   return (
     <>
@@ -286,14 +284,22 @@ const School = () => {
                 >
                   <img src="/Image/button/prevBtn.png" alt="이전 버튼" />
                 </NextBtn>
-                  <NextBtn2>
-                    <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
-                  </NextBtn2>
+                <NextBtn2>
+                  <img src="/Image/button/nextBtn2.png" alt="다음 버튼" />
+                </NextBtn2>
               </ButtonArea>
             ) : sceneType === "CLEAR" ? (
               <ButtonArea>
-                <NextBtn onClick={() => {handleOnclickPrevBtn();}}>
-                  <img src="/Image/button/prevBtn.png" alt="이전 버튼" hidden={prevState}/>
+                <NextBtn
+                  onClick={() => {
+                    handleOnclickPrevBtn();
+                  }}
+                >
+                  <img
+                    src="/Image/button/prevBtn.png"
+                    alt="이전 버튼"
+                    hidden={prevState}
+                  />
                 </NextBtn>
                 <NextBtn
                   onClick={() => {
@@ -308,8 +314,16 @@ const School = () => {
               </ButtonArea>
             ) : (
               <ButtonArea>
-                <NextBtn onClick={() => {handleOnclickPrevBtn();}}>
-                  <img src="/Image/button/prevBtn.png" alt="이전 버튼" hidden={prevState}/>
+                <NextBtn
+                  onClick={() => {
+                    handleOnclickPrevBtn();
+                  }}
+                >
+                  <img
+                    src="/Image/button/prevBtn.png"
+                    alt="이전 버튼"
+                    hidden={prevState}
+                  />
                 </NextBtn>
                 <NextBtn
                   onClick={() => {

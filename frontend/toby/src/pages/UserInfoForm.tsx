@@ -106,7 +106,7 @@ const Button = styled.button`
   background-size: 100% 100%;
   width: calc(10%);
   height: calc(10%);
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   transition: transform 0.1s ease;
   &:active {
     transform: translateY(1px);
@@ -132,7 +132,7 @@ const SignupClearButton = styled.div`
   background-color: transparent;
   width: calc(10%);
   height: calc(10%);
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   transition: transform 0.1s ease;
   &:active {
     transform: translateY(2px);

@@ -77,7 +77,7 @@ const CloseBtn = styled.button`
   right: calc(20%);
   grid-area: closeBtn;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   width: 3vw;
   height: 3vw;
   box-sizing: border-box;
@@ -112,7 +112,7 @@ const NextBtn = styled.div`
     width: 100%;
   }
 
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   box-shadow: none;
   transition: box-shadow 0.1s ease;
   &:active {

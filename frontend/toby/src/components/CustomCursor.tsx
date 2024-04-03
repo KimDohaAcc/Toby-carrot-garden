@@ -15,29 +15,25 @@ const NormalCursor = styled.div`
   position: absolute;
   width: 30px;
   height: 30px;
-  background-image: url("/Image/cursor/normal.png");
-  background-size: cover;
   pointer-events: none;
   z-index: 9999;
-  cursor: none;
+  cursor: url(/Image/cursor/normal.png);
 `;
 
 const ClickCursor = styled.div`
   position: absolute;
   width: 30px;
   height: 30px;
-  background-image: url("/Image/cursor/clicked.png");
-  background-size: cover;
   pointer-events: none;
   z-index: 9999;
-  cursor: none;
+  cursor: url(/Image/cursor/clicked.png);
 `;
 
 const HoverCursor = styled.div`
   position: absolute;
   width: 30px;
   height: 30px;
-  background-image: url("path/to/hover-cursor-image.png");
+  background-image: url(path/to/hover-cursor-image.png);
   background-size: cover;
   pointer-events: none;
   z-index: 9999;

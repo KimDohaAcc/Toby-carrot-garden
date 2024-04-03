@@ -168,7 +168,7 @@ const StoryQuizEmotions = ({ imageUrl, quizId, content, index, place }) => {
         <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
       </AudioArea>
       <StoryQuizEmotionsTitleArea>
-        <h1>StoryQuizEmotions</h1>
+        <h1>얼굴을 찍어주세요</h1>
       </StoryQuizEmotionsTitleArea>
       <StoryQuizEmotionsImageArea>
         <ImageArea>

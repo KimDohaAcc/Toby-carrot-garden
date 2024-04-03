@@ -53,7 +53,7 @@ const Image = styled.img`
   &:active {
     transform: translateY(3px);
   }
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const Category1 = styled.div`

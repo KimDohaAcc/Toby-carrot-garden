@@ -34,6 +34,7 @@ const SignupButton = styled.img`
   position: absolute;
   left: 21%;
   top: 49%;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   /* top: 1%; */
 `;
 const LoginButton = styled.img`
@@ -42,6 +43,7 @@ const LoginButton = styled.img`
   position: absolute;
   left: 21%;
   top: 69%;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   /* top: 1%; */
 `;
 

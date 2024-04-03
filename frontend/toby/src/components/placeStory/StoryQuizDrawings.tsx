@@ -81,13 +81,13 @@ const CanvasImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 const ClickText = styled.div`
   position: absolute;
   font-size: 2rem;
   font-weight: bold;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const AudioPlayer = styled.audio`
@@ -201,7 +201,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
         <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
       </AudioArea>
       <QuizTitleArea>
-        <h1>StoryQuizDrawings</h1>
+        <h1>화면에 그려주세요</h1>
       </QuizTitleArea>
       <QuizImageArea>
         <ImageArea>

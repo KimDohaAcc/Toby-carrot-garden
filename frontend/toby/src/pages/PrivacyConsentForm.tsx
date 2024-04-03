@@ -37,6 +37,7 @@ const ConsentFormContainer = styled.div`
 const NextButton = styled.button`
   margin-top: 2%;
   margin-bottom: 2%;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const CheckboxContainer = styled.div`

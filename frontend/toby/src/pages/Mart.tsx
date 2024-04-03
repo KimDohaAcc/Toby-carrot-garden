@@ -77,7 +77,7 @@ const CloseBtn = styled.button`
   right: calc(20%);
   grid-area: closeBtn;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   width: 3vw;
   height: 3vw;
   box-sizing: border-box;

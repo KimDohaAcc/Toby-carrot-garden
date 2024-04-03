@@ -21,6 +21,11 @@
         color-scheme: light only;
       }
     </style>
+    <style id="cursor-style">
+      body {
+        cursor: url("/Image/cursor/normal.png"), auto;
+      }
+    </style>
     <title>Toby's Carrot Farm</title>
   </head>
   <body>
@@ -39,6 +44,62 @@
       } else {
         console.log("Service workers are not supported.");
       }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const cursorStyle = document.getElementById("cursor-style");
+
+        document.addEventListener("mousemove", function (e) {
+          cursorStyle.innerHTML = `
+            body {
+              cursor: url("/Image/cursor/normal.png"), auto;
+            }
+          `;
+        });
+
+        // 마우스가 요소 위에 있을 때
+        // document.addEventListener("mouseenter", function () {
+        //   cursorStyle.innerHTML = `
+        //         body {
+        //           cursor: url("/Image/cursor/hover.png"), pointer;
+        //         }
+        //       `;
+        // });
+
+        // 마우스를 클릭할 때
+        document.addEventListener("mousedown", function () {
+          cursorStyle.innerHTML = `
+                body {
+                  cursor: url("/Image/cursor/clicked.png"), default;
+                }
+              `;
+        });
+
+        // 마우스를 뗄 때
+        document.addEventListener("mouseup", function () {
+          cursorStyle.innerHTML = `
+                body {
+                  cursor: url("/Image/cursor/normal.png"), default;
+                }
+              `;
+        });
+        // 마우스가 요소를 벗어났을 때
+        document.addEventListener("mouseout", function () {
+          cursorStyle.innerHTML = `
+            body {
+              cursor: url("/Image/cursor/normal.png"), default;
+            }
+          `;
+        });
+
+        document.addEventListener("mouseleave", function () {
+          cursorStyle.innerHTML = `
+            body {
+              cursor: url("/Image/cursor/normal.png"), default;
+            }
+          `;
+        });
+      });
     </script>
   </body>
 </html>

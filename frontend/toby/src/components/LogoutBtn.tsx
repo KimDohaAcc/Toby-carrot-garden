@@ -15,6 +15,7 @@ const LogoutArea = styled.div`
 
 const Image = styled.img`
   width: calc(50%);
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const LogoutBtn = () => {

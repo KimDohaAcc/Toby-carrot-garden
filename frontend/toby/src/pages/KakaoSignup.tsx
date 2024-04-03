@@ -35,7 +35,7 @@ const RabbitImage = styled.img`
 
 const KakaoButton = styled.img`
   width: 50%;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 function KakaoSignup() {

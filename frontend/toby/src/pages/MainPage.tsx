@@ -54,7 +54,7 @@ const ReportImage = styled.img`
   &:active {
     transform: translateY(3px);
   }
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const MartArea = styled.div`
@@ -79,7 +79,7 @@ const MartImage = styled.img`
   &:active {
     transform: translateY(3px);
   }
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const Area2 = styled.div`
@@ -110,7 +110,7 @@ const SchoolImage = styled.img`
   &:active {
     transform: translateY(3px);
   }
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const MypageArea = styled.div`
@@ -137,7 +137,7 @@ const MyPageImage = styled.img`
   &:active {
     transform: translateY(3px);
   }
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const Area3 = styled.div`
@@ -171,7 +171,7 @@ const HospitalImage = styled.img`
   &:active {
     transform: translateY(3px);
   }
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const PoliceArea = styled.div`
@@ -198,7 +198,7 @@ const PoliceImage = styled.img`
   &:active {
     transform: translateY(3px);
   }
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const UserArea = styled.div`
@@ -228,7 +228,7 @@ const TobyImage = styled.img`
   max-height: 100%;
   width: 80%;
   height: 90%;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const UserName = styled.div`
@@ -248,7 +248,7 @@ const UserName = styled.div`
 const SoundButton = styled.img`
   width: calc(80%);
   align-self: center;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const LogoutArea = styled.div`
@@ -275,12 +275,10 @@ const ButtonText = styled.div`
 `;
 
 const LogoutButton = styled.img`
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   align-self: center;
   width: calc(80%);
 `;
-
-
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -377,12 +375,12 @@ const MainPage = () => {
   // };
 
   const [audioElements, setAudioElements] = useState([
-    { id: 'report', isPlaying: false },
-    { id: 'mart', isPlaying: false },
-    { id: 'hospital', isPlaying: false },
-    { id: 'police', isPlaying: false },
-    { id: 'mypage', isPlaying: false },
-    { id: 'school', isPlaying: false },
+    { id: "report", isPlaying: false },
+    { id: "mart", isPlaying: false },
+    { id: "hospital", isPlaying: false },
+    { id: "police", isPlaying: false },
+    { id: "mypage", isPlaying: false },
+    { id: "school", isPlaying: false },
     // 다른 오디오 요소에 대한 정보도 추가
   ]);
 
@@ -424,7 +422,10 @@ const MainPage = () => {
             {audioElements.map((audio) =>
               audio.isPlaying ? (
                 <audio key={audio.id} controls autoPlay hidden>
-                  <source src={`/Sound/mainPage/${audio.id}.mp3`} type="audio/mpeg" />
+                  <source
+                    src={`/Sound/mainPage/${audio.id}.mp3`}
+                    type="audio/mpeg"
+                  />
                 </audio>
               ) : null
             )}
@@ -440,7 +441,10 @@ const MainPage = () => {
             {audioElements.map((audio) =>
               audio.isPlaying ? (
                 <audio key={audio.id} controls autoPlay hidden>
-                  <source src={`/Sound/mainPage/${audio.id}.mp3`} type="audio/mpeg" />
+                  <source
+                    src={`/Sound/mainPage/${audio.id}.mp3`}
+                    type="audio/mpeg"
+                  />
                 </audio>
               ) : null
             )}
@@ -507,9 +511,13 @@ const MainPage = () => {
                 <source src="/Sound/메인_BGM.mp3" type="audio/mpeg" />
               </audio>
               <SoundButton src={muteImage} onClick={handleMute} />
-              <ButtonText>{muteImage == "/Image/button/no-sound.png" ? "소리끄기" : "소리듣기"}</ButtonText>
+              <ButtonText>
+                {muteImage == "/Image/button/no-sound.png"
+                  ? "소리끄기"
+                  : "소리듣기"}
+              </ButtonText>
             </SoundArea>
-            
+
             <LogoutArea>
               <LogoutButton
                 src="\Image\button\logoutButton.png"

@@ -55,6 +55,7 @@ const AudioBtnNS = styled.button`
     outline: none;
     background-color: transparent;
   }
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const AudioBtnS = styled.button`
@@ -70,6 +71,7 @@ const AudioBtnS = styled.button`
     outline: none;
     background-color: transparent;
   }
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const AudioArea = styled.div`

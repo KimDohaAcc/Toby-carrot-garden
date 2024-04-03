@@ -16,6 +16,15 @@ const StoryQuizContainer = styled.div`
   width: 100%;
   height: 100%;
   border: 1px solid black;
+  position: relative;
+`;
+
+const AIText = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0%;
+  font-size: 3rem;
+  text-align: center;
 `;
 
 interface Scene {
@@ -102,7 +111,12 @@ const StoryQuizHospitial = ({ index, placeName }) => {
     }
   };
 
-  return <StoryQuizContainer>{renderQuiz()}</StoryQuizContainer>;
+  return (
+    <StoryQuizContainer>
+      <AIText>✨AI로 분석되는 퀴즈입니다</AIText>
+      {renderQuiz()}
+    </StoryQuizContainer>
+  );
 };
 
 export default StoryQuizHospitial;

@@ -70,7 +70,7 @@ const StoryContent = styled.div`
   align-items: center;
   justify-content: center;
   padding: 1%;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
   flex-basis: calc(25% - 70px);
   font-size: calc(0.7em);
   background-color: white;
@@ -85,7 +85,7 @@ const CloseBtn = styled.button`
   padding: 10px;
   font-size: calc(1.5em);
   background-color: white;
-  cursor: pointer;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const StoryTitle = styled.h1`
