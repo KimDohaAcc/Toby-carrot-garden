@@ -48,6 +48,7 @@ def emotion(image_data, data_name, member_id, quiz_id, correct_answer):
                 # 감정 분석
                 preds = classifier.predict(roi)[0]
                 label = class_labels[preds.argmax()]
+                print(f'preds: {preds}', flush=True)
                 print(f'😉 분석한 감정: {label}', flush=True)
                 label_position = (x, y)
                 cv2.putText(image, label, label_position, cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 0), 3)
