@@ -35,7 +35,7 @@ const ModalContainer = styled.div`
   background-size: 100% 100%;
   z-index: 100;
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 3fr 3fr;
   animation: ${fadeInAnimation} 0.5s ease;
   justify-content: center;
   justify-items: center;
@@ -53,26 +53,29 @@ const CloseButton = styled.div`
 `;
 
 const ConfirmationContent = styled.div`
+  top: -50%;
   width: 100%;
-  height: auto;
+  heighst: auto;
   object-fit: contain;
   text-align: center;
   overflow-wrap: break-word;
   font-size: calc(1em + 1.5vw);
   box-sizing: border-box;
   margin-top: calc(15%);
+  display: flex;
+  flex-direction: row;
 `;
 
 const ConfirmationButton = styled.button`
-  margin-top: -14%;
+  /* margin-top: %; */
   display: flex;
-  justify-content: center;
+  /* justify-content: center;
   align-content: center;
   align-items: center;
-  text-align: center;
+  text-align: center; */
   gap: 10%;
   width: 100%;
-  height: auto;
+  height: 130%;
   flex-grow: 1;
   border: none;
   border-radius: 5px;
