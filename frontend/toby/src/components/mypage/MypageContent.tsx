@@ -8,11 +8,11 @@ const MypageContentContainer = styled.div`
   display: grid;
   justify-items: center;
   align-items: center;
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   border: 2px solid black;
   grid-template-columns: 1fr 1fr;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   border-radius: 40px;
   overflow: hidden;
   object-fit: contain;
@@ -21,8 +21,8 @@ const MypageContentContainer = styled.div`
 const Area = styled.div`
   display: grid;
   grid-template-rows: 1fr 9fr;
-  width: 85%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   border: 2px solid black;
   border-radius: 30px;
   display: flex;
@@ -41,6 +41,7 @@ const TitleArea = styled.div`
   flex: 0 0 10%;
   overflow: hidden;
   object-fit: contain;
+  margin-left: 5%;
 `;
 
 const ImageArea = styled.img`
@@ -64,15 +65,13 @@ const MypageContent = () => {
     <MypageContentContainer>
       <Area>
         <TitleArea>
-          <ImageArea src="/Image/album/앨범.png" alt="앨범" />
-          <Text>앨범</Text>
+          <ImageArea src="/Image/button/ablumButtonOn.png" alt="앨범" />
         </TitleArea>
         <Album />
       </Area>
       <Area>
         <TitleArea>
-          <ImageArea src="/Image/album/당근밭.png" alt="carrot" />
-          <Text>당근밭</Text>
+          <ImageArea src="/Image/button/carrotButtonOn.png" alt="carrot" />
         </TitleArea>
 
         <CarrotField />

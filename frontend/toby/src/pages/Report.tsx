@@ -117,14 +117,14 @@ const ContentExpressBox = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  margin-left: 1%;
+  margin-left: 5px;
   object-fit: contain;
   overflow: hidden;
 `;
 
 const ContentExpressButton = styled.img`
   position: absolute;
-  width: 25%;
+  width: 30%;
   height: 100%;
   left: 5%;
 `;
@@ -159,7 +159,7 @@ const ContentExpress = styled.div`
 const ContentElseContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 1%;
+  /* margin-right: 1%; */
   width: 100%;
   height: 100%;
   object-fit: contain;

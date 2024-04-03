@@ -7,7 +7,7 @@ import { RootState } from "../store/store";
 
 import { useDispatch } from "react-redux";
 
-import PasswordModal from "../components/modals/passwordCheck"; // 비밀번호 입력 모달
+import PasswordModal from "../components/modals/passwordCheck";
 import Logo from "../components/Logo";
 import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryListModal";
 import SchoolStoryListModal from "../components/modals/school/SchoolStoryListModal";
@@ -238,7 +238,7 @@ const UserName = styled.div`
   transform: translateX(-50%);
   padding: calc(3%) calc(10%);
   color: #ffffff;
-  font-size: calc(2vw); /* 기본 텍스트 크기를 반응형으로 설정 */
+  font-size: calc(2vw);
   z-index: 1;
   background-image: url("/Image/button/nameBackground.png");
   background-size: 100% 100%;
