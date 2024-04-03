@@ -38,6 +38,8 @@ function App() {
   const windowRef = React.useRef(window);
 
   useEffect(() => {
+    applyFixedTheme();
+
     const windowObj = windowRef.current;
 
     const handleKeyDown = (e: KeyboardEvent) => {
