@@ -72,13 +72,16 @@ const QuizCanvasArea = styled.div`
 
 const CanvasImg = styled.img`
   width: 100%;
-  height: 100%;
+  height: 90%;
   object-fit: contain;
   cursor: url("/Image/cursor/hover.png"), pointer;
 `;
+
 const ClickText = styled.div`
   position: absolute;
-  font-size: 2rem;
+  margin-bottom: 8%;
+  margin-right: 5%;
+  font-size: 3vw;
   font-weight: bold;
   cursor: url("/Image/cursor/hover.png"), pointer;
 `;
@@ -104,7 +107,6 @@ const AudioBtnNS = styled.button`
 
 const ButtonText = styled.div`
   font-size: 1.1vw;
-  margin-top: 7px;
 `;
 
 const AudioBtnS = styled.button`
@@ -128,6 +130,15 @@ const AudioArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const AIText = styled.div`
+  display: flex;
+  position: absolute;
+  right: 13.5%;
+  top: 15%;
+  font-size: 1.5vw;
+  text-align: center;
 `;
 
 interface Scene {
@@ -233,13 +244,14 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
         <ConteentArea>{content}</ConteentArea>
       </QuizImageArea>
       <QuizCanvasArea>
+        <AIText>✨AI로 분석되는 퀴즈입니다</AIText>
         <CanvasImg
           src="/Image/common/캔버스.png"
           alt="canvas"
           onClick={handleCanvasClick}
         />
         {isSubmitted ? null : (
-          <ClickText onClick={handleCanvasClick}>클릭 하세요</ClickText>
+          <ClickText onClick={handleCanvasClick}>클릭!</ClickText>
         )}
       </QuizCanvasArea>
       <StoryDrawingModal

@@ -87,7 +87,6 @@ const AudioBtnNS = styled.button`
 
 const ButtonText = styled.div`
   font-size: 1.1vw;
-  margin-top: 7px;
 `;
 
 const AudioBtnS = styled.button`
@@ -111,6 +110,12 @@ const AudioArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const AIText = styled.div`
+  display: flex;
+  font-size: 1.5vw;
+  text-align: center;
 `;
 
 interface Scene {
@@ -198,6 +203,7 @@ const StoryQuizDetections = ({ imageUrl, quizId, content, index, place }) => {
         <ConteentArea>{content}</ConteentArea>
       </StoryQuizDetectionsImageArea>
       <StoryQuizDetectionCanmeraArea>
+        <AIText>✨AI로 분석되는 퀴즈입니다</AIText>
         <QuizWebCam quizId={quizId} place={place} />
       </StoryQuizDetectionCanmeraArea>
     </StoryQuizDetectionsContainer>
