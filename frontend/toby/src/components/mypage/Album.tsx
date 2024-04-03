@@ -270,8 +270,8 @@ const Album = () => {
   //   setPrevImage("");
   // };
   const backgroundImages = {
-    1: "/Image/album/schoolFrame.png",
-    2: "/Image/album/hospitalFrame.png",
+    1: "/Image/album/hospitalFrame.png",
+    2: "/Image/album/schoolFrame.png",
   };
   useEffect(() => {
     // 현재 이미지의 placeId를 설정하는 로직 추가...
