@@ -61,7 +61,7 @@ const MyResponsiveBar = () => {
           const transformedData = response.result.list.map((item) => ({
             항목: item.quizType === "FEELINGS" ? "감정" : "인지",
             우리아이평균: item.correctRateMe,
-            또래나이평균: item.correctRateAge,
+            또래아이평균: item.correctRateAge,
             전체평균: item.correctRateAll,
           }));
           setData(transformedData);
