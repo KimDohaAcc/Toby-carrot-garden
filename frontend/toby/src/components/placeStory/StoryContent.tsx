@@ -30,7 +30,7 @@ const StoryContentText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: 2.5vw;
   white-space: pre-wrap;
   width: 93%;
   justify-self: center;

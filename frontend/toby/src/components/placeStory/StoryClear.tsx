@@ -18,8 +18,10 @@ const ClearContainer = styled.div`
 `;
 
 const StoryClearContent = styled.div`
-  font-size: 3rem;
+  font-size: 2.5vw;
   text-align: center;
+  margin-top: 1%;
+  margin-bottom: 3%;
 `;
 
 const ClearWebcamArea = styled.div`
