@@ -355,7 +355,7 @@ const CarrotField = () => {
             <CarrotCount>
               {carrotList[2].carrotCount > 70
                 ? `${carrotList[2].carrotCount}`
-                : `${carrotList[2].carrotCount} ${carrotList[2].gradeMax}`}
+                : `${carrotList[2].carrotCount}/ ${carrotList[2].gradeMax}`}
             </CarrotCount>
           </MartCarrot>
           <PoliceCarrot>
