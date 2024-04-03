@@ -6,7 +6,6 @@ const StoryTitleContainer = styled.div`
   grid-template-rows: 2fr 1fr;
   width: 100%;
   height: 100%;
-  border: 1px solid black;
 `;
 
 const StoryTitleText = styled.div`
@@ -15,7 +14,6 @@ const StoryTitleText = styled.div`
   align-items: center;
   font-size: 5rem;
   font-weight: bold;
-  border: 1px solid black;
 `;
 
 const StoryTitleImageArea = styled.div`
@@ -25,7 +23,6 @@ const StoryTitleImageArea = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  border: 1px solid black;
   object-fit: contain;
   overflow: hidden;
 `;
@@ -35,7 +32,6 @@ const StoryTitleImage = styled.img`
   height: 100%;
 
   display: block;
-  border: 1px solid black;
 `;
 
 const StoryTitle = ({ title, storyImageUrl, placeName }) => {

@@ -9,7 +9,6 @@ const StoryContentContainer = styled.div`
   grid-template-rows: 7fr 2fr;
   width: 100%;
   height: 100%;
-  border: 1px solid black;
   position: relative;
 `;
 
@@ -17,7 +16,6 @@ const StoryContentImageArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   object-fit: contain;
   overflow: hidden;
 `;
@@ -26,7 +24,6 @@ const StoryContentImage = styled.img`
   height: 100%;
   width: auto;
   display: block;
-  border: 1px solid black;
 `;
 
 const StoryContentText = styled.div`
@@ -34,13 +31,20 @@ const StoryContentText = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 3rem;
-  border: 1px solid black;
   white-space: pre-wrap;
+  width: 93%;
+  justify-self: center;
 `;
 
 const AudioPlayer = styled.audio`
   position: absolute;
 `;
+
+const ButtonText = styled.div`
+  font-size: 1.1vw;
+  margin-top: 7px;
+`;
+
 
 const AudioBtnNS = styled.button`
   z-index: 1000;
@@ -77,6 +81,9 @@ const AudioBtnS = styled.button`
 const AudioArea = styled.div`
   position: absolute;
   margin: calc(2%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 interface Quiz {
@@ -153,9 +160,15 @@ const StoryContent = ({ index, placeName }) => {
           <source src={sceneList[index].voice} type="audio/mpeg" />
         </AudioPlayer>
         {isPlaying ? (
-          <AudioBtnS onClick={handleTogglePlay}></AudioBtnS>
+          <>
+            <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
+            <ButtonText>소리끄기</ButtonText>
+          </>        
         ) : (
-          <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
+          <>
+            <AudioBtnS onClick={handleTogglePlay}></AudioBtnS>
+            <ButtonText>소리듣기</ButtonText>
+          </>        
         )}
       </AudioArea>
       <StoryContentImageArea>

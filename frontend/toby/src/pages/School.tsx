@@ -23,27 +23,24 @@ const StoryContainer = styled.div`
   height: 100%;
   max-width: 100%;
   max-height: 100%;
-  border: 2px solid black;
 `;
 // 로고와 병원 내용을 나누기 위한 컨테이너
 const LogoArea = styled.div`
   position: relative;
   flex: 0 0 14%;
-  border: 2px solid black;
-  box-sizing: border-box;
 `;
 
 const StoryContentArea1 = styled.div`
   background-image: url("/Image/common/storyFrameImage.png");
   background-size: 100% 100%;
   flex: 0 0 86%;
-  border: 2px solid black;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  
 `;
 
 const StoryContentArea2 = styled.div`
@@ -54,12 +51,11 @@ const StoryContentArea2 = styled.div`
     "conten nextBtn";
   grid-template-columns: 11fr 1fr;
   grid-template-rows: 1fr 10fr 1fr;
-  width: 82%;
-  height: 80%;
-  border: 2px solid black;
+  width: 81%;
+  height: 77%;
   position: absolute;
   left: 5%;
-  top: 7%;
+  top: 9%;
 `;
 
 const CloseBtnArea = styled.div`
@@ -67,13 +63,12 @@ const CloseBtnArea = styled.div`
   display: flex;
   justify-content: center;
   align-content: center;
-  border: 1px solid black;
 `;
 
 const CloseBtn = styled.button`
   position: absolute;
   top: calc(35%);
-  right: calc(20%);
+  right: calc(25%);
   grid-area: closeBtn;
   border-radius: 5px;
   cursor: url("/Image/cursor/hover.png"), pointer;
@@ -98,7 +93,7 @@ const CloseBtn = styled.button`
 const ButtonArea = styled.div`
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: calc(1%);
   width: calc(10%);
 `;
 
@@ -107,7 +102,6 @@ const NextBtn = styled.div`
   justify-content: center;
   align-content: center;
   grid-area: nextBtn;
-  border: 1px solid black;
   img {
     width: 100%;
   }
@@ -116,7 +110,6 @@ const NextBtn = styled.div`
   box-shadow: none;
   transition: box-shadow 0.1s ease;
   &:active {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     transform: translateY(2px);
   }
 `;
@@ -126,7 +119,6 @@ const NextBtn2 = styled.div`
   justify-content: center;
   align-content: center;
   grid-area: nextBtn;
-  border: 1px solid black;
   img {
     width: 100%;
   }
@@ -134,8 +126,6 @@ const NextBtn2 = styled.div`
 
 const Content = styled.div<{ fadeIn: boolean }>`
   grid-area: conten;
-  border: 1px solid black;
-
   opacity: ${({ fadeIn }) => (fadeIn ? 1 : 0)};
   transition: ${({ fadeIn }) => (fadeIn ? "opacity 0.5s ease-in" : "none")};
 `;

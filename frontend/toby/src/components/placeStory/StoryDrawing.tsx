@@ -5,7 +5,6 @@ const StoryDrawingContainer = styled.div`
   display: grid;
   width: 90%;
   height: 90%;
-  border: 2px solid black;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 5fr;
   grid-template-areas:
@@ -15,17 +14,14 @@ const StoryDrawingContainer = styled.div`
 
 const Title = styled.div`
   grid-area: title;
-  border: 2px solid black;
 `;
 
 const Drawing1 = styled.div`
   grid-area: drawing1;
-  border: 2px solid black;
 `;
 
 const Drawing2 = styled.div`
   grid-area: drawing2;
-  border: 2px solid black;
 `;
 
 const StoryDrawing = () => {

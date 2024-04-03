@@ -29,7 +29,6 @@ const ClearWebcamArea = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   object-fit: contain;
   overflow: hidden;
 `;
@@ -54,6 +53,11 @@ const AudioBtnNS = styled.button`
   cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
+const ButtonText = styled.div`
+  font-size: 1.1vw;
+  margin-top: 7px;
+`;
+
 const AudioBtnS = styled.button`
   z-index: 1000;
   width: 3vw;
@@ -72,9 +76,12 @@ const AudioBtnS = styled.button`
 
 const AudioArea = styled.div`
   position: absolute;
-  top: calc(1%);
-  left: calc(1%);
+  top: calc(8%);
+  left: 0;
   margin: calc(2%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 interface Scene {
@@ -147,10 +154,17 @@ const StoryClear = ({ index, placeName }) => {
           <source src={sceneList[index].voice} type="audio/mpeg" />
         </AudioPlayer>
         {isPlaying ? (
-          <AudioBtnS onClick={handleTogglePlay}></AudioBtnS>
+          <>
+            <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
+            <ButtonText>소리끄기</ButtonText>
+          </>
         ) : (
-          <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
+          <>
+            <AudioBtnS onClick={handleTogglePlay}></AudioBtnS>
+            <ButtonText>소리듣기</ButtonText>
+          </>
         )}
+        
       </AudioArea>
       <StoryClearContent>{sceneList[index].content}</StoryClearContent>
       <ClearWebcamArea>
