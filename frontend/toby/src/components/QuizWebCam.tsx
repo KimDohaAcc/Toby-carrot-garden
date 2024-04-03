@@ -5,8 +5,10 @@ import WaitToby from "./modals/WaitToby";
 import FailToby from "./modals/FailToby";
 import SuccessToby from "./modals/SuccessToby";
 import styled from "styled-components";
-
+import { getAllQuiz } from "../apis/quizApi";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 import { setSchoolQuizClear } from "../store/slices/schoolSlice";
 import { setHospitalQuizClear } from "../store/slices/hospitalSlice";
@@ -48,7 +50,7 @@ const CameraArea = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 90%;
   position: relative;
 `;
 
@@ -62,12 +64,66 @@ const Image = styled.img`
 
 const ButtonArea = styled.div`
   display: flex;
-  flex: 0 0 20%;
-  justify-content: space-around;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  padding: calc(1%);
   width: 100%;
-  height: auto;
+  height: 90%;
   cursor: url("/Image/cursor/hover.png"), pointer;
+  background-repeat: no-repeat;
 `;
+
+const CameraButtonArea = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  margin: 0 calc(1%);
+  cursor: url("/Image/cursor/hover.png"), pointer;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  transition: background-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover{
+    border: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: translateY(1px);
+  }
+`;
+
+const CamereButton = styled.image`
+  height: calc(100%);
+  width: calc(5vh);
+  background-image: url("/Image/button/camera.png");
+  background-size: 100% 100%;
+`;
+
+const CamereSubmitButton = styled.image`
+  height: calc(100%);
+  width: calc(5vh);
+  background-image: url("/Image/button/cameraSubmit.png");
+  background-size: 100% 100%;
+`;
+
+const CamereAgainButton = styled.image`
+  height: calc(100%);
+  width: calc(5vh);
+  background-image: url("/Image/button/cameraAgain.png");
+  background-size: 100% 100%;
+`;
+
+const CamereText = styled.div`
+  margin-left: 10px;
+  font-size: calc(1.3vw);
+  align-self: center;
+`;
+
 
 const QuizWebCam = ({ quizId, place }) => {
   const webcamRef = useRef(null);
@@ -129,7 +185,10 @@ const QuizWebCam = ({ quizId, place }) => {
       setModalState("fail");
     }
   };
-
+  const place_id = useSelector<RootState, number>(
+    (state: RootState) => state.place.placeId
+  );
+  console.log(place_id);
   const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
     let attempts = 0;
     const maxAttempts = 10;
@@ -142,6 +201,7 @@ const QuizWebCam = ({ quizId, place }) => {
 
         if (answerResponse.status === 200) {
           clearInterval(interval);
+
           setModalState(
             answerResponse.result.score === 100 ? "success" : "fail"
           );
@@ -162,6 +222,21 @@ const QuizWebCam = ({ quizId, place }) => {
     }, 1000);
   }, []);
 
+  useEffect(() => {
+    const fetchAllQuiz = async () => {
+      if (modalState === "success") {
+        try {
+          const response = await getAllQuiz({ place_id });
+          console.log(response);
+          // 여기서 필요한 추가 작업을 수행할 수 있습니다.
+        } catch (error) {
+          console.error("Error fetching all quizzes", error);
+        }
+      }
+    };
+
+    fetchAllQuiz();
+  }, [modalState, place_id]);
   useEffect(() => {
     if (modalState !== "wait" && modalState !== "none") {
       const timeout = setTimeout(() => setModalState("none"), 2000);
@@ -185,24 +260,17 @@ const QuizWebCam = ({ quizId, place }) => {
           <CameraArea>
             <Image src={imageSrc} alt="Captured" />
           </CameraArea>
-          <ButtonArea>
-            <button
-              style={{
-                width: "100%",
-                height: "50%",
-                backgroundColor: "lightgray",
-              }}
-              onClick={retake}
-            >
-              다시찍기
-            </button>
-            <button
-              style={{ width: "100%", height: "50%" }}
-              onClick={submit}
-              disabled={submitQuizState}
-            >
-              제출하기
-            </button>
+          <ButtonArea style={{ margin: "5%" }}>
+            <CameraButtonArea onClick={retake} >
+              <CamereAgainButton />
+              <CamereText>다시찍기</CamereText>
+            </CameraButtonArea>
+            <CameraButtonArea onClick={submit} disabled={submitQuizState} style={{
+              backgroundColor: submitQuizState? "rgba(0, 0, 0, 0.1)": "",
+              transform: submitQuizState ? "translateY(1px)" : ""}}>
+              <CamereSubmitButton />
+              <CamereText>제출하기</CamereText>
+            </CameraButtonArea>
           </ButtonArea>
         </WebcamContainer>
       ) : (
@@ -212,14 +280,15 @@ const QuizWebCam = ({ quizId, place }) => {
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               videoConstraints={videoConstraints}
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "95%" }}
               audio={false}
             />
           </CameraArea>
           <ButtonArea>
-            <button style={{ width: "100%", height: "50%" }} onClick={capture}>
-              사진 찍기
-            </button>
+            <CameraButtonArea onClick={capture}>
+              <CamereButton />
+              <CamereText>사진찍기</CamereText>
+            </CameraButtonArea>
           </ButtonArea>
         </WebcamContainer>
       )}

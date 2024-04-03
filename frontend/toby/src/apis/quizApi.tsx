@@ -52,8 +52,8 @@ export const getQuizAnswer = async ({ memberQuizId }) => {
   }
 };
 
-//119문제 당근 부여
-export const getEmergencyQuiz = async ({ place_id }) => {
+//당근 count
+export const getAllQuiz = async ({ place_id }) => {
   try {
     const response = await api.patch(`place/${place_id}/carrot`, {});
     return response.data;
