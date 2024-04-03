@@ -244,6 +244,12 @@ const Hospital = () => {
     dispatch(setHospitalQuizClear(false));
   };
 
+  const handleOnclickCarrotBtn = () => {
+    navigate("/mypage");
+    dispatch(setIsPlaceClear(true));
+    dispatch(setHospitalQuizClear(false));
+  };
+
   const handleOnclickPrevBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
     setFadeIn(false);
@@ -305,6 +311,16 @@ const Hospital = () => {
                   <img
                     src="/Image/button/showStoryList.png"
                     alt="스토리 보기 버튼"
+                  />
+                </NextBtn>
+                <NextBtn
+                  onClick={() => {
+                    handleOnclickCarrotBtn();
+                  }}
+                >
+                  <img
+                    src="/Image/button/carrotBtn.png"
+                    alt="당근밭으로 버튼"
                   />
                 </NextBtn>
               </ButtonArea>

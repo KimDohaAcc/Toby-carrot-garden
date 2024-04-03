@@ -256,6 +256,12 @@ const School = () => {
     dispatch(setIsPlaceClear(true));
     dispatch(setSchoolQuizClear(false));
   };
+  
+  const handleOnclickCarrotBtn = () => {
+    navigate("/mypage");
+    dispatch(setIsPlaceClear(true));
+    dispatch(setSchoolQuizClear(false));
+  };
 
   const handleOnclickPrevBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
@@ -318,6 +324,16 @@ const School = () => {
                   <img
                     src="/Image/button/showStoryList.png"
                     alt="스토리 보기 버튼"
+                  />
+                </NextBtn>
+                <NextBtn
+                  onClick={() => {
+                    handleOnclickCarrotBtn();
+                  }}
+                >
+                  <img
+                    src="/Image/button/carrotBtn.png"
+                    alt="당근밭으로 버튼"
                   />
                 </NextBtn>
               </ButtonArea>

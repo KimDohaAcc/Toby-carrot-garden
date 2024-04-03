@@ -3,6 +3,40 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { getClearImageList } from "../../apis/mypageApi";
 
+// getClearImageList 대신에 더미 데이터를 사용합니다.
+// const dummyImageList = [
+//   {
+//     clearImageId: 1,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/fff",
+//     placeId: 1,
+//     createdTime: "2024-03-25T17:06:08",
+//   },
+//   {
+//     clearImageId: 2,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/fc9",
+//     placeId: 2,
+//     createdTime: "2024-03-25T17:06:44",
+//   },
+//   {
+//     clearImageId: 3,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/fz8",
+//     placeId: 3,
+//     createdTime: "234234T3424",
+//   },
+//   {
+//     clearImageId: 4,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/b58",
+//     placeId: 4,
+//     createdTime: "234234T3424",
+//   },
+//   {
+//     clearImageId: 5,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/f0f",
+//     placeId: 5,
+//     createdTime: "234234T3424",
+//   },
+// ];
+
 const AlbumContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -100,6 +134,15 @@ const NoImage = styled.div`
   font-size: 23px;
 `;
 
+// const GotoStory = styled.button`
+//   border: none;
+//   width: 100%;
+//   height: 250%;
+//   border-radius: 30px;
+//   position: relative;
+//   cursor: pointer;
+// `;
+
 const BtnArea = styled.div`
   height: 100%;
   width: 100%;
@@ -167,13 +210,46 @@ const ImageWrapper = styled.div`
   object-fit: contain; // 이미지 비율을 유지하면서 컨테이너에 맞춥니다.
   position: relative;
 `;
-
+// const AlbumToby = styled.img`
+//   position: absolute;
+//   height: 400%;
+//   left: 74%;
+//   top: -200%;
+// `;
 const GotoMainText = styled.div`
-  cursor: url("Image/cursor/hover.png"), pointer;
+  cursor: pointer;
   color: #000;
   font-size: 40px;
   margin-bottom: 20px;
 `;
+
+// 데이터 형식 예시
+// {
+//   “status” : 200,
+//   “message” : “사진 목록을 보냈습니다”,
+//    “result” :
+//     {
+//       “list” :
+//           [
+//               {
+//                  “clearImageId” : 1,
+//                   “clearImageUrl” : ”s3 url”,
+//                   “placeId” : 1,
+//                   “createdTime” : “234234T3424”
+//               } ,
+//               {
+//                   “clearImageId” : 3,
+//                   “clearImageUrl” : ”s3 url”,
+//                   “placeId” : 2,
+//                   “createdTime” : “234234T3424”
+//               }
+//           ]
+//      }
+// }
+// Header
+//{
+//   “Content-Type”: “application/json”
+// }
 
 interface Image {
   clearImageId: number;
@@ -193,7 +269,10 @@ const Album = () => {
   //   setPresentImage(prevImage);
   //   setPrevImage("");
   // };
-
+  const backgroundImages = {
+    1: "/Image/album/hospitalFrame.png",
+    2: "/Image/album/schoolFrame.png",
+  };
   useEffect(() => {
     // 현재 이미지의 placeId를 설정하는 로직 추가...
     const currentImage = imageList.find(
@@ -210,16 +289,18 @@ const Album = () => {
     navigate("/main"); // '/main'으로 이동하는 함수
   };
   useEffect(() => {
-    // 이미지 리스트를 불러옵니다.
+    // 이미지 리스트를 불러옴
     const fetchData = async () => {
       try {
-        const { result } = await getClearImageList(); // API 수정 필요
-        setImageList(result.list);
+        const response = await getClearImageList();
+        setImageList(response);
+        if (response) {
+          setPresentImage(response[0].clearImageUrl);
+        }
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchData();
   }, []);
   const getBackgroundImageUrl = (placeId) => {

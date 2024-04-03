@@ -233,9 +233,9 @@ const TobyImage = styled.img`
 
 const UserName = styled.div`
   position: absolute;
-  width: calc(130%);
+  width: calc(100%);
   top: calc(5%);
-  right: calc(5%);
+  right: calc(15%);
   transform: translateX(-50%);
   padding: calc(3%) calc(10%);
   color: #ffffff;

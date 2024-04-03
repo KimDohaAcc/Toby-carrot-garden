@@ -24,13 +24,11 @@ const StoryContainer = styled.div`
   height: 100%;
   max-width: 100%;
   max-height: 100%;
-  border: 2px solid black;
 `;
 
 const LogoArea = styled.div`
   position: relative;
   flex: 0 0 14%;
-  border: 2px solid black;
   box-sizing: border-box;
 `;
 
@@ -38,7 +36,6 @@ const StoryContentArea1 = styled.div`
   background-image: url("/Image/common/storyFrameImage.png");
   background-size: 100% 100%;
   flex: 0 0 86%;
-  border: 2px solid black;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
@@ -57,7 +54,6 @@ const StoryContentArea2 = styled.div`
   grid-template-rows: 1fr 10fr 1fr;
   width: 82%;
   height: 80%;
-  border: 2px solid black;
   position: absolute;
   left: 5%;
   top: 7%;
@@ -68,7 +64,6 @@ const CloseBtnArea = styled.div`
   display: flex;
   justify-content: center;
   align-content: center;
-  border: 1px solid black;
 `;
 
 const CloseBtn = styled.button`
@@ -134,8 +129,6 @@ const NextBtn2 = styled.div`
 const Content = styled.div<{ fadeIn: boolean }>`
   grid-area: conten;
   display: flex;
-  border: 1px solid black;
-
   opacity: ${({ fadeIn }) => (fadeIn ? 1 : 0)};
   transition: ${({ fadeIn }) => (fadeIn ? "opacity 0.5s ease-in" : "none")};
 `;
@@ -251,6 +244,12 @@ const PoliceOffice = () => {
     dispatch(setPoliceQuizClear(false));
   };
 
+  const handleOnclickCarrotBtn = () => {
+    navigate("/mypage");
+    dispatch(setIsPlaceClear(true));
+    dispatch(setPoliceQuizClear(false));
+  };
+
   const handleOnclickPrevBtn = () => {
     console.log("sceneIndex: ", sceneIndex);
     setFadeIn(false);
@@ -312,6 +311,16 @@ const PoliceOffice = () => {
                   <img
                     src="/Image/button/showStoryList.png"
                     alt="스토리 보기 버튼"
+                  />
+                </NextBtn>
+                <NextBtn
+                  onClick={() => {
+                    handleOnclickCarrotBtn();
+                  }}
+                >
+                  <img
+                    src="/Image/button/carrotBtn.png"
+                    alt="당근밭으로 버튼"
                   />
                 </NextBtn>
               </ButtonArea>
