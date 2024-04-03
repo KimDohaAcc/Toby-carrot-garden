@@ -160,7 +160,7 @@ const BtnArea = styled.div`
 const PrevBtn = styled.img`
   width: 11%;
   height: auto;
-  cursor: pointer;
+  cursor: url("Image/cursor/hover.png"), pointer;
   position: absolute;
   left: calc(25%);
   overflow: hidden;
@@ -184,7 +184,7 @@ const OrderArea = styled.div`
 const NextBtn = styled.img`
   width: 11%;
   height: auto;
-  cursor: pointer;
+  cursor: url("Image/cursor/hover.png"), pointer;
   position: absolute;
   left: calc(63%);
   flex: 1;

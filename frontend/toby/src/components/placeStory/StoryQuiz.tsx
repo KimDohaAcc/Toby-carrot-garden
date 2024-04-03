@@ -20,10 +20,11 @@ const StoryQuizContainer = styled.div`
 `;
 
 const AIText = styled.div`
+  display: flex;
   position: absolute;
-  right: 0;
-  top: 0%;
-  font-size: 3rem;
+  right: 10%;
+  bottom: 0;
+  font-size: 2rem;
   text-align: center;
 `;
 
