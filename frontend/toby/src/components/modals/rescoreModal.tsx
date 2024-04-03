@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { getRescore } from "../../apis/analysisApi";
 
 const ModalBackdrop = styled.div`
@@ -14,14 +14,35 @@ const ModalBackdrop = styled.div`
   align-items: center;
   z-index: 1050;
 `;
-
+const fadeInAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 const ModalContainer = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 100%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-image: url("/Image/Modal/rescoreModal.png");
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 40%;
+  transform: translate(-50%, -50%);
+  padding: 1.5% 3% 1.5% 3%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 100;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  animation: ${fadeInAnimation} 0.5s ease;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  object-fit: cover;
+  overflow: hidden;
 `;
 
 const CloseButton = styled.button`
@@ -45,11 +66,11 @@ const ConfirmationButton = styled.button`
   cursor: pointer;
   font-weight: bold;
   &:first-child {
-    background-color: #4caf50;
+    background-color: #afd485;
     color: white;
   }
   &:last-child {
-    background-color: #f44336;
+    background-color: #fd8a69;
     color: white;
   }
 `;
