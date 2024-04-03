@@ -65,6 +65,7 @@ const MyResponsiveBar = () => {
             전체평균: item.correctRateAll,
           }));
           setData(transformedData);
+          console.log("잘 갖고옴");
         }
       } catch (error) {
         console.error("데이터를 불러오는데 실패했습니다.", error);
@@ -78,7 +79,7 @@ const MyResponsiveBar = () => {
     <Graph>
       <ResponsiveBar
         data={data}
-        keys={["우리애평균", "나이평균", "총평균"]}
+        keys={["우리아이평균", "또래아이평균", "전체평균"]}
         indexBy="항목"
         margin={{ top: 40, right: 100, bottom: 40, left: 100 }}
         padding={0.1}
