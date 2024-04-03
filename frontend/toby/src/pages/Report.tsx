@@ -6,6 +6,7 @@ import Logo3 from "../components/Logo3";
 import Rescore from "../components/report/Rescore.tsx";
 import ReportGraphContent from "../components/report/ReportGraphContent.tsx";
 import ReportDrawings from "../components/report/ReportDrawings.tsx";
+import { is } from "@react-spring/shared";
 
 // 전체 컨테이너
 const ReportContainer = styled.div`
@@ -61,6 +62,7 @@ const Category1 = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px;
+  align-items: center;
   flex-direction: column;
   position: relative;
 `;
@@ -69,7 +71,7 @@ const Category2 = styled.div`
   grid-area: category2;
   display: flex;
   justify-content: center;
-  align-items: left;
+  align-items: center;
   gap: 10px;
   flex-direction: column;
   position: relative;
@@ -257,14 +259,11 @@ const Taehun2 = styled.h2`
   font-size: calc(1.8vw);
 `;
 
-const AudioBtn = styled.button<{ isPlaying: boolean }>`
+const AudioBtnNS = styled.button`
   z-index: 1000;
   width: 4vw;
   height: 4vw;
-  background-image: url(${(props) =>
-    props.isPlaying
-      ? "/Image/button/no-sound.png"
-      : "/Image/button/sound.png"});
+  background-image: url("/Image/button/no-sound.png");
   background-size: 100% 100%;
   background-color: transparent;
   border: none;
@@ -273,6 +272,23 @@ const AudioBtn = styled.button<{ isPlaying: boolean }>`
     outline: none;
     background-color: transparent;
   }
+  cursor: url("/Image/cursor/hover.png"), pointer;
+`;
+
+const AudioBtnS = styled.button`
+  z-index: 1000;
+  width: 4vw;
+  height: 4vw;
+  background-image: url("/Image/button/sound.png");
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent;
+  }
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const AudioArea = styled.div`
@@ -377,7 +393,11 @@ const Report = () => {
           <audio ref={audioRef} controls autoPlay loop hidden>
             <source src="/Sound/toby_analysis.mp3" type="audio/mpeg" />
           </audio>
-          <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay} />
+          {isPlaying ? (
+            <AudioBtnS onClick={handleTogglePlay} />
+          ) : (
+            <AudioBtnNS onClick={handleTogglePlay} />
+          )}
           <ButtonText>{isPlaying ? "소리끄기" : "소리듣기"}</ButtonText>
         </AudioArea>
 

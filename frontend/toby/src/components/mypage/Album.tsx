@@ -3,40 +3,6 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { getClearImageList } from "../../apis/mypageApi";
 
-// getClearImageList 대신에 더미 데이터를 사용합니다.
-// const dummyImageList = [
-//   {
-//     clearImageId: 1,
-//     clearImageUrl: "https://dummyimage.com/600x400/000/fff",
-//     placeId: 1,
-//     createdTime: "2024-03-25T17:06:08",
-//   },
-//   {
-//     clearImageId: 2,
-//     clearImageUrl: "https://dummyimage.com/600x400/000/fc9",
-//     placeId: 2,
-//     createdTime: "2024-03-25T17:06:44",
-//   },
-//   {
-//     clearImageId: 3,
-//     clearImageUrl: "https://dummyimage.com/600x400/000/fz8",
-//     placeId: 3,
-//     createdTime: "234234T3424",
-//   },
-//   {
-//     clearImageId: 4,
-//     clearImageUrl: "https://dummyimage.com/600x400/000/b58",
-//     placeId: 4,
-//     createdTime: "234234T3424",
-//   },
-//   {
-//     clearImageId: 5,
-//     clearImageUrl: "https://dummyimage.com/600x400/000/f0f",
-//     placeId: 5,
-//     createdTime: "234234T3424",
-//   },
-// ];
-
 const AlbumContainer = styled.div`
   width: 100%;
   height: 100%;
