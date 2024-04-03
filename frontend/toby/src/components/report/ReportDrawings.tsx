@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getDrawingsQuiz } from "../../apis/analysisApi";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 // 스타일링된 컴포넌트
 const ListContainer = styled.div`
@@ -33,7 +34,20 @@ const DrawingItem = styled.div`
   /* margin: 5px; */
   border-bottom: 3px solid #ffdcdc;
 `;
-
+const NoImageArea = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr; /* 기존 grid에서 flex로 변경 */
+  /* flex-direction: column; 내용을 세로로 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+  justify-content: center; /* 세로 중앙 정렬 */
+  background-color: #f5f5f5d9;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  object-fit: contain;
+  height: 100%;
+  width: 100%; /* 너비를 100%로 설정하여 부모 컨테이너를 꽉 채움 */
+`;
 const ImageContainer = styled.div`
   display: flex;
   align-items: center;
@@ -74,7 +88,33 @@ const Answer = styled.div`
   height: auto;
   font-size: 3vw;
 `;
+const MiddleTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  overflow: hidden;
+  object-fit: contain;
+`;
+const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  object-fit: contain;
+`;
 
+const AlbumToby = styled.img`
+  width: 25%; // Adjust size as needed
+  margin-left: 3%; // Space between text and image
+  right: 60%;
+  overflow: hidden;
+  object-fit: contain;
+`;
 const Score = styled.div`
   display: flex;
   align-items: center;
@@ -90,7 +130,12 @@ const CreateTime = styled.div`
   flex: 0 0 25%;
   font-size: 1.5vw;
 `;
-
+const GotoMainText = styled.div`
+  cursor: pointer;
+  color: #000;
+  font-size: 40px;
+  margin-bottom: 20px;
+`;
 const translateAnswer = (answer) => {
   const translations = {
     door: "문",
@@ -112,7 +157,10 @@ interface Drawing {
 
 const ReportDrawings = () => {
   const [drawingsList, setDrawingsList] = useState<Drawing[]>([]);
-
+  const navigate = useNavigate();
+  const handleGoToMain = () => {
+    navigate("/main"); // '/main'으로 이동하는 함수
+  };
   useEffect(() => {
     const fetchDrawingsQuiz = async () => {
       try {
@@ -138,20 +186,43 @@ const ReportDrawings = () => {
 
   return (
     <ListContainer>
-      {drawingsList.map((drawing, index) => (
-        <DrawingItem key={index}>
-          <ImageContainer>
-            <Image src={drawing.imageUrl} alt={`Drawing ${index}`} />
-          </ImageContainer>
-          <InfoContainer>
-            <Answer>{drawing.correctAnswer}</Answer>
-            <Score>일치율&nbsp;&nbsp;{drawing.score}&nbsp;%</Score>
-            <CreateTime>{drawing.createTime}</CreateTime>
-          </InfoContainer>
-        </DrawingItem>
-      ))}
+      {drawingsList.length > 0 ? (
+        drawingsList.map((drawing, index) => (
+          <DrawingItem key={index}>
+            <ImageContainer>
+              <Image src={drawing.imageUrl} alt={`Drawing ${index}`} />
+            </ImageContainer>
+            <InfoContainer>
+              <Answer>{drawing.correctAnswer}</Answer>
+              <Score>일치율&nbsp;&nbsp;{drawing.score}&nbsp;%</Score>
+              <CreateTime>{drawing.createTime}</CreateTime>
+            </InfoContainer>
+          </DrawingItem>
+        ))
+      ) : (
+        // 그림 목록이 비어 있을 때 표시될 UI
+        <NoImageArea>
+          <div> {/* Empty top container for spacing */} </div>
+          <MiddleTextContainer>
+            <h1>
+              토비와 함께
+              <br />
+              사진 찍으러 가볼까요?
+            </h1>
+          </MiddleTextContainer>
+          <BottomContainer>
+            <GotoMainText onClick={handleGoToMain}>
+              당근 모으러 가기 -▷
+            </GotoMainText>
+            <AlbumToby
+              src="/Image/album/토비3.png"
+              alt="albumtoby"
+              onClick={handleGoToMain}
+            />
+          </BottomContainer>
+        </NoImageArea>
+      )}
     </ListContainer>
   );
 };
-
 export default ReportDrawings;
