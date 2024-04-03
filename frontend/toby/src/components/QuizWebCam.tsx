@@ -5,8 +5,10 @@ import WaitToby from "./modals/WaitToby";
 import FailToby from "./modals/FailToby";
 import SuccessToby from "./modals/SuccessToby";
 import styled from "styled-components";
-
+import { getAllQuiz } from "../apis/quizApi";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 import { setSchoolQuizClear } from "../store/slices/schoolSlice";
 import { setHospitalQuizClear } from "../store/slices/hospitalSlice";
@@ -129,7 +131,10 @@ const QuizWebCam = ({ quizId, place }) => {
       setModalState("fail");
     }
   };
-
+  const place_id = useSelector<RootState, number>(
+    (state: RootState) => state.place.placeId
+  );
+  console.log(place_id);
   const checkQuizAnswer = useCallback(async ({ memberQuizId }) => {
     let attempts = 0;
     const maxAttempts = 10;
@@ -142,6 +147,7 @@ const QuizWebCam = ({ quizId, place }) => {
 
         if (answerResponse.status === 200) {
           clearInterval(interval);
+
           setModalState(
             answerResponse.result.score === 100 ? "success" : "fail"
           );
@@ -162,6 +168,21 @@ const QuizWebCam = ({ quizId, place }) => {
     }, 1000);
   }, []);
 
+  useEffect(() => {
+    const fetchAllQuiz = async () => {
+      if (modalState === "success") {
+        try {
+          const response = await getAllQuiz({ place_id });
+          console.log(response);
+          // 여기서 필요한 추가 작업을 수행할 수 있습니다.
+        } catch (error) {
+          console.error("Error fetching all quizzes", error);
+        }
+      }
+    };
+
+    fetchAllQuiz();
+  }, [modalState, place_id]);
   useEffect(() => {
     if (modalState !== "wait" && modalState !== "none") {
       const timeout = setTimeout(() => setModalState("none"), 2000);

@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-
+import { getAllQuiz } from "../../apis/quizApi";
 import SignatureCanvas from "react-signature-canvas";
 import { submitQuiz, getQuizAnswer } from "../../apis/quizApi";
 import WaitToby from "./WaitToby";
 import FailToby from "./FailToby";
 import SuccessToby from "./SuccessToby";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
@@ -122,7 +124,9 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
     }
     setIsSubmitting(false); // 제출 완료
   }, [isSubmitting, isPolling, isOpen, quizId]);
-
+  const place_id = useSelector<RootState, number>(
+    (state: RootState) => state.place.placeId
+  );
   const pollQuizAnswer = useCallback(async (memberQuizId, attempts = 0) => {
     setIsPolling(true); // 폴링 시작
     if (attempts >= 10) {
@@ -142,6 +146,15 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
             setModalState("fail");
           } else {
             setModalState(score > 50 ? "success" : "fail");
+            if (score > 50) {
+              // 성공한 경우에만 getAllQuiz를 호출합니다.
+              try {
+                const allQuizResponse = await getAllQuiz({ place_id });
+                console.log(allQuizResponse);
+              } catch (error) {
+                console.error("Error fetching all quizzes:", error);
+              }
+            }
           }
         } else {
           // score가 -1이면 아직 폴링 계속
