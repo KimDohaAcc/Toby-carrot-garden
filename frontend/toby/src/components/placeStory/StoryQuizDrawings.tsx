@@ -45,9 +45,11 @@ const ImageArea = styled.div`
 `;
 
 const ConteentArea = styled.div`
-  width: 100%;
+  width: 90%;
   height: 100%;
   display: flex;
+  margin-top: 10px;
+  font-size: 1.3vw;
   justify-content: center;
   align-items: center;
   flex: 0 0 12.5%;
