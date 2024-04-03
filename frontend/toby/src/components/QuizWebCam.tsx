@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 
 import { setSchoolQuizClear } from "../store/slices/schoolSlice";
 import { setHospitalQuizClear } from "../store/slices/hospitalSlice";
+import { setMartQuizClear } from "../store/slices/martSlice";
+import { setPoliceQuizClear } from "../store/slices/policeSlice";
 
 const base64ToMultipartFile = (base64String, fileName) => {
   const byteString = atob(base64String.split(",")[1]);
@@ -86,7 +88,7 @@ const QuizWebCam = ({ quizId, place }) => {
   };
 
   const submit = async () => {
-    setSubmitQuizState(true)
+    setSubmitQuizState(true);
 
     if (!imageSrc) {
       console.error("No image to submit");
@@ -119,9 +121,9 @@ const QuizWebCam = ({ quizId, place }) => {
       } else if (place === "hospital") {
         dispatch(setHospitalQuizClear(true));
       } else if (place === "mart") {
-        console.log("placeId 3");
+        dispatch(setMartQuizClear(true));
       } else if (place === "police") {
-        console.log("placeId 4");
+        dispatch(setPoliceQuizClear(true));
       }
     } catch (error) {
       console.error("Quiz submission error", error);
@@ -196,7 +198,11 @@ const QuizWebCam = ({ quizId, place }) => {
             >
               다시찍기
             </button>
-            <button style={{ width: "100%", height: "50%" }} onClick={submit} disabled={submitQuizState}>
+            <button
+              style={{ width: "100%", height: "50%" }}
+              onClick={submit}
+              disabled={submitQuizState}
+            >
               제출하기
             </button>
           </ButtonArea>

@@ -280,7 +280,7 @@ const MainPage = () => {
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [muteImage, setMuteImage] = useState("/Image/button/no-sound.png");
-  
+
   useEffect(() => {
     // 컴포넌트 마운트 시 getUserStorage를 호출하여 사용자 이름 가져오기
     const userInfo = getUserStorage();
@@ -371,11 +371,11 @@ const MainPage = () => {
       setIsPlaying(false);
     }
   };
-  
+
   const tobyClick = () => {
     const audio = new Audio("/Sound/toby.mp3");
     audio.play();
-  }
+  };
 
   return (
     <>
@@ -392,7 +392,7 @@ const MainPage = () => {
               onMouseEnter={() => playAudio("report")}
               onMouseLeave={() => stopAudio("report")}
             />
-            <audio id="report" controls hidden>
+            <audio id="report" autoplay controls hidden>
               <source src="/Sound/mainPage/report.mp3" type="audio/mpeg" />
             </audio>
           </ReportArea>

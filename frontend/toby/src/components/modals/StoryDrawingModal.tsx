@@ -10,6 +10,8 @@ import SuccessToby from "./SuccessToby";
 
 import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
+import { setMartQuizClear } from "../../store/slices/martSlice";
+import { setPoliceQuizClear } from "../../store/slices/policeSlice";
 
 const BlackBoard = styled.div`
   display: flex;
@@ -25,7 +27,7 @@ const BlackBoard = styled.div`
   height: 90%;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
   z-index: 100;
-`
+`;
 
 const StoryDrawingModalContainer = styled.div`
   display: flex;
@@ -36,7 +38,6 @@ const StoryDrawingModalContainer = styled.div`
   width: 80%;
   height: 24vw;
   background-color: rgb(15, 65, 0);
-
 `;
 
 const ModalArea = styled.div`
@@ -108,10 +109,10 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
           dispatch(setSchoolQuizClear(true));
         } else if (place === "hospital") {
           dispatch(setHospitalQuizClear(true));
-        } else if (quizId === 3) {
-          console.log("placeId 3");
-        } else if (quizId === 4) {
-          console.log("placeId 4");
+        } else if (place === "mart") {
+          dispatch(setMartQuizClear(true));
+        } else if (place === "police") {
+          dispatch(setPoliceQuizClear(true));
         }
       } else {
         setModalState("fail");
