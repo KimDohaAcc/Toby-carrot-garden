@@ -15,16 +15,15 @@ const StoryQuizContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  border: 1px solid black;
   position: relative;
 `;
 
 const AIText = styled.div`
   display: flex;
   position: absolute;
-  right: 10%;
-  bottom: 0;
-  font-size: 2rem;
+  right: 13.5%;
+  top: 10%;
+  font-size: 1.5vw;
   text-align: center;
 `;
 

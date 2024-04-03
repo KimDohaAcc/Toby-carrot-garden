@@ -120,7 +120,7 @@ const CamereAgainButton = styled.image`
 
 const CamereText = styled.div`
   margin-left: 10px;
-  font-size: calc(1vw);
+  font-size: calc(1.3vw);
   align-self: center;
 `;
 
@@ -280,7 +280,7 @@ const QuizWebCam = ({ quizId, place }) => {
               ref={webcamRef}
               screenshotFormat="image/jpeg"
               videoConstraints={videoConstraints}
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "95%" }}
               audio={false}
             />
           </CameraArea>
