@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "SUITE";
+  src: url("/font/SUITE-Variable.woff2") format("woff2-variations");
+  /* 다른 포맷도 지원할 경우 추가 */
+  /* src: url('/font/SUITE.woff') format('woff'), */
+  /* url('/font/SUITE.ttf') format('truetype'), */
+  /* url('/font/SUITE.svg#font') format('svg'); */
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -26,6 +35,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: "SUITE", sans-serif;
 }
 
 button {
