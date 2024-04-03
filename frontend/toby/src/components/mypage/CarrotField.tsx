@@ -343,21 +343,27 @@ const CarrotField = () => {
             <CarrotGradeImage carrotGrade={carrotList[0].carrotGrade} />
             <CarrotSign src="Image/carrot/학교팻말.png" alt="school" />
             <CarrotCount>
-              {carrotList[0].carrotCount} / {carrotList[0].gradeMax}
+              {carrotList[0].carrotCount > 70
+                ? `${carrotList[0].carrotCount}`
+                : `${carrotList[0].carrotCount} / 70`}
             </CarrotCount>
           </SchoolCarrot>
           <HospitalCarrot>
             <CarrotGradeImage carrotGrade={carrotList[1].carrotGrade} />
             <CarrotSign src="Image/carrot/병원팻말.png" alt="hospital" />
             <CarrotCount>
-              {carrotList[1].carrotCount} / {carrotList[1].gradeMax}
+              {carrotList[1].carrotCount > 70
+                ? `${carrotList[1].carrotCount}`
+                : `${carrotList[1].carrotCount} / 70`}
             </CarrotCount>
           </HospitalCarrot>
           <MartCarrot>
             <CarrotGradeImage carrotGrade={carrotList[2].carrotGrade} />
             <CarrotSign src="Image/carrot/마트팻말.png" alt="mart" />
             <CarrotCount>
-              {carrotList[2].carrotCount} / {carrotList[2].gradeMax}
+              {carrotList[2].carrotCount > 70
+                ? `${carrotList[2].carrotCount}`
+                : `${carrotList[2].carrotCount} / 70`}
             </CarrotCount>
           </MartCarrot>
           <PoliceCarrot>
