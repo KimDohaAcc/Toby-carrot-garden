@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const LogoutArea = styled.div`
   display: flex;
   flex-direction: column;
-  border: 2px solid black;
   width: calc(8%);
   margin: calc(1%);
   font-size: calc(2rem);

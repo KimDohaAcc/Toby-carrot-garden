@@ -272,12 +272,18 @@ const AudioBtn = styled.button<{ isPlaying: boolean }>`
   }
 `;
 const AudioArea = styled.div`
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: calc(1%);
   right: calc(1%);
   margin: calc(2%);
 `;
 
+const ButtonText = styled.div`
+  font-size: 1.1vw;
+  margin-top: 7px;
+`;
 const Report = () => {
   const navigate = useNavigate();
   const [contentText, setContentText] = useState<React.ReactNode>("");
@@ -365,6 +371,7 @@ const Report = () => {
             <source src="/Sound/toby_analysis.mp3" type="audio/mpeg" />
           </audio>
           <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay} />
+          <ButtonText>{isPlaying ? "소리끄기" : "소리듣기"}</ButtonText>
         </AudioArea>
 
         <ReportCategory>
