@@ -94,7 +94,7 @@ const CloseBtn = styled.button`
 const ButtonArea = styled.div`
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 3%;
   width: calc(10%);
 `;
 

@@ -132,9 +132,9 @@ const StoryClear = ({ index, placeName }) => {
 
   useEffect(() => {
     if (placeName === "hospital") {
-      setPlaceId(1);
-    } else if (placeName === "school") {
       setPlaceId(2);
+    } else if (placeName === "school") {
+      setPlaceId(1);
     } else if (placeName === "mart") {
       setPlaceId(3);
     } else if (placeName === "police") {
@@ -166,7 +166,6 @@ const StoryClear = ({ index, placeName }) => {
             <ButtonText>소리듣기</ButtonText>
           </>
         )}
-        
       </AudioArea>
       <StoryClearContent>{sceneList[index].content}</StoryClearContent>
       <ClearWebcamArea>

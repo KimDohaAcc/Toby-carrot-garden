@@ -40,7 +40,6 @@ const StoryContentArea1 = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  
 `;
 
 const StoryContentArea2 = styled.div`
@@ -156,6 +155,7 @@ const School = () => {
 
   const location = useLocation();
   const { storyId, title, storyImageUrl } = location.state; // storyId, title, storyImageUrl navigate의 state로 받아오기
+
   const dispatch = useDispatch(); // 리덕스 디스패치
   const navigate = useNavigate(); // 페이지 이동
 
@@ -167,6 +167,25 @@ const School = () => {
   ); // 퀴즈 클리어 여부 가져오기
 
   const placeName = "school"; // 장소 이름
+
+  // let storyId, title, storyImageUrl;
+
+  // if (location.state) {
+  //   const { storyId: id, title: t, storyImageUrl: imageUrl } = location.state;
+  //   storyId = id;
+  //   title = t;
+  //   storyImageUrl = imageUrl;
+  // } else {
+  //   // location.state가 존재하지 않는 경우 에러 처리
+  //   // 예를 들어 기본값을 설정하거나, 사용자에게 알림을 표시할 수 있습니다.
+  //   console.error("location.state가 존재하지 않습니다.");
+  //   // alert('잘못된 접근입니다. 메인 화면으로 이동합니다.');
+  //   navigate("/main");
+  //   // 또는 기본값 설정
+  //   storyId = "";
+  //   title = "";
+  //   storyImageUrl = "";
+  // }
 
   useEffect(() => {
     setFadeIn(true);
