@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Webcam, { WebcamRef } from "react-webcam";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import { setHospitalQuizClear } from "../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../store/slices/schoolSlice";
 import { setMartQuizClear } from "../store/slices/martSlice";
 import { setPoliceQuizClear } from "../store/slices/policeSlice";
+import ClearToby from "./modals/ClearToby";
 
 const base64ToMultipartFile = (
   base64String: string,
@@ -81,11 +82,13 @@ const CameraButtonArea = styled.button`
   align-content: center;
   margin: 0 calc(5%);
   height: 7vh;
+  padding: 5px;
   cursor: url("/Image/cursor/hover.png"), pointer;
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
   transition: background-color 0.3s ease;
+  border-radius: 15px;
 
   &:focus {
     outline: none;
@@ -129,6 +132,8 @@ const QuizWebCam = ({ placeId }) => {
   const webcamRef = useRef<WebcamRef>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [submitQuizState, setSubmitQuizState] = useState(false);
+  const [modalState, setModalState] = useState(false);
+
 
   const dispatch = useDispatch();
 
@@ -176,14 +181,25 @@ const QuizWebCam = ({ placeId }) => {
         } else if (placeId === 4) {
           dispatch(setPoliceQuizClear(true));
         }
+        setModalState(true)
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
+  useEffect(() => {
+    if (modalState) {
+      const timeout = setTimeout(() => setModalState(false), 3200);
+      return () => clearTimeout(timeout);
+    }
+  }, [modalState]);
+
   return (
     <>
+      {modalState  && (
+        <ClearToby onClose={() => setModalState(false)} />
+      )}
       {imageSrc ? (
         <WebcamContainer>
           <CameraArea>

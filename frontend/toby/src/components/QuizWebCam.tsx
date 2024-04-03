@@ -67,7 +67,6 @@ const ButtonArea = styled.div`
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  padding: calc(1%);
   width: 100%;
   height: 90%;
   cursor: url("/Image/cursor/hover.png"), pointer;
@@ -80,6 +79,9 @@ const CameraButtonArea = styled.button`
   justify-content: center;
   align-content: center;
   margin: 0 calc(1%);
+  height: 5vh;
+  padding: 5px;
+  border-radius: 15px;
   cursor: url("/Image/cursor/hover.png"), pointer;
   background-repeat: no-repeat;
   background-color: transparent;
