@@ -98,6 +98,19 @@ const CameraButtonArea = styled.button`
     transform: translateY(1px);
   }
 `;
+const DisableButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  margin: 0 calc(1%);
+  height: 5vh;
+  padding: 5px;
+  border-radius: 15px;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+`;
 
 const CamereButton = styled.image`
   height: calc(100%);
@@ -131,7 +144,7 @@ const QuizWebCam = ({ quizId, place }) => {
   const [imageSrc, setImageSrc] = useState("");
   const [modalState, setModalState] = useState("none");
   const [submitQuizState, setSubmitQuizState] = useState(false);
-  const [memberQuizId, setMemberQuizId] = useState("");
+  const [submitQuizResult, setSubmitQuizResult] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -209,6 +222,7 @@ const QuizWebCam = ({ quizId, place }) => {
           setModalState(
             answerResponse.result.score === 100 ? "success" : "fail"
           );
+          setSubmitQuizResult(answerResponse.result.score === 100 ? true : false)
         } else if (attempts >= maxAttempts) {
           clearInterval(interval);
           console.error("Max polling attempts reached, stopping.");
@@ -264,21 +278,43 @@ const QuizWebCam = ({ quizId, place }) => {
             <Image src={imageSrc} alt="Captured" />
           </CameraArea>
           <ButtonArea style={{ margin: "5%" }}>
-            <CameraButtonArea onClick={retake}>
-              <CamereAgainButton />
-              <CamereText>다시찍기</CamereText>
-            </CameraButtonArea>
-            <CameraButtonArea
-              onClick={submit}
-              disabled={submitQuizState}
-              style={{
-                backgroundColor: submitQuizState ? "rgba(0, 0, 0, 0.1)" : "",
-                transform: submitQuizState ? "translateY(1px)" : "",
-              }}
-            >
-              <CamereSubmitButton />
-              <CamereText>제출하기</CamereText>
-            </CameraButtonArea>
+            {submitQuizResult ? (
+              <>
+                <DisableButton onClick={retake} disabled>
+                  <CamereAgainButton />
+                  <CamereText>다시찍기</CamereText>
+                </DisableButton>
+                <CameraButtonArea
+                  onClick={submit}
+                  disabled={submitQuizState}
+                  style={{
+                    backgroundColor: submitQuizState ? "rgba(0, 0, 0, 0.1)" : "",
+                    transform: submitQuizState ? "translateY(1px)" : "",
+                  }}
+                >
+                  <CamereSubmitButton />
+                  <CamereText>제출하기</CamereText>
+                </CameraButtonArea>
+              </>
+            ) : (
+              <>
+                <CameraButtonArea onClick={retake}>
+                  <CamereAgainButton />
+                  <CamereText>다시찍기</CamereText>
+                </CameraButtonArea>
+                <CameraButtonArea
+                  onClick={submit}
+                  disabled={submitQuizState}
+                  style={{
+                    backgroundColor: submitQuizState ? "rgba(0, 0, 0, 0.1)" : "",
+                    transform: submitQuizState ? "translateY(1px)" : "",
+                  }}
+                >
+                  <CamereSubmitButton />
+                  <CamereText>제출하기</CamereText>
+                </CameraButtonArea>
+              </>
+            )}
           </ButtonArea>
         </WebcamContainer>
       ) : (
