@@ -4,7 +4,7 @@ import { getEmotionList, getObjectList } from "../../apis/analysisApi";
 import RescoreModal from "../modals/rescoreModal";
 import { format } from "date-fns";
 import { getRescore } from "../../apis/analysisApi";
-
+import { useNavigate } from "react-router-dom";
 interface QuizItem {
   correctAnswer: string;
   imageUrl: string;
@@ -149,6 +149,52 @@ const RecoreBoxAnswerText = styled.div`
   font-size: 2.5vw;
   margin: 5%;
 `;
+const NoImageArea = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr; /* 기존 grid에서 flex로 변경 */
+  /* flex-direction: column; 내용을 세로로 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+  justify-content: center; /* 세로 중앙 정렬 */
+  background-color: #f5f5f5d9;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  object-fit: contain;
+  height: 100%;
+  width: 100%; /* 너비를 100%로 설정하여 부모 컨테이너를 꽉 채움 */
+`;
+const MiddleTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  overflow: hidden;
+  object-fit: contain;
+`;
+const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  object-fit: contain;
+`;
+const GotoMainText = styled.div`
+  cursor: pointer;
+  color: #000;
+  font-size: 40px;
+  margin-bottom: 20px;
+`;
+const AlbumToby = styled.img`
+  width: 25%; // Adjust size as needed
+  margin-left: 3%; // Space between text and image
+  right: 60%;
+  overflow: hidden;
+  object-fit: contain;
+`;
 const RecoreBoxAnswerCheck = styled.div`
   width: 100%;
   height: auto;
@@ -198,7 +244,10 @@ const RecoreContent = () => {
   const [objectQuizList, setObjectQuizList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentQuizId, setCurrentQuizId] = useState<number | null>(null);
-
+  const navigate = useNavigate();
+  const handleGoToMain = () => {
+    navigate("/main"); // '/main'으로 이동하는 함수
+  };
   useEffect(() => {
     const fetchQuizData = async () => {
       try {
@@ -277,79 +326,129 @@ const RecoreContent = () => {
           <RecoreButtonContainer>
             <RecoreButton src="/Image/button/EmotionButtonOn.png" />
           </RecoreButtonContainer>
-          <RecoreScrollArea>
-            {/* <RecoreBoxTitle>감정</RecoreBoxTitle> */}
-            {emotionQuizList.map((quiz, index) => (
-              <RecoreBox key={quiz.memberQuizId}>
-                <RecoreBoxImage
-                  src={quiz.imageUrl}
-                  alt={`Quiz ${quiz.memberQuizId}`}
+          {emotionQuizList.length > 0 ? (
+            <RecoreScrollArea>
+              {/* <RecoreBoxTitle>감정</RecoreBoxTitle> */}
+              {emotionQuizList.map((quiz, index) => (
+                <RecoreBox key={quiz.memberQuizId}>
+                  <RecoreBoxImage
+                    src={quiz.imageUrl}
+                    alt={`Quiz ${quiz.memberQuizId}`}
+                  />
+                  <RecoreBoxAnswer>
+                    <RecoreBoxAnswerText>
+                      <div>
+                        <strong>정답 : {quiz.correctAnswer}</strong>
+                      </div>
+                    </RecoreBoxAnswerText>
+                    <RecoreBoxAnswerCheck>
+                      <div>
+                        <strong>{quiz.score}</strong>
+                      </div>
+                    </RecoreBoxAnswerCheck>
+                    <RecoreBoxRescoreDate>
+                      {" "}
+                      <div>
+                        <strong>{quiz.createTime}</strong>
+                      </div>
+                    </RecoreBoxRescoreDate>
+                    <RecoreBoxRescoreButton>
+                      <Button
+                        onClick={() => handleOpenModal(quiz.memberQuizId)}
+                      >
+                        재채점
+                      </Button>
+                    </RecoreBoxRescoreButton>
+                  </RecoreBoxAnswer>
+                </RecoreBox>
+              ))}
+            </RecoreScrollArea>
+          ) : (
+            <NoImageArea>
+              <div> {/* Empty top container for spacing */} </div>
+              <MiddleTextContainer>
+                <h1>
+                  토비와 함께
+                  <br />
+                  사진 찍으러 가볼까요?
+                </h1>
+              </MiddleTextContainer>
+              <BottomContainer>
+                <GotoMainText onClick={handleGoToMain}>
+                  당근 모으러 가기 -▷
+                </GotoMainText>
+                <AlbumToby
+                  src="/Image/album/토비3.png"
+                  alt="albumtoby"
+                  onClick={handleGoToMain}
                 />
-                <RecoreBoxAnswer>
-                  <RecoreBoxAnswerText>
-                    <div>
-                      <strong>정답 : {quiz.correctAnswer}</strong>
-                    </div>
-                  </RecoreBoxAnswerText>
-                  <RecoreBoxAnswerCheck>
-                    <div>
-                      <strong>{quiz.score}</strong>
-                    </div>
-                  </RecoreBoxAnswerCheck>
-                  <RecoreBoxRescoreDate>
-                    {" "}
-                    <div>
-                      <strong>{quiz.createTime}</strong>
-                    </div>
-                  </RecoreBoxRescoreDate>
-                  <RecoreBoxRescoreButton>
-                    <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
-                      재채점
-                    </Button>
-                  </RecoreBoxRescoreButton>
-                </RecoreBoxAnswer>
-              </RecoreBox>
-            ))}
-          </RecoreScrollArea>
+              </BottomContainer>
+            </NoImageArea>
+          )}
         </RecoreContentContainer2>
 
         <RecoreContentContainer2>
           <RecoreButtonContainer>
             <RecoreButton src="/Image/button/ObjectButtonOn.png" />
           </RecoreButtonContainer>
-          <RecoreScrollArea2>
-            {objectQuizList.map((quiz, index) => (
-              <RecoreBox key={quiz.memberQuizId}>
-                <RecoreBoxImage
-                  src={quiz.imageUrl}
-                  alt={`Quiz ${quiz.memberQuizId}`}
+          {objectQuizList.length > 0 ? (
+            <RecoreScrollArea2>
+              {objectQuizList.map((quiz, index) => (
+                <RecoreBox key={quiz.memberQuizId}>
+                  <RecoreBoxImage
+                    src={quiz.imageUrl}
+                    alt={`Quiz ${quiz.memberQuizId}`}
+                  />
+                  <RecoreBoxAnswer>
+                    <RecoreBoxAnswerText>
+                      <div>
+                        <strong>정답 : {quiz.correctAnswer}</strong>
+                      </div>
+                    </RecoreBoxAnswerText>
+                    <RecoreBoxAnswerCheck>
+                      <div>
+                        <strong>{quiz.score}</strong>
+                      </div>
+                    </RecoreBoxAnswerCheck>
+                    <RecoreBoxRescoreDate>
+                      {" "}
+                      <div>
+                        <strong>{quiz.createTime}</strong>
+                      </div>
+                    </RecoreBoxRescoreDate>
+                    <RecoreBoxRescoreButton>
+                      <Button
+                        onClick={() => handleOpenModal(quiz.memberQuizId)}
+                      >
+                        재채점
+                      </Button>
+                    </RecoreBoxRescoreButton>
+                  </RecoreBoxAnswer>
+                </RecoreBox>
+              ))}
+            </RecoreScrollArea2>
+          ) : (
+            <NoImageArea>
+              <div> {/* Empty top container for spacing */} </div>
+              <MiddleTextContainer>
+                <h1>
+                  토비와 함께
+                  <br />
+                  사진 찍으러 가볼까요?
+                </h1>
+              </MiddleTextContainer>
+              <BottomContainer>
+                <GotoMainText onClick={handleGoToMain}>
+                  당근 모으러 가기 -▷
+                </GotoMainText>
+                <AlbumToby
+                  src="/Image/album/토비3.png"
+                  alt="albumtoby"
+                  onClick={handleGoToMain}
                 />
-                <RecoreBoxAnswer>
-                  <RecoreBoxAnswerText>
-                    <div>
-                      <strong>정답 : {quiz.correctAnswer}</strong>
-                    </div>
-                  </RecoreBoxAnswerText>
-                  <RecoreBoxAnswerCheck>
-                    <div>
-                      <strong>{quiz.score}</strong>
-                    </div>
-                  </RecoreBoxAnswerCheck>
-                  <RecoreBoxRescoreDate>
-                    {" "}
-                    <div>
-                      <strong>{quiz.createTime}</strong>
-                    </div>
-                  </RecoreBoxRescoreDate>
-                  <RecoreBoxRescoreButton>
-                    <Button onClick={() => handleOpenModal(quiz.memberQuizId)}>
-                      재채점
-                    </Button>
-                  </RecoreBoxRescoreButton>
-                </RecoreBoxAnswer>
-              </RecoreBox>
-            ))}
-          </RecoreScrollArea2>
+              </BottomContainer>
+            </NoImageArea>
+          )}
         </RecoreContentContainer2>
       </RecoreContentContainer>
 

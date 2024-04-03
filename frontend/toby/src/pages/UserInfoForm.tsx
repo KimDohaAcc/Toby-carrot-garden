@@ -192,7 +192,7 @@ function UserInfoForm() {
 
       const response = await postSignInfo(requestData);
       console.log("추가 정보 전송 완료", response.message);
-      navigate("/main");
+      navigate("/");
     } catch (error) {
       console.error("추가 정보 전송 실패", error);
     }
