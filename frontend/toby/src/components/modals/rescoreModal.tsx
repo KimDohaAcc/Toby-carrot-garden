@@ -24,6 +24,7 @@ const fadeInAnimation = keyframes`
 const ModalContainer = styled.div`
   background-image: url("/Image/modal/rescoreModal.png");
   position: fixed;
+  font-size: calc(1em + 0.2vw);
   top: 50%;
   left: 50%;
   width: 30%;
@@ -53,31 +54,35 @@ const CloseButton = styled.div`
 `;
 
 const ConfirmationContent = styled.div`
-  top: -50%;
-  width: 100%;
-  heighst: auto;
+  /* top: -50%; */
+  width: 80%;
+  height: 20%;
   object-fit: contain;
   text-align: center;
   overflow-wrap: break-word;
-  font-size: calc(1em + 1.5vw);
+  font-size: calc(10em + 1.5vw);
   box-sizing: border-box;
-  margin-top: calc(15%);
+  margin-top: calc(-30%);
   display: flex;
   flex-direction: row;
+  flex-direction: row; /* 버튼을 가로로 배열 */
+  justify-content: space-around; /* 버튼 사이에 여백을 균등하게 분배 */
+  gap: 15%; /* 버튼 사이의 간격을 추가 */
 `;
 
 const ConfirmationButton = styled.button`
   /* margin-top: %; */
   display: flex;
-  /* justify-content: center;
-  align-content: center;
+  justify-content: center;
+
   align-items: center;
-  text-align: center; */
+  text-align: center;
   gap: 10%;
   width: 100%;
   height: 130%;
   flex-grow: 1;
   border: none;
+  font-size: calc(10%);
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
