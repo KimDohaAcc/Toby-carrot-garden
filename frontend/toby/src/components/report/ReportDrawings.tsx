@@ -31,7 +31,7 @@ const DrawingItem = styled.div`
   width: 100%;
   height: auto;
   /* margin: 5px; */
-  border-bottom: 3px solid #FFDCDC;
+  border-bottom: 3px solid #ffdcdc;
 `;
 
 const ImageContainer = styled.div`
@@ -43,7 +43,6 @@ const ImageContainer = styled.div`
   flex: 0 0 60%;
   object-fit: contain;
   overflow: hidden;
-  
 `;
 
 const Image = styled.img`
@@ -51,7 +50,11 @@ const Image = styled.img`
   height: 80%;
   width: 80%;
   margin: 5%;
-  border: 3px solid #fda7a7;
+  border: 5px solid #fda7a7;
+  background-image: url("/Image/modal/칠판.png");
+  background-size: cover;
+  background-repeat: no-repeat; /* 이미지 반복 없이 설정 */
+  background-position: center; /* 이미지를 가운데 정렬 */
 `;
 
 const InfoContainer = styled.div`
@@ -78,7 +81,6 @@ const Score = styled.div`
   margin-left: 10px;
   flex: 0 0 25%;
   font-size: 2vw;
-
 `;
 
 const CreateTime = styled.div`
@@ -93,6 +95,7 @@ const translateAnswer = (answer) => {
   const translations = {
     door: "문",
     "t-shirt": "티셔츠",
+    pants: "바지",
     // You can add more translations here
   };
 

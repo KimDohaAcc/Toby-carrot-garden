@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -10,6 +10,8 @@ import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setPoliceQuizClear } from "../../store/slices/policeSlice";
 import { setMartQuizClear } from "../../store/slices/martSlice";
 import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
+import SuccessToby from "../modals/SuccessToby";
+import FailToby from "../modals/FailToby";
 
 const EmergencyContainer = styled.div`
   display: grid;
@@ -131,20 +133,20 @@ const carrotModalani = keyframes`
   }
 `;
 
-const GetCarrotModal = styled.img`
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
-  height: 80%;
-  z-index: 10;
-  animation: ${carrotModalani} 2s linear none;
-`;
+// const GetCarrotModal = styled.img`
+//   position: fixed;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   width: 50%;
+//   height: 80%;
+//   z-index: 10;
+//   animation: ${carrotModalani} 2s linear none;
+// `;
 
 const AudioPlayer = styled.audio`
   position: absolute;
@@ -204,7 +206,8 @@ const StoryEmergency = ({ index, place }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCarrotModalOpen, setIsCarrotModalOpen] = useState(false);
-
+  const [IsFailModalOpen, setIsFailModalOpen] = useState(false);
+  const [IsSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const sceneList = useSelector<RootState, Scene[]>((state: RootState) => {
     if (place === "hospital") {
       return state.hospital.sceneList;
@@ -255,34 +258,44 @@ const StoryEmergency = ({ index, place }) => {
       setNumber(newNumber);
     }
   };
-
   const submit = async () => {
+    console.log("입력된 번호:", number);
     try {
-      const response = await getEmergencyQuiz({ place_id });
-      console.log(response);
-      openCarrotModal();
-      if (place === "hospital") {
+      // hospital에서 119를 정확히 입력했을 경우
+      if (place === "hospital" && number === "119") {
+        setIsSuccessModalOpen(true);
+        const response = await getEmergencyQuiz({ place_id });
+        console.log(response);
+        console.log(place);
+        console.log("1");
+        setTimeout(() => {
+          setIsSuccessModalOpen(false);
+        }, 2000);
         dispatch(setHospitalQuizClear(true));
-      } else if (place === "police") {
+      }
+      // police에서 112를 정확히 입력했을 경우
+      else if (place === "police" && number === "112") {
+        setIsSuccessModalOpen(true);
+        const response = await getEmergencyQuiz({ place_id });
+        console.log(response);
+        console.log(place);
+        setTimeout(() => {
+          setIsSuccessModalOpen(false);
+        }, 2000);
         dispatch(setPoliceQuizClear(true));
-        console.log("police");
-      } else if (place === "mart") {
-        dispatch(setMartQuizClear(true));
-      } else if (place === "school") {
-        dispatch(setSchoolQuizClear(true));
+      }
+      // 위의 경우를 제외한 모든 경우(실패)에 FailToby 모달을 표시
+      else {
+        setIsFailModalOpen(true);
+        console.log("1");
+        setTimeout(() => {
+          setIsFailModalOpen(false);
+        }, 2000);
       }
     } catch (error) {
       console.error(error);
     }
   };
-
-  const openCarrotModal = () => {
-    setIsCarrotModalOpen(true);
-    /* setTimeout(() => {
-      setIsCarrotModalOpen(false);
-    }, 4000); */
-  };
-
   return (
     <EmergencyContainer>
       <AudioArea>
@@ -318,14 +331,19 @@ const StoryEmergency = ({ index, place }) => {
             </ModalCloseBtn>
           </ErrorModal>
         )}
-        {isCarrotModalOpen && (
+        {IsSuccessModalOpen && (
           <>
-            <GetCarrotModal
-              src="/Image/toby/carrotRabbit.png"
-              alt="carrotRabbit"
-            />
+            <SuccessToby onClose={() => setIsSuccessModalOpen(false)} />
             <audio ref={audioRef} controls autoPlay hidden>
               <source src="/Sound/당근획득.mp3" type="audio/mpeg" />
+            </audio>
+          </>
+        )}
+        {IsFailModalOpen && (
+          <>
+            <FailToby onClose={() => setIsFailModalOpen(false)} />
+            <audio ref={audioRef} controls autoPlay hidden>
+              <source src="/Sound/다시도전.mp3" type="audio/mpeg" />
             </audio>
           </>
         )}

@@ -370,7 +370,9 @@ const CarrotField = () => {
             <CarrotGradeImage carrotGrade={carrotList[3].carrotGrade} />
             <CarrotSign src="Image/carrot/경찰서팻말.png" alt="police" />
             <CarrotCount>
-              {carrotList[3].carrotCount} / {carrotList[3].gradeMax}
+              {carrotList[3].carrotCount > 70
+                ? `${carrotList[3].carrotCount}`
+                : `${carrotList[3].carrotCount} / 70`}
             </CarrotCount>
           </PoliceCarrot>
           <ShovelImage src="Image/common/shovel.png" alt="shovel" />
