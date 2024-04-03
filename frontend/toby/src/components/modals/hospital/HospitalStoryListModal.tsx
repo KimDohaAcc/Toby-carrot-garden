@@ -90,6 +90,8 @@ const CloseBtn = styled.button`
 `;
 
 const StoryTitle = styled.h1`
+  white-space: nowrap; /* 텍스트가 한 줄로만 유지되도록 설정 */
+  text-overflow: ellipsis; /* 텍스트가 요소의 영역을 넘어갈 때 생략 부호(...)를 표시 */
   margin: 5px;
   flex: 2; /* 5:2:1 비율 중 두 번째 행 */
   overflow: hidden;

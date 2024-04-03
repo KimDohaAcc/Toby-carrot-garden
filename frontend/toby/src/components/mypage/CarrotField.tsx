@@ -92,14 +92,8 @@ const CarrotFieldContent = styled.div`
   border-radius: 5%;
   display: grid;
   grid-template-areas:
-    /* ". . . . ."
-    ". school . hospital ."
-    /* ". . . . ." */
-    /* ". mart . police ." */
-    /* ". . . . ."; */
     ". . . . ."
     ". school . hospital ."
-    /* ". . . . ." */
     ". mart . police ."
     ". . . . .";
   border-radius: 30px;
