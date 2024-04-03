@@ -117,14 +117,14 @@ const ContentExpressBox = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  margin-left: 1%;
+  margin-left: 5px;
   object-fit: contain;
   overflow: hidden;
 `;
 
 const ContentExpressButton = styled.img`
   position: absolute;
-  width: 25%;
+  width: 30%;
   height: 100%;
   left: 5%;
 `;
@@ -146,7 +146,7 @@ const ContentExpressButtonContiner = styled.div`
 const ContentExpress = styled.div`
   flex: 0 0 90%;
   box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
-  border: 14px solid #FFDCDC;
+  border: 14px solid #ffdcdc;
   background-color: white;
   border-radius: 5%;
   height: 90%;
@@ -159,7 +159,7 @@ const ContentExpress = styled.div`
 const ContentElseContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 1%;
+  /* margin-right: 1%; */
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -169,7 +169,7 @@ const ContentElseContainer = styled.div`
 const ContentElse = styled.div`
   flex: 0 0 90%;
   box-sizing: border-box; // 요소의 크기 계산에 경계선 포함
-  border: 14px solid #FFDCDC;
+  border: 14px solid #ffdcdc;
   background-color: white;
   border-radius: 5%;
   height: 100%;
@@ -261,7 +261,10 @@ const AudioBtn = styled.button<{ isPlaying: boolean }>`
   z-index: 1000;
   width: 4vw;
   height: 4vw;
-  background-image: url(${(props) => props.isPlaying ? "/Image/button/no-sound.png" : "/Image/button/sound.png"});
+  background-image: url(${(props) =>
+    props.isPlaying
+      ? "/Image/button/no-sound.png"
+      : "/Image/button/sound.png"});
   background-size: 100% 100%;
   background-color: transparent;
   border: none;
@@ -325,7 +328,10 @@ const Report = () => {
         setContentText(
           <>
             <Taehun> 히스토리</Taehun>
-            <Taehun2>우리 아이가 풀었던 문제를 확인할 수 있어요! 채점이 잘못되었다면 부모님이 다시 채점해주세요!</Taehun2>
+            <Taehun2>
+              우리 아이가 풀었던 문제를 확인할 수 있어요! 채점이 잘못되었다면
+              부모님이 다시 채점해주세요!
+            </Taehun2>
           </>
         );
         setShowBoxes(false);

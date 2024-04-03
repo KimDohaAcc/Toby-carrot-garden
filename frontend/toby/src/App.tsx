@@ -54,6 +54,7 @@ function App() {
         <Route path="report" element={<Report />} />
         <Route path="signplus" element={<UserInfoForm />} />
         <Route path="example" element={<Example />} />
+
         {/* <Route path="webcam" element={<QuizWebcam />} /> */}
 
         <Route path="*" element={<NotFound />} />

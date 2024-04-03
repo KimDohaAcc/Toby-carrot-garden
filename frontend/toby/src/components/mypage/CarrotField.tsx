@@ -87,6 +87,9 @@ const CarrotFieldContent = styled.div`
   background-image: url("Image/album/당근밭배경.png");
   background-size: cover;
   border-radius: 30px;
+  border: 14px solid #f7cb96;
+  box-sizing: border-box;
+  border-radius: 5%;
   display: grid;
   grid-template-areas:
     /* ". . . . ."
@@ -180,7 +183,7 @@ const CarrotCount = styled.div`
   /* overflow: hidden;
   object-fit: contain; */
   /* font-size: clamp(40px, 2vw, 20px); */
-  font-size: calc(150%);
+  font-size: calc(250%);
   flex: 0 0 15%;
   top: -12%;
   position: relative;
@@ -284,7 +287,7 @@ const CarrotGradeImage = ({ carrotGrade }) => {
       ImageAlt = "policemaster";
       break;
   }
-  return <img src={ImageURL} alt={ImageAlt} width="80%" height="80%" />;
+  return <img src={ImageURL} alt={ImageAlt} width="70%" height="55%" />;
 };
 
 const CarrotField = () => {

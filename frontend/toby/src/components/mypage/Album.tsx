@@ -40,31 +40,39 @@ import { getClearImageList } from "../../apis/mypageApi";
 const AlbumContainer = styled.div`
   width: 100%;
   height: 100%;
+  border: 14px solid #f7cb96;
+  box-sizing: border-box;
+  border-radius: 5%;
+  background-color: white;
 `;
 
 const AlbumArea = styled.div`
   display: grid;
-  grid-template-rows: 5fr 1fr;
-  /* background-color: #f5f5f5d9; */
+  grid-template-rows: 5fr 2fr;
   background-size: cover;
   border-radius: 30px;
+  background-repeat: no-repeat;
   justify-items: center;
   align-items: center;
+  align-self: center;
   overflow: hidden;
   object-fit: contain;
   width: 100%;
-  height: 95%;
+  height: 100%;
+  overflow: hidden;
+  background-size: contain;
+  background-image: url(${(props) => props.bgImage});
 `;
 
 const ImageArea = styled.div`
   width: 80%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   overflow: hidden;
   object-fit: contain;
-  flex: 0 0 70%;
+  flex: 0 0 10%;
 `;
 
 const NoImageArea = styled.div`
@@ -136,9 +144,9 @@ const NoImage = styled.div`
 // `;
 
 const BtnArea = styled.div`
-  height: 900%;
-  width: 70%;
-  top: 0%;
+  height: 100%;
+  width: 100%;
+  top: 15%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -146,18 +154,18 @@ const BtnArea = styled.div`
   overflow: hidden;
   object-fit: contain;
   position: relative;
-  flex: 0 0 30%;
+  flex: 0 0 40%;
 `;
 
 const PrevBtn = styled.img`
-  width: 20%;
+  width: 11%;
   height: auto;
   cursor: pointer;
   position: absolute;
-  left: calc(7%);
+  left: calc(25%);
   overflow: hidden;
   object-fit: contain;
-  flex: 0 0 33%;
+  flex: 1;
 `;
 
 const OrderArea = styled.div`
@@ -167,21 +175,41 @@ const OrderArea = styled.div`
   font-size: clamp(30px, 2vw, 43px);
   flex: 1;
   position: absolute;
-  left: calc(37%);
+  left: calc(44%);
   overflow: hidden;
   object-fit: contain;
-  flex: 0 0 33%;
+  flex: 1;
 `;
 
 const NextBtn = styled.img`
-  width: 20%;
+  width: 11%;
   height: auto;
   cursor: pointer;
   position: absolute;
-  left: calc(72%);
-  flex: 0 0 33%;
+  left: calc(63%);
+  flex: 1;
 `;
-
+const StyledImage = styled.img`
+  width: 70%; // 이미지의 너비를 설정
+  height: 70%; // 이미지의 높이를 설정
+  object-fit: contain; // 컨테이너 내에서 이미지 비율을 유지
+  margin: auto; // 이미지를 중앙에 위치시킵니다 (가로 정렬에 유용)
+  display: block; // 이미지를 블록 요소로 만들어 중앙 정렬이 가능하게 합니다
+  align-self: center; // Flexbox 컨테이너 내에서 자신을 세로 방향으로 중앙에 위치시킵니다
+  top: 35%;
+  position: absolute;
+  /* border: 2px solid red; */
+`;
+const ImageWrapper = styled.div`
+  display: flex;
+  justify-content: center; // 이미지를 가로 방향으로 중앙에 위치시킵니다.
+  align-items: center; // 이미지를 세로 방향으로 중앙에 위치시킵니다.
+  width: 100%; // 이미지 컨테이너의 너비를 조정합니다.
+  height: 100%; // 이미지 컨테이너의 높이를 조정합니다.
+  overflow: hidden; // 이미지가 컨테이너를 벗어날 경우 숨깁니다.
+  object-fit: contain; // 이미지 비율을 유지하면서 컨테이너에 맞춥니다.
+  position: relative;
+`;
 // const AlbumToby = styled.img`
 //   position: absolute;
 //   height: 400%;
@@ -235,13 +263,23 @@ const Album = () => {
   const [presentImage, setPresentImage] = useState("");
   const [imageList, setImageList] = useState<Image[]>([]);
   const [presentImageIndex, setPresentImageIndex] = useState(1);
-
+  const [presentImagePlaceId, setPresentImagePlaceId] = useState(0);
   // const showPrevImage = () => {
   //   setNextImage(presentImage);
   //   setPresentImage(prevImage);
   //   setPrevImage("");
   // };
-
+  const backgroundImages = {
+    1: "/Image/album/schoolFrame.png",
+    2: "/Image/album/hospitalFrame.png",
+  };
+  useEffect(() => {
+    // 현재 이미지의 placeId를 설정하는 로직 추가...
+    const currentImage = imageList.find(
+      (image) => image.clearImageUrl === presentImage
+    );
+    setPresentImagePlaceId(currentImage?.placeId || 0);
+  }, [presentImage, imageList]);
   // const showNextImage = () => {
   //   setPrevImage(presentImage);
   //   setPresentImage(nextImage);
@@ -332,13 +370,13 @@ const Album = () => {
           </BottomContainer>
         </NoImageArea>
       ) : (
-        <AlbumArea>
+        <AlbumArea
+          bgImage={backgroundImages[presentImagePlaceId] || backgroundImages[1]}
+        >
           <ImageArea>
-            <img
-              src={presentImage}
-              alt="image"
-              style={{ width: "80%", height: "auto" }}
-            />
+            <ImageWrapper>
+              <StyledImage src={presentImage} alt="image description" />
+            </ImageWrapper>
           </ImageArea>
           <BtnArea>
             <PrevBtn

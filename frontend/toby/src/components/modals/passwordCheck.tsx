@@ -58,7 +58,6 @@ const ButtonGroup = styled.div`
   width: 100%;
   height: auto;
   flex-grow: 1;
-  /* height: 40%; */
 
   box-sizing: border-box;
 `;
@@ -73,10 +72,6 @@ const CloseButton = styled.button`
 
   height: 100%;
   width: auto;
-
-  /* &:hover {
-    background-color: #0056b3;
-  } */
 `;
 
 const ConfirmButton = styled.button`
@@ -89,14 +84,9 @@ const ConfirmButton = styled.button`
   height: 100%;
   width: auto;
   box-sizing: border-box;
-
-  /* &:hover {
-    background-color: #218838;
-  } */
 `;
 
 const PasswordInput = styled.input`
-  /* margin-top: 20px; */
   padding: 7%;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -104,10 +94,11 @@ const PasswordInput = styled.input`
   height: auto;
   margin-top: -10%;
   box-sizing: border-box;
+
   justify-content: center;
   ::placeholder {
     color: #888;
-    /* font-size: calc(1.5em + 1vw); */
+    font-size: calc(1.5em + 5vw);
   }
 `;
 
