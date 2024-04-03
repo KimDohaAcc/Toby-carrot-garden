@@ -99,7 +99,6 @@ const PhoneButton = styled.div`
 `;
 
 const ErrorModal = styled.div`
-  border: 1px solid black;
   position: fixed;
   display: flex;
   flex-direction: column;

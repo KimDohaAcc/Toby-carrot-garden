@@ -13,7 +13,6 @@ const StoryQuizEmotionsContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 5fr;
   height: 100%;
-  border: 1px solid black;
 `;
 
 const StoryQuizEmotionsTitleArea = styled.div`
@@ -21,7 +20,6 @@ const StoryQuizEmotionsTitleArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
 `;
 
 const StoryQuizEmotionsImageArea = styled.div`
@@ -30,7 +28,6 @@ const StoryQuizEmotionsImageArea = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   object-fit: contain;
   overflow: hidden;
 `;
@@ -41,13 +38,11 @@ const StoryQuizEmotionCanmeraArea = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   object-fit: contain;
   overflow: hidden;
 `;
 
 const ImageArea = styled.div`
-  border: 1px solid black;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -62,7 +57,6 @@ const ConteentArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   flex: 0 0 12.5%;
 `;
 
@@ -71,7 +65,6 @@ const QuizImage = styled.img`
   width: auto;
   position: relative;
   display: block;
-  border: 1px solid black;
   margin: 0 auto;
 `;
 
@@ -79,14 +72,31 @@ const AudioPlayer = styled.audio`
   position: absolute;
 `;
 
-const AudioBtn = styled.button<{ isPlaying: boolean }>`
+const AudioBtnNS = styled.button`
   z-index: 1000;
   width: 3vw;
   height: 3vw;
-  background-image: url(${(props) =>
-    props.isPlaying
-      ? "/Image/button/no-sound.png"
-      : "/Image/button/sound.png"});
+  background-image: url("/Image/button/no-sound.png");
+  background-size: 100% 100%;
+  background-color: transparent;
+  border: none;
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: transparent;
+  }
+`;
+
+const ButtonText = styled.div`
+  font-size: 1.1vw;
+  margin-top: 7px;
+`;
+
+const AudioBtnS = styled.button`
+  z-index: 1000;
+  width: 3vw;
+  height: 3vw;
+  background-image: url("/Image/button/sound.png");
   background-size: 100% 100%;
   background-color: transparent;
   border: none;
@@ -100,6 +110,9 @@ const AudioBtn = styled.button<{ isPlaying: boolean }>`
 const AudioArea = styled.div`
   position: absolute;
   margin: calc(2%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 interface Scene {
@@ -165,7 +178,17 @@ const StoryQuizEmotions = ({ imageUrl, quizId, content, index, place }) => {
         >
           <source src={voiceUrl} type="audio/mpeg" />
         </AudioPlayer>
-        <AudioBtn isPlaying={isPlaying} onClick={handleTogglePlay}></AudioBtn>
+        {isPlaying ? (
+          <>
+            <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
+            <ButtonText>소리끄기</ButtonText>
+          </>
+        ) : (
+          <>
+            <AudioBtnS onClick={handleTogglePlay}></AudioBtnS>
+            <ButtonText>소리듣기</ButtonText>
+          </>
+        )}      
       </AudioArea>
       <StoryQuizEmotionsTitleArea>
         <h1>StoryQuizEmotions</h1>
