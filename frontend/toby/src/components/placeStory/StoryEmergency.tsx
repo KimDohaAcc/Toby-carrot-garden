@@ -19,8 +19,7 @@ const EmergencyContainer = styled.div`
   align-items: center;
   grid-template-areas:
     "title title title"
-    ". conteent ."
-    ". button .";
+    ". conteent button";
   grid-template-rows: 3fr 8fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
@@ -29,6 +28,10 @@ const EmergencyContainer = styled.div`
 
 const EmergencyTitle = styled.div`
   grid-area: title;
+  font-size: 2.2vw;
+  text-align: center;
+  align-self: last baseline;
+  margin-bottom: 2%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,8 +40,7 @@ const EmergencyTitle = styled.div`
 const EmergencyContent = styled.div`
   grid-area: conteent;
   display: grid;
-  justify-content: center;
-  align-items: center;
+
   justify-items: center;
   width: 100%;
   height: 100%;
@@ -49,6 +51,7 @@ const EmergencyContent = styled.div`
 const SubmitArea = styled.div`
   grid-area: button;
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 `;
@@ -57,14 +60,45 @@ const RetryBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 15px;
+  font-size: 1.5vw;
+  width: 10vw;
+  height: 5vw;
+  background-image: url("/Image/button/againBtn.png");
+  background-size: 100% 100%;
   cursor: url("/Image/cursor/hover.png"), pointer;
+  &:hover{
+    transform: translateY(3px);
+  }
 `;
 
 const SubmitBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 15px;
+  font-size: 1.5vw;
+  width: 10vw;
+  height: 5vw;
+  background-image: url("/Image/button/callBtn.png");
+  background-size: 100% 100%;
   cursor: url("/Image/cursor/hover.png"), pointer;
+
+  &:hover{
+    transform: translateY(3px);
+  }
+`;
+
+const NumberBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  font-size: 1.5vw;
+  width: 10vw;
+  height: 5vw;
+  background-image: url("/Image/button/numberBtn.png");
+  background-size: 100% 100%;
 `;
 
 const PhoneBackground = styled.img`
@@ -106,20 +140,31 @@ const ErrorModal = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  left: 50%;
+  left: 50.5%;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
   height: 200px;
-  background-color: white;
+  font-size: 1.5vw;
+  background-color: #ffeded;
   z-index: 10;
+  box-shadow: 8px 16px 16px hsl(0deg 0% 0% / 0.4);
+  border-radius: 15px;
 `;
 
 const ModalCloseBtn = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 20px;
+  padding: 3%;
+  font-size: 1vw;
+  border-radius: 8px;
   cursor: url("/Image/cursor/hover.png"), pointer;
+  
+  &:hover{
+    background-color: rgba(0,0,0,0.1);
+  }
 `;
+
 
 const carrotModalani = keyframes`
   0% {
@@ -314,52 +359,53 @@ const StoryEmergency = ({ index, place }) => {
           <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
         )}
       </AudioArea>
-      <EmergencyTitle>번호를 눌러주세요 이미지</EmergencyTitle>
+      <EmergencyTitle>어디로 전화해야할까요? <br/> 번호를 눌러주세요</EmergencyTitle>
+
       <EmergencyContent>
-        <PhoneBackground src="/Image/modal/phone.png" alt="phone" />
-        <PhoneNumber>{number}</PhoneNumber>
-        {isModalOpen && (
-          <ErrorModal>
-            <div>정답은 세글자 입니다</div>
-            <ModalCloseBtn
-              onClick={() => {
-                setIsModalOpen(false);
-              }}
-            >
-              닫기
-            </ModalCloseBtn>
-          </ErrorModal>
-        )}
-        {IsSuccessModalOpen && (
-          <>
-            <SuccessToby onClose={() => setIsSuccessModalOpen(false)} />
-            <audio ref={audioRef} controls autoPlay hidden>
-              <source src="/Sound/당근획득.mp3" type="audio/mpeg" />
-            </audio>
-          </>
-        )}
-        {IsFailModalOpen && (
-          <>
-            <FailToby onClose={() => setIsFailModalOpen(false)} />
-            <audio ref={audioRef} controls autoPlay hidden>
-              <source src="/Sound/다시도전.mp3" type="audio/mpeg" />
-            </audio>
-          </>
-        )}
-        <PhoneButtonContainer>
-          {numList.map((num) => {
-            return (
-              <PhoneButton
-                key={num}
+          <PhoneBackground src="/Image/modal/phone.png" alt="phone" />
+          <PhoneNumber>{number}</PhoneNumber>
+          {isModalOpen && (
+            <ErrorModal>
+              <div>정답은 세글자 입니다</div>
+              <ModalCloseBtn
                 onClick={() => {
-                  handleBtnClick(num);
+                  setIsModalOpen(false);
                 }}
               >
-                {num}
-              </PhoneButton>
-            );
-          })}
-        </PhoneButtonContainer>
+                닫기
+              </ModalCloseBtn>
+            </ErrorModal>
+          )}
+          {IsSuccessModalOpen && (
+            <>
+              <SuccessToby onClose={() => setIsSuccessModalOpen(false)} />
+              <audio ref={audioRef} controls autoPlay hidden>
+                <source src="/Sound/당근획득.mp3" type="audio/mpeg" />
+              </audio>
+            </>
+          )}
+          {IsFailModalOpen && (
+            <>
+              <FailToby onClose={() => setIsFailModalOpen(false)} />
+              <audio ref={audioRef} controls autoPlay hidden>
+                <source src="/Sound/다시도전.mp3" type="audio/mpeg" />
+              </audio>
+            </>
+          )}
+          <PhoneButtonContainer>
+            {numList.map((num) => {
+              return (
+                <PhoneButton
+                  key={num}
+                  onClick={() => {
+                    handleBtnClick(num);
+                  }}
+                >
+                  {num}
+                </PhoneButton>
+              );
+            })}
+          </PhoneButtonContainer>
       </EmergencyContent>
       <SubmitArea>
         <RetryBtn
@@ -367,20 +413,14 @@ const StoryEmergency = ({ index, place }) => {
             setNumber("");
           }}
         >
-          다시 입력
         </RetryBtn>
         {number.length > 2 ? (
-          <SubmitBtn
-            onClick={() => {
-              submit();
-            }}
-          >
-            전화걸기
-          </SubmitBtn>
+          <SubmitBtn onClick={() => { submit(); }} />
         ) : (
-          <SubmitBtn>번호를 입력하세요</SubmitBtn>
+          <NumberBtn/>
         )}
       </SubmitArea>
+
     </EmergencyContainer>
   );
 };
