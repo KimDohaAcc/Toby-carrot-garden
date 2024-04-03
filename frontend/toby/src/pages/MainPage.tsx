@@ -13,6 +13,7 @@ import HospitalStoryListModal from "../components/modals/hospital/HospitalStoryL
 import SchoolStoryListModal from "../components/modals/school/SchoolStoryListModal";
 import MartStoryListModal from "../components/modals/mart/MartStoryListModal";
 import PoliceStoryListModal from "../components/modals/police/PoliceStoryListModal";
+
 import { getUserStorage, clearUserStorage } from "../apis/userStorageApi";
 import { useSelector } from "react-redux";
 
@@ -245,20 +246,41 @@ const UserName = styled.div`
 `;
 
 const SoundButton = styled.img`
-  position: absolute;
-  width: calc(30%);
-  top: calc(5%);
-  right: calc(45%);
+  width: calc(80%);
+  align-self: center;
   cursor: pointer;
 `;
 
-const LogoutButton = styled.img`
+const LogoutArea = styled.div`
+  display: flex;
+  flex-direction: column;
   position: absolute;
   width: calc(30%);
   top: calc(5%);
   right: calc(8%);
-  cursor: pointer;
 `;
+
+const SoundArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: calc(30%);
+  top: calc(5%);
+  right: calc(45%);
+`;
+
+const ButtonText = styled.div`
+  font-size: 1.1vw;
+  margin-top: 7px;
+`;
+
+const LogoutButton = styled.img`
+  cursor: pointer;
+  align-self: center;
+  width: calc(80%);
+`;
+
+
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -279,6 +301,7 @@ const MainPage = () => {
   const location = useLocation();
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
+  const areaAudioRef = React.useRef<HTMLAudioElement>(null);
   const [muteImage, setMuteImage] = useState("/Image/button/no-sound.png");
 
   useEffect(() => {
@@ -353,25 +376,31 @@ const MainPage = () => {
   //   audio.play();
   // };
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioElements, setAudioElements] = useState([
+    { id: 'report', isPlaying: false },
+    { id: 'mart', isPlaying: false },
+    { id: 'hospital', isPlaying: false },
+    { id: 'police', isPlaying: false },
+    { id: 'mypage', isPlaying: false },
+    { id: 'school', isPlaying: false },
+    // 다른 오디오 요소에 대한 정보도 추가
+  ]);
 
-  const playAudio = (audioId) => {
-    const audio = document.getElementById(audioId);
-    if (audio) {
-      audio.play();
-      setIsPlaying(true);
-    }
+  const playAudio = (id) => {
+    setAudioElements((prevAudioElements) =>
+      prevAudioElements.map((element) =>
+        element.id === id ? { ...element, isPlaying: true } : element
+      )
+    );
   };
 
-  const stopAudio = (audioId) => {
-    const audio = document.getElementById(audioId);
-    if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
-      setIsPlaying(false);
-    }
+  const stopAudio = (id) => {
+    setAudioElements((prevAudioElements) =>
+      prevAudioElements.map((element) =>
+        element.id === id ? { ...element, isPlaying: false } : element
+      )
+    );
   };
-
   const tobyClick = () => {
     const audio = new Audio("/Sound/toby.mp3");
     audio.play();
@@ -392,9 +421,13 @@ const MainPage = () => {
               onMouseEnter={() => playAudio("report")}
               onMouseLeave={() => stopAudio("report")}
             />
-            <audio id="report" autoplay controls hidden>
-              <source src="/Sound/mainPage/report.mp3" type="audio/mpeg" />
-            </audio>
+            {audioElements.map((audio) =>
+              audio.isPlaying ? (
+                <audio key={audio.id} controls autoPlay hidden>
+                  <source src={`/Sound/mainPage/${audio.id}.mp3`} type="audio/mpeg" />
+                </audio>
+              ) : null
+            )}
           </ReportArea>
           <MartArea>
             <MartImage
@@ -404,9 +437,13 @@ const MainPage = () => {
               onMouseEnter={() => playAudio("mart")}
               onMouseLeave={() => stopAudio("mart")}
             />
-            <audio id="mart" controls hidden>
-              <source src="/Sound/mainPage/mart.mp3" type="audio/mpeg" />
-            </audio>
+            {audioElements.map((audio) =>
+              audio.isPlaying ? (
+                <audio key={audio.id} controls autoPlay hidden>
+                  <source src={`/Sound/mainPage/${audio.id}.mp3`} type="audio/mpeg" />
+                </audio>
+              ) : null
+            )}
           </MartArea>
         </Area1>
         <Area2>
@@ -444,7 +481,7 @@ const MainPage = () => {
               onMouseEnter={() => playAudio("hospital")}
               onMouseLeave={() => stopAudio("hospital")}
             />
-            <audio id="hospital" controls hidden>
+            <audio ref={audioRef} controls hidden>
               <source src="/Sound/mainPage/hospital.mp3" type="audio/mpeg" />
             </audio>
           </HospitalArea>
@@ -465,14 +502,21 @@ const MainPage = () => {
           {/* <div> {userName && <h1>{userName}</h1>}</div> */}
           <UserArea>
             <UserName>{userName} 어린이</UserName>
-            <audio ref={audioRef} controls autoPlay loop hidden>
-              <source src="/Sound/메인_BGM.mp3" type="audio/mpeg" />
-            </audio>
-            <SoundButton src={muteImage} onClick={handleMute} />
-            <LogoutButton
-              src="\Image\button\logoutButton.png"
-              onClick={handleLogout}
-            />
+            <SoundArea>
+              <audio ref={audioRef} controls autoPlay loop hidden>
+                <source src="/Sound/메인_BGM.mp3" type="audio/mpeg" />
+              </audio>
+              <SoundButton src={muteImage} onClick={handleMute} />
+              <ButtonText>{muteImage == "/Image/button/no-sound.png" ? "소리끄기" : "소리듣기"}</ButtonText>
+            </SoundArea>
+            
+            <LogoutArea>
+              <LogoutButton
+                src="\Image\button\logoutButton.png"
+                onClick={handleLogout}
+              />
+              <ButtonText>로그아웃</ButtonText>
+            </LogoutArea>
           </UserArea>
           <TobyArea>
             <TobyImage
