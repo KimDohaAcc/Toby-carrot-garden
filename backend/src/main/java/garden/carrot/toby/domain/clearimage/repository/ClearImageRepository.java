@@ -10,5 +10,5 @@ import garden.carrot.toby.domain.clearimage.entity.ClearImage;
 @Repository
 public interface ClearImageRepository extends JpaRepository<ClearImage, Integer> {
 
-	List<ClearImage> findAllByMemberId(Integer memberId);
+	List<ClearImage> findAllByMemberIdOrderByCreatedTimeDesc(Integer memberId);
 }

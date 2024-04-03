@@ -1,5 +1,6 @@
 package garden.carrot.toby.api.member.service;
 
+import garden.carrot.toby.api.member.dto.ClearImageDto.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,10 +113,11 @@ public class MemberService {
 
 	public ListDto<ClearImageDto.Response> getClearImages() {
 		Member member = memberUtil.getLoginMember();
-		List<ClearImageDto.Response> list = clearImageRepository.findAllByMemberId(member.getId())
+		List<ClearImageDto.Response> list = clearImageRepository.findAllByMemberIdOrderByCreatedTimeDesc(member.getId())
 			.stream().map(i -> clearImageMapper.clearImageToClearImageDtoResponse(i)).toList();
 
 		ListDto<ClearImageDto.Response> response = new ListDto<>(list);
+		System.out.println(response);
 		return response;
 	}
 }
