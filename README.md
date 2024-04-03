@@ -1,4 +1,4 @@
-<img src="./asset/logoImage.png" alt="예시 이미지" width="500" height="430">
+<img src="./asset/logoImage.png" alt="로고 이미지" width="500" height="430">
 
 
 # 🐇 토비의 당근 밭
@@ -98,10 +98,12 @@ AI를 기반으로 한 미취학 아동 교육
 <img src="./asset/erd.png" alt="예시 이미지" width="" height="">
 
 ### 🏗 System Architecture
-- 시스템 흐름 설명
+<img src="./asset/토비_시스템.png" alt="시스템아키텍쳐">
 
 ### 🔮 핵심기술
-- 카프카
+- Spring Security
+- KafKa
+- AI모델 : inceptionV3, doodle, mobileNet
 
 
 
