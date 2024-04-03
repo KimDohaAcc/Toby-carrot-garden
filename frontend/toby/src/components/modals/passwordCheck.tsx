@@ -136,7 +136,7 @@ const ConstructionModal = ({ onClose }) => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="비밀번호"
+          placeholder="숫자 네 자리를 입력해주세요"
         />
         <ButtonGroup>
           <ConfirmButton onClick={handleConfirm}>확인</ConfirmButton>
