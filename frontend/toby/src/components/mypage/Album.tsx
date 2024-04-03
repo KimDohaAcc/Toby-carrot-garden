@@ -3,6 +3,40 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { getClearImageList } from "../../apis/mypageApi";
 
+// getClearImageList 대신에 더미 데이터를 사용합니다.
+// const dummyImageList = [
+//   {
+//     clearImageId: 1,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/fff",
+//     placeId: 1,
+//     createdTime: "2024-03-25T17:06:08",
+//   },
+//   {
+//     clearImageId: 2,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/fc9",
+//     placeId: 2,
+//     createdTime: "2024-03-25T17:06:44",
+//   },
+//   {
+//     clearImageId: 3,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/fz8",
+//     placeId: 3,
+//     createdTime: "234234T3424",
+//   },
+//   {
+//     clearImageId: 4,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/b58",
+//     placeId: 4,
+//     createdTime: "234234T3424",
+//   },
+//   {
+//     clearImageId: 5,
+//     clearImageUrl: "https://dummyimage.com/600x400/000/f0f",
+//     placeId: 5,
+//     createdTime: "234234T3424",
+//   },
+// ];
+
 const AlbumContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -223,23 +257,22 @@ interface Image {
   placeId: number;
   createdTime: string;
 }
-const backgroundImages = {
-  1: "/Image/album/schoolFrame.png",
-  2: "/Image/album/hospitalFrame.png",
-};
+
 const Album = () => {
   const navigate = useNavigate();
   const [presentImage, setPresentImage] = useState("");
-  const [imageList, setImageList] = useState([]);
+  const [imageList, setImageList] = useState<Image[]>([]);
   const [presentImageIndex, setPresentImageIndex] = useState(1);
   const [presentImagePlaceId, setPresentImagePlaceId] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
   // const showPrevImage = () => {
   //   setNextImage(presentImage);
   //   setPresentImage(prevImage);
   //   setPrevImage("");
   // };
-
+  const backgroundImages = {
+    1: "/Image/album/hospitalFrame.png",
+    2: "/Image/album/schoolFrame.png",
+  };
   useEffect(() => {
     // 현재 이미지의 placeId를 설정하는 로직 추가...
     const currentImage = imageList.find(
@@ -256,16 +289,19 @@ const Album = () => {
     navigate("/main"); // '/main'으로 이동하는 함수
   };
   useEffect(() => {
-    const fetchImages = async () => {
+    // 이미지 리스트를 불러옴
+    const fetchData = async () => {
       try {
-        const response = await getClearImageList(); // API 호출로 이미지 목록 가져오기
-        setImageList(response.result.list); // 응답에서 이미지 목록 설정
+        const response = await getClearImageList();
+        setImageList(response);
+        if (response) {
+          setPresentImage(response[0].clearImageUrl);
+        }
       } catch (error) {
-        console.error("Failed to fetch images", error);
+        console.error(error);
       }
     };
-
-    fetchImages();
+    fetchData();
   }, []);
 
   // useEffect(() => {
@@ -278,8 +314,7 @@ const Album = () => {
   // }, []);
 
   //findIndex -> 배열에서 조건을 만족하는 첫 번째 요소의 인덱스를 반환
-  const currentBgImage =
-    backgroundImages[imageList[currentIndex]?.placeId] || backgroundImages[1];
+
   const showPrevImage = () => {
     // 이미지 리스트의 첫 번째 이미지일 경우에는 마지막 이미지를 표시
     const index = imageList.findIndex(
