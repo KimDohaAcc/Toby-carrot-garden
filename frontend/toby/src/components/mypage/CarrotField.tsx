@@ -86,7 +86,6 @@ const CarrotFieldContent = styled.div`
   position: relative;
   background-image: url("Image/album/당근밭배경.png");
   background-size: cover;
-  border-radius: 30px;
   border: 14px solid #f7cb96;
   box-sizing: border-box;
   border-radius: 5%;
@@ -96,7 +95,6 @@ const CarrotFieldContent = styled.div`
     ". school . hospital ."
     ". mart . police ."
     ". . . . .";
-  border-radius: 30px;
   height: 100%;
   overflow: hidden;
   object-fit: contain;

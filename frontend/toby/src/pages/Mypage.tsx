@@ -9,7 +9,6 @@ const MypageContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  border: 2px solid black;
   overflow: hidden;
   object-fit: contain;
 `;
@@ -17,14 +16,12 @@ const MypageContainer = styled.div`
 const LogoArea = styled.div`
   position: relative;
   flex: 0 0 15%;
-  border: 2px solid black;
 `;
 
 const MypageContentContainer = styled.div`
   height: 100%;
   flex: 0 0 85%;
   flex-direction: column;
-  border: 2px solid black;
   display: flex;
   overflow: hidden;
   object-fit: contain;
@@ -34,11 +31,7 @@ const LogoutArea = styled.div`
   display: flex;
   justify-content: space-between;
   flex: 0 0 15%;
-  border: 2px solid black;
   flex-direction: row;
-  white-space: nowrap; /* 텍스트가 한 줄로만 유지되도록 설정 */
-  text-overflow: ellipsis; /* 텍스트가 요소의 영역을 넘어갈 때 생략 부호(...)를 표시 */
-  overflow: hidden;
 `;
 
 const MypageContentArea = styled.div`
@@ -46,13 +39,11 @@ const MypageContentArea = styled.div`
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  border: 2px solid black;
   overflow: hidden;
   object-fit: contain;
 `;
 const Text1 = styled.h1`
   line-height: 60%;
-
   font-size: clamp(50px, 2vw, 70px);
 `;
 const Text2 = styled.h2`

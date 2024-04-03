@@ -93,7 +93,7 @@ const AudioPlayer = styled.audio`
 `;
 
 const AudioBtnNS = styled.button`
-  z-index: 1000;
+  z-index: 100;
   width: 3vw;
   height: 3vw;
   background-image: url("/Image/button/no-sound.png");
@@ -112,7 +112,7 @@ const ButtonText = styled.div`
 `;
 
 const AudioBtnS = styled.button`
-  z-index: 1000;
+  z-index: 10;
   width: 3vw;
   height: 3vw;
   background-image: url("/Image/button/sound.png");
@@ -207,8 +207,6 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
   const closeModal = () => {
     setIsModalOpen(false);
     console.log("이미지 판독");
-
-    setIsSubmitted(true);
   };
 
   return (
@@ -234,7 +232,7 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
             <AudioBtnS onClick={handleTogglePlay}></AudioBtnS>
             <ButtonText>소리듣기</ButtonText>
           </>
-        )}      
+        )}
       </AudioArea>
       <QuizTitleArea>
         <h1>화면에 그려주세요</h1>

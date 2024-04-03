@@ -10,7 +10,6 @@ const MypageContentContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  border: 2px solid black;
   grid-template-columns: 1fr 1fr;
   /* background-color: #ffffff; */
   border-radius: 40px;
@@ -23,7 +22,6 @@ const Area = styled.div`
   grid-template-rows: 1fr 9fr;
   width: 100%;
   height: 100%;
-  border: 2px solid black;
   border-radius: 30px;
   display: flex;
   flex-direction: column;

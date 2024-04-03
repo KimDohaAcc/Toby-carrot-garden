@@ -27,6 +27,7 @@ const Button = styled.button`
   border: none;
   border-radius: 15px;
   font-size: 1.5vw;
+  cursor: url("/Image/cursor/hover.png"), pointer;
 `;
 
 const RecoreContentContainer = styled.div`
