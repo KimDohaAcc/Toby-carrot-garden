@@ -37,6 +37,7 @@ const RecoreContentContainer = styled.div`
   overflow: hidden;
   object-fit: contain;
   flex-direction: row;
+  gap: 1%;
 `;
 const RecoreContentContainer2 = styled.div`
   display: flex;
