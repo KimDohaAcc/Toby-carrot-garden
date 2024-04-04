@@ -1,0 +1,16 @@
+declare module "*.jpg";
+declare module "*.jpeg";
+declare module "*.png";
+declare module "*.gif";
+declare module "*.svg";
+declare module "*.ico";
+declare module "*.bmp";
+declare module "*.tiff";
+declare module "*.webp";
+declare module "*.pdf";
+declare module "*.md";
+declare module "*.doc";
+declare module "*.docx";
+declare module "*.xls";
+declare module "*.xlsx";
+declare module "*.ppt";
