@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import Logo2 from "../components/Logo2";
 import MypageContent from "../components/mypage/MypageContent";
 import LogoutBtn from "../components/LogoutBtn";
+
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { useLocation } from "react-router-dom";
+
+import { setIsPlaceClear } from "../store/slices/placeSlice";
 
 const MypageContainer = styled.div`
   display: flex;
@@ -48,6 +54,21 @@ const Text1 = styled.h1`
 `;
 
 const Mypage = () => {
+  const dispatch = useDispatch();
+
+  const isPlaceClear = useSelector<RootState, boolean>(
+    (state: RootState) => state.place.isplaceClear
+  );
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isPlaceClear) {
+      const { placeName } = location.state;
+      console.log(placeName);
+      dispatch(setIsPlaceClear(false));
+    }
+  }, [location.state, isPlaceClear, dispatch]);
+
   return (
     <>
       <MypageContainer>

@@ -245,7 +245,7 @@ const PoliceOffice = () => {
   };
 
   const handleOnclickCarrotBtn = () => {
-    navigate("/mypage");
+    navigate("/mypage", { state: { placeName } });
     dispatch(setIsPlaceClear(true));
     dispatch(setPoliceQuizClear(false));
   };

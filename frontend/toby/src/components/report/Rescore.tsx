@@ -155,13 +155,17 @@ const NoImageArea = styled.div`
   /* flex-direction: column; 내용을 세로로 정렬 */
   align-items: center; /* 가로 중앙 정렬 */
   justify-content: center; /* 세로 중앙 정렬 */
-  background-color: #f5f5f5d9;
+  background-color: white;
   border-radius: 30px;
   position: relative;
   overflow: hidden;
   object-fit: contain;
   height: 100%;
   width: 100%; /* 너비를 100%로 설정하여 부모 컨테이너를 꽉 채움 */
+  border: 14px solid #fff299;
+  object-fit: contain;
+  overflow: hidden;
+  box-sizing: border-box;
 `;
 const MiddleTextContainer = styled.div`
   display: flex;
@@ -189,7 +193,7 @@ const GotoMainText = styled.div`
   margin-bottom: 20px;
 `;
 const AlbumToby = styled.img`
-  width: 25%; // Adjust size as needed
+  width: 22%; // Adjust size as needed
   margin-left: 3%; // Space between text and image
   right: 60%;
   overflow: hidden;

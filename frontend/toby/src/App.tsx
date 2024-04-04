@@ -66,9 +66,13 @@ function App() {
           <Route path="privacyConsentForm" element={<PrivacyConsentForm />} />
           <Route element={<ProtectedRoutes />}>
             <Route path="main" element={<MainPage />} />
+            <Route path="school" element={<NotFound />} />
             <Route path="school/*" element={<School />} />
+            <Route path="hospital" element={<NotFound />} />
             <Route path="hospital/*" element={<Hospital />} />
+            <Route path="police" element={<NotFound />} />
             <Route path="police/*" element={<PoliceOffice />} />
+            <Route path="mart" element={<NotFound />} />
             <Route path="mart/*" element={<Mart />} />
             <Route path="mypage" element={<Mypage />} />
             <Route path="report" element={<Report />} />

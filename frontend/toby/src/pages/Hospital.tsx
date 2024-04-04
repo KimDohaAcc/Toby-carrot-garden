@@ -245,7 +245,7 @@ const Hospital = () => {
   };
 
   const handleOnclickCarrotBtn = () => {
-    navigate("/mypage");
+    navigate("/mypage", { state: { placeName } });
     dispatch(setIsPlaceClear(true));
     dispatch(setHospitalQuizClear(false));
   };

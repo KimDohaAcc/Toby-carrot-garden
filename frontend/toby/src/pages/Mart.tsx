@@ -246,7 +246,7 @@ const Mart = () => {
   };
 
   const handleOnclickCarrotBtn = () => {
-    navigate("/mypage");
+    navigate("/mypage", { state: { placeName } });
     dispatch(setIsPlaceClear(true));
     dispatch(setMartQuizClear(false));
   };
