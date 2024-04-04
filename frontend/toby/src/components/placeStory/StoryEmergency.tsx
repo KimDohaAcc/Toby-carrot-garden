@@ -11,7 +11,13 @@ import { setPoliceQuizClear } from "../../store/slices/policeSlice";
 import SuccessToby from "../modals/SuccessToby";
 import FailToby from "../modals/FailToby";
 
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
 const EmergencyContainer = styled.div`
+  position: relative; 
   display: grid;
   justify-content: center;
   align-items: center;
@@ -65,7 +71,7 @@ const RetryBtn = styled.div`
   background-image: url("/Image/button/againBtn.png");
   background-size: 100% 100%;
   cursor: url("/Image/cursor/hover.png"), pointer;
-  &:hover {
+  &:hover{
     transform: translateY(3px);
   }
 `;
@@ -82,7 +88,7 @@ const SubmitBtn = styled.div`
   background-size: 100% 100%;
   cursor: url("/Image/cursor/hover.png"), pointer;
 
-  &:hover {
+  &:hover{
     transform: translateY(3px);
   }
 `;
@@ -100,6 +106,7 @@ const NumberBtn = styled.div`
 `;
 
 const PhoneBackground = styled.img`
+position: absolute;
   height: 100%;
   width: auto;
   object-fit: contain;
@@ -128,11 +135,13 @@ const PhoneButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 25px 0 25px;
-  cursor: url("/Image/cursor/hover.png"), pointer;
+  font-size: 2.5vw;
+  margin: 0 1vw 0 1vw;
+  cursor: pointer;
 `;
 
 const ErrorModal = styled.div`
+  border: 1px solid black;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -141,21 +150,13 @@ const ErrorModal = styled.div`
   left: 50.5%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 30%;
-  height: 20%;
+  width: 300px;
+  height: 200px;
   font-size: 1.5vw;
   background-color: #ffeded;
   z-index: 10;
   box-shadow: 8px 16px 16px hsl(0deg 0% 0% / 0.4);
   border-radius: 15px;
-`;
-
-const TobyHeadImage = styled.img`
-  position: absolute;
-  top: -20%;
-  left: -10%;
-  width: 20%;
-  height: auto;
 `;
 
 const ModalCloseBtn = styled.div`
@@ -165,9 +166,9 @@ const ModalCloseBtn = styled.div`
   font-size: 1vw;
   border-radius: 8px;
   cursor: url("/Image/cursor/hover.png"), pointer;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+  
+  &:hover{
+    background-color: rgba(0,0,0,0.1);
   }
 `;
 
@@ -317,7 +318,8 @@ const StoryEmergency = ({ index, place }) => {
     }
   };
   return (
-    <EmergencyContainer>
+    <Container>
+<EmergencyContainer>
       <AudioArea>
         <AudioPlayer
           ref={audioRef}
@@ -335,74 +337,71 @@ const StoryEmergency = ({ index, place }) => {
           <AudioBtnNS onClick={handleTogglePlay}></AudioBtnNS>
         )}
       </AudioArea>
-      <EmergencyTitle>
-        어디로 전화해야할까요? <br /> 번호를 눌러주세요
-      </EmergencyTitle>
+      <EmergencyTitle>어디로 전화해야할까요? <br/> 번호를 눌러주세요</EmergencyTitle>
 
       <EmergencyContent>
-        <PhoneBackground src="/Image/modal/phone.png" alt="phone" />
-        <PhoneNumber>{number}</PhoneNumber>
-        {isModalOpen && (
-          <ErrorModal>
-            <TobyHeadImage src="/Image/toby/토비머리.png" alt="토비머리" />
-            <div>정답은 세글자 입니다</div>
-            <ModalCloseBtn
-              onClick={() => {
-                setIsModalOpen(false);
-              }}
-            >
-              닫기
-            </ModalCloseBtn>
-          </ErrorModal>
-        )}
-        {IsSuccessModalOpen && (
-          <>
-            <SuccessToby onClose={() => setIsSuccessModalOpen(false)} />
-            <audio ref={audioRef} controls autoPlay hidden>
-              <source src="/Sound/당근획득.mp3" type="audio/mpeg" />
-            </audio>
-          </>
-        )}
-        {IsFailModalOpen && (
-          <>
-            <FailToby onClose={() => setIsFailModalOpen(false)} />
-            <audio ref={audioRef} controls autoPlay hidden>
-              <source src="/Sound/다시도전.mp3" type="audio/mpeg" />
-            </audio>
-          </>
-        )}
-        <PhoneButtonContainer>
-          {numList.map((num) => {
-            return (
-              <PhoneButton
-                key={num}
+          <PhoneBackground src="/Image/modal/phone.png" alt="phone" />
+          <PhoneNumber>{number}</PhoneNumber>
+          {isModalOpen && (
+            <ErrorModal>
+              <div>정답은 세글자 입니다</div>
+              <ModalCloseBtn
                 onClick={() => {
-                  handleBtnClick(num);
+                  setIsModalOpen(false);
                 }}
               >
-                {num}
-              </PhoneButton>
-            );
-          })}
-        </PhoneButtonContainer>
+                닫기
+              </ModalCloseBtn>
+            </ErrorModal>
+          )}
+          {IsSuccessModalOpen && (
+            <>
+              <SuccessToby onClose={() => setIsSuccessModalOpen(false)} />
+              <audio ref={audioRef} controls autoPlay hidden>
+                <source src="/Sound/당근획득.mp3" type="audio/mpeg" />
+              </audio>
+            </>
+          )}
+          {IsFailModalOpen && (
+            <>
+              <FailToby onClose={() => setIsFailModalOpen(false)} />
+              <audio ref={audioRef} controls autoPlay hidden>
+                <source src="/Sound/다시도전.mp3" type="audio/mpeg" />
+              </audio>
+            </>
+          )}
+          <PhoneButtonContainer>
+            {numList.map((num) => {
+              return (
+                <PhoneButton
+                  key={num}
+                  onClick={() => {
+                    handleBtnClick(num);
+                  }}
+                >
+                  {num}
+                </PhoneButton>
+              );
+            })}
+          </PhoneButtonContainer>
       </EmergencyContent>
       <SubmitArea>
         <RetryBtn
           onClick={() => {
             setNumber("");
           }}
-        ></RetryBtn>
+        >
+        </RetryBtn>
         {number.length > 2 ? (
-          <SubmitBtn
-            onClick={() => {
-              submit();
-            }}
-          />
+          <SubmitBtn onClick={() => { submit(); }} />
         ) : (
-          <NumberBtn />
+          <NumberBtn/>
         )}
       </SubmitArea>
+
     </EmergencyContainer>
+
+    </Container>
   );
 };
 
