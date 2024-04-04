@@ -1,0 +1,6 @@
+insert into rabbit.story_data (id, created_time, updated_time, recommend_age, story_image_url, title, place_data_id)
+values  (1, '2024-03-27 18:26:12.000000', '2024-04-03 10:49:14.000000', '5~6세', 'https://tobycarrotbucket.s3.ap-northeast-2.amazonaws.com/assets/image/school/story01/003.png', '등교하는 토비', 1),
+        (2, '2024-03-27 18:26:14.000000', '2024-04-03 10:49:14.000000', '5~6세', 'https://tobycarrotbucket.s3.ap-northeast-2.amazonaws.com/assets/image/hospital/story01/001.png', '병원아 지켜줘', 2),
+        (4, '2024-03-27 18:26:14.000000', '2024-03-27 18:26:15.000000', '3~4세', 'https://tobycarrotbucket.s3.ap-northeast-2.amazonaws.com/assets/image/hospital/story02/000.png', '토비의 병문안', 2),
+        (5, '2024-04-02 15:45:00.000000', '2024-04-03 03:30:00.000000', '3~4세', 'https://tobycarrotbucket.s3.ap-northeast-2.amazonaws.com/assets/image/police/story01/000.png', '길을 잃었어요', 4),
+        (6, '2024-04-02 15:45:00.000000', '2024-04-03 03:30:00.000000', '3~4세', 'https://tobycarrotbucket.s3.ap-northeast-2.amazonaws.com/assets/image/mart/story01/000.png', '새 옷을 사요', 3);
