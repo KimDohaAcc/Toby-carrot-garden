@@ -28,3 +28,6 @@ for message in consumer:
         analyze_object(image_data, message.value['memberId'], message.value['quizId'], message.value['correctAnswer'] )
     except Exception as e:
         print("그림 분석 실패:", e, flush=True)
+
+# image_data = s3_image_reader("구름.png")
+# analyze_object(image_data, 1, 1, 'cloud')

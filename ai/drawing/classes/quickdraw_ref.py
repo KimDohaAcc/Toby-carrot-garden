@@ -1,3 +1,0 @@
-ref = ['Apple', 'Bowtie', 'Candle', 'Door', 'Envelope', 'Fish',
-       'Guitar', 'Ice Cream', 'Lightning', 'Moon', 'Mountain',
-       'Star', 'Tent', 'Toothbrush', 'Wristwatch']

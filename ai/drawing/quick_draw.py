@@ -1,5 +1,5 @@
 import numpy as np
-from classes.dataset import CLASSES
+from src.dataset import CLASSES
 import torch
 from PIL import Image
 import redis
@@ -8,12 +8,23 @@ from pathlib import Path
 from dotenv import load_dotenv
 from io import BytesIO
 import traceback
+import warnings
+
+# 파이토치 버전 관련한 에러 메세지
+# 이 경고는 일반적으로 정보 제공용이며 코드에 문제가 있음을 나타내는 것은 아니므로 필터링
+warnings.filterwarnings("ignore", message="source code of class 'torch.nn.modules.dropout.Dropout' has changed.")
+warnings.filterwarnings("ignore", message="source code of class 'torch.nn.modules.container.Sequential' has changed.")
+warnings.filterwarnings("ignore", message="source code of class 'torch.nn.modules.conv.Conv2d' has changed.")
+warnings.filterwarnings("ignore", message="source code of class 'torch.nn.modules.activation.ReLU' has changed.")
+warnings.filterwarnings("ignore", message="source code of class 'torch.nn.modules.pooling.MaxPool2d' has changed.")
+warnings.filterwarnings("ignore", message="source code of class 'torch.nn.modules.linear.Linear' has changed.")
 
 dotenv_path = Path(".env")
 load_dotenv(dotenv_path=dotenv_path)
 
 REDIS_HOST = os.getenv("REDIS_HOST")
 REDIS_PORT = os.getenv("REDIS_PORT")
+
 
 def analyze_object(image_data, member_id, quiz_id, correct_answer):
     try:
@@ -56,7 +67,3 @@ def analyze_object(image_data, member_id, quiz_id, correct_answer):
         print("모델 에러 발생 ", e, flush=True)
         err_msg = traceback.format_exc()
         print(err_msg, flush=True)
-
-
-
-
