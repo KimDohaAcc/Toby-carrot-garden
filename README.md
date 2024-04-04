@@ -153,7 +153,7 @@ AI를 기반으로 한 미취학 아동 교육
 - react-datepicker
     - https://www.npmjs.com/package/react-datepicker
 
-###참고 사이트
+### 참고 사이트
 - Protected Route 구성
     - [https://velog.io/@frontendohs/React로-Protected-Router-구성하기](https://velog.io/@frontendohs/React%EB%A1%9C-Protected-Router-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0)
     - https://medium.com/@chiragmehta900/creating-protected-routes-in-react-js-with-react-router-v6-28f3a3ac53d
@@ -165,3 +165,8 @@ AI를 기반으로 한 미취학 아동 교육
     - [https://velog.io/@planic324/다크모드-대응기](https://velog.io/@planic324/%EB%8B%A4%ED%81%AC%EB%AA%A8%EB%93%9C-%EB%8C%80%EC%9D%91%EA%B8%B0)
 - 웹캠 이미지 파일 변환 (base64 → image)
     - http://www.jongminjang.com/html5/file/2018/12/27/blob-as-img-src.html
+    - https://blog.logrocket.com/using-react-webcam-capture-display-images/
+- PWA
+    - https://developer.chrome.com/docs/workbox/caching-strategies-overview?hl=ko
+    - https://developer.chrome.com/docs/workbox/precaching-dos-and-donts?hl=ko
+    - https://s0n9h2.tistory.com/122
