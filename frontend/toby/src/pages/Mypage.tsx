@@ -47,6 +47,8 @@ const MypageContentArea = styled.div`
   flex-grow: 1;
   overflow: hidden;
   object-fit: contain;
+  padding: 1%;
+  box-sizing: border-box;
 `;
 const Text1 = styled.h1`
   line-height: 60%;

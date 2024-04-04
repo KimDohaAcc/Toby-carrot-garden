@@ -17,7 +17,19 @@ const MypageContentContainer = styled.div`
   object-fit: contain;
 `;
 
-const Area = styled.div`
+const Area1 = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 9fr;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  object-fit: contain;
+`;
+
+const Area2 = styled.div`
   display: grid;
   grid-template-rows: 1fr 9fr;
   width: 100%;
@@ -61,19 +73,19 @@ const Text = styled.div`
 const MypageContent = () => {
   return (
     <MypageContentContainer>
-      <Area>
+      <Area1>
         <TitleArea>
           <ImageArea src="/Image/button/ablumButtonOn.png" alt="앨범" />
         </TitleArea>
         <Album />
-      </Area>
-      <Area>
+      </Area1>
+      <Area2>
         <TitleArea>
           <ImageArea src="/Image/button/carrotButtonOn.png" alt="carrot" />
         </TitleArea>
 
         <CarrotField />
-      </Area>
+      </Area2>
     </MypageContentContainer>
   );
 };

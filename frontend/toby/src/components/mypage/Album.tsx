@@ -40,7 +40,7 @@ interface AlbumAreaProps {
   backgroundImage: string;
 }
 const AlbumContainer = styled.div`
-  width: 100%;
+  width: 98%;
   height: 100%;
   border: 14px solid #f7cb96;
   box-sizing: border-box;
