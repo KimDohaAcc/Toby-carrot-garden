@@ -106,6 +106,10 @@ AI를 기반으로 한 미취학 아동 교육
 - KafKa
 - AI모델 : inceptionV3, doodle, mobileNet
 
+### 🚀 Git Flow
+<img src="./asset/gitflow.PNG" alt="깃 flow 이미지" width="500" height="430">
+
+
 <!-- # 📍 사용 방법
 ### 🎨 설치 및 시작하기 -->
 
