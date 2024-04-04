@@ -93,9 +93,11 @@ const ReportContent = styled.div`
   flex-direction: column;
   flex-grow: 1;
   width: 100%;
-  height: 100%;
+  height: 96%;
   object-fit: contain;
   overflow: hidden;
+  padding: 1%;
+  padding-bottom: 1%;
 `;
 
 const ContentCategory = styled.div`
@@ -112,6 +114,7 @@ const Content = styled.div`
   width: 100%;
   object-fit: contain;
   overflow: hidden;
+  gap: 1%;
 `;
 
 const ContentExpressBox = styled.div`
@@ -352,8 +355,8 @@ const Report = () => {
           <>
             <Taehun> 히스토리</Taehun>
             <Taehun2>
-              우리 아이가 풀었던 문제를 확인할 수 있어요! 
-              채점이 잘못되었다면 다시 채점해주세요!
+              우리 아이가 풀었던 문제를 확인할 수 있어요! 채점이 잘못되었다면
+              다시 채점해주세요!
             </Taehun2>
           </>
         );
