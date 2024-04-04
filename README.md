@@ -124,20 +124,22 @@ AI를 기반으로 한 미취학 아동 교육
 # 🐣 팀 구성
 
 ## 팀원
-<table>
+<img src="./asset/팀원소개.JPG" alt="팀원 이미지" >
+
+<!-- <table>
   <tbody>
     <tr>
-      <td align="center"><a href=""><img src=""width="100px;" alt=""/><br /><sub><b>팀장 : 김도하</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 김지원</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 김태훈</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="https://avatars.githubusercontent.com/u/139312936?v=4" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 오화석</b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="./asset/팀원소개.JPG" alt="팀원 이미지" ><br /><sub><b>팀장 : 김도하</b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="./asset/팀원소개.JPG" alt="팀원 이미지" ><br /><sub><b>BE 팀원 : 김지원</b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="./asset/팀원소개.JPG" alt="팀원 이미지" ><br /><sub><b>FE 팀원 : 김태훈</b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="./asset/팀원소개.JPG" alt="팀원 이미지" ><br /><sub><b>FE 팀원 : 오화석</b></sub></a><br /></td>
      <tr/>
       <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 이정은</b></sub></a><br /></td>
       <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 전우리</b></sub></a><br /></td>
 
     </tr>
   </tbody>
-</table>
+</table> -->
 프로젝트를 설치하고 로컬에서 실행하는 방법에 대한 세부 사항을 제공
 
 # 라이센스
