@@ -14,6 +14,7 @@ import { setHospitalQuizClear } from "../../store/slices/hospitalSlice";
 import { setSchoolQuizClear } from "../../store/slices/schoolSlice";
 import { setMartQuizClear } from "../../store/slices/martSlice";
 import { setPoliceQuizClear } from "../../store/slices/policeSlice";
+import { set } from "date-fns";
 
 const BlackBoard = styled.div`
   display: flex;
@@ -159,6 +160,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   const [modalState, setModalState] = useState<
     "none" | "wait" | "success" | "fail"
   >("none");
+  const [stopModal, setStopModal] = useState(false);
 
   const [showFinDrawModal, setShowFinDrawModal] = useState(false);
 
@@ -186,7 +188,10 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
   }, [isOpen]);
 
   const handleSaveDrawing = useCallback(async () => {
-    if (isSubmitting || isPolling || !isOpen) return; // 제출 중, 폴링 중, 모달 닫힘 상태 체크
+    if (isSubmitting || isPolling || !isOpen) {
+      setStopModal(true);
+      return; // 제출 중, 폴링 중, 모달 닫힘 상태 체크
+    }
 
     setIsSubmitting(true); // 제출 시작// To prevent multiple submissions
     const canvas = signaturePadRef.current.getCanvas();
@@ -228,6 +233,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
     setIsPolling(true); // 폴링 시작
     if (attempts >= 10) {
       setIsPolling(false); // 폴링 종료
+      setIsSubmitting(false); // 제출 상태 초기화
       setModalState("fail"); // 최대 시도 회수 도달로 실패 처리
       return;
     }
@@ -241,6 +247,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
           // score가 0이면 폴링 중지하고 실패 상태 설정
           if (score === 0) {
             setModalState("fail");
+            setIsSubmitting(false); // 제출 상태 초기화
           } else {
             setModalState(score > 50 ? "success" : "fail");
             if (score > 50) {
@@ -260,6 +267,7 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
       } else {
         // 응답 상태가 200이 아니면 에러 처리
         setIsPolling(false); // 폴링 종료
+        setIsSubmitting(false); // 제출 상태 초기화
         setModalState("fail");
       }
     } catch (error) {
@@ -314,6 +322,17 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
           <RetryBtn onClick={handleRetryDrawing}></RetryBtn>
           <CloseBoardBtn onClick={onClose}></CloseBoardBtn>
         </ButtonArea>
+        {stopModal && (
+          <FinDrawModalContainer>
+            <FinDrawModal>
+              <TobyHeadImage src="/Image/toby/토비머리.png" alt="토비머리" />
+              <p style={{ fontSize: "5em" }}>이미 제출했습니다.</p>
+              <ModalCloseBtn onClick={() => setStopModal(false)}>
+                확인
+              </ModalCloseBtn>
+            </FinDrawModal>
+          </FinDrawModalContainer>
+        )}
         {showFinDrawModal && (
           <FinDrawModalContainer>
             <FinDrawModal>
