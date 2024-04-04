@@ -17,10 +17,45 @@ spring:
         jdbc:
           time_zone: Asia/Seoul
 
-  flyway:
-    enabled: false
-
-  redis:
-    data:
-      host: localhost
+  data:
+    redis:
+      host: ${REDIS_HOST}
       port: 6379
+
+  flyway:
+    enabled: true
+
+  kafka:
+    bootstrap-servers: kafka:9092
+
+server:
+  servlet:
+    context-path: /api
+
+logging:
+  level:
+    root: info
+
+# constants
+DOMAIN:
+  FRONT: ${FRONT_DOMAIN} # localhost:5173
+  BACK: ${BACK_DOMAIN} # http://localhost:8080
+KAKAO:
+  CLIENT_ID: ${KAKAO_OAUTH2_CLIENT_ID}
+  REDIRECT_URI: ${BACK_DOMAIN}/api/auth/oauth2/kakao/callback
+secretKeyPlain: ${SECURE_KEY_PLAIN} # 시큐리티 키
+
+discord:
+  webhook: ${DISCORD_WEBHOOK}
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${S3_ACCESSKEY}
+      secret-key: ${S3_SECRETKEY}
+    s3: #버킷이름
+      bucket: ${S3_BUCKET}
+    region: #S3 지역
+      static: ${S3_REGION}
+    stack:
+      auto: false
