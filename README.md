@@ -37,6 +37,7 @@ AI를 기반으로 한 미취학 아동 교육
 체험형 스토리에서 주된 사용 기술은 사물인식, 모션인식, 그림인식이 있다.
 
 #### 🎦 동영상
+[![Video Label](http://img.youtube.com/vi/JBYrgkJb9Wo/0.jpg)](https://youtu.be/JBYrgkJb9Wo)
 
 # ⚒️ 기술 스택
 
