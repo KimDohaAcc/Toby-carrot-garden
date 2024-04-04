@@ -122,7 +122,7 @@ const BottomContainer = styled.div`
 `;
 
 const AlbumToby = styled.img`
-  width: 25%; // Adjust size as needed
+  width: 22%; // Adjust size as needed
   margin-left: 3%; // Space between text and image
   right: 60%;
   overflow: hidden;
