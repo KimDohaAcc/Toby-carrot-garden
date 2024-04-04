@@ -127,13 +127,13 @@ AI를 기반으로 한 미취학 아동 교육
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href=""><img src="width="100px;" alt=""/><br /><sub><b>팀장 : </b></sub></a><br /></td>
+      <td align="center"><a href=""><img src=""width="100px;" alt=""/><br /><sub><b>팀장 : 김도하</b></sub></a><br /></td>
       <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 김지원</b></sub></a><br /></td>
       <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 김태훈</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 오화석</b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="https://avatars.githubusercontent.com/u/139312936?v=4" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 오화석</b></sub></a><br /></td>
      <tr/>
       <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 이정은</b></sub></a><br /></td>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 전우리리</b></sub></a><br /></td>
+      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 전우리</b></sub></a><br /></td>
 
     </tr>
   </tbody>
