@@ -195,10 +195,11 @@ const StoryQuizDrawings = ({ imageUrl, quizId, content, index, place }) => {
     setIsPlaying(false);
   };
   const handleCanvasClick = () => {
-    if (!isSubmitted) {
-      // 제출 상태가 아닐 때만 모달을 열 수 있도록 조건 추가
-      openModal();
-    }
+    // if (!isSubmitted) {
+    //   // 제출 상태가 아닐 때만 모달을 열 수 있도록 조건 추가
+    //   openModal();
+    // }
+    openModal();
   };
   const openModal = () => {
     setIsModalOpen(true);
