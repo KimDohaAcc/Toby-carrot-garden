@@ -27,6 +27,7 @@ const Area = styled.div`
   flex-direction: column;
   overflow: hidden;
   object-fit: contain;
+  margin: 5px;
 `;
 
 const TitleArea = styled.div`
