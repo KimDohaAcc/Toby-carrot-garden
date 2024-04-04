@@ -338,7 +338,11 @@ const StoryDrawingModal = ({ isOpen, onClose, quizId, place }) => {
             <FinDrawModal>
               <TobyHeadImage src="/Image/toby/토비머리.png" alt="토비머리" />
               <p style={{ fontSize: "5em" }}>그림을 그려주세요!</p>
-              <ModalCloseBtn onClick={() => setShowFinDrawModal(false)}>
+              <ModalCloseBtn
+                onClick={() => {
+                  setShowFinDrawModal(false);
+                }}
+              >
                 확인
               </ModalCloseBtn>
             </FinDrawModal>
