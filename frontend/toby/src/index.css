@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "SUITE";
+  src: url("/font/SUITE-Variable.woff2") format("woff2-variations");
+  /* 다른 포맷도 지원할 경우 추가 */
+  /* src: url('/font/SUITE.woff') format('woff'), */
+  /* url('/font/SUITE.ttf') format('truetype'), */
+  /* url('/font/SUITE.svg#font') format('svg'); */
+}
+
+:root {
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  object-fit: contain;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: "SUITE", sans-serif;
+  width: 100vw;
+  height: 100vh;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+}
