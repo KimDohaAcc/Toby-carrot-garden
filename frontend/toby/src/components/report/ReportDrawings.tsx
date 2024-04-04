@@ -42,6 +42,7 @@ const NoImageArea = styled.div`
   justify-content: center; /* 세로 중앙 정렬 */
   background-color: #f5f5f5d9;
   border-radius: 30px;
+
   position: relative;
   overflow: hidden;
   object-fit: contain;
@@ -109,7 +110,7 @@ const BottomContainer = styled.div`
 `;
 
 const AlbumToby = styled.img`
-  width: 25%; // Adjust size as needed
+  width: 22%; // Adjust size as needed
   margin-left: 3%; // Space between text and image
   right: 60%;
   overflow: hidden;

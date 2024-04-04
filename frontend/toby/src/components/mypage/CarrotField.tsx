@@ -42,6 +42,21 @@ const NoCarrotArea = styled.div`
   overflow: hidden;
   object-fit: contain;
 `;
+const NoImageArea = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr; /* 기존 grid에서 flex로 변경 */
+  /* flex-direction: column; 내용을 세로로 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+  justify-content: center; /* 세로 중앙 정렬 */
+  background-image: url("Image/album/당근밭배경.png");
+  border-radius: 30px;
+  border: 14px solid #f7cb96;
+  position: relative;
+  overflow: hidden;
+  object-fit: contain;
+  height: 100%;
+  width: 100%; /* 너비를 100%로 설정하여 부모 컨테이너를 꽉 채움 */
+`;
 const MiddleTextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -61,7 +76,6 @@ const BottomContainer = styled.div`
   overflow: hidden;
   object-fit: contain;
 `;
-
 const CarrotToby = styled.img`
   width: 25%; // Adjust size as needed
   margin-left: 3%; // Space between text and image
@@ -126,7 +140,13 @@ const HospitalCarrot = styled.div`
   overflow: hidden;
   object-fit: contain;
 `;
-
+const AlbumToby = styled.img`
+  width: 22%; // Adjust size as needed
+  margin-left: 3%; // Space between text and image
+  right: 60%;
+  overflow: hidden;
+  object-fit: contain;
+`;
 const MartCarrot = styled.div`
   grid-area: mart;
   display: flex;
@@ -271,11 +291,11 @@ const CarrotGradeImage = ({ carrotGrade }) => {
       ImageAlt = "hospitalmaster";
       break;
     case 7:
-      ImageURL = "martmasterurl";
+      ImageURL = "Image/carrot/마트마스터당근.png";
       ImageAlt = "martmaster";
       break;
     case 8:
-      ImageURL = "policemasterurl";
+      ImageURL = "Image/carrot/경찰마스터당근.png";
       ImageAlt = "policemaster";
       break;
   }
@@ -309,26 +329,26 @@ const CarrotField = () => {
         carrotList[1].carrotCount == 0 &&
         carrotList[2].carrotCount == 0 &&
         carrotList[3].carrotCount == 0) ? (
-        <NoCarrotArea>
-          <div></div>
+        <NoImageArea>
+          <div> {/* Empty top container for spacing */} </div>
           <MiddleTextContainer>
             <h1>
-              아직
+              토비와 함께
               <br />
-              당근이 자라고 있어요!
+              사진 찍으러 가볼까요?
             </h1>
           </MiddleTextContainer>
           <BottomContainer>
             <GotoMainText onClick={handleGoToMain}>
               당근 모으러 가기 -▷
             </GotoMainText>
-            <CarrotToby
-              src="Image/album/토비1.png"
-              alt="caarrottoby"
+            <AlbumToby
+              src="/Image/album/토비1.png"
+              alt="albumtoby"
               onClick={handleGoToMain}
             />
           </BottomContainer>
-        </NoCarrotArea>
+        </NoImageArea>
       ) : (
         <CarrotFieldContent>
           <SchoolCarrot>
