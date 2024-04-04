@@ -1,13 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/icon-16.png" />
+    <!-- <link rel="icon" type="image/jpg" href="public\leader.jpg" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="preload" href="/Image/common/logoImage.png" as="image" />
+    <link rel="preload" href="/Image/village/schoolImage.png" as="image" />
+    <link rel="preload" href="/Image/village/martImage.png" as="image" />
+    <!-- <link
+      href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css"
+      rel="stylesheet"
+    /> -->
+    <link href="/src/index.css" rel="stylesheet" />
+    <meta name="color-scheme" content="light only" />
+    <meta name="supported-color-schemes" content="light" />
+    <style>
+      :root {
+        color-scheme: light only;
+      }
+    </style>
+    <style id="cursor-style">
+      body {
+        cursor: url("/Image/cursor/normal.png"), auto;
+      }
+    </style>
+    <title>Toby's Carrot Farm</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("./sw.js")
+          .then(function (registration) {
+            console.log("Service Worker 등록 성공:", registration.scope);
+          })
+          .catch(function (error) {
+            console.log("Service Worker 등록 실패:", error);
+          });
+      } else {
+        console.log("Service workers are not supported.");
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const cursorStyle = document.getElementById("cursor-style");
+
+        document.addEventListener("mousemove", function (e) {
+          cursorStyle.innerHTML = `
+            body {
+              cursor: url("/Image/cursor/normal.png"), auto;
+            }
+          `;
+        });
+
+        // 마우스가 요소 위에 있을 때
+        // document.addEventListener("mouseenter", function () {
+        //   cursorStyle.innerHTML = `
+        //         body {
+        //           cursor: url("/Image/cursor/hover.png"), pointer;
+        //         }
+        //       `;
+        // });
+
+        // 마우스를 클릭할 때
+        document.addEventListener("mousedown", function () {
+          cursorStyle.innerHTML = `
+                body {
+                  cursor: url("/Image/cursor/clicked.png"), default;
+                }
+              `;
+        });
+
+        // 마우스를 뗄 때
+        document.addEventListener("mouseup", function () {
+          cursorStyle.innerHTML = `
+                body {
+                  cursor: url("/Image/cursor/normal.png"), default;
+                }
+              `;
+        });
+        // 마우스가 요소를 벗어났을 때
+        document.addEventListener("mouseout", function () {
+          cursorStyle.innerHTML = `
+            body {
+              cursor: url("/Image/cursor/normal.png"), default;
+            }
+          `;
+        });
+
+        document.addEventListener("mouseleave", function () {
+          cursorStyle.innerHTML = `
+            body {
+              cursor: url("/Image/cursor/normal.png"), default;
+            }
+          `;
+        });
+      });
+    </script>
   </body>
 </html>
