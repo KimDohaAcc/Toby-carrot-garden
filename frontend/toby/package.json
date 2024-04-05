@@ -23,7 +23,8 @@
     "react-router-dom": "^6.22.3",
     "react-signature-canvas": "^1.0.6",
     "react-webcam": "^7.2.0",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "swiper": "^6.8.4"
   },
   "devDependencies": {
     "@types/node": "^20.11.25",
