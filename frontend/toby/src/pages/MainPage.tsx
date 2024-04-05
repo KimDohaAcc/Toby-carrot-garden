@@ -434,7 +434,7 @@ const MainPage = () => {
   `;
 
   const TutorialSchoolImage = styled.img`
-    width: 65%;
+    width: 60%;
     height: auto;
     position: absolute;
     top: 20%;
