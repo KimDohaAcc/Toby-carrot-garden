@@ -19,7 +19,7 @@ import KakaoLogin from "./pages/KakaoLogin";
 import UserInfoForm from "./pages/UserInfoForm";
 import styled from "styled-components";
 import Example from "./pages/Example";
-import Tutorial from "./components/modals/Tutorial";
+// import Tutorial from "./components/modals/tutorial";
 function applyFixedTheme() {
   document.body.style.backgroundColor = "#ffffff";
   document.body.style.color = "#000000";
@@ -59,7 +59,7 @@ function App() {
       <BackgroundContainer>
         <Routes>
           <Route path="/" element={<StartPage />} />
-          <Route path="tutorial" element={<Tutorial />} />
+          {/* <Route path="tutorial" element={<Tutorial />} /> */}
           <Route path="auth" element={<AuthPage />} />
           <Route path="kakaoSignup" element={<KakaoSignup />} />
           <Route path="kakaoLogin" element={<KakaoLogin />} />
