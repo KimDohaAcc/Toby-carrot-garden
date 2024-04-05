@@ -378,7 +378,7 @@ const Album = () => {
     <AlbumContainer>
       {/** 이미지 없을 때 보여줄 화면 */}
       {imageList.length > 0 ? (
-        <AlbumArea backgroundImage={backgroundImageUrl}>
+        <AlbumArea $backgroundImage={backgroundImageUrl}>
           {/* 수정된 부분 */}
           <ImageArea>
             <ImageWrapper>
