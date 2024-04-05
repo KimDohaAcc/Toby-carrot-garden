@@ -515,7 +515,7 @@ const MainPage = () => {
               onMouseLeave={() => stopAudio("report")}
             />
             <TutorialReportImage
-              src="\public\Image\modal\reportModal.png"
+              src="\Image\modal\reportModal.png"
               alt="Tutorial report"
               show={isTutorialMode}
             />
@@ -539,7 +539,7 @@ const MainPage = () => {
               onMouseLeave={() => stopAudio("mart")}
             />
             <TutorialMartImage
-              src="\public\Image\modal\martModal.png"
+              src="\Image\modal\martModal.png"
               alt="Tutorial Mart"
               show={isTutorialMode}
             />
@@ -565,7 +565,7 @@ const MainPage = () => {
               onMouseLeave={() => stopAudio("school")}
             />
             <TutorialSchoolImage
-              src="\public\Image\modal\schoolModal.png"
+              src="\Image\modal\schoolModal.png"
               alt="Tutorial Police"
               show={isTutorialMode}
             />
@@ -582,7 +582,7 @@ const MainPage = () => {
               onMouseLeave={() => stopAudio("mypage")}
             />
             <TutorialMypageImage
-              src="\public\Image\modal\mypageModal.png"
+              src="\Image\modal\mypageModal.png"
               alt="Tutorial Mypage"
               show={isTutorialMode}
             />
@@ -601,7 +601,7 @@ const MainPage = () => {
               onMouseLeave={() => stopAudio("hospital")}
             />
             <TutorialHospitalImage
-              src="\public\Image\modal\hospitalModal.png"
+              src="\Image\modal\hospitalModal.png"
               alt="Tutorial Hospital"
               show={isTutorialMode}
             />
@@ -618,7 +618,7 @@ const MainPage = () => {
               onMouseLeave={() => stopAudio("police")}
             />
             <TutorialPoliceImage
-              src="\public\Image\modal\policeModal.png"
+              src="\Image\modal\policeModal.png"
               alt="Tutorial Police"
               show={isTutorialMode}
             />
