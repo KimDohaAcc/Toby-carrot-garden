@@ -235,7 +235,7 @@ const UserName = styled.div`
   position: absolute;
   width: calc(100%);
   top: calc(5%);
-  right: calc(15%);
+  right: calc(60%);
   transform: translateX(-50%);
   padding: calc(3%) calc(10%);
   color: #ffffff;
@@ -259,6 +259,14 @@ const LogoutArea = styled.div`
   top: calc(5%);
   right: calc(8%);
 `;
+const TutorialArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: calc(30%);
+  top: calc(5%);
+  right: calc(80%);
+`;
 
 const SoundArea = styled.div`
   display: flex;
@@ -272,6 +280,11 @@ const SoundArea = styled.div`
 const ButtonText = styled.div`
   font-size: 1.1vw;
   margin-top: 7px;
+`;
+const TutorialButton = styled.img`
+  cursor: url("/Image/cursor/hover.png"), pointer;
+  align-self: center;
+  width: calc(80%);
 `;
 
 const LogoutButton = styled.img`
@@ -289,6 +302,7 @@ const MainPage = () => {
   const [showPoliceModal, setShowPoliceModal] = useState(false);
   const [modalType, setModalType] = useState(""); // 모달 종류를 결정하는 상태
   const [userName, setUserName] = useState("");
+  const [isTutorialMode, setIsTutorialMode] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -361,6 +375,24 @@ const MainPage = () => {
     }
   };
 
+  const Overlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: ${({ show }) =>
+      show ? "blur(1px) brightness(0.7)" : "none"};
+    z-index: 1500;
+    display: ${({ show }) => (show ? "block" : "none")};
+  `;
+
+  const handleTutorialModeToggle = () => {
+    setIsTutorialMode(!isTutorialMode); // 튜토리얼 모드 토글
+  };
+  const handleCloseTutorialMode = () => {
+    setIsTutorialMode(false);
+  };
   const handleMute = () => {
     if (audioRef.current) {
       audioRef.current.muted = !audioRef.current.muted;
@@ -373,7 +405,61 @@ const MainPage = () => {
       console.error("audioRef is null");
     }
   };
+  const TutorialPoliceImage = styled.img`
+    width: 70%;
+    height: auto;
+    position: absolute;
+    top: 11%;
+    left: 18%;
+    display: ${({ show }) => (show ? "block" : "none")};
+    z-index: 2000;
+  `;
+  const TutorialMartImage = styled.img`
+    width: 55%;
+    height: auto;
+    position: absolute;
+    top: 15%;
+    left: 35%;
+    display: ${({ show }) => (show ? "block" : "none")};
+    z-index: 2000;
+  `;
+  const TutorialHospitalImage = styled.img`
+    width: 70%;
+    height: auto;
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    display: ${({ show }) => (show ? "block" : "none")};
+    z-index: 2000;
+  `;
 
+  const TutorialSchoolImage = styled.img`
+    width: 65%;
+    height: auto;
+    position: absolute;
+    top: 20%;
+    left: 18%;
+    display: ${({ show }) => (show ? "block" : "none")};
+    z-index: 2000;
+  `;
+  const TutorialMypageImage = styled.img`
+    width: 60%;
+    height: auto;
+    position: absolute;
+    top: 11%;
+    left: 18%;
+    display: ${({ show }) => (show ? "block" : "none")};
+    z-index: 2000;
+  `;
+  const TutorialReportImage = styled.img`
+    width: 55%;
+    height: auto;
+    position: absolute;
+    top: 17%;
+    left: 30%;
+    display: ${({ show }) => (show ? "block" : "none")};
+    z-index: 2000;
+  `;
   // const playAudio = (audioFilePath) => {
   //   const audio = new Audio(audioFilePath);
   //   audio.play();
@@ -411,18 +497,27 @@ const MainPage = () => {
 
   return (
     <>
+      {isTutorialMode && (
+        <Overlay show={isTutorialMode} onClick={handleCloseTutorialMode} />
+      )}
       <MainpageContainer>
         <Area1>
           <div style={{ position: "relative" }}>
             <Logo />
           </div>
           <ReportArea>
+            <img></img>
             <ReportImage
               src="\Image\village\reportImage.png"
               alt="report"
               onClick={() => handleAreaClick("/report")}
               onMouseEnter={() => playAudio("report")}
               onMouseLeave={() => stopAudio("report")}
+            />
+            <TutorialReportImage
+              src="\public\Image\modal\reportModal.png"
+              alt="Tutorial report"
+              show={isTutorialMode}
             />
             {audioElements.map((audio) =>
               audio.isPlaying ? (
@@ -442,6 +537,11 @@ const MainPage = () => {
               onClick={() => handleAreaClick("/mart")}
               onMouseEnter={() => playAudio("mart")}
               onMouseLeave={() => stopAudio("mart")}
+            />
+            <TutorialMartImage
+              src="\public\Image\modal\martModal.png"
+              alt="Tutorial Mart"
+              show={isTutorialMode}
             />
             {audioElements.map((audio) =>
               audio.isPlaying ? (
@@ -464,6 +564,11 @@ const MainPage = () => {
               onMouseEnter={() => playAudio("school")}
               onMouseLeave={() => stopAudio("school")}
             />
+            <TutorialSchoolImage
+              src="\public\Image\modal\schoolModal.png"
+              alt="Tutorial Police"
+              show={isTutorialMode}
+            />
             <audio id="school" controls hidden>
               <source src="/Sound/mainPage/school.mp3" type="audio/mpeg" />
             </audio>
@@ -475,6 +580,11 @@ const MainPage = () => {
               onClick={() => handleAreaClick("/mypage")}
               onMouseEnter={() => playAudio("mypage")}
               onMouseLeave={() => stopAudio("mypage")}
+            />
+            <TutorialMypageImage
+              src="\public\Image\modal\mypageModal.png"
+              alt="Tutorial Mypage"
+              show={isTutorialMode}
             />
             <audio id="mypage" controls hidden>
               <source src="/Sound/mainPage/mypage.mp3" type="audio/mpeg" />
@@ -490,6 +600,11 @@ const MainPage = () => {
               onMouseEnter={() => playAudio("hospital")}
               onMouseLeave={() => stopAudio("hospital")}
             />
+            <TutorialHospitalImage
+              src="\public\Image\modal\hospitalModal.png"
+              alt="Tutorial Hospital"
+              show={isTutorialMode}
+            />
             <audio ref={audioRef} controls hidden>
               <source src="/Sound/mainPage/hospital.mp3" type="audio/mpeg" />
             </audio>
@@ -501,6 +616,11 @@ const MainPage = () => {
               onClick={() => handleAreaClick("/police")}
               onMouseEnter={() => playAudio("police")}
               onMouseLeave={() => stopAudio("police")}
+            />
+            <TutorialPoliceImage
+              src="\public\Image\modal\policeModal.png"
+              alt="Tutorial Police"
+              show={isTutorialMode}
             />
             <audio id="police" controls hidden>
               <source src="/Sound/mainPage/police.mp3" type="audio/mpeg" />
@@ -530,6 +650,13 @@ const MainPage = () => {
               />
               <ButtonText>로그아웃</ButtonText>
             </LogoutArea>
+            <TutorialArea>
+              <TutorialButton
+                src="\Image\button\light.png"
+                onClick={handleTutorialModeToggle}
+              />
+              <ButtonText>튜토리얼</ButtonText>
+            </TutorialArea>
           </UserArea>
           <TobyArea>
             <TobyImage
