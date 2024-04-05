@@ -303,6 +303,11 @@ const MainPage = () => {
   const [muteImage, setMuteImage] = useState("/Image/button/no-sound.png");
 
   useEffect(() => {
+    console.log(audioRef.current.volume);
+    if (audioRef.current) {
+      audioRef.current.volume = 0.2; // 볼륨 설정
+    }
+
     // 컴포넌트 마운트 시 getUserStorage를 호출하여 사용자 이름 가져오기
     const userInfo = getUserStorage();
     if (userInfo && userInfo.name) {

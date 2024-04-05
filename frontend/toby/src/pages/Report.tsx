@@ -331,6 +331,9 @@ const Report = () => {
   };
 
   useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.2;
+    }
     // 초기 분석 탭 설정
     handleButtonClick("analysis");
   }, []);
