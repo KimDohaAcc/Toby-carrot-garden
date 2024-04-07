@@ -114,14 +114,26 @@ AI를 기반으로 한 미취학 아동 교육
 ### 🎨 설치 및 시작하기 -->
 
 # 💾 기능 소개
+![Alt 텍스트](https://lab.ssafy.com/s10-ai-image-sub2/S10P22A202/-/raw/master/asset/%E1%84%92%E1%85%AC%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%80%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8.GIF?ref_type=heads)
 - 로그인 화면
+
+![Alt 텍스트](https://lab.ssafy.com/s10-ai-image-sub2/S10P22A202/-/raw/master/asset/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5.GIF?ref_type=heads)
 - 메인 화면
-- 스토리 화면
+
+
+![Alt 텍스트](https://lab.ssafy.com/s10-ai-image-sub2/S10P22A202/-/raw/master/asset/%E1%84%86%E1%85%AE%E1%86%AF%E1%84%8E%E1%85%A6.GIF?ref_type=heads)
 - AI모델 Object Quiz
+
+![Alt 텍스트](https://lab.ssafy.com/s10-ai-image-sub2/S10P22A202/-/raw/master/asset/%E1%84%80%E1%85%A1%E1%86%B7%E1%84%8C%E1%85%A5%E1%86%BC.GIF?ref_type=heads)
 - AI모델 Emotion Quiz
+
+![Alt 텍스트](https://lab.ssafy.com/s10-ai-image-sub2/S10P22A202/-/raw/master/asset/%E1%84%80%E1%85%B3%E1%84%85%E1%85%B5%E1%86%B7.GIF?ref_type=heads)
 - AI모델 Drawing Quiz
-- 분석 화면
-- 당근밭 화면
+
+- 분석 화면 (미완료)
+
+![Alt 텍스트](https://lab.ssafy.com/s10-ai-image-sub2/S10P22A202/-/raw/master/asset/%E1%84%80%E1%85%B5%E1%84%82%E1%85%A7%E1%86%B7%E1%84%89%E1%85%A1%E1%84%8C%E1%85%B5%E1%86%AB.GIF)
+- 스토리 클리어 기념사진 당근밭 화면
 
 # 🐣 팀 구성
 
