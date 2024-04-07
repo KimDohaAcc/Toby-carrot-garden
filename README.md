@@ -117,6 +117,10 @@ AI를 기반으로 한 미취학 아동 교육
 ![Alt 텍스트](https://lab.ssafy.com/s10-ai-image-sub2/S10P22A202/-/raw/master/asset/%E1%84%92%E1%85%AC%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%80%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8.GIF?ref_type=heads)
 - 로그인 화면
 
+![Alt 텍스트](https://lab.ssafy.com/s10-ai-image-sub2/S10P22A202/-/raw/master/asset/%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF.GIF)
+
+- 튜토리얼 처음 유저를 위한 안내페이지
+
 ![Alt 텍스트](https://lab.ssafy.com/s10-ai-image-sub2/S10P22A202/-/raw/master/asset/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5.GIF?ref_type=heads)
 - 메인 화면
 
