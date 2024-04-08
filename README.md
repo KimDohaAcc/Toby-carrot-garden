@@ -188,3 +188,7 @@ AI를 기반으로 한 미취학 아동 교육
     - https://developer.chrome.com/docs/workbox/caching-strategies-overview?hl=ko
     - https://developer.chrome.com/docs/workbox/precaching-dos-and-donts?hl=ko
     - https://s0n9h2.tistory.com/122
+    - https://t-i-show.medium.com/build-a-pwa-with-next-js-and-typescript-94ead0e3e6f2
+- CSS
+    - [https://velog.io/@jhsung23/CSS-fff와-ffffff는-무슨-차이인가요](https://velog.io/@jhsung23/CSS-fff%EC%99%80-ffffff%EB%8A%94-%EB%AC%B4%EC%8A%A8-%EC%B0%A8%EC%9D%B4%EC%9D%B8%EA%B0%80%EC%9A%94)
+    - https://naradesign.github.io/flex-grow-shrink.html
