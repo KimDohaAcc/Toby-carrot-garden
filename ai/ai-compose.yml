@@ -1,0 +1,16 @@
+version: '3.8'
+name: toby
+
+services:
+  tobyemotion:
+    container_name: tobyemotion
+    image: wldnjs35242/toby_emotion:1.1
+    env_file: .env
+  tobyedetection:
+    container_name: tobydetection
+    image: wldnjs35242/toby_detection:1.1
+    env_file: .env
+  tobydrawing:
+    container_name: tobydrawing
+    image: wldnjs35242/toby_drawing:1.1
+    env_file: .env
