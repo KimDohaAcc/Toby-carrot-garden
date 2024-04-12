@@ -113,29 +113,38 @@ AI를 기반으로 한 미취학 아동 교육
 ### 🎨 설치 및 시작하기 -->
 
 # 💾 기능 소개
-![Alt 텍스트](https://github.com/KimDohaAcc/Toby-carrot-garden/-/raw/master/asset/%E1%84%92%E1%85%AC%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%80%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8.GIF?ref_type=heads)
+![회원가입](https://github.com/KimDohaAcc/Toby-carrot-garden/assets/127382101/fa5f65d9-ac9a-44ec-bff8-640da86c9718)
+
 - 로그인 화면
 
-![Alt 텍스트](https://github.com/KimDohaAcc/Toby-carrot-garden/-/raw/master/asset/%E1%84%90%E1%85%B2%E1%84%90%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8B%E1%85%A5%E1%86%AF.GIF)
+
+![튜토리얼](https://github.com/KimDohaAcc/Toby-carrot-garden/assets/127382101/0acd85f2-2566-4b6b-9a85-7aeef222e156)
 
 - 튜토리얼 처음 유저를 위한 안내페이지
 
-![Alt 텍스트](https://github.com/KimDohaAcc/Toby-carrot-garden/-/raw/master/asset/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5.GIF?ref_type=heads)
+![메인페이지](https://github.com/KimDohaAcc/Toby-carrot-garden/assets/127382101/11360f94-155a-4d77-82b6-11caef1ce051)
+
 - 메인 화면
 
 
-![Alt 텍스트](https://github.com/KimDohaAcc/Toby-carrot-garden/-/raw/master/asset/%E1%84%86%E1%85%AE%E1%86%AF%E1%84%8E%E1%85%A6.GIF?ref_type=heads)
+![물체](https://github.com/KimDohaAcc/Toby-carrot-garden/assets/127382101/428255fa-7dfc-470c-919a-fbf8b6d4716e)
+
 - AI모델 Object Quiz
 
-![Alt 텍스트](https://github.com/KimDohaAcc/Toby-carrot-garden/-/raw/master/asset/%E1%84%80%E1%85%A1%E1%86%B7%E1%84%8C%E1%85%A5%E1%86%BC.GIF?ref_type=heads)
+![감정](https://github.com/KimDohaAcc/Toby-carrot-garden/assets/127382101/9c0083a1-3959-41f5-b33a-8628e264c0dd)
+
 - AI모델 Emotion Quiz
 
-![Alt 텍스트](https://github.com/KimDohaAcc/Toby-carrot-garden/-/raw/master/asset/%E1%84%80%E1%85%B3%E1%84%85%E1%85%B5%E1%86%B7.GIF?ref_type=heads)
+![그림](https://github.com/KimDohaAcc/Toby-carrot-garden/assets/127382101/ccb8e11b-2e44-42cb-97ea-e2a1d4e937d0)
+
 - AI모델 Drawing Quiz
 
-- 분석 화면 (미완료)
+![응급상황](https://github.com/KimDohaAcc/Toby-carrot-garden/assets/127382101/67bf87ee-291f-42ff-9c55-576c503241fe)
 
-![Alt 텍스트](https://github.com/KimDohaAcc/Toby-carrot-garden/-/raw/master/asset/%E1%84%80%E1%85%B5%E1%84%82%E1%85%A7%E1%86%B7%E1%84%89%E1%85%A1%E1%84%8C%E1%85%B5%E1%86%AB.GIF)
+- 응급상황 Quiz
+
+![기념사진](https://github.com/KimDohaAcc/Toby-carrot-garden/assets/127382101/ba336feb-cf8a-405f-8bcf-ebd5a44e85d1)
+
 - 스토리 클리어 기념사진 당근밭 화면
 
 # 🐣 팀 구성
